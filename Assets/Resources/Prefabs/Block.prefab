@@ -111,6 +111,7 @@ MonoBehaviour:
   index: 0
   i: 0
   j: 0
+  upgrade: {fileID: 0}
 --- !u!222 &2277524728898757159
 CanvasRenderer:
   m_ObjectHideFlags: 0
