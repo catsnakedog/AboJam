@@ -13,7 +13,6 @@ public class UI : MonoBehaviour
 
     private void Start()
     {
-        Audio.instance.PlayBgm(true);
         StartCoroutine(CorUpdate());
     }
 

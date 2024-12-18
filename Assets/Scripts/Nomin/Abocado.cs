@@ -18,6 +18,7 @@ public class Abocado : MonoBehaviour
     public void Start()
     {
         spr = GetComponent<SpriteRenderer>();
+        slider = gameObject.GetComponent<Slider>();
         ChangeSprite(Resources.Load<Sprite>("Images/Level0"));
         abocados.Add(this);
         StartCoroutine(CorHP());
@@ -59,20 +60,39 @@ public class Abocado : MonoBehaviour
     public void ChangeSprite(Sprite sprite)
     {
         this.spr.sprite = sprite;
+
+        switch (level)
+        {
+            case 0:
+                transform.localScale = new Vector2(0.3f, 0.3f);
+                break;
+            case 1:
+                transform.localScale = new Vector2(0.25f, 0.25f);
+                break;
+            case 2:
+                transform.localScale = new Vector2(0.6f, 0.6f);
+                break;
+            case 3:
+                transform.localScale = new Vector2(0.5f, 0.5f);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 응급 처치용 업데이트..ㅈㅅ
+    /// </summary>
+    private void Update()
+    {
+        if(level == 2 && transform.localScale.x < 0.4f)
+        {
+            transform.localScale = new Vector2(0.6f, 0.6f);
+        }
     }
 
     private IEnumerator CorHP()
     {
-        if (HP == StaticData.HP_Abocado)
-        {
-            slider.gameObject.SetActive(false);
-        }
-        else
-        {
-            if(slider.gameObject.active == false) slider.gameObject.SetActive(true);
-            if (slider.value > HP / StaticData.HP_Abocado) slider.value -= (StaticData.HP_Abocado * 0.07f);
-        }
-        
+        if (HP == StaticData.HP_Abocado) yield return new WaitForSeconds(0.05f);
+        if (slider.value > HP / StaticData.HP_Abocado) slider.value -= (StaticData.HP_Abocado * 0.07f);
         yield return new WaitForSeconds(0.1f);
     }
 }
