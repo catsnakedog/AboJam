@@ -14,7 +14,9 @@ public class Tile : MonoBehaviour
     public int i, j;
     public bool isWall { get; set; } = false;
     public GameObject go { get; set; } = null;
+    public GameObject upgrade;
     private BoxCollider2D col;
+    public static Tile currentTile;
 
     public void Start()
     {
@@ -25,30 +27,48 @@ public class Tile : MonoBehaviour
         // index 으로부터 i, j 추출
         (i, j) = Grid.ConvertIndexToArray(index);
         col = GetComponent<BoxCollider2D>();
-
+        upgrade = FindInactiveByTag("Upgrade");
     }
 
     public void OnClick()
     {
         Debug.Log($"[" + i + "][" + j + "]\n" + $"Index : {index}");
+        upgrade.SetActive(false);
 
-        // 수확 & 심기 모드 (Shift)
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        // 나무 컨트롤 모드 (F)
+        if (Input.GetKey(KeyCode.F))
         {
             // 빈 타일
             if (go == null)
             {
-
+                // 아보카도 경작
+                go = Resources.Load<GameObject>("Prefabs/Abocado");
+                Abocado abc = go.GetComponent<Abocado>();
+                Create(go);
             }
             // 채워진 타일
             else
             {
                 Abocado abc = go.GetComponent<Abocado>();
+                if (abc == null) return;
 
-                // 아보카도 수확
-                if (abc != null) abc.Harvest();
+                go.gameObject.GetComponent<Animation_Click>().OnClick();
+
+                // Level 0 = 심기
+                if (abc.level == 0 && StaticData.Abocado > 0)
+                {
+                    StaticData.Abocado--;
+                    abc.LevelUp(true);
+                }
+                // Level 2 = 타워 업그레이드
+                else if (abc.level == 2)
+                {
+                    currentTile = this;
+                    upgrade.SetActive(true);
+                }
+                // Level 3 = 수확
+                else if (abc.level == 3) abc.Harvest();
             }
-
         }
     }
 
@@ -63,8 +83,7 @@ public class Tile : MonoBehaviour
     /// </summary>
     public void Create(GameObject go)
     {
-        this.go = go;
-        Instantiate(go, gameObject.transform.position, Quaternion.identity);
+        this.go = Instantiate(go, gameObject.transform.position, Quaternion.identity);
     }
 
     /// <summary>
@@ -82,5 +101,20 @@ public class Tile : MonoBehaviour
     public override int GetHashCode()
     {
         return (i, j).GetHashCode();
+    }
+
+    public GameObject FindInactiveByTag(string tag)
+    {
+        Transform[] allTransforms = Resources.FindObjectsOfTypeAll<Transform>();
+
+        foreach (Transform t in allTransforms)
+        {
+            if (t.gameObject.CompareTag(tag) && !t.gameObject.activeSelf)
+            {
+                return t.gameObject;
+            }
+        }
+
+        return null;
     }
 }

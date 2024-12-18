@@ -6,8 +6,8 @@ public class Button : MonoBehaviour
 {
     public GameObject abocade;
 
-    public void ON()
+    public void Switch()
     {
-        Grid.GetBlock(1, 1).Create(abocade);
+        Grid.GetTile(1, 1).SwitchWall(true);
     }
 }
