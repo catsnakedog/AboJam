@@ -50,11 +50,11 @@ public class Grid : MonoBehaviour
     /// <summary>
     /// <br>타일 [i][j] 을 반환합니다.</br>
     /// </summary>
-    public static Block GetBlock(int i, int j)
+    public static Tile GetBlock(int i, int j)
     {
         try
         {
-            return obj.transform.GetChild(ConvertArrayToIndex(i, j)).gameObject.GetComponent<Block>();
+            return obj.transform.GetChild(ConvertArrayToIndex(i, j)).gameObject.GetComponent<Tile>();
         }
         catch (System.Exception)
         {
