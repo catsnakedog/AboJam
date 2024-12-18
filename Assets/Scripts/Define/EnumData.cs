@@ -12,4 +12,17 @@ public class EnumData
         River,
         Turret,
     }
+
+    public enum Weapon
+    {
+        Gun,
+        ShotGun,
+        Riple,
+        Sniper,
+        knife,
+        Spear,
+        ChainSaw,
+        Bat,
+        Default
+    }
 }

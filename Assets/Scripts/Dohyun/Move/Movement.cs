@@ -32,6 +32,16 @@ public class Movement
 
     public void Move()
     {
-        _rb?.MovePosition(_rb.position + MoveDirection * MoveSpeed * Time.fixedDeltaTime);
+        if(_rb != null)
+        {
+            if(MoveDirection != Vector2.zero)
+            {
+                if (MoveDirection.x > 0)
+                    _rb.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+                else
+                    _rb.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            }
+            _rb.MovePosition(_rb.position + MoveSpeed * Time.fixedDeltaTime * MoveDirection);
+        }
     }
 }
