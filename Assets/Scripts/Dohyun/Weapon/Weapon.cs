@@ -1,35 +1,58 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public GameObject weaponPrefab; // 무기 프리팹
-
-    private GameObject equippedWeapon; // 장착된 무기
-
-    public virtual void InitializeWeapon(Vector2 weaponPlace)
+    [System.Serializable]
+    public class WeaponData
     {
-        // 무기 생성 및 장착
-        if (weaponPrefab != null)
-        {
-            Transform parentTransform = transform;
-            Vector3 weaponPosition = parentTransform.position + (Vector3)weaponPlace;
-            equippedWeapon = Instantiate(weaponPrefab, weaponPosition, Quaternion.identity, parentTransform);
-        }
+        public float Damage;
+        public float BulletSpeed;
+        public float Spread;
+        public float AttackSpeed;
+        public float Range;
+        public int bulletPenetration;
     }
 
-    public void RotateWeaponToMouse()
+    [SerializeField]
+    public List<WeaponData> WeaponDatas;
+    public int Level;
+    public Transform FireLocation;
+    public Transform SecondHandLocation;
+    public GameObject BulletObj;
+
+    public Type Bullet = typeof(Bullet);
+    private bool isReload = false;
+
+    public void Init()
     {
-        if (equippedWeapon == null) return;
+        isReload = false;
+        StartCoroutine(Reload());
+    }
 
-        // 마우스 위치 가져오기
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;
+    public void Attack()
+    {
+        if (isReload)
+            return;
+        AttackLogic();
+        StartCoroutine(Reload());
+    }
 
-        // 무기가 마우스를 향하도록 회전
-        Vector2 direction = (mousePosition - equippedWeapon.transform.position).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        equippedWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+    public virtual void AttackLogic()
+    {
+    }
+
+    private IEnumerator Reload()
+    {
+        isReload = true;
+        yield return new WaitForSeconds(1 / WeaponDatas[Level-1].AttackSpeed);
+        isReload = false;
+    }
+
+    public void OnDisable()
+    {
+        isReload = false;
     }
 }

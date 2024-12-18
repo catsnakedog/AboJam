@@ -6,16 +6,25 @@ using UnityEngine;
 public class Player : Character
 {
     public PlayerMovement playerMovement;
+    public Hand Hand;
+    public Head Head;
 
     void Awake()
     {
         playerMovement = new();
         Movement = playerMovement;
+        Hand?.Init();
+        Head?.Init();
         Init();
     }
 
     private void Update()
     {
         playerMovement.MoveAction?.Invoke();
+        Hand.HandAction?.Invoke();
+        Head.HeadAction?.Invoke();
+
+        if (Input.GetKeyDown(KeyCode.C))
+            Hand.SetWeapon();
     }
 }

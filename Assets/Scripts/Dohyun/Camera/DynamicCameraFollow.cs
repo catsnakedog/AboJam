@@ -15,6 +15,7 @@ public class DynamicCameraFollow : MonoBehaviour
     {
         _mainCamera = Camera.main; // 메인 카메라 참조
         _fixedZ = transform.position.z; // 초기 Z축 값 저장
+        Player = GameObject.FindWithTag("Player").transform;
     }
 
     void FixedUpdate()
