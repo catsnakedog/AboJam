@@ -6,6 +6,9 @@ using UnityEngine;
 public class PlayerMovement : Movement
 {
     public float Drag = 5f; // 관성 효과를 위한 드래그 값
+    public Animator BodyAnimator;
+    public Animator ClothesAnimator;
+    public Animator HeadAnimator;
 
     private Vector2 _movement;
 
@@ -28,7 +31,19 @@ public class PlayerMovement : Movement
 
     public void SetCharacterDirection()
     {
-        // 선형 보간을 사용해 현재 속도를 목표 속도로 서서히 변경 (관성 효과)
+        if (_movement != Vector2.zero)
+        {
+            BodyAnimator.SetTrigger("Run");
+            ClothesAnimator.SetTrigger("Run");
+            HeadAnimator.SetTrigger("Run");
+        }
+        if (_movement == Vector2.zero)
+        {
+            BodyAnimator.SetTrigger("Default");
+            ClothesAnimator.SetTrigger("Default");
+            HeadAnimator.SetTrigger("Default");
+        }
+
         MoveDirection = _movement;
     }
 }

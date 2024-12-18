@@ -11,7 +11,6 @@ public class Player : Character
 
     void Awake()
     {
-        playerMovement = new();
         Movement = playerMovement;
         Hand?.Init();
         Head?.Init();

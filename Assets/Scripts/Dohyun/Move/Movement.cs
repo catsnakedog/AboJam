@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Movement
 {
-    public float MoveSpeed = 5f; // 이동 속도
+    public float MoveSpeed = 2f; // 이동 속도
     public Vector2 MoveDirection = Vector2.zero; // 이동 방향
     public Action MoveAction; // 업데이터는 해당 유닛에서 실행
 
