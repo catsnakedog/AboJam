@@ -8,8 +8,3 @@ public static class StaticData
     public static Tile[,] MapData;
     public static int Garu;
 }
-
-public class Tile
-{
-    public TileType Type;
-}
