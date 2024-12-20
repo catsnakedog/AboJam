@@ -30,18 +30,27 @@ public class Hand
     public void Init()
     {
         HandAction = CheckAttack;
+        HandAction += SetFlip;
         HandAction += LeftSet;
         HandAction += RightSet;
         HandAction += SetArm;
         SetWeapon();
     }
 
+    private void SetFlip()
+    {
+        if (Player.transform.position.x > Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
+            _extraFlip = false;
+        else
+            _extraFlip = true;
+    }
+
     private void SetArm()
     {
-        if(CheckFlip(weapons[(int)WeaponType].StandardHand == 0))
-            Weapon.transform.parent = LeftGunLocation;
+        if(CheckFlip(weapons[(int)WeaponType], 0, _extraFlip) == false)
+            Weapon.transform.SetParent(LeftGunLocation, false);
         else
-            Weapon.transform.parent = RightGunLocation;
+            Weapon.transform.SetParent(RightGunLocation, false);
         LeftArm.transform.rotation = LeftRot;
         RightArm.transform.rotation = RightRot;
     }
@@ -72,11 +81,11 @@ public class Hand
     [System.Serializable]
     public class WeaponHandState
     {
-        public int StandardHand;
+        public bool StandardHand;
         public bool LeftUse;
         public bool RightUse;
 
-        public WeaponHandState(int standardHand, bool leftUse, bool rightUse)
+        public WeaponHandState(bool standardHand, bool leftUse, bool rightUse)
         {
             this.StandardHand = standardHand;
             this.LeftUse = leftUse;
@@ -88,55 +97,55 @@ public class Hand
     {
         new WeaponHandState // Gun
         (
-            1, // 0 Left 1 Right
+            true, // false Left true Right
             true,
             true
         ),
         new WeaponHandState // ShotGun
         (
-            0,
+            false,
             true,
             true
         ),
         new WeaponHandState // Riple
         (
-            0,
+            false,
             true,
             true
         ),
         new WeaponHandState // Sniper
         (
-            0,
+            false,
             true,
             true
         ),
         new WeaponHandState // Knife
         (
-            0,
+            false,
             true,
             true
         ),
         new WeaponHandState // Spear
         (
-            1,
+            true,
             true,
             false
         ),
         new WeaponHandState // ChainSaw
         (
-            1,
+            true,
             true,
             false
         ),
         new WeaponHandState // Bat
         (
-            1,
+            true,
             true,
             false
         ),
         new WeaponHandState // Default
         (
-            1,
+            true,
             false,
             false
         )
@@ -145,9 +154,9 @@ public class Hand
     public void LeftSet()
     {
         var weaponData = weapons[(int)WeaponType];
-        if (CheckFlip(weaponData.LeftUse))
+        if (CheckFlip(weaponData, 1, _extraFlip))
         {
-            if (CheckFlip(weaponData.StandardHand == 0))
+            if (CheckFlip(weaponData, 0, _extraFlip) == false)
             {
                 LeftRenderer.sortingLayerName = "Entity";
                 LeftRenderer.sortingOrder = 5;
@@ -163,7 +172,7 @@ public class Hand
         else
         {
             LeftRenderer.sortingLayerName = "Entity";
-            if (weaponData.StandardHand == 1)
+            if (CheckFlip(weaponData, 0, _extraFlip) == false)
                 RightRenderer.sortingOrder = 3;
             else
                 RightRenderer.sortingOrder = 0;
@@ -175,9 +184,9 @@ public class Hand
     public void RightSet()
     {
         var weaponData = weapons[(int)WeaponType];
-        if (CheckFlip(weaponData.RightUse))
+        if (CheckFlip(weaponData, 2, _extraFlip))
         {
-            if (CheckFlip(weaponData.StandardHand == 1))
+            if (CheckFlip(weaponData, 0, _extraFlip) == true)
             {
                 RightRenderer.sortingLayerName = "Entity";
                 RightRenderer.sortingOrder = 5;
@@ -193,7 +202,7 @@ public class Hand
         else
         {
             RightRenderer.sortingLayerName = "Entity";
-            if(weaponData.StandardHand == 1)
+            if(CheckFlip(weaponData, 0, _extraFlip) == true)
                 RightRenderer.sortingOrder = 3;
             else
                 RightRenderer.sortingOrder = 0;
@@ -202,12 +211,29 @@ public class Hand
         }
     }
 
-    private bool CheckFlip(bool ori)
+    private bool CheckFlip(WeaponHandState weaponHandState, int type, bool isFlip)
     {
-        if (Player.transform.localRotation.y == 180)
-            return !ori;
+        if (type == 0)
+        {
+            if (isFlip)
+                return !weaponHandState.StandardHand;
+            else
+                return weaponHandState.StandardHand;
+        }
+        else if (type == 1)
+        {
+            if (isFlip)
+                return weaponHandState.RightUse;
+            else
+                return weaponHandState.LeftUse;
+        }
         else
-            return ori;
+        {
+            if (isFlip)
+                return weaponHandState.LeftUse;
+            else
+                return weaponHandState.RightUse;
+        }
     }
 
     public Quaternion ForwardToMouse(GameObject obj)
@@ -216,7 +242,7 @@ public class Hand
         Vector3 mouseScreenPosition = Input.mousePosition;
 
         // 2. 마우스의 월드 좌표를 계산 (카메라 기준 Z 깊이 설정)
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, Camera.main.nearClipPlane));
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
         mouseWorldPosition.z = 0; // 2D 환경에서는 Z축 고정
 
         // 3. 오브젝트의 위치에서 마우스 위치로 향하는 방향 벡터 계산
@@ -227,20 +253,6 @@ public class Hand
 
         // 5. 오브젝트의 자체 Z축 기준 회전 추가 (90도)
         float adjustedAngle = angle + 90f;
-
-        // 6. 좌측/우측 판별하여 Flip 처리
-        Vector3 localScale = obj.transform.localScale;
-        if (direction.x > 0) // 우측 방향
-        {
-            localScale.x = -1;
-            _extraFlip = true;
-        }
-        else // 좌측 방향
-        {
-            localScale.x = 1;
-            _extraFlip = false;
-        }
-        obj.transform.localScale = localScale;
 
         // 7. 최종 회전값 반환
         return Quaternion.Euler(new Vector3(0, 0, adjustedAngle));
