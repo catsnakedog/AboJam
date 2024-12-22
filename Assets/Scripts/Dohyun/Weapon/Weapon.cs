@@ -44,6 +44,7 @@ public class Weapon : MonoBehaviour
     public HoldingLocationOrder HoldingOrder;
     public SpriteRenderer Renderer;
     public WeaponHandState HandState;
+    public EnumData.Weapon WeaponType;
 
     private bool isReload = false;
 

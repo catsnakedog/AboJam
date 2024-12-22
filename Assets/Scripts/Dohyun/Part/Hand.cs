@@ -106,13 +106,18 @@ public class Hand
             return;
         if (index == UsingWeaponIndex)
         {
+            _lastChangeHand = !_lastChangeHand;
+            _lastStandardHand = !_lastStandardHand;
             CurrentWeaponType = weaponType;
             SetWeapon();
         }
-        Weapon weapon = _weapons[(int)weaponType];
-        weapon.transform.SetParent(WeaponHoldingLocation[(int)weapon.HoldingIndex], false);
-        weapon.Renderer.sortingOrder = (int)weapon.HoldingOrder;
-        weapon.gameObject.SetActive(true);
+        else
+        {
+            Weapon weapon = _weapons[(int)weaponType];
+            weapon.transform.SetParent(WeaponHoldingLocation[(int)weapon.HoldingIndex], false);
+            weapon.Renderer.sortingOrder = (int)weapon.HoldingOrder;
+            weapon.gameObject.SetActive(true);
+        }
     }
 
 
@@ -225,6 +230,7 @@ public class Hand
                 UsingWeaponIndex = UsingWeapon.FirstRanged;
             else
                 UsingWeaponIndex++;
+            SetHoldWeapons();
         }
     }
 
@@ -232,8 +238,15 @@ public class Hand
     {
         if(_currentWeapon != null)
         {
-            _currentWeapon.gameObject.SetActive(false);
-            _currentWeapon.transform.SetParent(WeaponRoot.transform, false);
+            if(_currentWeapon.WeaponType == FirstRangedWeapon || _currentWeapon.WeaponType == SecondRangedWeapon || _currentWeapon.WeaponType == FirstMeleeWeapon)
+            {
+
+            }
+            else
+            {
+                _currentWeapon.gameObject.SetActive(false);
+                _currentWeapon.transform.SetParent(WeaponRoot.transform, false);
+            }
         }
         _currentWeapon = _weapons[(int)CurrentWeaponType];
         _currentWeapon.Renderer.sortingOrder = 4;

@@ -161,10 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 343c54f196c6b5e4b8b204b5df3f25fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HandState:
-    StandardHand: 0
-    LeftUse: 1
-    RightUse: 1
   WeaponDatas:
   - Damage: 1
     BulletSpeed: 10
@@ -186,8 +182,13 @@ MonoBehaviour:
     bulletPenetration: 0
   Level: 1
   SecondHandLocation: {fileID: 5155197759769967217}
-  HoldingOrder: -2
   HoldingIndex: 1
+  HoldingOrder: -2
   Renderer: {fileID: 159845221034874658}
-  BulletObj: {fileID: 8668373932551009970, guid: 577ac13fc15daa3429320723afb788f7, type: 3}
+  HandState:
+    StandardHand: 0
+    LeftUse: 1
+    RightUse: 1
+  WeaponType: 2
   FireLocation: {fileID: 1749792385394760301}
+  BulletObj: {fileID: 8668373932551009970, guid: 577ac13fc15daa3429320723afb788f7, type: 3}
