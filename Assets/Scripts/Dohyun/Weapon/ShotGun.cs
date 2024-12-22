@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotGun : Weapon
+public class ShotGun : MeleeWeapon
 {
     public override void AttackLogic()
     {

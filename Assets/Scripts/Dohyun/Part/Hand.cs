@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static EnumData;
 using static Weapon;
 
 [System.Serializable]
@@ -15,178 +16,248 @@ public class Hand
         Right = 2,
     }
 
+    public enum HandLayer
+    {
+        beforeBody = -2,
+        InClothes = 0,
+        afterBody = 2,
+        beforeGun = 3,
+        afterGun = 5,
+    }
+
+    public enum UsingWeapon
+    {
+        FirstRanged = 0,
+        SecondRanged = 1,
+        FirstMelee = 2,
+    }
+
+
     public GameObject LeftArm;
     public GameObject RightArm;
-    [HideInInspector]
-    public Weapon Weapon;
-    public Weapon[] Weapons;
 
     public Action HandAction;
-    public Quaternion LeftRot;
-    public Quaternion RightRot;
     public SpriteRenderer LeftRenderer;
     public SpriteRenderer RightRenderer;
     public Transform LeftGunLocation;
     public Transform RightGunLocation;
-    public EnumData.Weapon WeaponType = EnumData.Weapon.Default;
+    public EnumData.Weapon CurrentWeaponType = EnumData.Weapon.None;
     public GameObject Player;
+    public GameObject WeaponRoot;
+    public int AttackKeyIndex = 0;
+    public KeyCode WeaponChangeKey = KeyCode.R;
+    public List<Transform> WeaponHoldingLocation;
+    public EnumData.Weapon FirstRangedWeapon;
+    public EnumData.Weapon SecondRangedWeapon;
+    public EnumData.Weapon FirstMeleeWeapon;
+    public UsingWeapon UsingWeaponIndex;
 
     private bool _changeHand;
+    private Quaternion _leftRot;
+    private Quaternion _rightRot;
+    private Camera _mainCamera;
+    private Weapon[] _weapons;
+    private Weapon _currentWeapon;
+
+    private bool _lastStandardHand;
+    private bool _lastChangeHand;
+
+    private int _playerFlip;
+    private int _mouseFlip;
+    private int _flip;
+
+    const float HandAngleCorrection = 90;
 
     public void Init()
     {
+        _mainCamera = Camera.main;
+        UsingWeaponIndex = UsingWeapon.FirstRanged;
+        SetWeaponData();
         HandAction = CheckAttack;
+        HandAction += CheckUsingWeaponChange;
+        HandAction += SetFlipData;
         HandAction += SetFlip;
         HandAction += LeftSet;
         HandAction += RightSet;
         HandAction += SetArm;
-        SetWeapon();
+        SetHoldWeapons();
+    }
+
+    private void SetWeaponData()
+    {
+        var count = WeaponRoot.transform.childCount;
+        _weapons = new Weapon[count];
+        for (int i = 0; i < WeaponRoot.transform.childCount; i++)
+        {
+            _weapons[i] = WeaponRoot.transform.GetChild(i).GetComponent<Weapon>();
+        }
+    }
+
+    private void SetHoldWeapons()
+    {
+        HoldWeapon(FirstRangedWeapon, UsingWeapon.FirstRanged);
+        HoldWeapon(SecondRangedWeapon, UsingWeapon.SecondRanged);
+        HoldWeapon(FirstMeleeWeapon, UsingWeapon.FirstMelee);
+    }
+
+    private void HoldWeapon(EnumData.Weapon weaponType, UsingWeapon index)
+    {
+        if (weaponType == EnumData.Weapon.None)
+            return;
+        if (index == UsingWeaponIndex)
+        {
+            CurrentWeaponType = weaponType;
+            SetWeapon();
+        }
+        Weapon weapon = _weapons[(int)weaponType];
+        weapon.transform.SetParent(WeaponHoldingLocation[(int)weapon.HoldingIndex], false);
+        weapon.Renderer.sortingOrder = (int)weapon.HoldingOrder;
+        weapon.gameObject.SetActive(true);
+    }
+
+
+    private void SetFlipData()
+    {
+        // 플레이어 Y축 방향 (1 : 기본 방향, -1 : 뒤집힌 방향)
+        _playerFlip = Player.transform.localEulerAngles.y == 0 ? 1 : -1;
+        // 마우스가 플레이어 상대 방향 (1 : 왼쪽, -1 : 오른쪽)
+        _mouseFlip = Player.transform.position.x > _mainCamera.ScreenToWorldPoint(Input.mousePosition).x ? 1 : -1;
+        // 3. 최종 방향 결정 (1: 기본, -1: 뒤집힘)
+        _flip = _playerFlip * _mouseFlip;
     }
 
     private void SetFlip()
     {
-        if (Player.transform.position.x > Camera.main.ScreenToWorldPoint(Input.mousePosition).x)
-        {
-            if (Player.transform.localEulerAngles.y != 0)
-            {
-                LeftArm.transform.localScale = new Vector3(-1, 1, 1);
-                RightArm.transform.localScale = new Vector3(1, 1, 1);
-                if(weapons[(int)WeaponType].StandardHand)
-                    Weapon.transform.localScale = new Vector3(1, -1, 1);
-                else
-                    Weapon.transform.localScale = new Vector3(1, 1, 1);
-                _changeHand = true;
-            }
-            else
-            {
-                LeftArm.transform.localScale = new Vector3(1, 1, 1);
-                RightArm.transform.localScale = new Vector3(-1, 1, 1);
-                if (weapons[(int)WeaponType].StandardHand)
-                    Weapon.transform.localScale = new Vector3(1, -1, 1);
-                else
-                    Weapon.transform.localScale = new Vector3(1, 1, 1);
-                _changeHand = false;
-            }
-        }
+        // 4. 팔과 무기의 크기 설정
+        // 기본적으로 오른손에 총이 올라간경우 플립되어야한다. 따라서 flip, -flip으로 계산한다.
+        // 하지만 뒤집힌 경우 반대로 바뀌기에 최정 방향을 기준으로 보정해준다.
+        LeftArm.transform.localScale = new Vector3(_flip, 1, 1);
+        RightArm.transform.localScale = new Vector3(-_flip, 1, 1);
+
+        // 360도로 회전시켜 방향을 나타내기에 우측으로 가는경우 (정방향 기준) y축 플립해줘야한다.
+        // 하지만 이 또한 플레이어가 뒤집히면 반대로 바뀌기에 플레이어 방향을 기준으로 보정해준다.
+        if (_currentWeapon.HandState.StandardHand) // 오른손에 있을때만
+            _currentWeapon.transform.localScale = new Vector3(1, -_mouseFlip, 1);
         else
-        {
-            if (Player.transform.localEulerAngles.y != 0)
-            {
-                LeftArm.transform.localScale = new Vector3(1, 1, 1);
-                RightArm.transform.localScale = new Vector3(-1, 1, 1);
-                if (weapons[(int)WeaponType].StandardHand)
-                    Weapon.transform.localScale = new Vector3(1, 1, 1);
-                else
-                    Weapon.transform.localScale = new Vector3(1, -1, 1);
-                _changeHand = false;
-            }
+            _currentWeapon.transform.localScale = new Vector3(1, _mouseFlip, 1);
 
-            else
-            {
-                LeftArm.transform.localScale = new Vector3(-1, 1, 1);
-                RightArm.transform.localScale = new Vector3(1, 1, 1);
-                if (weapons[(int)WeaponType].StandardHand)
-                    Weapon.transform.localScale = new Vector3(1, 1, 1);
-                else
-                    Weapon.transform.localScale = new Vector3(1, -1, 1);
-                _changeHand = true;
-            }
-        }
+        // 5. _changeHand 플래그 설정
+        _changeHand = (_flip == -1);
     }
 
-    private void SetArm()
+    public void LeftSet() // 사용하는 경우, 주/부 확인
     {
-        if(CheckFlip(weapons[(int)WeaponType], HandType.Standard, _changeHand) == false)
-            Weapon.transform.SetParent(LeftGunLocation, false);
-        else
-            Weapon.transform.SetParent(RightGunLocation, false);
-        LeftArm.transform.rotation = LeftRot;
-        RightArm.transform.rotation = RightRot;
-    }
-
-    public void SetWeapon()
-    {
-        if(Weapon != null)
+        var weaponData = _currentWeapon.HandState;
+        if (ApplyHandSwap(weaponData, HandType.Left, _changeHand))
         {
-            Weapon.gameObject.SetActive(false);
-        }
-        Weapon = Weapons[(int)WeaponType];
-        Weapon.gameObject.SetActive(true);
-        Weapon.Init();
-    }
-
-    public void CheckAttack()
-    {
-        if (WeaponType == EnumData.Weapon.Default)
-            return;
-        if (Input.GetMouseButton(0))
-        {
-            if(Weapon != null)
-                Weapon.Attack();
-        }
-    }
-
-    public void LeftSet()
-    {
-        var weaponData = weapons[(int)WeaponType];
-        if (CheckFlip(weaponData, HandType.Left, _changeHand))
-        {
-            if (CheckFlip(weaponData, HandType.Standard, _changeHand) == false)
+            if (ApplyHandSwap(weaponData, HandType.Standard, _changeHand) == false) // 주
             {
                 LeftRenderer.sortingLayerName = "Entity";
-                LeftRenderer.sortingOrder = 5;
-                LeftRot = ForwardToMouse(LeftArm);
+                LeftRenderer.sortingOrder = (int)HandLayer.afterGun;
+                _leftRot = ForwardToMouse(LeftArm);
             }
-            else
+            else // 부
             {
                 LeftRenderer.sortingLayerName = "Entity";
-                LeftRenderer.sortingOrder = 3;
-                LeftRot = ForwardToObj(LeftArm, Weapon.SecondHandLocation.position);
+                LeftRenderer.sortingOrder = (int)HandLayer.beforeGun;
+                _leftRot = ForwardToObj(LeftArm, _currentWeapon.SecondHandLocation.position);
             }
         }
-        else
+        else // 사용안하는 경우 기본 세팅
         {
             LeftRenderer.sortingLayerName = "Entity";
-            if (CheckFlip(weaponData, HandType.Standard, _changeHand) == false)
-                RightRenderer.sortingOrder = 3;
-            else
-                RightRenderer.sortingOrder = 0;
-            LeftRot = Quaternion.Euler(new Vector3(0, 0, 0));
+            RightRenderer.sortingOrder = (int)HandLayer.afterBody;
+            _leftRot = Quaternion.Euler(new Vector3(0, 0, 0));
             return;
         }
     }
 
     public void RightSet()
     {
-        var weaponData = weapons[(int)WeaponType];
-        if (CheckFlip(weaponData, HandType.Right, _changeHand))
+        var weaponData = _currentWeapon.HandState;
+        if (ApplyHandSwap(weaponData, HandType.Right, _changeHand))
         {
-            if (CheckFlip(weaponData, HandType.Standard, _changeHand) == true)
+            if (ApplyHandSwap(weaponData, HandType.Standard, _changeHand) == true)
             {
                 RightRenderer.sortingLayerName = "Entity";
-                RightRenderer.sortingOrder = 5;
-                RightRot = ForwardToMouse(RightArm);
+                RightRenderer.sortingOrder = (int)HandLayer.afterGun;
+                _rightRot = ForwardToMouse(RightArm);
             }
             else
             {
                 RightRenderer.sortingLayerName = "Entity";
-                RightRenderer.sortingOrder = 3;
-                RightRot = ForwardToObj(RightArm, Weapon.SecondHandLocation.position);
+                RightRenderer.sortingOrder = (int)HandLayer.afterBody;
+                _rightRot = ForwardToObj(RightArm, _currentWeapon.SecondHandLocation.position);
             }
         }
         else
         {
             RightRenderer.sortingLayerName = "Entity";
-            if(CheckFlip(weaponData, HandType.Standard, _changeHand) == true)
-                RightRenderer.sortingOrder = 3;
-            else
-                RightRenderer.sortingOrder = 0;
-            RightRot = Quaternion.Euler(new Vector3(0, 0, 0));
+            RightRenderer.sortingOrder = (int)HandLayer.afterBody;
+            _rightRot = Quaternion.Euler(new Vector3(0, 0, 0));
             return;
         }
     }
 
-    private bool CheckFlip(WeaponHandState weaponHandState, HandType type, bool isFlip)
+    private void SetArm()
+    {
+        if(_currentWeapon.HandState.StandardHand != _lastStandardHand)
+        {
+            SetWeaponParent();
+            _lastStandardHand = _currentWeapon.HandState.StandardHand;
+        }
+        if(_lastChangeHand != _changeHand)
+        {
+            SetWeaponParent();
+            _lastChangeHand = _changeHand;
+        }
+
+
+        LeftArm.transform.rotation = _leftRot;
+        RightArm.transform.rotation = _rightRot;
+    }
+
+    public void CheckUsingWeaponChange()
+    {
+        if (Input.GetKeyDown(WeaponChangeKey))
+        {
+            if (UsingWeaponIndex == UsingWeapon.FirstMelee)
+                UsingWeaponIndex = UsingWeapon.FirstRanged;
+            else
+                UsingWeaponIndex++;
+        }
+    }
+
+    public void SetWeapon()
+    {
+        if(_currentWeapon != null)
+        {
+            _currentWeapon.gameObject.SetActive(false);
+            _currentWeapon.transform.SetParent(WeaponRoot.transform, false);
+        }
+        _currentWeapon = _weapons[(int)CurrentWeaponType];
+        _currentWeapon.Renderer.sortingOrder = 4;
+        _lastStandardHand = _currentWeapon.HandState.StandardHand;
+
+        SetWeaponParent();
+
+        _currentWeapon.transform.localPosition = Vector3.zero;
+        _currentWeapon.gameObject.SetActive(true);
+        _currentWeapon.Init();
+    }
+
+    public void CheckAttack()
+    {
+        if (CurrentWeaponType == EnumData.Weapon.None)
+            return;
+        if (Input.GetMouseButton(AttackKeyIndex))
+        {
+            if(_currentWeapon != null)
+                _currentWeapon.Attack();
+        }
+    }
+
+    private bool ApplyHandSwap(WeaponHandState weaponHandState, HandType type, bool isFlip)
     {
         return type switch
         {
@@ -196,13 +267,22 @@ public class Hand
         };
     }
 
+    private void SetWeaponParent()
+    {
+        if (ApplyHandSwap(_currentWeapon.HandState, HandType.Standard, _changeHand))
+            _currentWeapon.transform.SetParent(RightGunLocation, false);
+        else
+            _currentWeapon.transform.SetParent(LeftGunLocation, false);
+        _currentWeapon.transform.localPosition = Vector3.zero;
+    }
+
     public Quaternion ForwardToMouse(GameObject obj)
     {
         // 1. 마우스의 화면 좌표를 가져옴
         Vector3 mouseScreenPosition = Input.mousePosition;
 
         // 2. 마우스의 월드 좌표를 계산 (카메라 기준 Z 깊이 설정)
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+        Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
         mouseWorldPosition.z = 0; // 2D 환경에서는 Z축 고정
 
         // 3. 오브젝트의 위치에서 마우스 위치로 향하는 방향 벡터 계산
@@ -212,7 +292,7 @@ public class Hand
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         // 5. 오브젝트의 자체 Z축 기준 회전 추가 (90도)
-        float adjustedAngle = angle + 90f;
+        float adjustedAngle = angle + HandAngleCorrection;
 
         // 7. 최종 회전값 반환
         return Quaternion.Euler(new Vector3(0, 0, adjustedAngle));
@@ -223,94 +303,16 @@ public class Hand
 
     public static Quaternion ForwardToObj(GameObject obj1, Vector3 obj2)
     {
-        Vector3 direction = Vector3.zero;
-
         // 두 번째 오브젝트를 향하는 방향 벡터 계산
-        direction = obj2 - obj1.transform.position;
+        Vector3 direction = obj2 - obj1.transform.position;
         direction.z = 0; // 2D 환경에서는 Z축 무시
         if (direction == Vector3.zero) return Quaternion.identity; // 방향이 없으면 기본 회전 반환
 
         // 방향 벡터를 기준으로 회전 계산 (Z축 회전만)
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        float adjustedAngle = angle + 90f;
+        float adjustedAngle = angle + HandAngleCorrection;
 
         // 6. 최종 회전값 반환
         return Quaternion.Euler(new Vector3(0, 0, adjustedAngle));
     }
-
-
-    [System.Serializable]
-    public class WeaponHandState
-    {
-        public bool StandardHand;
-        public bool LeftUse;
-        public bool RightUse;
-
-        public WeaponHandState(bool standardHand, bool leftUse, bool rightUse)
-        {
-            this.StandardHand = standardHand;
-            this.LeftUse = leftUse;
-            this.RightUse = rightUse;
-        }
-    }
-
-    public List<WeaponHandState> weapons = new()
-    {
-        new WeaponHandState // Gun
-        (
-            true, // false Left true Right
-            true,
-            true
-        ),
-        new WeaponHandState // ShotGun
-        (
-            false,
-            true,
-            true
-        ),
-        new WeaponHandState // Riple
-        (
-            false,
-            true,
-            true
-        ),
-        new WeaponHandState // Sniper
-        (
-            false,
-            true,
-            true
-        ),
-        new WeaponHandState // Knife
-        (
-            false,
-            true,
-            true
-        ),
-        new WeaponHandState // Spear
-        (
-            true,
-            true,
-            false
-        ),
-        new WeaponHandState // ChainSaw
-        (
-            true,
-            true,
-            false
-        ),
-        new WeaponHandState // Bat
-        (
-            true,
-            true,
-            false
-        ),
-        new WeaponHandState // Default
-        (
-            true,
-            false,
-            false
-        )
-    };
 }
-
-

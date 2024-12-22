@@ -22,20 +22,5 @@ public class Player : Character
         playerMovement.MoveAction?.Invoke();
         Hand.HandAction?.Invoke();
         Head.HeadAction?.Invoke();
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if ((int)Hand.WeaponType == 0)
-                return;
-            Hand.WeaponType = (EnumData.Weapon)((int)Hand.WeaponType - 1);
-            Hand.SetWeapon();
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            if ((int)Hand.WeaponType >= 8)
-                return;
-            Hand.WeaponType = (EnumData.Weapon)((int)Hand.WeaponType + 1);
-            Hand.SetWeapon();
-        }
     }
 }

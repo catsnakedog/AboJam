@@ -23,6 +23,6 @@ public class EnumData
         Spear,
         ChainSaw,
         Bat,
-        Default
+        None,
     }
 }

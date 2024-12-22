@@ -5,6 +5,26 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public enum HoldingLocationIndex
+    {
+        Place1 = 0,
+        Place2 = 1,
+    }
+
+    public enum HoldingLocationOrder
+    {
+        Place1 = 0,
+        Place2 = -2,
+    }
+
+    [System.Serializable]
+    public class WeaponHandState
+    {
+        public bool StandardHand;
+        public bool LeftUse;
+        public bool RightUse;
+    }
+
     [System.Serializable]
     public class WeaponData
     {
@@ -19,11 +39,12 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     public List<WeaponData> WeaponDatas;
     public int Level;
-    public Transform FireLocation;
     public Transform SecondHandLocation;
-    public GameObject BulletObj;
+    public HoldingLocationIndex HoldingIndex;
+    public HoldingLocationOrder HoldingOrder;
+    public SpriteRenderer Renderer;
+    public WeaponHandState HandState;
 
-    public Type Bullet = typeof(Bullet);
     private bool isReload = false;
 
     public void Init()

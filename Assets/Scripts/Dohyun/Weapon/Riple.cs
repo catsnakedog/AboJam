@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Riple : Weapon
+public class Riple : MeleeWeapon
 {
     public override void AttackLogic()
     {
