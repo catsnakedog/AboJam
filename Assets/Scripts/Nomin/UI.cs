@@ -30,7 +30,7 @@ public class UI : MonoBehaviour
     }
 
     /// <summary>
-    /// ºĞ ´ÜÀ§ ¼ıÀÚ¸¦ 00:00 Çü½Ä (½Ã°£:ºĞ)À¸·Î º¯È¯ÇÕ´Ï´Ù.
+    /// ë¶„ ë‹¨ìœ„ ìˆ«ìë¥¼ 00:00 í˜•ì‹ (ì‹œê°„:ë¶„)ìœ¼ë¡œ ë³€í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     public string FormatTime(int minutes)
     {

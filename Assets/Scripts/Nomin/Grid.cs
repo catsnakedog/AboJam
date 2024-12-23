@@ -12,7 +12,7 @@ public class Grid : MonoBehaviour
     public static float cellSize;
     public static float spacing;
 
-    // ÇàÀÇ °³¼ö i, ¿­ÀÇ °³¼ö j
+    // í–‰ì˜ ê°œìˆ˜ i, ì—´ì˜ ê°œìˆ˜ j
     public static int i, j;
 
     private void Awake()
@@ -26,7 +26,7 @@ public class Grid : MonoBehaviour
     }
 
     /// <summary>
-    /// <br>[i][j] À» ÀÎµ¦½ºÈ­ ÇÕ´Ï´Ù.</br>
+    /// <br>[i][j] ì„ ì¸ë±ìŠ¤í™” í•©ë‹ˆë‹¤.</br>
     /// </summary>
     public static int ConvertArrayToIndex(int i, int j)
     {
@@ -36,11 +36,11 @@ public class Grid : MonoBehaviour
     }
 
     /// <summary>
-    /// <br>ÀÎµ¦½º¸¦ [i][j] ·Î º¯°æÇÕ´Ï´Ù.</br>
+    /// <br>ì¸ë±ìŠ¤ë¥¼ [i][j] ë¡œ ë³€ê²½í•©ë‹ˆë‹¤.</br>
     /// </summary>
     public static (int i, int j) ConvertIndexToArray(int index)
     {
-        // Çà°ú ¿­ ÀÎµ¦½º °è»ê
+        // í–‰ê³¼ ì—´ ì¸ë±ìŠ¤ ê³„ì‚°
         int i = index / Grid.j + 1;
         int j = index % Grid.j + 1;
 
@@ -48,7 +48,7 @@ public class Grid : MonoBehaviour
     }
 
     /// <summary>
-    /// <br>Å¸ÀÏ [i][j] À» ¹İÈ¯ÇÕ´Ï´Ù.</br>
+    /// <br>íƒ€ì¼ [i][j] ì„ ë°˜í™˜í•©ë‹ˆë‹¤.</br>
     /// </summary>
     public static Tile GetTile(int i, int j)
     {

@@ -13,7 +13,4 @@ public static class StaticData
     public static int Date_Time = 0;
     public static int Date_TimeThreshold = 5;
     public static bool Date_isMorning = true;
-    //public static float HP_Player_Max = 100f;
-    //public static float HP_Player_Current = 100f;
-    public static float HP_Abocado = 100f;
 }

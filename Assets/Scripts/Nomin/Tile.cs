@@ -20,11 +20,11 @@ public class Tile : MonoBehaviour
 
     public void Start()
     {
-        // gameObject.name À¸·ÎºÎÅÍ index ÃßÃâ
+        // gameObject.name ìœ¼ë¡œë¶€í„° index ì¶”ì¶œ
         Match match = Regex.Match(gameObject.name, @"\d+");
         if (match.Success) { index = int.Parse(match.Value); }
         else { index = 0; }
-        // index À¸·ÎºÎÅÍ i, j ÃßÃâ
+        // index ìœ¼ë¡œë¶€í„° i, j ì¶”ì¶œ
         (i, j) = Grid.ConvertIndexToArray(index);
         col = GetComponent<BoxCollider2D>();
         upgrade = FindInactiveByTag("Upgrade");
@@ -35,18 +35,18 @@ public class Tile : MonoBehaviour
         Debug.Log($"[" + i + "][" + j + "]\n" + $"Index : {index}");
         upgrade.SetActive(false);
 
-        // ³ª¹« ÄÁÆ®·Ñ ¸ğµå (F)
+        // ë‚˜ë¬´ ì»¨íŠ¸ë¡¤ ëª¨ë“œ (F)
         if (Input.GetKey(KeyCode.F))
         {
-            // ºó Å¸ÀÏ
+            // ë¹ˆ íƒ€ì¼
             if (go == null)
             {
-                // ¾Æº¸Ä«µµ °æÀÛ
+                // ì•„ë³´ì¹´ë„ ê²½ì‘
                 go = Resources.Load<GameObject>("Prefabs/Abocado");
                 Abocado abc = go.GetComponent<Abocado>();
                 Create(go);
             }
-            // Ã¤¿öÁø Å¸ÀÏ
+            // ì±„ì›Œì§„ íƒ€ì¼
             else
             {
                 Abocado abc = go.GetComponent<Abocado>();
@@ -54,19 +54,19 @@ public class Tile : MonoBehaviour
 
                 go.gameObject.GetComponent<Animation_Click>().OnClick();
 
-                // Level 0 = ½É±â
+                // Level 0 = ì‹¬ê¸°
                 if (abc.level == 0 && StaticData.Abocado > 0)
                 {
                     StaticData.Abocado--;
                     abc.LevelUp(true);
                 }
-                // Level 2 = Å¸¿ö ¾÷±×·¹ÀÌµå
+                // Level 2 = íƒ€ì›Œ ì—…ê·¸ë ˆì´ë“œ
                 else if (abc.level == 2)
                 {
                     currentTile = this;
                     upgrade.SetActive(true);
                 }
-                // Level 3 = ¼öÈ®
+                // Level 3 = ìˆ˜í™•
                 else if (abc.level == 3) abc.Harvest();
             }
         }
@@ -79,7 +79,7 @@ public class Tile : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇöÀç Å¸ÀÏ À§Ä¡¿¡ ÁöÁ¤ÇÑ ÇÁ¸®ÆÕÀ» »ı¼ºÇÕ´Ï´Ù.
+    /// í˜„ì¬ íƒ€ì¼ ìœ„ì¹˜ì— ì§€ì •í•œ í”„ë¦¬íŒ¹ì„ ìƒì„±í•©ë‹ˆë‹¤.
     /// </summary>
     public void Create(GameObject go)
     {
@@ -87,7 +87,7 @@ public class Tile : MonoBehaviour
     }
 
     /// <summary>
-    /// Å¸ÀÏ¿¡ Á¸ÀçÇÏ´Â ÇÁ¸®ÆÕÀ» Á¦°ÅÇÕ´Ï´Ù.
+    /// íƒ€ì¼ì— ì¡´ì¬í•˜ëŠ” í”„ë¦¬íŒ¹ì„ ì œê±°í•©ë‹ˆë‹¤.
     /// </summary>
     public void Delete()
     {
@@ -95,8 +95,8 @@ public class Tile : MonoBehaviour
     }
 
     /// <summary>
-    /// <br>Equals ¸¦ ÀçÁ¤ÀÇ ÇÒ ¶§, ÇØ½Ã ÄÚµåµµ ÀçÁ¤ÀÇ ÇØ¾ßÇÕ´Ï´Ù.</br>
-    /// <br>ÀÌ´Â ÇØ½Ã ±â¹İ ÄÃ·º¼Ç¿¡¼­µµ ¿Ã¹Ù¸£°Ô Å½»öÇÒ ¼ö ÀÖµµ·Ï ÇÕ´Ï´Ù.</br>
+    /// <br>Equals ë¥¼ ì¬ì •ì˜ í•  ë•Œ, í•´ì‹œ ì½”ë“œë„ ì¬ì •ì˜ í•´ì•¼í•©ë‹ˆë‹¤.</br>
+    /// <br>ì´ëŠ” í•´ì‹œ ê¸°ë°˜ ì»¬ë ‰ì…˜ì—ì„œë„ ì˜¬ë°”ë¥´ê²Œ íƒìƒ‰í•  ìˆ˜ ìˆë„ë¡ í•©ë‹ˆë‹¤.</br>
     /// </summary>
     public override int GetHashCode()
     {

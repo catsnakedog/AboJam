@@ -24,7 +24,7 @@ public class Date : MonoBehaviour
     {
         while (true)
         {
-            // ≥∑
+            // ÎÇÆ
             if (StaticData.Date_isMorning)
             {
                 StaticData.Date_Day++;
@@ -47,7 +47,7 @@ public class Date : MonoBehaviour
                 StaticData.Date_Time = 0;
                 StaticData.Date_isMorning = false;
             }
-            // π„
+            // Î∞§
             else
             {
                 if (img.sprite.name != "Date_Night")
@@ -56,7 +56,7 @@ public class Date : MonoBehaviour
                     GetComponent<Animation_Click>().OnClick();
                 }
 
-                // ∏ÛΩ∫≈Õ∞° 0 ∏∂∏Æ¿Ã∏È
+                // Î™¨Ïä§ÌÑ∞Í∞Ä 0 ÎßàÎ¶¨Ïù¥Î©¥
                 // StaticData.Date_isMorning = true;
             }
 

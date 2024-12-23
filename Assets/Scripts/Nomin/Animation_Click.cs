@@ -35,7 +35,7 @@ public class Animation_Click : MonoBehaviour
     }
     private IEnumerator CorClick()
     {
-        // ≈©±‚ ¡ı∞°
+        // ÌÅ¨Í∏∞ Ï¶ùÍ∞Ä
         float elapsed = 0f;
         while (elapsed < animationDuration / 2)
         {
@@ -45,7 +45,7 @@ public class Animation_Click : MonoBehaviour
         }
         ref_realScale = originalScale * scaleFactor;
 
-        // ≈©±‚ ∫π±∏
+        // ÌÅ¨Í∏∞ Î≥µÍµ¨
         elapsed = 0f;
         while (elapsed < animationDuration / 2)
         {

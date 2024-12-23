@@ -8,32 +8,31 @@ using UnityEngine.UI;
 
 public class Abocado : MonoBehaviour
 {
-    // 0 = °³°£, 1 = ¾¾¾Ñ, 2 = ³ª¹«, 3 = ¿­¸Å
+    // 0 = ê°œê°„, 1 = ì”¨ì•—, 2 = ë‚˜ë¬´, 3 = ì—´ë§¤
     public int level = 0;
-    public float HP = StaticData.HP_Abocado;
     private SpriteRenderer spr = new SpriteRenderer();
     public Slider slider;
+
     private static List<Abocado> abocados = new List<Abocado>();
 
     public void Start()
     {
         spr = GetComponent<SpriteRenderer>();
         slider = gameObject.GetComponent<Slider>();
-        ChangeSprite(Resources.Load<Sprite>("Images/Level0"));
+        this.spr.sprite = Resources.Load<Sprite>("Images/Level0");
         abocados.Add(this);
-        StartCoroutine(CorHP());
     }
 
     /// <summary>
-    /// ¾Æº¸Ä«µµ¸¦ ·¹º§¾÷ ½ÃÅµ´Ï´Ù. forced = true ¸é Á¶°Ç¿¡ °ü°è¾øÀÌ ¼ºÀåÇÕ´Ï´Ù.
+    /// ì•„ë³´ì¹´ë„ë¥¼ ë ˆë²¨ì—… ì‹œí‚µë‹ˆë‹¤. forced = true ë©´ ì¡°ê±´ì— ê´€ê³„ì—†ì´ ì„±ì¥í•©ë‹ˆë‹¤.
     /// </summary>
     public void LevelUp(bool forced = false)
     {
-        // °³°£ »óÅÂ, ¿­¸Å »óÅÂ´Â ·¹º§¾÷ X
+        // ê°œê°„ ìƒíƒœ, ì—´ë§¤ ìƒíƒœëŠ” ë ˆë²¨ì—… X
         if ((level == 0 || level == 3) && forced == false) return;
 
         level++;
-        ChangeSprite(Resources.Load<Sprite>($"Images/Level{level}"));
+        this.spr.sprite = Resources.Load<Sprite>($"Images/Level{level}");
     }
 
     public static void LevelUpAll()
@@ -52,47 +51,8 @@ public class Abocado : MonoBehaviour
         if (level == 3)
         {
             level--;
-            ChangeSprite(Resources.Load<Sprite>($"Images/Level{level}"));
+            this.spr.sprite = Resources.Load<Sprite>($"Images/Level{level}");
             StaticData.Abocado++;
         }
-    }
-
-    public void ChangeSprite(Sprite sprite)
-    {
-        this.spr.sprite = sprite;
-
-        switch (level)
-        {
-            case 0:
-                transform.localScale = new Vector2(0.3f, 0.3f);
-                break;
-            case 1:
-                transform.localScale = new Vector2(0.25f, 0.25f);
-                break;
-            case 2:
-                transform.localScale = new Vector2(0.6f, 0.6f);
-                break;
-            case 3:
-                transform.localScale = new Vector2(0.5f, 0.5f);
-                break;
-        }
-    }
-
-    /// <summary>
-    /// ÀÀ±Ş Ã³Ä¡¿ë ¾÷µ¥ÀÌÆ®..¤¸¤µ
-    /// </summary>
-    private void Update()
-    {
-        if(level == 2 && transform.localScale.x < 0.4f)
-        {
-            transform.localScale = new Vector2(0.6f, 0.6f);
-        }
-    }
-
-    private IEnumerator CorHP()
-    {
-        if (HP == StaticData.HP_Abocado) yield return new WaitForSeconds(0.05f);
-        if (slider.value > HP / StaticData.HP_Abocado) slider.value -= (StaticData.HP_Abocado * 0.07f);
-        yield return new WaitForSeconds(0.1f);
     }
 }

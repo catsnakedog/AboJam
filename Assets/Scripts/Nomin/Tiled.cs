@@ -9,20 +9,20 @@ public class Tiled : MonoBehaviour
 
     public void Start()
     {
-        // ¸ğµç Map ¸¶´Ù Å©±â Á¶Àı
+        // ëª¨ë“  Map ë§ˆë‹¤ í¬ê¸° ì¡°ì ˆ
         foreach (Transform map in tiled.transform)
         {
             // map.localScale = new Vector2(91, 91);
 
-            // ¸ğµç Grid ¸¶´Ù À§Ä¡ Á¤·Ä
+            // ëª¨ë“  Grid ë§ˆë‹¤ ìœ„ì¹˜ ì •ë ¬
             foreach (Transform grid in map)
             {
                 // grid.localPosition = new Vector2(-8.8f, 5.93f);
 
-                // BackGround ¶Ç´Â ForeGround
+                // BackGround ë˜ëŠ” ForeGround
                 foreach (Transform layerGroup in grid)
                 {
-                    // BackGround ÀÇ °¢ ·¹ÀÌ¾î ¸¶´Ù Sorting Layer º¯°æ
+                    // BackGround ì˜ ê° ë ˆì´ì–´ ë§ˆë‹¤ Sorting Layer ë³€ê²½
                     if (layerGroup.gameObject.name == "BackGround")
                     {
                         foreach (Transform layer in layerGroup)
@@ -31,7 +31,7 @@ public class Tiled : MonoBehaviour
                         }
                     }
 
-                    // ForeGround ÀÇ °¢ ·¹ÀÌ¾î ¸¶´Ù Sorting Layer º¯°æ
+                    // ForeGround ì˜ ê° ë ˆì´ì–´ ë§ˆë‹¤ Sorting Layer ë³€ê²½
                     if (layerGroup.gameObject.name == "ForeGround")
                     {
                         foreach (Transform layer in layerGroup)
