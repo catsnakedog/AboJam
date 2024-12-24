@@ -52,22 +52,22 @@ public class Tile : MonoBehaviour
                 Abocado abc = go.GetComponent<Abocado>();
                 if (abc == null) return;
 
-                go.gameObject.GetComponent<Animation_Click>().OnClick();
+                go.gameObject.GetComponent<AnimationClick>().OnClick();
 
-                // Level 0 = 심기
-                if (abc.level == 0 && StaticData.Abocado > 0)
+                // Cultivate > Seed
+                if (abc.level == EnumData.Abocado.Cultivated && StaticData.Abocado > 0)
                 {
                     StaticData.Abocado--;
-                    abc.LevelUp(true);
+                    abc.GrowUp(true);
                 }
-                // Level 2 = 타워 업그레이드
-                else if (abc.level == 2)
+                // Tree > Upgrade
+                else if (abc.level == EnumData.Abocado.Tree)
                 {
                     currentTile = this;
                     upgrade.SetActive(true);
                 }
-                // Level 3 = 수확
-                else if (abc.level == 3) abc.Harvest();
+                // Fruited > Harvest
+                else if (abc.level == EnumData.Abocado.Fruited) abc.Harvest();
             }
         }
     }

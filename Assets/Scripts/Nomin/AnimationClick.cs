@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Animation_Click : MonoBehaviour
+public class AnimationClick : MonoBehaviour
 {
     public float scaleFactor = 1.2f;
     public float animationDuration = 0.2f;
@@ -27,6 +27,9 @@ public class Animation_Click : MonoBehaviour
     }
     void Start() { originalScale = ref_realScale; }
 
+    /// <summary>
+    /// 자연스러운 클릭 애니메이션을 연출합니다.
+    /// </summary>
     public void OnClick()
     {
         if (corLast != null) StopCoroutine(corLast);

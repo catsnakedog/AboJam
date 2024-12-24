@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2858883287418546351}
   - component: {fileID: 6781959995807194502}
-  - component: {fileID: 2115293876489943347}
+  - component: {fileID: 7792944748867675779}
   - component: {fileID: 6412532579159748648}
   m_Layer: 0
   m_Name: Abocado
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2115293876489943347
+--- !u!114 &7792944748867675779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26552026f408a60468f10288f2ed6f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
-  slider: {fileID: 0}
+  animationClick: {fileID: 6412532579159748648}
+  spriteRenderer: {fileID: 6781959995807194502}
 --- !u!114 &6412532579159748648
 MonoBehaviour:
   m_ObjectHideFlags: 0

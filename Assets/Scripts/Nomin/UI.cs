@@ -38,11 +38,4 @@ public class UI : MonoBehaviour
         int remainingMinutes = minutes % 60;
         return $"{hours}:{remainingMinutes}";
     }
-
-    //private IEnumerator CorHP()
-    //{
-    //    //if (StaticData.HP_Player_Current == StaticData.HP_Player_Max) yield return new WaitForSeconds(0.05f);
-    //    //if (slider.value > HP / StaticData.HP_Abocado) slider.value -= (StaticData.HP_Abocado * 0.07f);
-    //    //yield return new WaitForSeconds(0.1f);
-    //}
 }

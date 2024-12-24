@@ -28,11 +28,11 @@ public class Date : MonoBehaviour
             if (StaticData.Date_isMorning)
             {
                 StaticData.Date_Day++;
-                Abocado.LevelUpAll();
+                foreach (var abo in Abocado.instances) abo.GrowUp();
                 if (img.sprite.name != "Date_Morning")
                 {
                     img.sprite = Resources.Load<Sprite>("Images/Date_Morning");
-                    GetComponent<Animation_Click>().OnClick();
+                    GetComponent<AnimationClick>().OnClick();
                 };
                 float elapsedTime = 0f;
 
@@ -53,11 +53,8 @@ public class Date : MonoBehaviour
                 if (img.sprite.name != "Date_Night")
                 {
                     img.sprite = Resources.Load<Sprite>("Images/Date_Night");
-                    GetComponent<Animation_Click>().OnClick();
+                    GetComponent<AnimationClick>().OnClick();
                 }
-
-                // 몬스터가 0 마리이면
-                // StaticData.Date_isMorning = true;
             }
 
             yield return new WaitForSeconds(0.01f);
