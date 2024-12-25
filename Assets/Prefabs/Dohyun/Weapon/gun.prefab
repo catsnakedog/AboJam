@@ -99,10 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f675c30b9da60ab4ca000f716bd54c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HandState:
-    StandardHand: 1
-    LeftUse: 0
-    RightUse: 1
   WeaponDatas:
   - Damage: 5
     BulletSpeed: 5
@@ -123,13 +119,19 @@ MonoBehaviour:
     Range: 0
     bulletPenetration: 0
   Level: 1
+  ClothesShake: 30
   SecondHandLocation: {fileID: 3564996983098421850}
-  HoldingOrder: 0
   HoldingIndex: 0
-  HoldingLocation: {fileID: 0}
+  HoldingOrder: 0
   Renderer: {fileID: 6328982051557456961}
-  BulletObj: {fileID: 8668373932551009970, guid: 577ac13fc15daa3429320723afb788f7, type: 3}
+  HandState:
+    StandardHand: 1
+    LeftUse: 0
+    RightUse: 1
+  WeaponType: 0
+  IsReload: 0
   FireLocation: {fileID: 7801978534721758356}
+  BulletObj: {fileID: 8668373932551009970, guid: 577ac13fc15daa3429320723afb788f7, type: 3}
 --- !u!1 &5756134043500760419
 GameObject:
   m_ObjectHideFlags: 0

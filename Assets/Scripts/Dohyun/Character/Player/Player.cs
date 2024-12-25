@@ -23,14 +23,4 @@ public class Player : Character
         Hand.HandAction?.Invoke();
         Head.HeadAction?.Invoke();
     }
-
-    public Coroutine StartCoroutineHelper(IEnumerator target)
-    {
-        return StartCoroutine(target);
-    }
-
-    public void StopCoroutineHelper(Coroutine target)
-    {
-        StopCoroutine(target);
-    }
 }
