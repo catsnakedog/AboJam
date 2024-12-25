@@ -17,6 +17,7 @@ public class Weapon : MonoBehaviour
         Place2 = -2,
     }
 
+
     [System.Serializable]
     public class WeaponHandState
     {
