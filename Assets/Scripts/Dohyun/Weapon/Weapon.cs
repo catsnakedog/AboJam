@@ -17,6 +17,7 @@ public class Weapon : MonoBehaviour
         Place2 = -2,
     }
 
+
     [System.Serializable]
     public class WeaponHandState
     {
@@ -39,6 +40,7 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     public List<WeaponData> WeaponDatas;
     public int Level;
+    public float ClothesShake;
     public Transform SecondHandLocation;
     public HoldingLocationIndex HoldingIndex;
     public HoldingLocationOrder HoldingOrder;
@@ -46,17 +48,17 @@ public class Weapon : MonoBehaviour
     public WeaponHandState HandState;
     public EnumData.Weapon WeaponType;
 
-    private bool isReload = false;
+    public bool IsReload = false;
 
     public void Init()
     {
-        isReload = false;
+        IsReload = false;
         StartCoroutine(Reload());
     }
 
     public void Attack()
     {
-        if (isReload)
+        if (IsReload)
             return;
         AttackLogic();
         StartCoroutine(Reload());
@@ -68,13 +70,13 @@ public class Weapon : MonoBehaviour
 
     private IEnumerator Reload()
     {
-        isReload = true;
+        IsReload = true;
         yield return new WaitForSeconds(1 / WeaponDatas[Level-1].AttackSpeed);
-        isReload = false;
+        IsReload = false;
     }
 
     public void OnDisable()
     {
-        isReload = false;
+        IsReload = false;
     }
 }

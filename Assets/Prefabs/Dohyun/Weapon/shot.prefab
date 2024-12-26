@@ -119,6 +119,7 @@ MonoBehaviour:
     Range: 0
     bulletPenetration: 0
   Level: 1
+  ClothesShake: 5
   SecondHandLocation: {fileID: 3860451971136251601}
   HoldingIndex: 1
   HoldingOrder: -2
@@ -128,6 +129,7 @@ MonoBehaviour:
     LeftUse: 1
     RightUse: 1
   WeaponType: 1
+  IsReload: 0
   FireLocation: {fileID: 1620379963695660045}
   BulletObj: {fileID: 8668373932551009970, guid: 577ac13fc15daa3429320723afb788f7, type: 3}
 --- !u!1 &5183802571964573019
