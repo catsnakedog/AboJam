@@ -8,12 +8,13 @@ using UnityEngine.UI;
 
 public class Abocado : MonoBehaviour
 {
-    /* Dependency */
-    [Header("Dependency")] public SpriteRenderer spriteRenderer;
+    /* Dependency */ [Header("Dependency")]
+    public SpriteRenderer spriteRenderer;
 
     /* Field */
     public static List<Abocado> instances = new List<Abocado>(); // 모든 아보카도 인스턴스
     public EnumData.Abocado level { get; private set; } // 아보카도 레벨
+    private string path = "Images/Abocado/"; // 아보카도 이미지 Resources 경로
     private Sprite[] spr_level; // 레벨에 대응하는 스프라이트
 
     /* Intializer & Finalizer */
@@ -25,9 +26,9 @@ public class Abocado : MonoBehaviour
         // 레벨에 맞는 이미지를 spr_level 에 바인딩합니다.
         for (int i = 0; i < length_level; i++)
         {
-            Sprite temp = Resources.Load<Sprite>("Images/Abocado/" + (EnumData.Abocado)i);
+            Sprite temp = Resources.Load<Sprite>(path + (EnumData.Abocado)i);
             if(temp != null) spr_level[i] = temp;
-            else spr_level[i] = Resources.Load<Sprite>("Images/Abocado/Default");
+            else spr_level[i] = Resources.Load<Sprite>(path + "Default");
         }
 
         spriteRenderer.sprite = spr_level[0];

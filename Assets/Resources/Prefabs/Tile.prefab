@@ -108,10 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9d7d28f541bb444bcb5d81813c3d62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 0
-  i: 0
-  j: 0
-  upgrade: {fileID: 0}
+  button: {fileID: 5854785577795241237}
+  bocCollider2D: {fileID: 6364981335080306227}
 --- !u!222 &2277524728898757159
 CanvasRenderer:
   m_ObjectHideFlags: 0
