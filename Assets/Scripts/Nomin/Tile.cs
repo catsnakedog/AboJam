@@ -12,14 +12,15 @@ public class Tile : MonoBehaviour
 {
     /* Dependency */
     [Header("Dependency")]
-    public Button button;
-    public BoxCollider2D bocCollider2D;
-    private GameObject upgrade;
+    public Button button; // 하이라키 연결
+    public BoxCollider2D bocCollider2D; // 하이라키 연결
+    private Grid grid; // 싱글턴 연결
+    private Upgrade upgrade; // 싱글턴 연결
 
-    /* Field */
+    /* Field & Property */
     public static Tile currentTile; // 마지막으로 클릭한 타일
     public GameObject Go { get; set; } = null; // 타일에 배치된 프리팹
-    public int Index { get; private set; } // { get; private set; } = 외부 readonly
+    public int Index { get; private set; }
     public int I { get; private set; }
     public int J { get; private set; }
     private bool isWall = false;
@@ -28,24 +29,28 @@ public class Tile : MonoBehaviour
     /* Intializer & Finalizer */
     public void Start()
     {
+        // 싱글턴 연결
+        grid = Grid.instance;
+        upgrade = Upgrade.instance;
+
         // gameObject.name 으로부터 Index 추출
         Match match = Regex.Match(gameObject.name, @"\d+");
         if (match.Success) { Index = int.Parse(match.Value); }
         else { Debug.Log($"타일 {gameObject.name} 의 이름에서 Index 추출에 실패하였습니다."); return; /*Index = 0;*/ }
 
-        // Index 으로부터 I, J 추출
-        (I, J) = Grid.ConvertIndexToArray(Index);
-        upgrade = Upgrade.instance.gameObject;
+        // Index 로부터 I, J 추출
+        (I, J) = grid.ConvertIndexToArray(Index);
     }
 
     /* Public Method */
     /// <summary>
     /// <br>타일을 클릭했을 때 발생하는 이벤트 입니다.</br>
+    /// <br>설치된 오브젝트로 이벤트가 구분됩니다.</br>
     /// </summary>
     public void OnClick()
     {
         Debug.Log($"[" + I + "][" + J + "]\n" + $"Index : {Index}");
-        upgrade.SetActive(false);
+        upgrade.gameObject.SetActive(false);
 
         // 오브젝트 컨트롤 모드 (F) : 오브젝트 Go 에 따라 다른 행동을 합니다.
         if (Input.GetKey(KeyCode.F))
@@ -72,7 +77,7 @@ public class Tile : MonoBehaviour
                         // Tree : 타워 업그레이드 패널 On
                         case EnumData.Abocado.Tree:
                             currentTile = this;
-                            upgrade.SetActive(true);
+                            upgrade.gameObject.SetActive(true);
                             break;
                         // Fruited : 수확
                         case EnumData.Abocado.Fruited:

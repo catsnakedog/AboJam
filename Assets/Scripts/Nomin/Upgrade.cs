@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Upgrade : MonoBehaviour
+public class Promotion : MonoBehaviour
 {
     /* Dependency */
     private Tile currentTile => Tile.currentTile; // 하드 링크
     public GameObject tower;
     public int cost;
 
-    /* Field */
-    public static Upgrade instance; // 싱글턴
+    /* Field & Property */
+    public static Promotion instance; // 싱글턴
     private string path = "Prefabs/Tower/"; // 타워 프리팹 Resources 경로
 
     /* Intializer & Finalizer */
@@ -22,12 +22,11 @@ public class Upgrade : MonoBehaviour
     }
 
     /* Public Method */
-
     /// <summary>
     /// <br>최근 선택된 타일의 아보카도를 타워로 업그레이드합니다.</br>
     /// </summary>
     /// <param name="towerName">(EnumData.Tower)towerName</param>
-    public void Promotion(string towerName)
+    public void Promote(string towerName)
     {
         // towerName 이 EnumData.Tower 에 존재하는지 검사
         try { EnumData.Tower tower = (EnumData.Tower)Enum.Parse(typeof(EnumData.Tower), towerName); }
@@ -40,21 +39,6 @@ public class Upgrade : MonoBehaviour
         // 아보카도 제거 & 타워 건설
         currentTile.Delete();
         currentTile.Create(go_tower);
-    }
-
-    /* Private Method */
-
-
-
-
-    public void TowerUpgrade()
-    {
-        if (StaticData.Garu >= cost)
-        {
-            StaticData.Garu -= cost;
-            Tile.currentTile.Delete();
-            Tile.currentTile.Create(tower);
-            transform.parent.gameObject.SetActive(false);
-        }
+        gameObject.SetActive(false);
     }
 }

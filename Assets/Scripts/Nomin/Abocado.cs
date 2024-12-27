@@ -9,9 +9,9 @@ using UnityEngine.UI;
 public class Abocado : MonoBehaviour
 {
     /* Dependency */ [Header("Dependency")]
-    public SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer; // 하이라키 연결
 
-    /* Field */
+    /* Field & Property */
     public static List<Abocado> instances = new List<Abocado>(); // 모든 아보카도 인스턴스
     public EnumData.Abocado level { get; private set; } // 아보카도 레벨
     private string path = "Images/Abocado/"; // 아보카도 이미지 Resources 경로
