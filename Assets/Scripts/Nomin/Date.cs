@@ -40,8 +40,6 @@ public class Date : MonoBehaviour
         end = StringToTime(morningEndTime);
         StartCoroutine(CorTime());
     }
-
-    /* Private Method */
     /// <summary>
     /// <br>게임 시간 Update 를 위한 코루틴 입니다.</br>
     /// </summary>
@@ -51,6 +49,7 @@ public class Date : MonoBehaviour
         {
             UpdateTime(timeFlow);
             UpdateImage();
+            if (isMorning == false) StartNight();
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -92,6 +91,20 @@ public class Date : MonoBehaviour
             animationClick.OnClick();
         }
     }
+
+    /* Public Method */
+    /// <summary>
+    /// 밤을 스킵하고 아침이 시작됩니다.
+    /// </summary>
+    public void SkipNight()
+    {
+        if (isMorning == true) return;
+        text_time.enabled = true;
+        dateTime = dateTime.Date + TimeSpan.FromDays(1) + StringToTime(morningStartTime);
+        timeFlow = true;
+    }
+
+    /* Private Method */
     /// <summary>
     /// <br>인스펙터의 string 을 TimeSpan 으로 변환합니다.</br>
     /// </summary>
@@ -101,5 +114,13 @@ public class Date : MonoBehaviour
     {
         try { TimeSpan time = TimeSpan.Parse(timeString); return time; }
         catch { Debug.Log($"{gameObject.name} 의 {timeString} 는 유효한 시각이 아닙니다."); return new TimeSpan(0, 0, 0); }
+    }
+    /// <summary>
+    /// <br>밤이 시작됩니다.</br>
+    /// </summary>
+    private void StartNight()
+    {
+        text_time.enabled = false;
+        timeFlow = false;
     }
 }

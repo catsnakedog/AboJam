@@ -7,8 +7,8 @@ using UnityEngine.Events;
 public class HP : MonoBehaviour
 {
     /* Dependency */
-    [HideInInspector] public SpriteRenderer spr_empty;
-    [HideInInspector] public SpriteRenderer spr_max;
+    public SpriteRenderer spr_empty;
+    public SpriteRenderer spr_max;
     public GameObject entity; // HP 모듈을 적용할 대상
 
     /* Field & Property */
@@ -41,6 +41,18 @@ public class HP : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateHP();
+    }
+    /// <summary>
+    /// UI 상의 HP 를 업데이트 합니다.
+    /// </summary>
+    /// <param name="HP_ratio"></param>
+    private void UpdateHP()
+    {
+        // HP 비율에 변동이 생겼을 때만 동작
+        float HP_ratio_new = HP_current / HP_max;
+        if (HP_ratio == HP_ratio_new) return;
+        HP_ratio = Mathf.Lerp(material.GetFloat("_Fill"), HP_ratio_new, speed);
+        material.SetFloat("_Fill", HP_ratio);
     }
 
     /* Public Method */
@@ -76,18 +88,6 @@ public class HP : MonoBehaviour
     }
 
     /* Private Method */
-    /// <summary>
-    /// UI 상의 HP 를 업데이트 합니다.
-    /// </summary>
-    /// <param name="HP_ratio"></param>
-    private void UpdateHP()
-    {
-        // HP 비율에 변동이 생겼을 때만 동작
-        float HP_ratio_new = HP_current / HP_max;
-        if (HP_ratio == HP_ratio_new) return;
-        HP_ratio = Mathf.Lerp(material.GetFloat("_Fill"), HP_ratio_new, speed);
-        material.SetFloat("_Fill", HP_ratio);
-    }
     /// <summary>
     /// <br>현재 상태에 따라 체력바를 보이게 / 안보이게 합니다.</br>
     /// </summary>
