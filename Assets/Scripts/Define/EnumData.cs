@@ -28,31 +28,28 @@ public class EnumData
 
     /// <summary>
     /// <br>아보카도 성장 단계 입니다.</br>
-    /// <br>Resources/Images/Abocado 에 이름에 맞는 이미지가 필요합니다.</br>
-    /// <br>이미지가 없으면 Default 이미지로 설정됩니다.</br>
+    /// <br>Resources/Images/Abocado 에 타입에 맞는 이미지가 필요합니다.</br>
     /// </summary>
     public enum Abocado : sbyte
     {
-        Cultivated = 0,
-        Seed = 1,
-        Tree = 2,
-        Fruited = 3
+        Cultivated,
+        Seed,
+        Tree,
+        Fruited,
     }
 
     /// <summary>
     /// <br>아보카도 타워 종류 입니다.</br> 
+    /// <br>StaticData.text_promotion 에 타입에 맞는 설명이 필요합니다.</br>
+    /// <br>Resources/Prefabs/Tower 에 타입에 맞는 프리팹이 필요합니다.</br>
+    /// <br>Resources/Images/Tower 에 타입에 맞는 이미지가 필요합니다.</br>
     /// </summary>
-    public enum Tower : sbyte
+    public enum TowerType : sbyte
     {
-        Guard_I,
-        Guard_II,
-        Auto_I,
-        Auto_II,
-        Splash_I,
-        Splash_II,
-        Production_I,
-        Production_II,
-        Heal_I,
-        Heal_II,
+        Guard,
+        Auto,
+        Splash,
+        Production,
+        Heal,
     }
 }

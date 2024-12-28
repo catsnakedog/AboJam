@@ -11,27 +11,27 @@ using UnityEngine.UI;
 public class Tile : MonoBehaviour
 {
     /* Dependency */
-    [Header("Dependency")]
+    public static List<Tile> instances = new List<Tile>(); // 모든 타일 인스턴스
     public Button button; // 하이라키 연결
     public BoxCollider2D bocCollider2D; // 하이라키 연결
     private Grid grid; // 싱글턴 연결
-    private Upgrade upgrade; // 싱글턴 연결
+    private Promotion promotion; // 싱글턴 연결
 
     /* Field & Property */
     public static Tile currentTile; // 마지막으로 클릭한 타일
     public GameObject Go { get; set; } = null; // 타일에 배치된 프리팹
-    public int Index { get; private set; }
     public int I { get; private set; }
     public int J { get; private set; }
-    private bool isWall = false;
-    private string path_abocado = "Prefabs/Abocado";
+    public int Index { get; private set; }
+    public bool isWall { get; private set; } = false;
+    private string path_abocado = "Prefabs/Entity/Abocado";
 
-    /* Intializer & Finalizer */
+    /* Intializer & Finalizer & Updater */
     public void Start()
     {
-        // 싱글턴 연결
+        instances.Add(this);
         grid = Grid.instance;
-        upgrade = Upgrade.instance;
+        promotion = Promotion.instance;
 
         // gameObject.name 으로부터 Index 추출
         Match match = Regex.Match(gameObject.name, @"\d+");
@@ -50,7 +50,7 @@ public class Tile : MonoBehaviour
     public void OnClick()
     {
         Debug.Log($"[" + I + "][" + J + "]\n" + $"Index : {Index}");
-        upgrade.gameObject.SetActive(false);
+        promotion.gameObject.SetActive(false);
 
         // 오브젝트 컨트롤 모드 (F) : 오브젝트 Go 에 따라 다른 행동을 합니다.
         if (Input.GetKey(KeyCode.F))
@@ -77,7 +77,7 @@ public class Tile : MonoBehaviour
                         // Tree : 타워 업그레이드 패널 On
                         case EnumData.Abocado.Tree:
                             currentTile = this;
-                            upgrade.gameObject.SetActive(true);
+                            promotion.gameObject.SetActive(true);
                             break;
                         // Fruited : 수확
                         case EnumData.Abocado.Fruited:

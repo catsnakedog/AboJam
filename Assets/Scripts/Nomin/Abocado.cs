@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Abocado : MonoBehaviour
 {
-    /* Dependency */ [Header("Dependency")]
+    /* Dependency */
     public SpriteRenderer spriteRenderer; // 하이라키 연결
 
     /* Field & Property */
@@ -17,7 +17,7 @@ public class Abocado : MonoBehaviour
     private string path = "Images/Abocado/"; // 아보카도 이미지 Resources 경로
     private Sprite[] spr_level; // 레벨에 대응하는 스프라이트
 
-    /* Intializer & Finalizer */
+    /* Intializer & Finalizer & Updater */
     private void Start()
     {
         int length_level = Enum.GetValues(typeof(EnumData.Abocado)).Length;

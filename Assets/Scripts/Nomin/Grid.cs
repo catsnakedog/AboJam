@@ -17,7 +17,7 @@ public class Grid : MonoBehaviour
     public int I { get; private set; }
     public int J { get; private set; }
 
-    /* Intializer & Finalizer */
+    /* Intializer & Finalizer & Updater */
     private void Awake()
     {
         instance = this;
