@@ -5,7 +5,6 @@ using System;
 
 public class MeleeWeapon : Weapon
 {
-    public Transform FireLocation;
-    public GameObject BulletObj;
-    public Type Bullet = typeof(Bullet);
+    public GameObject AttackEffectObj;
+    public Type AttackEffectType = typeof(Type);
 }

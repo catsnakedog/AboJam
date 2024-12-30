@@ -502,6 +502,7 @@ public class Hand
         }
     }
 
+
     private bool ApplyHandSwap(WeaponHandState weaponHandState, HandType type, bool isFlip)
     {
         return type switch
@@ -531,6 +532,7 @@ public class Hand
             _lastWeaponParent = false;
         }
         _currentWeapon.transform.localPosition = Vector3.zero;
+        _currentWeapon.Init();
     }
 
     private void SetHoldSlotWeaponParent(WeaponSlot targetSlot)
@@ -542,8 +544,8 @@ public class Hand
 
     private void SetHoldSlotWeaponParent(Weapon targetWeapon)
     {
-        targetWeapon.transform.SetParent(_weaponHoldingLocation[(int)_currentWeapon.HoldingIndex], false);
-        targetWeapon.Renderer.sortingOrder = (int)_currentWeapon.HoldingOrder;
+        targetWeapon.transform.SetParent(_weaponHoldingLocation[(int)targetWeapon.HoldingIndex], false);
+        targetWeapon.Renderer.sortingOrder = (int)targetWeapon.HoldingOrder;
     }
 
     private void ReturnWeaponToRoot(Weapon weapon)
