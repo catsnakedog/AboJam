@@ -127,7 +127,7 @@ launcher			get set			발사체 모듈
 
 /* Field & Property */
 instances			get set			모든 타워 인스턴스
-
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Auto : Tower ]
 
 /* Field & Property */
@@ -138,6 +138,36 @@ range				get set inspector		적 감지 범위
 /* Public Method */
 Fire				공격 On / Off
 SetDelay			공격 딜레이 재설정
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Auto_2 : Tower ]
+
+/* Field & Property */
+instances			get set			모든 연사 타워 인스턴스
+delay				inspector			공격 딜레이
+range				get set inspector		적 감지 범위
+angle	
+count
+
+/* Public Method */
+Fire				공격 On / Off
+SetDelay			공격 딜레이 재설정
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+1	1 발 = 목적지
+2	2 발 = 양 끝
+3	3 발 = 양 끝 + 2 등분 지점
+4	4 발 = 양 끝 + 3 등분 지점
+5	5 발 = 양 끝 + 4 등분 지점
+6	6 발 = 양 끝 + 5 등분 지점
+
+
+Vector3 ortho = origin 의 직교
+Vector3 left = origin * -angle / 2
+Vector3 right = origin * angle / 2
+
+Vector3 leftEndPoint = 
+Vector3 rightEndPoint
+
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 1	Tree 클릭 > Promotion 열림

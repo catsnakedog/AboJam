@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Auto_Tower : Tower
+public class Auto : Tower
 {
     /* Field & Property */
-    public static List<Auto_Tower> instances = new List<Auto_Tower>(); // 모든 연사 타워 인스턴스
+    public static List<Auto> instances = new List<Auto>(); // 모든 연사 타워 인스턴스
     [SerializeField] private float delay = 0.1f; // 공격 딜레이
     public float range = 5f; // 적 감지 범위
     private WaitForSeconds delay_waitForSeconds;
@@ -16,6 +16,8 @@ public class Auto_Tower : Tower
     {
         instances.Add(this);
         delay_waitForSeconds = new WaitForSeconds(delay);
+
+        Fire(true);
     }
     private void OnDestroy()
     {

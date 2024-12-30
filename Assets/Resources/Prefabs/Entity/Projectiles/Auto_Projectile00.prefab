@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1193637438243774845}
   - component: {fileID: 1469443515481340077}
   m_Layer: 0
-  m_Name: Auto_Tower_Projectile00
+  m_Name: Auto_Projectile00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   colider2D: {fileID: 1469443515481340077}
   clashTags:
   - Player
-  damage: 10
+  damage: 3
   penetrate: 1
 --- !u!212 &1193637438243774845
 SpriteRenderer:

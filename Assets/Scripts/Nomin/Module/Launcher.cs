@@ -27,8 +27,6 @@ public class Launcher : MonoBehaviour
     /// <param name="destination">목적지</param>
     public void Launch(Vector3 destination)
     {
-
-
         // 발사체 장전 (풀링 or 생성)
         GameObject projectile = SearchPool() ?? Create();
         projectile.transform.position = transform.position;
@@ -96,6 +94,20 @@ public class Launcher : MonoBehaviour
             yield return new WaitForSeconds(0.016f); // 대략 60 프레임 기준
         }
     }
+
+    /// <summary>
+    /// 목적지에서의 직교 벡터를 구합니다.
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="destination"></param>
+    private void GetOrthogonal(Vector2 start, Vector2 destination)
+    {
+        Vector2 direction = destination - start;
+        Vector2 orthogonalDirection = new Vector2(-direction.y, direction.x);
+        Vector2 orthogonalAtDestination = destination + orthogonalDirection;
+    }
+
+    private void 
 
     /* Test Method */
     [ContextMenu("LaunchTest")]
