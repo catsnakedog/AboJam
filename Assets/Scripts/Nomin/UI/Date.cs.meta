@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8487affcb432cce4b9fd0e6a24a80e20
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - sprite_morning: {fileID: 21300000, guid: b173a7d4b9b6542419a8fbfaf2b9ba86, type: 3}
+  - sprite_night: {fileID: 21300000, guid: 1e713ac9bf9465e49a4a62302e1ad172, type: 3}
+  - text_day: {fileID: 3599470729493585725, guid: e1344d42e2333a245bfa138a01db09f7, type: 3}
+  - text_time: {fileID: 15502344761077802, guid: 13bb1bf7bbeed524ca1404215ba48717, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

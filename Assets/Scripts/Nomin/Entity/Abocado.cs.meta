@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 26552026f408a60468f10288f2ed6f19
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - spr_Cultivated: {fileID: 21300000, guid: 4f13b48d0d1b908439a8375de016bad7, type: 3}
+  - spr_Seed: {fileID: 21300000, guid: d71bb71f990c6334c82b4e29f58b608d, type: 3}
+  - spr_Tree: {fileID: 21300000, guid: 6c4dbac11edd11c4684a10224cb3162e, type: 3}
+  - spr_Fruited: {fileID: 21300000, guid: 850d9836d185bc84bbe63ba9fe33e2dd, type: 3}
+  - slider: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
