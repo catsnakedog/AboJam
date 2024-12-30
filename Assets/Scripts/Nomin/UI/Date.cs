@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Date : MonoBehaviour
@@ -24,7 +25,10 @@ public class Date : MonoBehaviour
     public string morningStartTime = "06:00"; // 낮 시작 시각
     public string morningEndTime = "18:00"; // 낮 종료 시각
     public bool isMorning { get; private set; } = true;
+    public bool isNight { get; private set; } = false;
     public DateTime dateTime = DateTime.MinValue; // 게임 시각
+    public UnityEvent morningStart; // 아침이 시작할 때 작동할 메서드
+    public UnityEvent nightStart; // 밤이 시작할 때 작동할 메서드
     private TimeSpan start;
     private TimeSpan end;
     private DateTime last = DateTime.Now;
@@ -36,9 +40,12 @@ public class Date : MonoBehaviour
         image = GetComponent<Image>();
         animationClick = GetComponent<AnimationClick>();
         dateTime += StringToTime(startTime);
+        morningStart.AddListener(() => { Debug.Log("아침이 시작되었습니다."); });
+        nightStart.AddListener(() => { Debug.Log("밤이 시작되었습니다."); });
         start = StringToTime(morningStartTime);
         end = StringToTime(morningEndTime);
         StartCoroutine(CorTime());
+        morningStart?.Invoke();
     }
     /// <summary>
     /// <br>게임 시간 Update 를 위한 코루틴 입니다.</br>
@@ -49,7 +56,7 @@ public class Date : MonoBehaviour
         {
             UpdateTime(timeFlow);
             UpdateImage();
-            if (isMorning == false) StartNight();
+            if (isMorning == false && isNight == false) StartNight();
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -99,9 +106,12 @@ public class Date : MonoBehaviour
     public void SkipNight()
     {
         if (isMorning == true) return;
+        morningStart?.Invoke();
         text_time.enabled = true;
         dateTime = dateTime.Date + TimeSpan.FromDays(1) + StringToTime(morningStartTime);
+        isNight = false;
         timeFlow = true;
+        last = DateTime.Now;
     }
 
     /* Private Method */
@@ -120,6 +130,8 @@ public class Date : MonoBehaviour
     /// </summary>
     private void StartNight()
     {
+        nightStart?.Invoke();
+        isNight = true;
         text_time.enabled = false;
         timeFlow = false;
     }

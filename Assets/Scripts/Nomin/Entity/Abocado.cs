@@ -33,6 +33,9 @@ public class Abocado : MonoBehaviour
 
         spriteRenderer.sprite = spr_level[0];
         instances.Add(this);
+
+        // 아침이 밝을 때 성장시킵니다.
+        Date.instance.morningStart.AddListener(() => { this.GrowUp(); });
     }
     private void OnDestroy()
     {

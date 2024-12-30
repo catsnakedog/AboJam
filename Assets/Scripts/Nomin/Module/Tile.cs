@@ -117,5 +117,6 @@ public class Tile : MonoBehaviour
     public void Delete()
     {
         Destroy(Go);
+        Go = null;
     }
 }

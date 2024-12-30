@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using UnityEditor.Experimental.Licensing;
@@ -15,6 +16,7 @@ public class HP : MonoBehaviour
     [SerializeField] private float HP_MAX = 100f; // 최대 체력 (초기화에만 사용됨)
     [SerializeField] private float speed = 0.02f; // 체력바 속도
     [SerializeField] private bool HideFullHP = false; // 최대 체력일 때 체력바 숨기기
+    public static List<HP> instances = new List<HP>();
     public UnityEvent death; // HP 가 0 이 되었을 때 작동할 메서드
     public float HP_max { get; private set; }
     public float HP_current { get; private set; }
@@ -24,6 +26,7 @@ public class HP : MonoBehaviour
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        instances.Add(this);
         material = spr_max.material;
         spr_max.sortingOrder = spr_empty.sortingOrder + 1;
         CheckVisible();
@@ -53,6 +56,10 @@ public class HP : MonoBehaviour
         if (HP_ratio == HP_ratio_new) return;
         HP_ratio = Mathf.Lerp(material.GetFloat("_Fill"), HP_ratio_new, speed);
         material.SetFloat("_Fill", HP_ratio);
+    }
+    private void OnDestroy()
+    {
+        instances.Remove(this);
     }
 
     /* Public Method */

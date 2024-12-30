@@ -11,9 +11,8 @@ public class Launcher : MonoBehaviour
     public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
     public List<GameObject> pool { get; private set; } = new List<GameObject>(); // 발사체 풀링
     public GameObject pool_hierarchy { get; private set; }
-    public float delay = 0.1f; // 발사 딜레이
-    public int count = 1; // 발사체 수
     public float speed = 0.02f; // 발사체 속도
+    public float range = 5f; // 발사체 유효 사거리
 
     /* Intializer & Finalizer */
     private void Start()
@@ -28,6 +27,8 @@ public class Launcher : MonoBehaviour
     /// <param name="destination">목적지</param>
     public void Launch(Vector3 destination)
     {
+
+
         // 발사체 장전 (풀링 or 생성)
         GameObject projectile = SearchPool() ?? Create();
         projectile.transform.position = transform.position;
@@ -50,10 +51,10 @@ public class Launcher : MonoBehaviour
         // pool 에서 비활성화된 발사체를 찾습니다.
         foreach (var projectile in pool)
         {
-            if (projectile.active == false)
+            if (projectile.activeSelf == false)
             {
                 go = projectile;
-                go.active = true;
+                go.SetActive(true);
                 break;
             }
         }
@@ -68,7 +69,7 @@ public class Launcher : MonoBehaviour
     {
         pool_hierarchy = pool_hierarchy ?? new GameObject($"@Pool {name}");
         GameObject projectile = Instantiate(this.projectile, pool_hierarchy.transform); ;
-        
+
         pool.Add(projectile);
         return projectile;
     }
@@ -79,22 +80,18 @@ public class Launcher : MonoBehaviour
     /// <param name="destination">목적지</param>
     private IEnumerator CorLaunch(GameObject projectile, Vector3 destination)
     {
-        while (projectile != null && projectile.active == true)
-        {
-            // (남은 거리 < 1 회 이동 거리) 면 위치 고정
-            if ((projectile.transform.position - destination).magnitude < speed)
-            {
-                projectile.transform.position = destination;
-            }
-            // 아니면 이동
-            else
-            {
-                Vector3 direction = (destination - projectile.transform.position).normalized;
-                projectile.transform.position = projectile.transform.position += direction * speed;
-            }
+        Vector3 startPos = transform.position;
 
-            // 목표 지점에 도착 시 disable (pool 에 잔류)
-            if (projectile.transform.position == destination) projectile.active = false;
+        while (projectile != null && projectile.activeSelf == true)
+        {
+            // 진행 방향 & 타겟으로의 방향
+            Vector3 direction = (destination - startPos).normalized;
+            Vector3 antiDirection = (destination - projectile.transform.position).normalized;
+
+            projectile.transform.position = projectile.transform.position += direction * speed;
+
+            // 사거리를 벗어나면 즉시 비활성화
+            if (range < (projectile.transform.position - startPos).magnitude) projectile.SetActive(false);
 
             yield return new WaitForSeconds(0.016f); // 대략 60 프레임 기준
         }

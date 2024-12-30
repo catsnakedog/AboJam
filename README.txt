@@ -4,7 +4,7 @@
 [ 스니펫 ]
 /* Dependency */
 /* Field & Property */
-/* Intializer & Finalizer */
+/* Intializer & Finalizer & Updater */
 /* Public Method */
 /* Private Method */
 
@@ -59,6 +59,7 @@ instance			get set		싱글턴
 HP_MAX			inspector			초기 최대 체력
 speed				inspector			체력바 UI 조절 속도
 HideFullHP			inspector			최대 체력일 때 체력바 UI 숨기기
+instances			get set			모든 HP 인스턴스
 death				get set inspector		체력이 0 이 되었을 때 실행될 대리자 (인스펙터 연결)
 HP_max			get				게임 중 실시간 최대 체력
 HP_current			get				게임 중 실시간 현재 체력
@@ -80,33 +81,63 @@ morningStartTime		get set inspector		낮 시작 시각
 morningEndTime		get set inspector		낮 종료 시각
 isMorning			get				Morning / Night 조회
 dateTime			get set			게임 시각
+morningStart		get set inspector		아침 시작 시 실행될 메서드
+nightStart			get set inspector		밤 시작 시 실행될 메서드
 
 /* Method */
-SkipNight()			밤 스킵
+SkipNight			밤 스킵
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Launcher ]
 
 /* Field */
 instances			get set			모든 발사 장치 인스턴스
 pool				get				발사체 풀
+pool_hierarchy		get				발사체 풀 (하이라키 정리용)
 projectile			get set inspector		발사체
-delay				get set inspector		발사 딜레이
-count				get set inspector		발사체 수
 speed				get set inspector		발사체 속도
+range				get set			발사체 유효 사거리
 
 /* Method */
-Launch()			발사
+Launch			발사
 ChangeProjectile		발사체 변경
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Projectile ]
 
+/* Dependency */
+colider2D			get set			발사체 콜라이더
+
 /* Field */
-instances			get set			모든 발사체 인스턴스
+instances_enable		get set			모든 발사체 인스턴스 (활성화)
+instances_disable		get set			모든 발사체 인스턴스 (비활성화)
+clashTag			get set inspector		충돌 타겟 태그 지정
 damage			get set inspector		발사체 데미지
+penetrate			get set inspector		총 관통 수
 
 /* Method */
-InActive()							발사체 비활성화
+Clash				타겟에 명중
+Disappear			비활성화
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Tower ]
+
+/* Dependency */
+colider2D			get set			타워 콜라이더
+hp				get set			체력 모듈
+launcher			get set			발사체 모듈
+
+/* Field & Property */
+instances			get set			모든 타워 인스턴스
+
+[ Auto : Tower ]
+
+/* Field & Property */
+instances			get set			모든 연사 타워 인스턴스
+delay				inspector			공격 딜레이
+range				get set inspector		적 감지 범위
+
+/* Public Method */
+Fire				공격 On / Off
+SetDelay			공격 딜레이 재설정
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 1	Tree 클릭 > Promotion 열림
@@ -114,12 +145,15 @@ InActive()							발사체 비활성화
 3	Tower 클릭 > Upgrade 열림
 4	버튼 클릭 : 기존 타워의 모듈에 접근해서 능력치 UP !
 
-[ Tower ]
-/* 모듈 */
-HP
 
-포신 (동시 N발)
-총알 (단일, 관통)
+밤 시작
+아침 시작
+
+// 일정 거리 까지 투사
+
+목적지 도착하면 증발해버리니까 관통이 안됨
+타겟 위치에서 터트리기 vs 직선으로 쭉 쏘기
+
 포탄 (광역)
 생산 (? 막막한데..)
 힐

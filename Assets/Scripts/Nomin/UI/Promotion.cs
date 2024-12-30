@@ -13,7 +13,7 @@ public class Promotion : MonoBehaviour
 
     /* Field & Property */
     public static Promotion instance; // 싱글턴
-    private string path_prefabs = "Prefabs/Tower/"; // 타워 프리팹 Resources 경로
+    private string path_prefabs = "Prefabs/Entity/Tower/"; // 타워 프리팹 Resources 경로
     private string path_images = "Images/Tower/"; // 타워 프리팹 Resources 경로
 
     /* Intializer & Finalizer & Updater */
