@@ -10,6 +10,7 @@ public class Explosion : MonoBehaviour
     public Targeter targeter; // 조준경
     public float radius = 5f; // 폭발 반경
     public float damage = 3f; // 폭발 데미지
+    public float time = 2f; // 폭발 시간
 
     /* Public Method */
     /// <summary>
@@ -17,10 +18,10 @@ public class Explosion : MonoBehaviour
     /// </summary>
     /// <param name="tags">피해를 입힐 오브젝트의 태그</param>
     /// <param name="seconds">이펙트 재생 시간</param>
-    public void Explode(string[] tags, float seconds)
+    public void Explode(string[] tags)
     {
         SplashDamage(tags, radius);
-        coroutine = StartCoroutine(CorOn(seconds));
+        coroutine = StartCoroutine(CorOn());
     }
 
     /* Private Method */
@@ -29,9 +30,9 @@ public class Explosion : MonoBehaviour
     /// </summary>
     /// <param name="seconds">이펙트 유지 시간</param>
     /// <returns></returns>
-    private IEnumerator CorOn(float seconds)
+    private IEnumerator CorOn()
     {
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(time);
         gameObject.SetActive(false);
     }
     /// <summary>

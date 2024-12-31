@@ -37,6 +37,7 @@ public class Projectile : MonoBehaviour
         {
             explosion = Instantiate(explosion);
             explosion_script = explosion.GetComponent<Explosion>();
+            explosion.SetActive(false);
         }
     }
     private void OnEnable()
@@ -67,7 +68,7 @@ public class Projectile : MonoBehaviour
                 if (explosion_script.coroutine != null) explosion_script.StopCoroutine(explosion_script.coroutine);
                 explosion.SetActive(true);
                 explosion.transform.position = transform.position;
-                explosion_script.Explode(clashTags, 1f);
+                explosion_script.Explode(clashTags);
             }
 
             // 타겟에게 데미지 입히기

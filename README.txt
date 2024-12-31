@@ -142,6 +142,7 @@ Targeter
 /* Field */
 radius				get set inspector		폭발 반경
 damage			get set inspector		폭발 데미지
+time				get set inspector		폭발 시간
 
 /* Method */
 Explode							폭발
