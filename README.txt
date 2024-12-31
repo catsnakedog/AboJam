@@ -90,6 +90,10 @@ SkipNight							밤 스킵
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Launcher ]
 
+/* Module */
+Targeter
+Projectile
+
 /* Field */
 instances			get set			모든 발사 장치 인스턴스
 pool				get				발사체 풀
@@ -103,10 +107,21 @@ Launch							발사
 ChangeProjectile						발사체 변경
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-[ Projectile ]
+[ Targeter ]
 
-/* Dependency */
-colider2D			get set			발사체 콜라이더
+/* Method */
+Targetting							범위 내 타입에 맞는 단일 대상 반환
+Near								범위 내 가장 가까운 대상 반환
+LowHP							범위 내 가장 체력 낮은 대상 반환
+GetTargets							범위 내 태그된 오브젝트 모두 반환
+GetTaged							태그된 오브젝트 모두 반환
+GetDistances						리스트를 <오브젝트, 거리> 로 치환
+CheckRange							리스트를 범위 내로 필터링 후 반환
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Projectile ]
+/* Module */
+Explosion
 
 /* Field */
 instances_enable		get set			모든 발사체 인스턴스 (활성화)
@@ -121,26 +136,31 @@ Disappear							비활성화
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Explosion ]
 
+/* Module */
+Targeter
+
 /* Field */
-radius				폭발 반지름
+radius				get set inspector		폭발 반경
+damage			get set inspector		폭발 데미지
 
 /* Method */
-Explode							폭발 : 피해 입힘, 애니메이션 재생
-
+Explode							폭발
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Tower ]
 
-/* Dependency */
-hp				get set			체력 모듈
+/* Module */
+HP
 
 /* Field & Property */
 instances			get set			모든 타워 인스턴스
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Auto : Tower ]
 
+/* Module */
+Launcher
+
 /* Field & Property */
 instances			get set			모든 연사 타워 인스턴스
-launcher			get set			발사체 모듈
 delay				inspector			공격 딜레이
 detection			get set inspector		적 감지 범위
 

@@ -6,7 +6,8 @@ using static Launcher;
 
 public class Targeter : MonoBehaviour
 {
-    public enum TargetType // 타게팅 타입
+    /* Field & Property */
+    public enum TargetType
     {
         /// <summary>
         /// 가장 가까운 적을 타게팅
@@ -18,6 +19,7 @@ public class Targeter : MonoBehaviour
         LowHP,
     }
 
+    /* Public Method */
     /// <summary>
     /// <br>감지 범위 이내에서 대상을 지정합니다.</br>
     /// <br>타겟이 없다면 null 을 반환합니다.</br>

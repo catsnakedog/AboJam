@@ -6,17 +6,20 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     /* Field & Property */
-    private Coroutine coroutine;
-    public float radius; // 폭발 데미지 반지름
-
-    /* Intializer & Finalizer & Updater */
-
+    public Coroutine coroutine;
+    public Targeter targeter; // 조준경
+    public float radius = 5f; // 폭발 반경
+    public float damage = 3f; // 폭발 데미지
 
     /* Public Method */
-    public void Explode(float seconds)
+    /// <summary>
+    /// 폭발합니다.
+    /// </summary>
+    /// <param name="tags">피해를 입힐 오브젝트의 태그</param>
+    /// <param name="seconds">이펙트 재생 시간</param>
+    public void Explode(string[] tags, float seconds)
     {
-        if(coroutine != null) StopCoroutine(coroutine);
-        //SplashDamage(radius);
+        SplashDamage(tags, radius);
         coroutine = StartCoroutine(CorOn(seconds));
     }
 
@@ -28,36 +31,16 @@ public class Explosion : MonoBehaviour
     /// <returns></returns>
     private IEnumerator CorOn(float seconds)
     {
-        gameObject.SetActive(true);
         yield return new WaitForSeconds(seconds);
         gameObject.SetActive(false);
     }
-
     /// <summary>
     /// 일정 거리 이내, 특정 태그의 타겟에게 데미지를 입힙니다.
     /// </summary>
     /// <param name="distance"></param>
-    private void SplashDamage(string[] tags, float distance)
+    private void SplashDamage(string[] tags, float radius)
     {
-        // 타겟 태그를 체크하고..
-        // 태그의 모든 적을 반환하고..
-        // 
-
-        /// <summary>
-        /// 태그에 해당하는 모든 오브젝트를 반환합니다.
-        /// </summary>
-        List<GameObject> GetTaged(string[] tags)
-        {
-            List<GameObject> targets = new List<GameObject>();
-            foreach (string tag in tags)
-            {
-                foreach (GameObject go in GameObject.FindGameObjectsWithTag(tag))
-                {
-                    targets.Add(go);
-                }
-            }
-
-            return targets;
-        }
+        List<GameObject> targets = targeter.GetTargets(tags, radius);
+        foreach (GameObject target in targets) HP.FindHP(target).Damage(damage);
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1504421444762453317}
   - component: {fileID: 6186980030847008097}
   - component: {fileID: 5285698987186902714}
-  - component: {fileID: 7480182973509113234}
+  - component: {fileID: 5712474040616241153}
   - component: {fileID: -109754202756310999}
   m_Layer: 0
   m_Name: Bullet
@@ -103,7 +103,7 @@ MonoBehaviour:
   damage: 0
   penetration: 0
   maxDistance: 0
---- !u!114 &7480182973509113234
+--- !u!114 &5712474040616241153
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colider2D: {fileID: -109754202756310999}
+  explosion: {fileID: 0}
   clashTags:
   - Towers
   damage: 10

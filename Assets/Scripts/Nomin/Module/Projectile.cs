@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
 {
     /* Dependency */
     public Collider2D colider2D;
+    public GameObject explosion; // 없어도 작동
 
     /* Field & Property */
     public static List<Projectile> instances_enable = new List<Projectile>(); // 모든 발사체 인스턴스 (활성화)
@@ -17,10 +18,12 @@ public class Projectile : MonoBehaviour
     public float damage = 10f; // 발사체 데미지
     public int penetrate = 1; // 총 관통 수
     private int penetrate_current; // 남은 관통 수
+    private Explosion explosion_script;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        // 예외처리
         if (penetrate < 1)
         {
             Debug.Log($"{name} 의 Projectile 의 penetrate 이 너무 작아 1 로 설정되었습니다.");
@@ -28,6 +31,13 @@ public class Projectile : MonoBehaviour
         }
         if (clashTags.Length == 0) Debug.Log($"{name} 의 Projectile 의 충돌 대상 태그가 할당되지 않았습니다.");
         if (colider2D == null) Debug.Log($"{name} 의 Projectile 에서 colider 가 설정되지 않았습니다.");
+
+        // 폭발 모듈 초기화
+        if (explosion != null)
+        {
+            explosion = Instantiate(explosion);
+            explosion_script = explosion.GetComponent<Explosion>();
+        }
     }
     private void OnEnable()
     {
@@ -51,6 +61,16 @@ public class Projectile : MonoBehaviour
         // 타겟의 태그가 clashTags 에 존재해야 충돌
         if (Array.Exists(clashTags, tag => tag == target.tag))
         {
+            // 폭발
+            if (explosion != null)
+            {
+                if (explosion_script.coroutine != null) explosion_script.StopCoroutine(explosion_script.coroutine);
+                explosion.SetActive(true);
+                explosion.transform.position = transform.position;
+                explosion_script.Explode(clashTags, 1f);
+            }
+
+            // 타겟에게 데미지 입히기
             HP.FindHP(target).Damage(damage);
             penetrate_current--;
             if (penetrate_current == 0) Disappear();

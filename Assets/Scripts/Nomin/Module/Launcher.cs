@@ -12,7 +12,7 @@ public class Launcher : MonoBehaviour
 {
     /* Dependency */
     public GameObject projectile; // 발사체
-    public Targeter targeter;
+    public Targeter targeter; // 조준경
 
     /* Field & Property */
     public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
@@ -105,8 +105,8 @@ public class Launcher : MonoBehaviour
 
             projectile.transform.position = projectile.transform.position += direction * speed;
 
-            // 사거리를 벗어나면 즉시 비활성화
-            if (range < (projectile.transform.position - startPos).magnitude) projectile.SetActive(false);
+            // 사거리를 벗어나면 비활성화
+            if (range < (projectile.transform.position - startPos).magnitude) projectile.GetComponent<Projectile>().Disappear();
 
             yield return new WaitForSeconds(0.016f); // 대략 60 프레임 기준
         }
