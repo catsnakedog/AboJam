@@ -53,7 +53,7 @@ public class Auto : Tower
     {
         while (true)
         {
-            launcher.Launch(Launcher.TargetType.Near, detection);
+            launcher.Launch(Targeter.TargetType.Near, detection);
             yield return delay_waitForSeconds;
         }
     }

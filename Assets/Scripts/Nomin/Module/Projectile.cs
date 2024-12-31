@@ -51,7 +51,7 @@ public class Projectile : MonoBehaviour
         // 타겟의 태그가 clashTags 에 존재해야 충돌
         if (Array.Exists(clashTags, tag => tag == target.tag))
         {
-            FindHP(target).Damage(damage);
+            HP.FindHP(target).Damage(damage);
             penetrate_current--;
             if (penetrate_current == 0) Disappear();
         }
@@ -72,20 +72,5 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Clash(collision.gameObject);
-    }
-    /// <summary>
-    /// 타겟 오브젝트와 연결된 HP 모듈을 탐색합니다.
-    /// </summary>
-    /// <param name="target">발사체와 충돌한 오브젝트</param>
-    /// <returns>타겟 오브젝트의 HP</returns>
-    private HP FindHP(GameObject target)
-    {
-        foreach (var HP in HP.instances)
-        {
-            if (HP.entity == target) return HP;
-        }
-
-        Debug.Log($"{target.name} 과 연결된 HP 가 존재하지 않습니다.");
-        return null;
     }
 }

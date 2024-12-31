@@ -15,8 +15,8 @@
 instances			get set		모든 아보카도 인스턴스
 
 /* Method */
-GrowUp			성장 
-Harvest			수확
+GrowUp						성장 
+Harvest						수확
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Grid ]
 
@@ -28,7 +28,7 @@ I				get			행 개수
 J				get			열 개수
 
 /* Method */
-GetObject			그리드에서 [i][j] 오브젝트 반환
+GetObject						그리드에서 [i][j] 오브젝트 반환
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Tile ]
@@ -43,10 +43,10 @@ Index				get			타일 고유 번호
 IsWall				get			벽 On / Off
 		
 /* Method */
-OnClick			타일 클릭 이벤트
-SwitchWall			이동 가능 On Off
-Create			프리팹 건설
-Delete			프리팹 철거
+OnClick						타일 클릭 이벤트
+SwitchWall						이동 가능 On Off
+Create						프리팹 건설
+Delete						프리팹 철거
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Promotion ]
 
@@ -66,9 +66,10 @@ HP_current			get				게임 중 실시간 현재 체력
 HP_ratio			get				게임 중 실시간 현재 체력 / 최대 체력
 
 /* Method */
-Damage			피해 입음
-Heal				체력 회복
-SetMaxHP			최대 체력 변경
+Damage							피해 입음
+Heal								체력 회복
+SetMaxHP							최대 체력 변경
+FindHP			static				오브젝트의 HP 인스턴스 탐색
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Date ]
 
@@ -85,7 +86,7 @@ morningStart		get set inspector		아침 시작 시 실행될 메서드
 nightStart			get set inspector		밤 시작 시 실행될 메서드
 
 /* Method */
-SkipNight			밤 스킵
+SkipNight							밤 스킵
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Launcher ]
 
@@ -98,8 +99,8 @@ speed				get set inspector		발사체 속도
 range				get set			발사체 유효 사거리
 
 /* Method */
-Launch			발사
-ChangeProjectile		발사체 변경
+Launch							발사
+ChangeProjectile						발사체 변경
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Projectile ]
@@ -115,15 +116,22 @@ damage			get set inspector		발사체 데미지
 penetrate			get set inspector		총 관통 수
 
 /* Method */
-Clash				타겟에 명중
-Disappear			비활성화
+Clash								타겟에 명중
+Disappear							비활성화
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Explosion ]
+
+/* Field */
+radius				폭발 반지름
+
+/* Method */
+Explode							폭발 : 피해 입힘, 애니메이션 재생
+
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Tower ]
 
 /* Dependency */
-colider2D			get set			타워 콜라이더
 hp				get set			체력 모듈
-launcher			get set			발사체 모듈
 
 /* Field & Property */
 instances			get set			모든 타워 인스턴스
@@ -132,25 +140,21 @@ instances			get set			모든 타워 인스턴스
 
 /* Field & Property */
 instances			get set			모든 연사 타워 인스턴스
+launcher			get set			발사체 모듈
 delay				inspector			공격 딜레이
 detection			get set inspector		적 감지 범위
 
 /* Public Method */
-Fire				공격 On / Off
-SetDelay			공격 딜레이 재설정
+Fire								공격 On / Off
+SetDelay							공격 딜레이 재설정
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-[ Auto_2 : Tower ]
+[ Auto : Guard ]
 
 /* Field & Property */
-instances			get set			모든 연사 타워 인스턴스
-delay				inspector			공격 딜레이
-range				get set inspector		적 감지 범위
-angle	
-count
+instances			get set			모든 타워 인스턴스
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-/* Public Method */
-Fire				공격 On / Off
-SetDelay			공격 딜레이 재설정
+
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 1	1 발 = 목적지

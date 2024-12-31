@@ -12,17 +12,7 @@ public class Launcher : MonoBehaviour
 {
     /* Dependency */
     public GameObject projectile; // 발사체
-    public enum TargetType // 오토 타게팅 타입
-    {
-        /// <summary>
-        /// 가장 가까운 적을 타게팅
-        /// </summary>
-        Near,
-        /// <summary>
-        /// 가장 낮은 체력의 적을 타게팅
-        /// </summary>
-        LowHP,
-    }
+    public Targeter targeter;
 
     /* Field & Property */
     public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
@@ -55,9 +45,9 @@ public class Launcher : MonoBehaviour
     /// </summary>
     /// <param name="targetType">타게팅 기준</param>
     /// <param name="range">타겟 감지 거리 (!= 유효 사거리)</param>
-    public void Launch(TargetType targetType, float detection)
+    public void Launch(Targeter.TargetType targetType, float detection)
     {
-        GameObject target = Targetting(targetType, detection);
+        GameObject target = targeter.Targetting(targetType, projectile.GetComponent<Projectile>().clashTags, detection);
         if (target != null) Launch(target.transform.position);
     }
 
@@ -120,110 +110,6 @@ public class Launcher : MonoBehaviour
 
             yield return new WaitForSeconds(0.016f); // 대략 60 프레임 기준
         }
-    }
-    /// <summary>
-    /// <br>사격 대상을 지정합니다.</br>
-    /// <br>타겟이 없다면 null 을 반환합니다.</br>
-    /// </summary>
-    /// <returns>가장 가까운 적</returns>
-    private GameObject Targetting(TargetType targetType, float detection)
-    {
-        switch (targetType)
-        {
-            case TargetType.Near:
-                return Near(detection);
-            case TargetType.LowHP:
-                return LowHP(detection);
-            default:
-                Debug.Log($"지정한 {targetType} 의 동작이 정의되지 않았습니다.");
-                return null;
-        }
-
-        /* Local Method */
-        /// <summary>
-        /// <br>오브젝트 리스트 중 현재 오브젝트와 가장 가까운 오브젝트를 반환합니다.</br>
-        /// </summary>
-        GameObject Near(float detection)
-        {
-            List<GameObject> targets = GetTargets(detection);
-
-            if (targets.Count > 0) return targets[0];
-            else return null;
-        }
-        /// <summary>
-        /// <br>사거리 이내에서 체력이 가장 낮은 오브젝트를 반환합니다.</br>
-        /// </summary>
-        GameObject LowHP(float detection)
-        {
-            List<GameObject> targets = GetTargets(detection);
-            List<KeyValuePair<GameObject, float>> targetsWithHP = new List<KeyValuePair<GameObject, float>>();
-            foreach (HP HP in HP.instances)
-            {
-                if (targets.Contains(HP.entity)) targetsWithHP.Add(new KeyValuePair<GameObject, float>(HP.entity, HP.HP_current));
-            }
-            targetsWithHP.OrderBy(pair => pair.Value).ToList();
-
-            if (targetsWithHP.Count > 0) return targetsWithHP[0].Key;
-            else return null;
-        }
-        /// <summary>
-        /// 범위 이내의 타겟을 반환합니다. (거리 순 ASC 정렬)
-        /// </summary>
-        List<GameObject> GetTargets(float detection)
-        {
-            List<GameObject> targets = GetTaged();
-            List<KeyValuePair<GameObject, float>> withDistance = GetDistances(targets);
-            List<KeyValuePair<GameObject, float>> InRange = CheckRange(withDistance, detection);
-            return InRange.Select(pair => pair.Key).ToList();
-        }
-        /// <summary>
-        /// 발사체의 태그에 해당하는 모든 오브젝트를 반환합니다.
-        /// </summary>
-        List<GameObject> GetTaged()
-        {
-            List<GameObject> targets = new List<GameObject>();
-            foreach (string clashTag in projectile.GetComponent<Projectile>().clashTags)
-            {
-                foreach (GameObject go in GameObject.FindGameObjectsWithTag(clashTag))
-                {
-                    targets.Add(go);
-                }
-            }
-
-            return targets;
-        }
-        /// <summary>
-        /// 타겟 오브젝트들의 거리를 계산하여 거리 순 ASC 정렬 후 반환합니다.
-        /// </summary>
-        List<KeyValuePair<GameObject, float>> GetDistances(List<GameObject> objects)
-        {
-            List<KeyValuePair<GameObject, float>> gos = new List<KeyValuePair<GameObject, float>>();
-
-            foreach (GameObject go in objects)
-            {
-                gos.Add(new KeyValuePair<GameObject, float>(go, Vector3.Distance(transform.position, go.transform.position)));
-            }
-
-            return gos.OrderBy(pair => pair.Value).ToList(); ;
-        }
-        /// <summary>
-        /// 사거리 이내의 요소만 반환합니다.
-        /// </summary>
-        List<KeyValuePair<GameObject, float>> CheckRange(List<KeyValuePair<GameObject, float>> objects, float detection)
-        {
-            return objects.Where(pair => pair.Value <= detection).ToList();
-        }
-    }
-    /// <summary>
-    /// 목적지에서의 직교 벡터를 구합니다.
-    /// </summary>
-    /// <param name="start"></param>
-    /// <param name="destination"></param>
-    private void GetOrthogonal(Vector2 start, Vector2 destination)
-    {
-        Vector2 direction = destination - start;
-        Vector2 orthogonalDirection = new Vector2(-direction.y, direction.x);
-        Vector2 orthogonalAtDestination = destination + orthogonalDirection;
     }
 
     /* Test Method */

@@ -1,0 +1,332 @@
+fileFormatVersion: 2
+guid: 49019b4320668764788e1d462eb24c37
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: _loood_Frame_0
+    originalName: 
+    pivot: {x: 0.5, y: -0.111111104}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 46
+      y: 87
+      width: 32
+      height: 27
+    spriteID: d95caf0893199bc44bfbbd154aced9cb
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 46, y: 87}
+  - name: _loood_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: -0.10344827}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 87
+      width: 34
+      height: 29
+    spriteID: e2114e4fbc3212241b3a5bf6b3217e23
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 87}
+  - name: _loood_Frame_2
+    originalName: 
+    pivot: {x: 0.48571432, y: -0.029411765}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 45
+      width: 35
+      height: 34
+    spriteID: 27c0de37ed2b95e4fa58388bda1198b8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 45}
+  - name: _loood_Frame_3
+    originalName: 
+    pivot: {x: 0.57575756, y: -0.13333333}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 89
+      y: 45
+      width: 33
+      height: 30
+    spriteID: 1ce4c8c71fa445b42878a8dcec345407
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 89, y: 45}
+  - name: _loood_Frame_4
+    originalName: 
+    pivot: {x: 0.5882353, y: -0.13333333}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 47
+      y: 45
+      width: 34
+      height: 30
+    spriteID: 414b55073cc41ce4fa73b7995aa965a2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 47, y: 45}
+  - name: _loood_Frame_5
+    originalName: 
+    pivot: {x: 0.5555555, y: -0.10344827}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 51
+      y: 4
+      width: 36
+      height: 29
+    spriteID: 965bfc198bebd7649bc55e9e1d9370d7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 51, y: 4}
+  - name: _loood_Frame_6
+    originalName: 
+    pivot: {x: 0.48717952, y: -0.06060606}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 39
+      height: 33
+    spriteID: 010042f55ba039f4799a5411c2d5856c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: 1482845236
+    name: _loood
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: _loood_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 5
+        y: 3
+        width: 32
+        height: 27
+      spriteId: d95caf0893199bc44bfbbd154aced9cb
+    - name: _loood_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 4
+        y: 3
+        width: 34
+        height: 29
+      spriteId: e2114e4fbc3212241b3a5bf6b3217e23
+    - name: _loood_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 4
+        y: 1
+        width: 35
+        height: 34
+      spriteId: 27c0de37ed2b95e4fa58388bda1198b8
+    - name: _loood_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 2
+        y: 4
+        width: 33
+        height: 30
+      spriteId: 1ce4c8c71fa445b42878a8dcec345407
+    - name: _loood_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 1
+        y: 4
+        width: 34
+        height: 30
+      spriteId: 414b55073cc41ce4fa73b7995aa965a2
+    - name: _loood_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 1
+        y: 3
+        width: 36
+        height: 29
+      spriteId: 965bfc198bebd7649bc55e9e1d9370d7
+    - name: _loood_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 2
+        y: 2
+        width: 39
+        height: 33
+      spriteId: 010042f55ba039f4799a5411c2d5856c
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 42, y: 38}

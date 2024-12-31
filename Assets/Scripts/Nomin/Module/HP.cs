@@ -93,6 +93,21 @@ public class HP : MonoBehaviour
         if (HP_current > value) { HP_current = value; CheckVisible(); }
         HP_max = value;
     }
+    /// <summary>
+    /// 타겟 오브젝트와 연결된 HP 모듈을 탐색합니다.
+    /// </summary>
+    /// <param name="target">발사체와 충돌한 오브젝트</param>
+    /// <returns>타겟 오브젝트의 HP</returns>
+    public static HP FindHP(GameObject target)
+    {
+        foreach (var HP in HP.instances)
+        {
+            if (HP.entity == target) return HP;
+        }
+
+        Debug.Log($"{target.name} 과 연결된 HP 가 존재하지 않습니다.");
+        return null;
+    }
 
     /* Private Method */
     /// <summary>
