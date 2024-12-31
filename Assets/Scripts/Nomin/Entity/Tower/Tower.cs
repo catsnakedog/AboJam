@@ -6,7 +6,6 @@ public class Tower : MonoBehaviour
 {
     /* Dependency */
     public HP hp;
-    public Launcher launcher;
 
     /* Field & Property */
     public static List<Tower> instances = new List<Tower>(); // 모든 타워 인스턴스

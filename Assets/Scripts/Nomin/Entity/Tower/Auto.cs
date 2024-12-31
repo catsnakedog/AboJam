@@ -6,8 +6,9 @@ public class Auto : Tower
 {
     /* Field & Property */
     public static List<Auto> instances = new List<Auto>(); // 모든 연사 타워 인스턴스
+    public Launcher launcher;
     [SerializeField] private float delay = 0.1f; // 공격 딜레이
-    public float range = 5f; // 적 감지 범위
+    public float detection = 5f; // 적 감지 범위
     private WaitForSeconds delay_waitForSeconds;
     private Coroutine corFire;
 
@@ -52,64 +53,8 @@ public class Auto : Tower
     {
         while (true)
         {
-            GameObject target = Targetting();
-            if (target != null) launcher.Launch(target.transform.position);
-
+            launcher.Launch(Launcher.TargetType.Near, detection);
             yield return delay_waitForSeconds;
-        }
-    }
-    /// <summary>
-    /// 사격 대상을 지정합니다.
-    /// </summary>
-    /// <returns>가장 가까운 적</returns>
-    private GameObject Targetting()
-    {
-        List<GameObject> targets = TargetObjects();
-        if (targets.Count == 0) { Debug.Log($"{name} 의 타겟이 존재하지 않습니다."); return null; }
-
-        GameObject target = Closest(targets, out float distance);
-        if (distance <= range) return target;
-        else return null;
-
-        /* Local Method */
-        /// <summary>
-        /// 발사체의 태그에 해당하는 모든 오브젝트를 반환합니다.
-        /// </summary>
-        List<GameObject> TargetObjects()
-        {
-            List<GameObject> targets = new List<GameObject>();
-            foreach (string clashTag in launcher.projectile.GetComponent<Projectile>().clashTags)
-            {
-                foreach (GameObject go in GameObject.FindGameObjectsWithTag(clashTag))
-                {
-                    targets.Add(go);
-                }
-            }
-
-            return targets;
-        }
-        /// <summary>
-        /// 오브젝트 리스트 중 현재 오브젝트와 가장 가까운 오브젝트를 반환합니다.
-        /// </summary>
-        GameObject Closest(List<GameObject> targets, out float distance)
-        {
-            GameObject closest = null;
-            float shortestDistance = Mathf.Infinity;
-            foreach (GameObject go in targets)
-            {
-                if (go == null) continue;
-
-                distance = Vector3.Distance(transform.position, go.transform.position);
-
-                if (distance < shortestDistance)
-                {
-                    shortestDistance = distance;
-                    closest = go;
-                }
-            }
-
-            distance = shortestDistance;
-            return closest;
         }
     }
 

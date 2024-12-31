@@ -133,7 +133,7 @@ instances			get set			모든 타워 인스턴스
 /* Field & Property */
 instances			get set			모든 연사 타워 인스턴스
 delay				inspector			공격 딜레이
-range				get set inspector		적 감지 범위
+detection			get set inspector		적 감지 범위
 
 /* Public Method */
 Fire				공격 On / Off
