@@ -17,14 +17,25 @@ public class Launcher : MonoBehaviour
     /* Field & Property */
     public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
     public List<GameObject> pool { get; private set; } = new List<GameObject>(); // 발사체 풀링
-    public GameObject pool_hierarchy { get; private set; }
+    public GameObject pool_root { get; private set; }
     public float speed = 0.02f; // 발사체 속도
     public float range = 5f; // 발사체 유효 사거리 (!= 타겟 감지 거리)
 
     /* Intializer & Finalizer */
+    private void Awake()
+    {
+        pool_root = GameObject.Find("@Pooling") ?? new GameObject("@Pooling");
+    }
     private void Start()
     {
         if (projectile == null) Debug.Log($"{gameObject.name} 의 Launcher 에 Projectile 이 연결되지 않았습니다.");
+        instances.Add(this);
+    }
+    private void OnDestroy()
+    {
+        // 생성된 발사체 제거
+        foreach (var item in pool) Destroy(item);
+        instances.Remove(this);
     }
 
     /* Public Method */
@@ -82,8 +93,7 @@ public class Launcher : MonoBehaviour
     /// <returns>새로 생성된 발사체 입니다.</returns>
     private GameObject Create()
     {
-        pool_hierarchy = pool_hierarchy ?? new GameObject($"@Pool {name}");
-        GameObject projectile = Instantiate(this.projectile, pool_hierarchy.transform); ;
+        GameObject projectile = Instantiate(this.projectile, pool_root.transform); ;
 
         pool.Add(projectile);
         return projectile;

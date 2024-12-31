@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour
     /* Field & Property */
     public static List<Projectile> instances_enable = new List<Projectile>(); // 모든 발사체 인스턴스 (활성화)
     public static List<Projectile> instances_disable = new List<Projectile>(); // 모든 발사체 인스턴스 (비활성화)
+    public GameObject pool_root { get; private set; }
     public string[] clashTags; // 충돌 대상 태그
     public float damage = 10f; // 발사체 데미지
     public int penetrate = 1; // 총 관통 수
@@ -21,6 +22,10 @@ public class Projectile : MonoBehaviour
     private Explosion explosion_script;
 
     /* Intializer & Finalizer & Updater */
+    private void Awake()
+    {
+        pool_root = GameObject.Find("@Pooling") ?? new GameObject("@Pooling");
+    }
     private void Start()
     {
         // 예외처리
@@ -35,7 +40,7 @@ public class Projectile : MonoBehaviour
         // 폭발 모듈 초기화
         if (explosion != null)
         {
-            explosion = Instantiate(explosion);
+            explosion = Instantiate(explosion, pool_root.transform);
             explosion_script = explosion.GetComponent<Explosion>();
             explosion.SetActive(false);
         }
@@ -50,6 +55,12 @@ public class Projectile : MonoBehaviour
     {
         instances_enable.Remove(this);
         instances_disable.Add(this);
+    }
+    private void OnDestroy()
+    {
+        instances_enable.Remove(this);
+        instances_disable.Remove(this);
+        Destroy(explosion);
     }
 
     /* Public Method */
