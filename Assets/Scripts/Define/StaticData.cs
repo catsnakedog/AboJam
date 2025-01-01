@@ -28,7 +28,7 @@ public static class StaticData
         set
         {
             garu = value;
-            if(Inventory.instance != null) Inventory.instance.UpdateGaru();
+            foreach (var item in Inventory.instances) if (item != null) item.UpdateGaru();
         }
     }
     public static int Abocado
@@ -40,7 +40,7 @@ public static class StaticData
         set
         {
             abocado = value;
-            if (Inventory.instance != null) Inventory.instance.UpdateAbocado();
+            foreach (var item in Inventory.instances) if (item != null) item.UpdateAbocado();
         }
     }
     public static int Water
@@ -52,7 +52,7 @@ public static class StaticData
         set
         {
             water = value;
-            if (Inventory.instance != null) Inventory.instance.UpdateWater();
+            foreach (var item in Inventory.instances) if (item != null) item.UpdateWater();
         }
     }
     #region Backing Field

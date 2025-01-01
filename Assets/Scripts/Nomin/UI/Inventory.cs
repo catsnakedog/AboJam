@@ -5,28 +5,34 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    /* Field & Property */
-    public static Inventory instance; // 싱글턴
+    /* Dependency */
     public TextMeshProUGUI abocado;
     public TextMeshProUGUI garu;
+
+    /* Field & Property */
+    public static List<Inventory> instances = new List<Inventory>();
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
-        instance = this;
+        instances.Add(this);
         StaticData.Abocado = StaticData.Abocado;
         StaticData.Garu = StaticData.Garu;
         StaticData.Water = StaticData.Water;
+    }
+    private void OnDestroy()
+    {
+        instances.Remove(this);
     }
 
     /* Public Method */
     public void UpdateAbocado()
     {
-        abocado.text = StaticData.Abocado.ToString();
+        if (abocado != null) abocado.text = StaticData.Abocado.ToString();
     }
     public void UpdateGaru()
     {
-        garu.text = StaticData.Garu.ToString();
+        if (garu != null) garu.text = StaticData.Garu.ToString();
     }
     public void UpdateWater()
     {

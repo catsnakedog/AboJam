@@ -174,14 +174,81 @@ detection			get set inspector		적 감지 범위
 Fire								공격 On / Off
 SetDelay							공격 딜레이 재설정
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-[ Auto : Guard ]
+[ Guard : Tower ]
 
 /* Field & Property */
 instances			get set			모든 타워 인스턴스
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Heal : Tower ]
 
+/* Module */
+Launcher
+
+/* Field & Property */
+instances			get set			모든 회복 타워 인스턴스
+delay				inspector			공격 딜레이
+ratio				get set inspector		체력 회복 기준 비율
+detection			get set inspector		아군 감지 범위
+
+/* Public Method */
+Healing							회복 On / Off
+SetDelay							회복 딜레이 재설정
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Inventory ]
+
+/* Field & Property */
+instance			get set			싱글턴
+
+/* Public Method */
+UpdateAbocado						아보카도 개수 갱신
+UpdateGaru							가루 개수 갱신
+UpdateWater						물 이미지 갱신
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Close ]
+
+/* Field & Property */
+instance			get set			싱글턴
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Change ]
+
+/* Field & Property */
+instance			get set			싱글턴
+Price				get set			아보카도 가격
+Quantity			get set			회당 거래 개수
+
+/* Public Method */
+Trade								아보카도 판매
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ BTN_Buy ]
+
+/* Field & Property */
+instances			get set			모든 인스턴스
+image				get set			상품 이미지
+price				get set			상품 가격
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Upgrade ] : 각 버튼에 접근하여 업그레이드 비용을 관리합니다.
+
+/* Field & Property */
+BTN_Damage		get set			버튼 : 데미지
+BTN_Speed			get set			버튼 : 공격 속도
+BTN_Range			get set			버튼 : 사거리
+BTN_Knockback		get set			버튼 : 넉백
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Weapon ] : 각 버튼에 접근하여 무기 비용을 관리합니다.
+
+/* Field & Property */
+BTN_Damage		get set			버튼 : 데미지
+BTN_Speed			get set			버튼 : 공격 속도
+BTN_Range			get set			버튼 : 사거리
+BTN_Knockback		get set			버튼 : 넉백
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ OnOff ] : 상점을 끄거나 킵니다.
+
+/* Method */
+Switch							상점 On / Off
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
 
 1	1 발 = 목적지
 2	2 발 = 양 끝
