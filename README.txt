@@ -13,10 +13,15 @@
 
 /* Field */
 instances			get set		모든 아보카도 인스턴스
+level				get			성장 레벨 (경작 / 씨앗 / 나무 / 열매)
+quality			static			품질
+quality_max			get set		최고 품질
+harvest			get set		아보카도 수확량
 
 /* Method */
-GrowUp						성장 
+GrowUp						성장
 Harvest						수확
+Promotion						품질 강화 (수확량 UP)
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Grid ]
 

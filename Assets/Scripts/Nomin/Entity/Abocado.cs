@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
+using static EnumData;
 
 public class Abocado : MonoBehaviour
 {
@@ -14,6 +16,9 @@ public class Abocado : MonoBehaviour
     /* Field & Property */
     public static List<Abocado> instances = new List<Abocado>(); // 모든 아보카도 인스턴스
     public EnumData.Abocado level { get; private set; } // 아보카도 레벨
+    public int quality { get; private set; } = 0; // 아보카도 품질 (Promotion)
+    public static int quality_max = 1; // 아보카도 최고 품질 (Promotion)
+    public int harvest = 1; // 수확량
     private string path = "Images/Abocado/"; // 아보카도 이미지 Resources 경로
     private Sprite[] spr_level; // 레벨에 대응하는 스프라이트
 
@@ -27,7 +32,7 @@ public class Abocado : MonoBehaviour
         for (int i = 0; i < length_level; i++)
         {
             Sprite temp = Resources.Load<Sprite>(path + (EnumData.Abocado)i);
-            if(temp != null) spr_level[i] = temp;
+            if (temp != null) spr_level[i] = temp;
             else spr_level[i] = Resources.Load<Sprite>(path + "Default");
         }
 
@@ -58,9 +63,30 @@ public class Abocado : MonoBehaviour
     {
         if (level == EnumData.Abocado.Fruited)
         {
-            StaticData.Abocado++;
+            StaticData.Abocado += harvest;
             LevelDown();
         }
+    }
+    /// <summary>
+    /// <br>아보카도의 품질을 향상시킵니다.</br>
+    /// <br>수확량이 증가하며, 이미지가 바뀝니다.</br>
+    /// </summary>
+    public void Promote()
+    {
+        if (quality == quality_max)
+        {
+            Debug.Log("이미 최고 품질입니다.");
+            return;
+        }
+
+        quality++;
+        harvest++;
+
+        spr_level[(int)EnumData.Abocado.Tree] = Resources.Load<Sprite>($"{path}{EnumData.Abocado.Tree}{string.Concat(Enumerable.Repeat("+", quality))}");
+        spr_level[(int)EnumData.Abocado.Fruited] = Resources.Load<Sprite>($"{path}{EnumData.Abocado.Fruited}{string.Concat(Enumerable.Repeat("+", quality))}");
+        if (spr_level[(int)EnumData.Abocado.Tree] == null || spr_level[(int)EnumData.Abocado.Fruited] == null) Debug.Log("아보카도 품질에 맞는 이미지가 없습니다.");
+
+        spriteRenderer.sprite = spr_level[(int)level];
     }
 
     /* Private Method */

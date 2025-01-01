@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static EnumData;
 
 public class Promotion : MonoBehaviour
 {
@@ -53,7 +54,15 @@ public class Promotion : MonoBehaviour
     /// <param name="towerName">(EnumData.Tower)towerName</param>
     private void Promote(EnumData.TowerType towerType)
     {
-        // 해당 타워 프리팹 불러오기
+        // 아보카도 품질 증강
+        if (towerType == EnumData.TowerType.Production)
+        {
+            currentTile.Go.GetComponent<Abocado>().Promote();
+            gameObject.SetActive(false);
+            return;
+        }
+
+        // 타워 프리팹 불러오기
         GameObject go_tower = Resources.Load<GameObject>(path_prefabs + towerType);
         if (go_tower == null) { Debug.Log(path_prefabs + towerType + " 에 타워 프리팹이 없습니다."); return; }
 
