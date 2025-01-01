@@ -7,16 +7,7 @@ using static EnumData;
 
 public static class StaticData
 {
-    // (i, j) GameObject 접근 : Grid.instance.GetObject(i, j);
-    // (i, j) Tile 접근 : Grid.instance.GetObject(i, j).GetComponant<Tile>();
-    public static int Garu;
-    public static int Abocado = 5;
-    public static int Water = 10;
-    public static int Date_Day = 0;
-    public static int Date_Time = 0;
-    public static int Date_TimeThreshold = 5;
-    public static bool Date_isMorning = true;
-
+    /* Field & Property */
     /// <summary>
     /// <br>Promotion 에 표기되는 TowerType 의 설명 입니다.</br>
     /// </summary>
@@ -28,4 +19,53 @@ public static class StaticData
         { TowerType.Production, "생산능력이 강화" },
         { TowerType.Heal, "체력이 가장 낮은 아보카도 나무의 체력을 회복" },
     };
+    public static int Garu
+    {
+        get
+        {
+            return garu;
+        }
+        set
+        {
+            garu = value;
+            if(Inventory.instance != null) Inventory.instance.UpdateGaru();
+        }
+    }
+    public static int Abocado
+    {
+        get
+        {
+            return abocado;
+        }
+        set
+        {
+            abocado = value;
+            if (Inventory.instance != null) Inventory.instance.UpdateAbocado();
+        }
+    }
+    public static int Water
+    {
+        get
+        {
+            return water;
+        }
+        set
+        {
+            water = value;
+            if (Inventory.instance != null) Inventory.instance.UpdateWater();
+        }
+    }
+    #region Backing Field
+    private static int garu;
+    private static int abocado;
+    private static int water;
+    #endregion
+
+    /* Intializer & Finalizer & Updater */
+    static StaticData()
+    {
+        Garu = 0;
+        Abocado = 5;
+        Water = 10;
+    }
 }
