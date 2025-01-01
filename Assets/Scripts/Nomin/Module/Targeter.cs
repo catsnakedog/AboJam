@@ -24,15 +24,16 @@ public class Targeter : MonoBehaviour
     /// <br>감지 범위 이내에서 대상을 지정합니다.</br>
     /// <br>타겟이 없다면 null 을 반환합니다.</br>
     /// </summary>
+    /// <param name="ratio">TargetType.LowHP 에서 일정 비율 이하의 체력만 타게팅 (0 ~ 1)</param>
     /// <returns>가장 가까운 적</returns>
-    public GameObject Targetting(TargetType targetType, string[] tags, float detection)
+    public GameObject Targetting(TargetType targetType, string[] tags, float detection, float ratio = 1.0f)
     {
         switch (targetType)
         {
             case TargetType.Near:
                 return Near(tags, detection);
             case TargetType.LowHP:
-                return LowHP(tags,detection);
+                return LowHP(tags, detection, ratio);
             default:
                 Debug.Log($"지정한 {targetType} 의 동작이 정의되지 않았습니다.");
                 return null;
@@ -51,13 +52,20 @@ public class Targeter : MonoBehaviour
     /// <summary>
     /// <br>감지 범위 이내에서 체력이 가장 낮은 오브젝트를 반환합니다.</br>
     /// </summary>
-    public GameObject LowHP(string[] tags, float detection)
+    /// <param name="ratio">일정 비율 이하의 체력만 타게팅 (0 ~ 1)</param>
+    /// <returns></returns>
+    public GameObject LowHP(string[] tags, float detection, float ratio = 1.0f)
     {
         List<GameObject> targets = GetTargets(tags,detection);
         List<KeyValuePair<GameObject, float>> targetsWithHP = new List<KeyValuePair<GameObject, float>>();
         foreach (HP HP in HP.instances)
         {
-            if (targets.Contains(HP.entity)) targetsWithHP.Add(new KeyValuePair<GameObject, float>(HP.entity, HP.HP_current));
+            // 타겟의 HP 인스턴스 특정
+            if (targets.Contains(HP.entity))
+            {
+                // 일정 비율 이하의 HP 만 타게팅
+                if (HP.HP_current <= HP.HP_max * ratio) targetsWithHP.Add(new KeyValuePair<GameObject, float>(HP.entity, HP.HP_current));
+            }
         }
         targetsWithHP.OrderBy(pair => pair.Value).ToList();
 
@@ -75,7 +83,8 @@ public class Targeter : MonoBehaviour
         return InRange.Select(pair => pair.Key).ToList();
     }
     /// <summary>
-    /// 태그에 해당하는 모든 오브젝트를 반환합니다.
+    /// <br>태그에 해당하는 모든 오브젝트를 반환합니다.</br>
+    /// <br>단, 현재 오브젝트를 포함한 조상 계층은 제외합니다.</br>
     /// </summary>
     public List<GameObject> GetTaged(string[] tags)
     {
@@ -87,6 +96,7 @@ public class Targeter : MonoBehaviour
                 targets.Add(go);
             }
         }
+        InnerJoin(targets, GetParentList());
 
         return targets;
     }
@@ -110,5 +120,31 @@ public class Targeter : MonoBehaviour
     public List<KeyValuePair<GameObject, float>> CheckRange(List<KeyValuePair<GameObject, float>> objects, float detection)
     {
         return objects.Where(pair => pair.Value <= detection).ToList();
+    }
+
+    /* Private Method */
+    /// <summary>
+    /// 타게터의 오브젝트를 포함한 모든 조상 오브젝트를 리스트로 반환합니다.
+    /// </summary>
+    /// <returns>조상 오브젝트 리스트</returns>
+    private List<GameObject> GetParentList()
+    {
+        List<GameObject> parents = new List<GameObject>();
+        Transform current = transform;
+
+        while (current != null)
+        {
+            parents.Add(current.gameObject);
+            current = current.parent;
+        }
+
+        return parents;
+    }
+    /// <summary>
+    /// A 리스트에서 B 리스트의 요소를 제거합니다.
+    /// </summary>
+    private void InnerJoin(List<GameObject> listA, List<GameObject> listB)
+    {
+        listA.RemoveAll(item => listB.Contains(item));
     }
 }

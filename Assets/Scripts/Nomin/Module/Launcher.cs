@@ -47,6 +47,7 @@ public class Launcher : MonoBehaviour
     {
         // 발사체 장전 (풀링 or 생성)
         GameObject projectile = SearchPool() ?? Create();
+        projectile.GetComponent<Projectile>().launcher = gameObject;
         projectile.transform.position = transform.position;
 
         StartCoroutine(CorLaunch(projectile, destination));
@@ -56,9 +57,10 @@ public class Launcher : MonoBehaviour
     /// </summary>
     /// <param name="targetType">타게팅 기준</param>
     /// <param name="range">타겟 감지 거리 (!= 유효 사거리)</param>
-    public void Launch(Targeter.TargetType targetType, float detection)
+    /// <param name="ratio">일정 비율 이하의 체력만 타게팅 (0 ~ 1)</param>
+    public void Launch(Targeter.TargetType targetType, float detection, float ratio = 1f)
     {
-        GameObject target = targeter.Targetting(targetType, projectile.GetComponent<Projectile>().clashTags, detection);
+        GameObject target = targeter.Targetting(targetType, projectile.GetComponent<Projectile>().clashTags, detection, ratio);
         if (target != null) Launch(target.transform.position);
     }
 
