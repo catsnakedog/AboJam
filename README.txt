@@ -225,7 +225,7 @@ Trade								아보카도 판매
 /* Field & Property */
 instances			get set			모든 인스턴스
 image				get set			상품 이미지
-price				get set			상품 가격
+Price				get set			상품 가격
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Upgrade ] : 각 버튼에 접근하여 업그레이드 비용을 관리합니다.
 
@@ -235,7 +235,7 @@ BTN_Speed			get set			버튼 : 공격 속도
 BTN_Range			get set			버튼 : 사거리
 BTN_Knockback		get set			버튼 : 넉백
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-[ Weapon ] : 각 버튼에 접근하여 무기 비용을 관리합니다.
+[ Weapons ] : 각 버튼에 접근하여 무기 비용을 관리합니다.
 
 /* Field & Property */
 BTN_Damage		get set			버튼 : 데미지
@@ -247,6 +247,12 @@ BTN_Knockback		get set			버튼 : 넉백
 
 /* Method */
 Switch							상점 On / Off
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Message ]
+
+/* Method */
+On								메시지 출력
+
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 

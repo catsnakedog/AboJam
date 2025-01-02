@@ -64,8 +64,10 @@ public class Change : MonoBehaviour
     {
         if (StaticData.Abocado >= quantity)
         {
+            Message.instance.On($"아보카도 {quantity} 개를 가루 {Quantity * Price} 개에 판매했습니다.", 2f);
             StaticData.Abocado -= Quantity;
             StaticData.Garu += Quantity * Price;
         }
+        else Message.instance.On($"{quantity} 개 이상부터 판매할 수 있습니다.", 2f);
     }
 }

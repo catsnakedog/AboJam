@@ -133,7 +133,7 @@ MonoBehaviour:
   button: {fileID: 3210264571734722499}
   animationClick: {fileID: 6184045550999567468}
   image: {fileID: 6895694209549013370}
-  price: {fileID: 5544267545002862765}
+  tmp_price: {fileID: 5544267545002862765}
 --- !u!114 &6184045550999567468
 MonoBehaviour:
   m_ObjectHideFlags: 0
