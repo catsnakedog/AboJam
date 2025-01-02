@@ -8,4 +8,9 @@ public class RangedWeapon : Weapon
     public Transform FireLocation;
     public GameObject BulletObj;
     public Type Bullet = typeof(Bullet);
+
+    public override void WeaponSetting()
+    {
+        AttackType = WeaponAttackType.Range;
+    }
 }

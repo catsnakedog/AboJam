@@ -17,6 +17,14 @@ public class Weapon : MonoBehaviour
         Place2 = -2,
     }
 
+    public enum WeaponAttackType
+    {
+        Melee = 0,
+        Range = 1,
+        Charge = 2,
+        Gage = 3
+    }
+
 
     [System.Serializable]
     public class WeaponHandState
@@ -47,13 +55,20 @@ public class Weapon : MonoBehaviour
     public SpriteRenderer Renderer;
     public WeaponHandState HandState;
     public EnumData.Weapon WeaponType;
+    public WeaponAttackType AttackType;
 
     public bool IsReload = false;
 
     public void Init()
     {
+        WeaponSetting();
         IsReload = false;
         StartCoroutine(Reload());
+    }
+
+    public virtual void WeaponSetting()
+    {
+
     }
 
     public void Attack()
