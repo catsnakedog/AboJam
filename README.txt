@@ -220,12 +220,16 @@ Quantity			get set			회당 거래 개수
 Trade								아보카도 판매
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-[ BTN_Buy ]
+[ BTN_Weapons ]
 
 /* Field & Property */
-instances			get set			모든 인스턴스
-image				get set			상품 이미지
-Price				get set			상품 가격
+instances_melee		get set			근거리 무기 버튼 인스턴스
+instances_range		get set			원거리 무기 버튼 인스턴스
+Price				get set inspector		상품 가격
+purchase			inspector			구매 여부
+
+/* Method */
+Buy								현재 버튼의 상품 구매
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Upgrade ] : 각 버튼에 접근하여 업그레이드 비용을 관리합니다.
 
@@ -279,14 +283,3 @@ Vector3 rightEndPoint
 4	버튼 클릭 : 기존 타워의 모듈에 접근해서 능력치 UP !
 
 
-밤 시작
-아침 시작
-
-// 일정 거리 까지 투사
-
-목적지 도착하면 증발해버리니까 관통이 안됨
-타겟 위치에서 터트리기 vs 직선으로 쭉 쏘기
-
-포탄 (광역)
-생산 (? 막막한데..)
-힐
