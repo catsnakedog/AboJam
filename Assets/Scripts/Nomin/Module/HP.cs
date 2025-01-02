@@ -30,7 +30,7 @@ public class HP : MonoBehaviour
         material = spr_max.material;
         spr_max.sortingOrder = spr_empty.sortingOrder + 1;
         CheckVisible();
-        death.AddListener(() => { Debug.Log("체력이 0 에 도달했습니다."); });
+        death.AddListener(() => { Debug.Log($"{entity.name} 의 체력이 0 에 도달했습니다."); });
 
         if (HP_MAX <= 0)
         {

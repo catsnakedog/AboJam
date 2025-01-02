@@ -16,9 +16,12 @@ public class BTN_Upgrade : MonoBehaviour
     public AnimationClick animationClick;
     public Image image;
     public TextMeshProUGUI tmp_price;
-    [SerializeField] private int maxLevel = 1;
-    [SerializeField] private int[] prices;
+    public TextMeshProUGUI tmp_level;
     public Sprite[] sprites_level;
+
+    /* Field & Property */
+    public static List<BTN_Upgrade> instances = new List<BTN_Upgrade>();
+    [SerializeField] private int[] prices;
     public int Price
     {
         get
@@ -32,14 +35,22 @@ public class BTN_Upgrade : MonoBehaviour
             tmp_price.text = price.ToString();
         }
     }
-    public int Level { get; private set; } = 0;
-    public bool Purchase { get; private set; } // 구매 여부
-    #region Backing Field
-    private int price;
-    #endregion
+    private int price; // 백킹 필드
+    public int Level
+    {
+        get
+        {
+            return level;
+        }
 
-    /* Field & Property */
-    public static List<BTN_Upgrade> instances = new List<BTN_Upgrade>();
+        private set
+        {
+            level = value;
+            tmp_level.text = "Lv. " + level.ToString();
+        }
+    }
+    private int level; // 백킹 필드
+    [SerializeField] private int maxLevel = 1;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -47,6 +58,7 @@ public class BTN_Upgrade : MonoBehaviour
         instances.Add(this);
         ChangeImage();
         ChangePrice();
+        Level = 0;
         button.onClick.AddListener(() => animationClick.OnClick());
         button.onClick.AddListener(() => Buy());
     }
@@ -61,41 +73,51 @@ public class BTN_Upgrade : MonoBehaviour
     /// </summary>
     public void Buy()
     {
-        Check();
-        if (Purchase == true)
-        {
-            Message.instance.On("상품 구매가 완료되었습니다.", 2f);
-            StaticData.Garu -= Price;
-            Level++;
-            if (Level == maxLevel) tmp_price.text = "MAX";
-            ChangePrice();
-            ChangeImage();
-        }
+        if (Check() == false) return;
+
+        Checkout();
+        LevelUp();
+        ChangePrice();
+        ChangeImage();
     }
 
     /* Private Method */
     /// <summary>
     /// 상품 구매 가능 여부를 계산합니다.
     /// </summary>
-    private void Check()
+    private bool Check()
     {
-        // 이미 최대 레벨이면 리턴
+        // 이미 최대 레벨인지 체크
         if (Level >= maxLevel)
         {
             Message.instance.On("이미 최대 레벨입니다.", 2f);
-            Purchase = false;
-            return;
+            return false;
         }
 
-        // 가루 부족 시 리턴
+        // 가루 부족한지 체크
         if (StaticData.Garu < Price)
         {
             Message.instance.On("상품을 구매하기 위한 가루가 부족합니다.", 2f);
-            Purchase = false;
-            return;
+            return false;
         }
 
-        Purchase = true;
+        return true;
+    }
+    /// <summary>
+    /// 결제합니다.
+    /// </summary>
+    private void Checkout()
+    {
+        Message.instance.On("상품 구매가 완료되었습니다.", 2f);
+        StaticData.Garu -= price;
+    }
+    /// <summary>
+    /// 업그레이드 레벨을 증가시킵니다.
+    /// </summary>
+    private void LevelUp()
+    {
+        Level++;
+        if (Level == maxLevel) tmp_price.text = "MAX";
     }
     /// <summary>
     /// <br>구매 시 다음 상품 이미지로 변경합니다.</br>
