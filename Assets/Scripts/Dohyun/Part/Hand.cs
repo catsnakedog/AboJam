@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static Weapon;
+using static HandUtil;
 
 [System.Serializable]
 public class Hand
@@ -31,67 +32,67 @@ public class Hand
         FirstMelee = 2,
     }
 
-    // Player¿¡°Ô Update ½ÇÇàÀ» ³Ñ±â±â À§ÇÑ Action, PlayerÂÊ¿¡¼­ ½ÇÇà½ÃÄÑÁØ´Ù.
+    // Playerì—ê²Œ Update ì‹¤í–‰ì„ ë„˜ê¸°ê¸° ìœ„í•œ Action, Playerìª½ì—ì„œ ì‹¤í–‰ì‹œì¼œì¤€ë‹¤.
     public Action HandAction;
 
-    // °¢Á¾ Å° °ü·Ã µ¥ÀÌÅÍ, ÀÓ½Ã·Î ³ÖÀº°Å°í Å° µ¥ÀÌÅÍ °ü·ÃÀº µû·Î »¬ »ı°¢ÀÓ!
+    // ê°ì¢… í‚¤ ê´€ë ¨ ë°ì´í„°, ì„ì‹œë¡œ ë„£ì€ê±°ê³  í‚¤ ë°ì´í„° ê´€ë ¨ì€ ë”°ë¡œ ëº„ ìƒê°ì„!
     /// <summary>
-    /// °ø°İ Å°
+    /// ê³µê²© í‚¤
     /// </summary>
     public int AttackKeyIndex = 0;
     /// <summary>
-    /// ¹«±â ±³Ã¼ Å°
+    /// ë¬´ê¸° êµì²´ í‚¤
     /// </summary>
     public KeyCode SlotChangeKey = KeyCode.R;
 
 
-    // ½ÇÁúÀûÀÎ ¹«±â µ¥ÀÌÅÍ, °¢ ½½·Ô¿¡ ¹«¾ùÀ» ÀåÂø ÁßÀÎÁö, ¾î¶² ¹«±â¸¦ »ç¿ë ÁßÀÎÁö
+    // ì‹¤ì§ˆì ì¸ ë¬´ê¸° ë°ì´í„°, ê° ìŠ¬ë¡¯ì— ë¬´ì—‡ì„ ì¥ì°© ì¤‘ì¸ì§€, ì–´ë–¤ ë¬´ê¸°ë¥¼ ì‚¬ìš© ì¤‘ì¸ì§€
     /// <summary>
-    /// ¿ø°Å¸® ¹«±â1
+    /// ì›ê±°ë¦¬ ë¬´ê¸°1
     /// </summary>
     public EnumData.Weapon FirstSlot;
     /// <summary>
-    /// ¿ø°Å¸® ¹«±â2
+    /// ì›ê±°ë¦¬ ë¬´ê¸°2
     /// </summary>
     public EnumData.Weapon SecondSlot;
     /// <summary>
-    /// ±Ù°Å¸® ¹«±â1
+    /// ê·¼ê±°ë¦¬ ë¬´ê¸°1
     /// </summary>
     public EnumData.Weapon ThirdSlot;
     /// <summary>
-    /// »ç¿ë ÁßÀÎ ¹«±â
+    /// ì‚¬ìš© ì¤‘ì¸ ë¬´ê¸°
     /// </summary>
     public WeaponSlot CurrentSlotIndex = WeaponSlot.FirstRanged;
 
-    public EnumData.Weapon CurrentSlotWeaponType { get { // ÇöÀç ¹«±â°¡ ¹«¾ùÀÎÁö ¾Ë·ÁÁÖ´Â ÇÁ·ÎÆÛÆ¼
+    public EnumData.Weapon CurrentSlotWeaponType { get { // í˜„ì¬ ë¬´ê¸°ê°€ ë¬´ì—‡ì¸ì§€ ì•Œë ¤ì£¼ëŠ” í”„ë¡œí¼í‹°
             return GetSlotWeaponType(CurrentSlotIndex);
     } }
 
 
     /// <summary>
-    /// ¹«±â ±³Ã¼¿¡ ÇÊ¿äÇÑ ½Ã°£
+    /// ë¬´ê¸° êµì²´ì— í•„ìš”í•œ ì‹œê°„
     /// </summary>
     public float WeaponSwitchTime = 2f;
 
-    // µÚÁıÈù ¿©ºÎ¸¦ ÆÇº°ÇÏ¿© ¼Õ ¹èÄ¡¸¦ ¹İ´ë·Î ÇØ¾ßÇÏ´ÂÁö
+    // ë’¤ì§‘íŒ ì—¬ë¶€ë¥¼ íŒë³„í•˜ì—¬ ì† ë°°ì¹˜ë¥¼ ë°˜ëŒ€ë¡œ í•´ì•¼í•˜ëŠ”ì§€
     private bool _changeHand;
     private Camera _mainCamera;
     
     /// <summary>
-    /// ¹«±âµé ÀúÀå °ø°£
+    /// ë¬´ê¸°ë“¤ ì €ì¥ ê³µê°„
     /// </summary>
     private Weapon[] _weapons;
     /// <summary>
-    /// ÇöÀç »ç¿ë ÁßÀÎ ¹«±â
+    /// í˜„ì¬ ì‚¬ìš© ì¤‘ì¸ ë¬´ê¸°
     /// </summary>
     private Weapon _currentWeapon;
 
     /// <summary>
-    /// º¯È­¸¦ °¨ÁöÇÏ°í »õ·Ó°Ô ¼¼ÆÃÇÏ±â À§ÇÑ °¨Áö¿ë
+    /// ë³€í™”ë¥¼ ê°ì§€í•˜ê³  ìƒˆë¡­ê²Œ ì„¸íŒ…í•˜ê¸° ìœ„í•œ ê°ì§€ìš©
     /// </summary>
     private bool _lastWeaponParent;
 
-    // À§Ä¡ Á¶Á¤¿¡ ÇÊ¿äÇÑ ¿ÀºêÁ§Æ®µéÀÇ µ¥ÀÌÅÍµé
+    // ìœ„ì¹˜ ì¡°ì •ì— í•„ìš”í•œ ì˜¤ë¸Œì íŠ¸ë“¤ì˜ ë°ì´í„°ë“¤
     private GameObject _leftArm;
     private GameObject _rightArm;
     private SpriteRenderer _leftRenderer;
@@ -104,48 +105,48 @@ public class Hand
     private Transform _weaponHoldingLocationRoot;
     private GameObject _clothes;
 
-    // Flip ÆÇº°¿ë 1, -1(µÚÁıÈû) À¸·Î ±¸ºĞÇÑ´Ù
+    // Flip íŒë³„ìš© 1, -1(ë’¤ì§‘í˜) ìœ¼ë¡œ êµ¬ë¶„í•œë‹¤
     private int _playerFlip;
     private int _mouseFlip;
     /// <summary>
-    /// ÃÖÁ¾ÀûÀ¸·Î flip µÇ¾ú´ÂÁö
+    /// ìµœì¢…ì ìœ¼ë¡œ flip ë˜ì—ˆëŠ”ì§€
     /// </summary>
     private int _flip;
     
-    // ÀåÀü¿¡ »ç¿ëµÈ´Ù
+    // ì¥ì „ì— ì‚¬ìš©ëœë‹¤
     /// <summary>
-    /// ¹«±â ±³Ã¼ ÁßÀÎÁö, ±³Ã¼ Áß¿£ ´Ù¸¥ Çàµ¿Àº ¾ÈÇÑ´Ù
+    /// ë¬´ê¸° êµì²´ ì¤‘ì¸ì§€, êµì²´ ì¤‘ì—” ë‹¤ë¥¸ í–‰ë™ì€ ì•ˆí•œë‹¤
     /// </summary>
     private bool _isSwitchWeapon = false;
     /// <summary>
-    /// ¹«±â ±³Ã¼ Á¾·á À§Ä¡
+    /// ë¬´ê¸° êµì²´ ì¢…ë£Œ ìœ„ì¹˜
     /// </summary>
     private Quaternion _switchLeftTargetRot;
     private Quaternion _switchRightTargetRot;
     /// <summary>
-    /// ¹«±â ±³Ã¼ ½ÃÀÛ À§Ä¡
+    /// ë¬´ê¸° êµì²´ ì‹œì‘ ìœ„ì¹˜
     /// </summary>
     private Quaternion _switchLeftOriRot;
     private Quaternion _switchRightOriRot;
     /// <summary>
-    /// ±³Ã¼ È£Ãâ Àü À§Ä¡
+    /// êµì²´ í˜¸ì¶œ ì „ ìœ„ì¹˜
     /// </summary>
     private Quaternion _firstLeftTargetRot;
     private Quaternion _firstRightTargetRot;
     /// <summary>
-    /// ±³Ã¼ ÁøÇàµµ
+    /// êµì²´ ì§„í–‰ë„
     /// </summary>
     private float _switchProgressTime;
 
 
-    // Clothes ¹İµ¿ °ü·Ã
+    // Clothes ë°˜ë™ ê´€ë ¨
     public float ShakeAmount;
-    public float HealShake = 0.5f; // Èçµé¸² È¸º¹ ½Ã°£
-    public float MaxShake = 15f; // ÃÖ´ë Èçµé¸² °¢µµ Á¦ÇÑ
+    public float HealShake = 0.5f; // í”ë“¤ë¦¼ íšŒë³µ ì‹œê°„
+    public float MaxShake = 15f; // ìµœëŒ€ í”ë“¤ë¦¼ ê°ë„ ì œí•œ
 
 
     /// <summary>
-    /// ¹«±âµé È¸Àü°ª ÀÚÃ¼ º¸Á¤ ¾øÀ¸¸é ¾ÈµÊ ¸ÅÁ÷ ³Ñ¹ö ¸ÂÀ½ °Çµå¸®Áö ¸¶»ï
+    /// ë¬´ê¸°ë“¤ íšŒì „ê°’ ìì²´ ë³´ì • ì—†ìœ¼ë©´ ì•ˆë¨ ë§¤ì§ ë„˜ë²„ ë§ìŒ ê±´ë“œë¦¬ì§€ ë§ˆì‚¼
     /// </summary>
     const float HandAngleCorrection = 90;
 
@@ -155,18 +156,18 @@ public class Hand
 
         CurrentSlotIndex = WeaponSlot.FirstRanged;
         SetWeaponData();
-        HandAction = CheckAttack; // °ø°İÇß´ÂÁö Ã¼Å©
-        HandAction += CheckSlotSwitch; // ½½·ÔÀÌ ¹Ù²î¾ú´ÂÁö Ã¼Å©
+        HandAction = CheckAttack; // ê³µê²©í–ˆëŠ”ì§€ ì²´í¬
+        HandAction += CheckSlotSwitch; // ìŠ¬ë¡¯ì´ ë°”ë€Œì—ˆëŠ”ì§€ ì²´í¬
         HandAction += SetClothes;
-        HandAction += CheckFlipData; // ¹æÇâÀÌ ¹Ù²î¾ú´ÂÁö Ã¼Å© ÈÄ ¹æÇâ Àû¿ë
-        HandAction += CheckCurrentSlotWeaponParent; // ¹«±âÀÇ À§Ä¡°¡ ¹Ù²î¾ú´ÂÁö Ã¼Å© ÈÄ Àû¿ë
-        HandAction += SetArmRot; // ¼ÕÀÇ ¹æÇâÀ» ¼³Á¤
+        HandAction += CheckFlipData; // ë°©í–¥ì´ ë°”ë€Œì—ˆëŠ”ì§€ ì²´í¬ í›„ ë°©í–¥ ì ìš©
+        HandAction += CheckCurrentSlotWeaponParent; // ë¬´ê¸°ì˜ ìœ„ì¹˜ê°€ ë°”ë€Œì—ˆëŠ”ì§€ ì²´í¬ í›„ ì ìš©
+        HandAction += SetArmRot; // ì†ì˜ ë°©í–¥ì„ ì„¤ì •
 
-        SetSlotWeapons(); // ÃÖÃÊ ½ÃÀÛ½Ã ÀÏ´Ü ±âº»°ªÀ¸·Î ¼¼ÆÃ
+        SetSlotWeapons(); // ìµœì´ˆ ì‹œì‘ì‹œ ì¼ë‹¨ ê¸°ë³¸ê°’ìœ¼ë¡œ ì„¸íŒ…
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ®µé ¼¼ÆÃ (µ¿Àû ¼¼ÆÃ) ÀÌ¸§ ±â¹İÀ¸·Î °¨À¸·Î Player ³»ºÎ ¿ÀºêÁ§Æ®µé ÀÌ¸§ º¯°æ ±İÁö
+    /// ì˜¤ë¸Œì íŠ¸ë“¤ ì„¸íŒ… (ë™ì  ì„¸íŒ…) ì´ë¦„ ê¸°ë°˜ìœ¼ë¡œ ê°ìœ¼ë¡œ Player ë‚´ë¶€ ì˜¤ë¸Œì íŠ¸ë“¤ ì´ë¦„ ë³€ê²½ ê¸ˆì§€
     /// </summary>
     private void InitObj()
     {
@@ -184,13 +185,13 @@ public class Hand
         _weaponHoldingLocation = new();
         for (int i = 0; i < _weaponHoldingLocationRoot.childCount; i++)
         {
-            _weaponHoldingLocation.Add(_weaponHoldingLocationRoot.GetChild(i)); // ¼­¼øÀ¸·Î °¡Á®¿À´Ï±î ¼ø¼­´ë·Î ³Ö¾î!!
+            _weaponHoldingLocation.Add(_weaponHoldingLocationRoot.GetChild(i)); // ì„œìˆœìœ¼ë¡œ ê°€ì ¸ì˜¤ë‹ˆê¹Œ ìˆœì„œëŒ€ë¡œ ë„£ì–´!!
         }
     }
 
 
     /// <summary>
-    /// _weaponRoot¿¡ Á¸ÀçÇÏ´Â ¸ğµç Weaponµé Ã£¾Æ¼­ _weapons¿¡ ³Ö¾îÁØ´Ù
+    /// _weaponRootì— ì¡´ì¬í•˜ëŠ” ëª¨ë“  Weaponë“¤ ì°¾ì•„ì„œ _weaponsì— ë„£ì–´ì¤€ë‹¤
     /// </summary>
     private void SetWeaponData()
     {
@@ -203,36 +204,36 @@ public class Hand
     }
 
     /// <summary>
-    /// ³ª¸ÓÁö °ªµéÀº ¹«½ÃÇÏ°í ÇöÀç ¹«±â½½·Ô µ¥ÀÌÅÍ »óÀ¸·Î µî·Ï µÇ¾î ÀÖ´Â ¹«±âµé·Î ÀüºÎ ¼¼ÆÃÇÏ°í ÃÊ±âÈ­ÇÑ´Ù
-    /// ¸¸¾à ¹«±â¸¦ ±³Ã¼ ÁßÀÌ¿´´Ù¸é ÀüºÎ ÃÊ±âÈ­ ½ÃÅ°°í ¼¼ÆÃÇÑ´Ù.
+    /// ë‚˜ë¨¸ì§€ ê°’ë“¤ì€ ë¬´ì‹œí•˜ê³  í˜„ì¬ ë¬´ê¸°ìŠ¬ë¡¯ ë°ì´í„° ìƒìœ¼ë¡œ ë“±ë¡ ë˜ì–´ ìˆëŠ” ë¬´ê¸°ë“¤ë¡œ ì „ë¶€ ì„¸íŒ…í•˜ê³  ì´ˆê¸°í™”í•œë‹¤
+    /// ë§Œì•½ ë¬´ê¸°ë¥¼ êµì²´ ì¤‘ì´ì˜€ë‹¤ë©´ ì „ë¶€ ì´ˆê¸°í™” ì‹œí‚¤ê³  ì„¸íŒ…í•œë‹¤.
     /// </summary>
     private void SetSlotWeapons()
     {
-        // ÀåÀü °ü·Ã ÃÊ±âÈ­
+        // ì¥ì „ ê´€ë ¨ ì´ˆê¸°í™”
 
         int[] holdWeapons = new int[3] { (int)FirstSlot, (int)SecondSlot, (int)FirstSlot };
 
         for (int i = 0; i < _weapons.Length; i++)
         {
-            if (holdWeapons.Contains(i)) // Âø¿ë ¸ñ·Ï¿¡ ÀÖ´Ù¸é
+            if (holdWeapons.Contains(i)) // ì°©ìš© ëª©ë¡ì— ìˆë‹¤ë©´
             {
                 if (!_weapons[i].gameObject.activeSelf)
                 {
                     _weapons[i].gameObject.SetActive(true);
                 }
-                if (holdWeapons[(int)CurrentSlotIndex] == i) // ¼Õ¿¡ µé°í ÀÖ´Â ¹«±â¶ó¸é ¼Õ¿¡ ÀåÂø½ÃÅ²´Ù
+                if (holdWeapons[(int)CurrentSlotIndex] == i) // ì†ì— ë“¤ê³  ìˆëŠ” ë¬´ê¸°ë¼ë©´ ì†ì— ì¥ì°©ì‹œí‚¨ë‹¤
                 {
-                    _currentWeapon = _weapons[i]; // ÇöÀç ÀåÂø ÁßÀÎ ¹«±â·Î Ç¥½ÃÇÑ´Ù.
+                    _currentWeapon = _weapons[i]; // í˜„ì¬ ì¥ì°© ì¤‘ì¸ ë¬´ê¸°ë¡œ í‘œì‹œí•œë‹¤.
                     _currentWeapon.Renderer.sortingOrder = 4;
-                    SetCurrentSlotWeaponParent(); // ÀåÂø ÁßÀÎ ¹«±â¸¦ ¸ŞÀÎ ¼Õ¿¡ ÀåÂø
+                    SetCurrentSlotWeapon(); // ì¥ì°© ì¤‘ì¸ ë¬´ê¸°ë¥¼ ë©”ì¸ ì†ì— ì¥ì°©
                 }
-                else // ¼Õ¿¡ µé°í ÀÖ´Â ¹«±â°¡ ¾Æ´Ï¶ó¸é È¦µù À§Ä¡·Î ÀÌµ¿½ÃÅ²´Ù
+                else // ì†ì— ë“¤ê³  ìˆëŠ” ë¬´ê¸°ê°€ ì•„ë‹ˆë¼ë©´ í™€ë”© ìœ„ì¹˜ë¡œ ì´ë™ì‹œí‚¨ë‹¤
                 {
                     SetHoldSlotWeaponParent(_weapons[i]);
                 }
             }
-            else // Âø¿ë ¸ñ·Ï¿¡ ¾ø´Ù¸é WeaponRoot·Î ÀÌµ¿½ÃÅ´. ¸¸¾à ÀÌ¹Ì WeaponRoot¶ó¸é ½ºÅµ
-            // »ç¿ëÀº ¾ÈÇÏÁö¸¸ È°¼ºÈ­ µÇ¾îÀÖ´Â ÃÑµéÀ» Á¤¸®ÇÏ±â À§ÇØ activeSelf·Î Ã³¸®
+            else // ì°©ìš© ëª©ë¡ì— ì—†ë‹¤ë©´ WeaponRootë¡œ ì´ë™ì‹œí‚´. ë§Œì•½ ì´ë¯¸ WeaponRootë¼ë©´ ìŠ¤í‚µ
+            // ì‚¬ìš©ì€ ì•ˆí•˜ì§€ë§Œ í™œì„±í™” ë˜ì–´ìˆëŠ” ì´ë“¤ì„ ì •ë¦¬í•˜ê¸° ìœ„í•´ activeSelfë¡œ ì²˜ë¦¬
             {
                 if (_weapons[i].gameObject.activeSelf)
                 {
@@ -273,95 +274,57 @@ public class Hand
 
     private int _lastPlayerFlip = 1;
     /// <summary>
-    /// ÇöÀçÇÃ·¹ÀÌ¾î »óÈ²ÀÌ µÚÁıÈù »óÈ²ÀÎÁö °è»êÇÏ°í Àû¿ë½ÃÅ²´Ù
+    /// í˜„ì¬í”Œë ˆì´ì–´ ìƒí™©ì´ ë’¤ì§‘íŒ ìƒí™©ì¸ì§€ ê³„ì‚°í•˜ê³  ì ìš©ì‹œí‚¨ë‹¤
     /// </summary>
     private void CheckFlipData()
     {
-        // ÇÃ·¹ÀÌ¾î YÃà ¹æÇâ (1 : ±âº» ¹æÇâ, -1 : µÚÁıÈù ¹æÇâ)
+        // í”Œë ˆì´ì–´ Yì¶• ë°©í–¥ (1 : ê¸°ë³¸ ë°©í–¥, -1 : ë’¤ì§‘íŒ ë°©í–¥)
         _playerFlip = _player.transform.localEulerAngles.y == 0 ? 1 : -1;
         if (_lastPlayerFlip != _playerFlip)
             ShakeAmount = -ShakeAmount;
         _lastPlayerFlip = _playerFlip;
-        // ¸¶¿ì½º°¡ ÇÃ·¹ÀÌ¾î »ó´ë ¹æÇâ (1 : ¿ŞÂÊ, -1 : ¿À¸¥ÂÊ)
-        _mouseFlip = _player.transform.position.x > ScreenToWorld2D(Input.mousePosition).x ? 1 : -1;
-        // 3. ÃÖÁ¾ ¹æÇâ °áÁ¤ (1: ±âº», -1: µÚÁıÈû)
+        // ë§ˆìš°ìŠ¤ê°€ í”Œë ˆì´ì–´ ìƒëŒ€ ë°©í–¥ (1 : ì™¼ìª½, -1 : ì˜¤ë¥¸ìª½)
+        _mouseFlip = _player.transform.position.x > ScreenToWorld2D(Input.mousePosition, _mainCamera).x ? 1 : -1;
+        // 3. ìµœì¢… ë°©í–¥ ê²°ì • (1: ê¸°ë³¸, -1: ë’¤ì§‘í˜)
         _flip = _playerFlip * _mouseFlip;
         SetFlip();
     }
 
     /// <summary>
-    /// °è»êÇÑ FipData¸¦ ±â¹İÀ¸·Î ÇÃ·¹ÀÌ¾îÀÇ ¼Õ, ¹«±âÀÇ Scale¸¦ Á¶Á¤ÇÏ°í ¼Õ ±³Ã¼ ¿©ºÎ¸¦ ¼³Á¤ÇÑ´Ù
+    /// ê³„ì‚°í•œ FipDataë¥¼ ê¸°ë°˜ìœ¼ë¡œ í”Œë ˆì´ì–´ì˜ ì†, ë¬´ê¸°ì˜ Scaleë¥¼ ì¡°ì •í•˜ê³  ì† êµì²´ ì—¬ë¶€ë¥¼ ì„¤ì •í•œë‹¤
     /// </summary>
     private void SetFlip()
     {
-        // ÆÈ°ú ¹«±âÀÇ Å©±â ¼³Á¤
-        // ±âº»ÀûÀ¸·Î ¿À¸¥¼Õ¿¡ ÃÑÀÌ ¿Ã¶ó°£°æ¿ì ÇÃ¸³µÇ¾î¾ßÇÑ´Ù. µû¶ó¼­ flip, -flipÀ¸·Î °è»êÇÑ´Ù.
-        // ÇÏÁö¸¸ µÚÁıÈù °æ¿ì ¹İ´ë·Î ¹Ù²î±â¿¡ ÃÖÁ¤ ¹æÇâÀ» ±âÁØÀ¸·Î º¸Á¤ÇØÁØ´Ù.
+        // íŒ”ê³¼ ë¬´ê¸°ì˜ í¬ê¸° ì„¤ì •
+        // ê¸°ë³¸ì ìœ¼ë¡œ ì˜¤ë¥¸ì†ì— ì´ì´ ì˜¬ë¼ê°„ê²½ìš° í”Œë¦½ë˜ì–´ì•¼í•œë‹¤. ë”°ë¼ì„œ flip, -flipìœ¼ë¡œ ê³„ì‚°í•œë‹¤.
+        // í•˜ì§€ë§Œ ë’¤ì§‘íŒ ê²½ìš° ë°˜ëŒ€ë¡œ ë°”ë€Œê¸°ì— ìµœì • ë°©í–¥ì„ ê¸°ì¤€ìœ¼ë¡œ ë³´ì •í•´ì¤€ë‹¤.
         _leftArm.transform.localScale = new Vector3(_flip, 1, 1);
         _rightArm.transform.localScale = new Vector3(-_flip, 1, 1);
 
-        // 360µµ·Î È¸Àü½ÃÄÑ ¹æÇâÀ» ³ªÅ¸³»±â¿¡ ¿ìÃøÀ¸·Î °¡´Â°æ¿ì (Á¤¹æÇâ ±âÁØ) yÃà ÇÃ¸³ÇØÁà¾ßÇÑ´Ù.
-        // ÇÏÁö¸¸ ÀÌ ¶ÇÇÑ ÇÃ·¹ÀÌ¾î°¡ µÚÁıÈ÷¸é ¹İ´ë·Î ¹Ù²î±â¿¡ ÇÃ·¹ÀÌ¾î ¹æÇâÀ» ±âÁØÀ¸·Î º¸Á¤ÇØÁØ´Ù.
-        if (_currentWeapon.HandState.StandardHand) // ¿À¸¥¼Õ¿¡ ÀÖÀ»¶§¸¸
+        // 360ë„ë¡œ íšŒì „ì‹œì¼œ ë°©í–¥ì„ ë‚˜íƒ€ë‚´ê¸°ì— ìš°ì¸¡ìœ¼ë¡œ ê°€ëŠ”ê²½ìš° (ì •ë°©í–¥ ê¸°ì¤€) yì¶• í”Œë¦½í•´ì¤˜ì•¼í•œë‹¤.
+        // í•˜ì§€ë§Œ ì´ ë˜í•œ í”Œë ˆì´ì–´ê°€ ë’¤ì§‘íˆë©´ ë°˜ëŒ€ë¡œ ë°”ë€Œê¸°ì— í”Œë ˆì´ì–´ ë°©í–¥ì„ ê¸°ì¤€ìœ¼ë¡œ ë³´ì •í•´ì¤€ë‹¤.
+        if (_currentWeapon.HandState.StandardHand) // ì˜¤ë¥¸ì†ì— ìˆì„ë•Œë§Œ
             _currentWeapon.transform.localScale = new Vector3(1, -_mouseFlip, 1);
         else
             _currentWeapon.transform.localScale = new Vector3(1, _mouseFlip, 1);
 
-        // 5. _changeHand ÇÃ·¡±× ¼³Á¤
+        // 5. _changeHand í”Œë˜ê·¸ ì„¤ì •
         _changeHand = (_flip == -1);
     }
 
     /// <summary>
-    /// ¹«±âÀÇ HandState¸¦ º¸°í ±×¿¡ ¸ÂÃç¼­ ¼ÕÀ» ¼¼ÆÃÇÑ´Ù
-    /// </summary>
-    /// <param name="handType">¾î´À ¼ÕÀ» ¼¼ÆÃÇÒ °ÍÀÎÁö</param>
-    private void SetArm(HandType handType)
-    {
-        bool isLeft = handType == HandType.Left;
-        var arm = isLeft ? _leftArm : _rightArm;
-        var renderer = isLeft ? _leftRenderer : _rightRenderer;
-        Quaternion rot;
-        var weaponData = _currentWeapon.HandState;
-
-        if (ApplyHandSwap(weaponData, handType, _changeHand))
-        {
-            if (!IsRightHandStandard() == isLeft)
-            {
-                renderer.sortingLayerName = "Entity";
-                renderer.sortingOrder = (int)HandLayer.afterGun;
-                rot = ForwardToMouse(arm);
-            }
-            else
-            {
-                renderer.sortingLayerName = "Entity";
-                renderer.sortingOrder = (int)HandLayer.beforeGun;
-                rot = ForwardToObj(arm, _currentWeapon.SecondHandLocation.position);
-            }
-        }
-        else
-        {
-            renderer.sortingLayerName = "Entity";
-            renderer.sortingOrder = (int)HandLayer.afterBody;
-            rot = Quaternion.Euler(new Vector3(0, 0, 0));
-        }
-
-        arm.transform.rotation = rot;
-    }
-
-
-    /// <summary>
-    /// ¾ç ÂÊ ¼ÕÀ» ¼¼ÆÃÇÑ´Ù
+    /// ì–‘ ìª½ ì†ì„ ì„¸íŒ…í•œë‹¤
     /// </summary>
     private void SetArmRot()
     {
-        SetArm(HandType.Left);
-        SetArm(HandType.Right);
+        _currentWeapon.HandLogic.SetLeftArm(_leftArm, _leftRenderer, _currentWeapon, _changeHand, _mainCamera);
+        _currentWeapon.HandLogic.SetRightArm(_rightArm, _rightRenderer, _currentWeapon, _changeHand, _mainCamera);
     }
 
     /// <summary>
-    /// SlotÀ» º¯°æÇÏ´ÂÁö¸¦ Ã¼Å©ÇÑ´Ù
+    /// Slotì„ ë³€ê²½í•˜ëŠ”ì§€ë¥¼ ì²´í¬í•œë‹¤
     /// </summary>
-    public void CheckSlotSwitch() // _crruentWeapon¸¸ °á±¹ º¯°æµÇ¸é µÊ
+    public void CheckSlotSwitch() // _crruentWeaponë§Œ ê²°êµ­ ë³€ê²½ë˜ë©´ ë¨
     {
         if (Input.GetKeyDown(SlotChangeKey))
         {
@@ -384,10 +347,10 @@ public class Hand
         _isSwitchWeapon = true;
         HandAction -= CheckFlipData;
         HandAction -= CheckCurrentSlotWeaponParent;
-        HandAction -= SetArmRot; // ±³Ã¼ Áß¿£ ÀÏ´Ü ½ºÅ¾
+        HandAction -= SetArmRot; // êµì²´ ì¤‘ì—” ì¼ë‹¨ ìŠ¤íƒ‘
         
-        _switchLeftTargetRot = ForwardToObj(_leftArm, _weaponHoldingLocation[(int)_currentWeapon.HoldingIndex].position);
-        _switchRightTargetRot = ForwardToObj(_rightArm, _weaponHoldingLocation[(int)_currentWeapon.HoldingIndex].position);
+        _switchLeftTargetRot = ForwardToObj(_leftArm, _weaponHoldingLocation[(int)_currentWeapon.HoldingIndex].position, HandAngleCorrection);
+        _switchRightTargetRot = ForwardToObj(_rightArm, _weaponHoldingLocation[(int)_currentWeapon.HoldingIndex].position, HandAngleCorrection);
         _firstLeftTargetRot = _leftArm.transform.rotation;
         _firstRightTargetRot = _rightArm.transform.rotation;
         _switchLeftOriRot = _leftArm.transform.rotation;
@@ -397,12 +360,12 @@ public class Hand
         HandAction += HoldStandardWeapon;
     }
 
-    private void HoldStandardWeapon() // ¹«±â¸¦ È¦´õ¿¡ ³Ö´Â °úÁ¤, ½ÇÇàµÇ¸é ¹«Á¶°Ç ³¡³ª¾ßÇÔ !ÃÖ¿ì¼±!
+    private void HoldStandardWeapon() // ë¬´ê¸°ë¥¼ í™€ë”ì— ë„£ëŠ” ê³¼ì •, ì‹¤í–‰ë˜ë©´ ë¬´ì¡°ê±´ ëë‚˜ì•¼í•¨ !ìµœìš°ì„ !
     {
-        _switchProgressTime += Time.deltaTime; // ÀÌµ¿Àº ½Ã°£ ºñ·Ê·Î ÀÌµ¿
+        _switchProgressTime += Time.deltaTime; // ì´ë™ì€ ì‹œê°„ ë¹„ë¡€ë¡œ ì´ë™
         _leftArm.transform.rotation = Quaternion.Slerp(_switchLeftOriRot, _switchLeftTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
         _rightArm.transform.rotation = Quaternion.Slerp(_switchRightOriRot, _switchRightTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
-        if (_switchProgressTime >= (WeaponSwitchTime - 0.4f) / 2f) // ÀÌµ¿ ¿Ï·á
+        if (_switchProgressTime >= (WeaponSwitchTime - 0.4f) / 2f) // ì´ë™ ì™„ë£Œ
         {
             _leftArm.transform.rotation = _switchLeftTargetRot;
             _rightArm.transform.rotation = _switchRightTargetRot;
@@ -417,15 +380,15 @@ public class Hand
     private void WaitHold()
     {
         _switchProgressTime += Time.deltaTime;
-        if (_switchProgressTime >= 0.2f) // ÀÌµ¿ ¿Ï·á
+        if (_switchProgressTime >= 0.2f) // ì´ë™ ì™„ë£Œ
         {
             _currentWeapon.transform.SetParent(_weaponHoldingLocation[(int)_currentWeapon.HoldingIndex], false);
             _currentWeapon.Renderer.sortingOrder = (int)_currentWeapon.HoldingOrder;
 
             _currentWeapon = _weapons[(int)CurrentSlotWeaponType];
 
-            _switchLeftTargetRot = ForwardToObj(_leftArm, _weaponHoldingLocation[(int)_currentWeapon.HoldingIndex].position);
-            _switchRightTargetRot = ForwardToObj(_rightArm, _weaponHoldingLocation[(int)_currentWeapon.HoldingIndex].position);
+            _switchLeftTargetRot = ForwardToObj(_leftArm, _weaponHoldingLocation[(int)_currentWeapon.HoldingIndex].position, HandAngleCorrection);
+            _switchRightTargetRot = ForwardToObj(_rightArm, _weaponHoldingLocation[(int)_currentWeapon.HoldingIndex].position, HandAngleCorrection);
             _switchLeftOriRot = _leftArm.transform.rotation;
             _switchRightOriRot = _rightArm.transform.rotation;
 
@@ -436,23 +399,23 @@ public class Hand
         }
     }
 
-    private void DrawStandardWeapon() // ¹«±â¸¦ ³ÖÀº »óÅÂ¿¡¼­ ¼±ÅÃµÈ ¹«±â¸¦ ²¨³»´Â °úÁ¤
+    private void DrawStandardWeapon() // ë¬´ê¸°ë¥¼ ë„£ì€ ìƒíƒœì—ì„œ ì„ íƒëœ ë¬´ê¸°ë¥¼ êº¼ë‚´ëŠ” ê³¼ì •
     {
-        _switchProgressTime += Time.deltaTime; // ÀÌµ¿Àº ½Ã°£ ºñ·Ê·Î ÀÌµ¿
+        _switchProgressTime += Time.deltaTime; // ì´ë™ì€ ì‹œê°„ ë¹„ë¡€ë¡œ ì´ë™
         _leftArm.transform.rotation = Quaternion.Slerp(_switchLeftOriRot, _switchLeftTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
         _rightArm.transform.rotation = Quaternion.Slerp(_switchRightOriRot, _switchRightTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
 
-        if (_switchProgressTime >= (WeaponSwitchTime-0.4f) /4f) // ÀÌµ¿ ¿Ï·á
+        if (_switchProgressTime >= (WeaponSwitchTime-0.4f) /4f) // ì´ë™ ì™„ë£Œ
         {
             _leftArm.transform.rotation = _switchLeftTargetRot;
             _rightArm.transform.rotation = _switchRightTargetRot;
             _switchLeftOriRot = _leftArm.transform.rotation;
             _switchRightOriRot = _rightArm.transform.rotation;
-            SetCurrentSlotWeaponParent();
+            SetCurrentSlotWeapon();
             _currentWeapon.Renderer.sortingOrder = 4;
             _switchProgressTime = 0;
 
-            HandAction -= DrawStandardWeapon; // ÁÖ¹«±â±îÁö ²¨³¿
+            HandAction -= DrawStandardWeapon; // ì£¼ë¬´ê¸°ê¹Œì§€ êº¼ëƒ„
             HandAction += WaitDraw;
         }
     }
@@ -460,7 +423,7 @@ public class Hand
     private void WaitDraw()
     {
         _switchProgressTime += Time.deltaTime;
-        if (_switchProgressTime >= 0.2f) // ÀÌµ¿ ¿Ï·á
+        if (_switchProgressTime >= 0.2f) // ì´ë™ ì™„ë£Œ
         {
             _switchProgressTime = 0;
 
@@ -469,13 +432,13 @@ public class Hand
         }
     }
 
-    private void ReadyStandardWeapon() // ¹«±â¸¦ ³ÖÀº »óÅÂ¿¡¼­ ¼±ÅÃµÈ ¹«±â¸¦ ²¨³»´Â °úÁ¤
+    private void ReadyStandardWeapon() // ë¬´ê¸°ë¥¼ ë„£ì€ ìƒíƒœì—ì„œ ì„ íƒëœ ë¬´ê¸°ë¥¼ êº¼ë‚´ëŠ” ê³¼ì •
     {
-        _switchProgressTime += Time.deltaTime; // ÀÌµ¿Àº ½Ã°£ ºñ·Ê·Î ÀÌµ¿
+        _switchProgressTime += Time.deltaTime; // ì´ë™ì€ ì‹œê°„ ë¹„ë¡€ë¡œ ì´ë™
         _leftArm.transform.rotation = Quaternion.Slerp(_switchLeftOriRot, _firstLeftTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
         _rightArm.transform.rotation = Quaternion.Slerp(_switchRightOriRot, _firstLeftTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
 
-        if (_switchProgressTime >= (WeaponSwitchTime - 0.4f) / 4f) // ÀÌµ¿ ¿Ï·á
+        if (_switchProgressTime >= (WeaponSwitchTime - 0.4f) / 4f) // ì´ë™ ì™„ë£Œ
         {
             _leftArm.transform.rotation = _firstLeftTargetRot;
             _rightArm.transform.rotation = _firstRightTargetRot;
@@ -493,6 +456,11 @@ public class Hand
     {
         if (CurrentSlotWeaponType == EnumData.Weapon.None)
             return;
+        if (Input.GetMouseButtonDown(AttackKeyIndex))
+        {
+            if (_currentWeapon != null)
+                _currentWeapon.Attack();
+        }
         if (Input.GetMouseButton(AttackKeyIndex))
         {
             if (!_currentWeapon.IsReload)
@@ -500,28 +468,28 @@ public class Hand
             if (_currentWeapon != null)
                 _currentWeapon.Attack();
         }
+        if (Input.GetMouseButtonUp(AttackKeyIndex))
+        {
+            if (_currentWeapon != null)
+                _currentWeapon.Attack();
+        }
     }
 
-
-    private bool ApplyHandSwap(WeaponHandState weaponHandState, HandType type, bool isFlip)
+    private void SetCurrentSlotWeapon()
     {
-        return type switch
-        {
-            HandType.Standard => isFlip ? !weaponHandState.StandardHand : weaponHandState.StandardHand,
-            HandType.Left => isFlip ? weaponHandState.RightUse : weaponHandState.LeftUse,
-            _ => isFlip ? weaponHandState.LeftUse : weaponHandState.RightUse,
-        };
+        SetCurrentSlotWeaponParent();
+        InitCurrentSlotSetting();
     }
 
     private void CheckCurrentSlotWeaponParent()
     {
-        if (_lastWeaponParent != IsRightHandStandard())
+        if (_lastWeaponParent != IsRightHandStandard(_currentWeapon, _changeHand))
             SetCurrentSlotWeaponParent();
     }
 
     private void SetCurrentSlotWeaponParent()
     {
-        if (IsRightHandStandard())
+        if (IsRightHandStandard(_currentWeapon, _changeHand))
         {
             _currentWeapon.transform.SetParent(_rightWeaponLocation, false);
             _lastWeaponParent = true;
@@ -532,7 +500,11 @@ public class Hand
             _lastWeaponParent = false;
         }
         _currentWeapon.transform.localPosition = Vector3.zero;
-        _currentWeapon.Init();
+    }
+
+    private void InitCurrentSlotSetting()
+    {
+        _currentWeapon.SetMain();
     }
 
     private void SetHoldSlotWeaponParent(WeaponSlot targetSlot)
@@ -554,11 +526,6 @@ public class Hand
         weapon.transform.SetParent(_weaponRoot.transform, false);
     }
 
-    private bool IsRightHandStandard()
-    {
-        return ApplyHandSwap(_currentWeapon.HandState, HandType.Standard, _changeHand);
-    }
-
     private EnumData.Weapon GetSlotWeaponType(WeaponSlot slot)
     {
         return slot switch
@@ -568,69 +535,5 @@ public class Hand
             WeaponSlot.FirstMelee => ThirdSlot,
             _ => throw new NotImplementedException()
         };
-    }
-
-    public Quaternion ForwardToMouse(GameObject obj)
-    {
-        // 1. ¸¶¿ì½ºÀÇ È­¸é ÁÂÇ¥¸¦ °¡Á®¿È
-        Vector3 mouseScreenPosition = Input.mousePosition;
-
-        // 2. ¸¶¿ì½ºÀÇ ¿ùµå ÁÂÇ¥¸¦ °è»ê (Ä«¸Ş¶ó ±âÁØ Z ±íÀÌ ¼³Á¤)
-        Vector3 mouseWorldPosition = ScreenToWorld2D(mouseScreenPosition);
-
-        // 3. ¿ÀºêÁ§Æ®ÀÇ À§Ä¡¿¡¼­ ¸¶¿ì½º À§Ä¡·Î ÇâÇÏ´Â ¹æÇâ º¤ÅÍ °è»ê
-        Vector3 direction = mouseWorldPosition - obj.transform.position;
-
-        // 4. ¹æÇâ º¤ÅÍ¸¦ ±âÁØÀ¸·Î °¢µµ °è»ê
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // 5. ¿ÀºêÁ§Æ®ÀÇ ÀÚÃ¼ ZÃà ±âÁØ È¸Àü Ãß°¡ (90µµ)
-        float adjustedAngle = angle + HandAngleCorrection;
-
-        // 7. ÃÖÁ¾ È¸Àü°ª ¹İÈ¯
-        return Quaternion.Euler(new Vector3(0, 0, adjustedAngle));
-    }
-
-
-
-
-    public static Quaternion ForwardToObj(GameObject obj1, Vector3 obj2)
-    {
-        // µÎ ¹øÂ° ¿ÀºêÁ§Æ®¸¦ ÇâÇÏ´Â ¹æÇâ º¤ÅÍ °è»ê
-        Vector3 direction = obj2 - obj1.transform.position;
-        direction.z = 0; // 2D È¯°æ¿¡¼­´Â ZÃà ¹«½Ã
-        if (direction == Vector3.zero) return Quaternion.identity; // ¹æÇâÀÌ ¾øÀ¸¸é ±âº» È¸Àü ¹İÈ¯
-
-        // ¹æÇâ º¤ÅÍ¸¦ ±âÁØÀ¸·Î È¸Àü °è»ê (ZÃà È¸Àü¸¸)
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        float adjustedAngle = angle + HandAngleCorrection;
-
-        // 6. ÃÖÁ¾ È¸Àü°ª ¹İÈ¯
-        return Quaternion.Euler(new Vector3(0, 0, adjustedAngle));
-    }
-
-    Vector3 ScreenToWorld2D(Vector3 screenPosition)
-    {
-        // 1. È­¸é ÁÂÇ¥¸¦ 0~1·Î Á¤±ÔÈ­
-        float normalizedX = screenPosition.x / Screen.width;
-        float normalizedY = screenPosition.y / Screen.height;
-
-        // 2. Ä«¸Ş¶óÀÇ ¿ùµå ÁÂÇ¥ ¹üÀ§ °è»ê
-        float halfHeight = _mainCamera.orthographicSize; // Ä«¸Ş¶óÀÇ ¼¼·Î Àı¹İ Å©±â
-        float halfWidth = halfHeight * _mainCamera.aspect; // Ä«¸Ş¶óÀÇ °¡·Î Àı¹İ Å©±â (aspect ºñÀ² °í·Á)
-
-        // 3. ¿ùµå ÁÂÇ¥ °è»ê
-        float worldX = Mathf.Lerp(_mainCamera.transform.position.x - halfWidth,
-                                  _mainCamera.transform.position.x + halfWidth,
-                                  normalizedX);
-
-        float worldY = Mathf.Lerp(_mainCamera.transform.position.y - halfHeight,
-                                  _mainCamera.transform.position.y + halfHeight,
-                                  normalizedY);
-
-        // 4. ZÃà ±íÀÌ´Â 0
-        float worldZ = 0f;
-
-        return new Vector3(worldX, worldY, worldZ);
     }
 }

@@ -34,19 +34,6 @@ public class Weapon : MonoBehaviour
         public bool RightUse;
     }
 
-    [System.Serializable]
-    public class WeaponData
-    {
-        public float Damage;
-        public float BulletSpeed;
-        public float Spread;
-        public float AttackSpeed;
-        public float Range;
-        public int bulletPenetration;
-    }
-
-    [SerializeField]
-    public List<WeaponData> WeaponDatas;
     public int Level;
     public float ClothesShake;
     public Transform SecondHandLocation;
@@ -56,19 +43,38 @@ public class Weapon : MonoBehaviour
     public WeaponHandState HandState;
     public EnumData.Weapon WeaponType;
     public WeaponAttackType AttackType;
+    public IHandLogic HandLogic;
 
+    public float AttackSpeed = 1;
     public bool IsReload = false;
+    public bool IsStartAttack = false;
 
     public void Init()
     {
         WeaponSetting();
         IsReload = false;
+        IsStartAttack = false;
+        StartCoroutine(Reload());
+    }
+
+    public void SetMain()
+    {
+        IsReload = false;
+        IsStartAttack = false;
         StartCoroutine(Reload());
     }
 
     public virtual void WeaponSetting()
     {
 
+    }
+
+    public void AttackStart()
+    {
+        if (IsReload)
+            return;
+        IsStartAttack = true;
+        AttackStartLogic();
     }
 
     public void Attack()
@@ -79,19 +85,36 @@ public class Weapon : MonoBehaviour
         StartCoroutine(Reload());
     }
 
+    public void AttackEnd()
+    {
+        if (!IsStartAttack)
+            return;
+        IsStartAttack = false;
+        AttackEndLogic();
+    }
+
+
+    public virtual void AttackStartLogic()
+    {
+    }
+
     public virtual void AttackLogic()
+    {
+    }
+
+    public virtual void AttackEndLogic()
     {
     }
 
     private IEnumerator Reload()
     {
         IsReload = true;
-        yield return new WaitForSeconds(1 / WeaponDatas[Level-1].AttackSpeed);
+        yield return new WaitForSeconds(1 / AttackSpeed);
         IsReload = false;
     }
 
-    public void OnDisable()
+    private void OnEnable()
     {
-        IsReload = false;
+        Init();
     }
 }

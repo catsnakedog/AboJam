@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bat : MonoBehaviour
+public class Bat : ChargeMeleeWeapon
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void ChargeAttack(float chargeTime)
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ChargeEffect()
     {
         
     }

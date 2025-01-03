@@ -9,8 +9,24 @@ public class RangedWeapon : Weapon
     public GameObject BulletObj;
     public Type Bullet = typeof(Bullet);
 
+    [System.Serializable]
+    public class RangedWeaponData
+    {
+        public float Damage;
+        public float BulletSpeed;
+        public float Spread;
+        public float AttackSpeed;
+        public float Range;
+        public int bulletPenetration;
+    }
+
+    [SerializeField]
+    public List<RangedWeaponData> WeaponDatas;
+
     public override void WeaponSetting()
     {
         AttackType = WeaponAttackType.Range;
+        AttackSpeed = WeaponDatas[Level].AttackSpeed;
+        HandLogic = new RangedHandLogic();
     }
 }

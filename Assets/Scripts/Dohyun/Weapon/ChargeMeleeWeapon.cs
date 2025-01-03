@@ -9,43 +9,34 @@ public class ChargeMeleeWeapon : MeleeWeapon
     public float ChargeMaxTime = 2;
     public float ChargeMinTime = 0;
     public float ChargeTime = 0;
-    private float _lastChargeTime = 0;
 
     private Action _chargeAction = null;
-    private Action _chargeLateAction = null;
 
     public override void AttackLogic()
     {
-        if (!IsCharge)
+        if (IsCharge)
         {
-            IsCharge = true;
-            _chargeLateAction = CheckCharge;
-            _chargeAction = ChargeEffect;
-            ChargeTime = 0;
-            _lastChargeTime = -1;
-        }
-        else
-        {
+            if (ChargeTime >= ChargeMaxTime)
+            {
+                ChargeTime = ChargeMaxTime;
+                return;
+            }
             ChargeTime += Time.deltaTime;
         }
     }
 
-    private void CheckCharge()
+    public override void AttackStartLogic()
     {
-        if (_lastChargeTime == ChargeTime)
-        {
-            ChargeEnd();
-        }
-        else
-        {
-            _lastChargeTime = ChargeTime;
-        }
+        IsCharge = true;
+        _chargeAction = ChargeEffect;
+        ChargeTime = 0;
     }
 
-    virtual public void ChargeEnd()
+    public override void AttackEndLogic()
     {
-        Debug.Log(ChargeTime);
-
+        IsCharge = false;
+        ChargeAttack(ChargeTime);
+        ChargeTime = 0;
     }
 
     virtual public void ChargeEffect()
@@ -53,13 +44,13 @@ public class ChargeMeleeWeapon : MeleeWeapon
 
     }
 
+    virtual public void ChargeAttack(float chargeTime)
+    {
+
+    }
+
     public void Update()
     {
         _chargeAction?.Invoke();
-    }
-
-    public void LateUpdate()
-    {
-        _chargeLateAction?.Invoke();
     }
 }
