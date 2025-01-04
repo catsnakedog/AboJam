@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4452280365464044394}
   - component: {fileID: 5854290326818662696}
+  - component: {fileID: -3165279363330157103}
+  - component: {fileID: 4142172300456956039}
   - component: {fileID: 6402427507937476938}
   - component: {fileID: 1304255801497131616}
   - component: {fileID: 3722299692211717703}
@@ -54,6 +56,48 @@ MonoBehaviour:
   delay: 0.4
   detection: 10
   ratio: 0.8
+--- !u!114 &-3165279363330157103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2552858087031951219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b855f4933fdaac4f811b8fbf7cfa771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleFactor: 1.2
+  animationDuration: 0.2
+--- !u!114 &4142172300456956039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2552858087031951219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504fa27d546ffab42b5c4776714e2c8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colider2D: {fileID: 3722299692211717703}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3165279363330157103}
+        m_TargetAssemblyTypeName: AnimationClick, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!212 &6402427507937476938
 SpriteRenderer:
   m_ObjectHideFlags: 0

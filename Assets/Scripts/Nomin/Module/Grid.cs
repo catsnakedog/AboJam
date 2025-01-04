@@ -1,59 +1,80 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Grid : MonoBehaviour
 {
     /* Dependency */
-    public Canvas canvas; // 하이라키 연결
-    public GridLayoutGroup gridLayoutGroup; // 하이라키 연결
+    public SpriteRenderer spriteRenderer; // 맵
 
     /* Field & Property */
     public static Grid instance; // 싱글턴
-    public float CellSize { get; private set; } // 한 셀 너비
-    public float Spacing { get; private set; } // 셀 사이 공간
-    public int I { get; private set; }
-    public int J { get; private set; }
+    public int row = 1; // 행 개수
+    public int column = 1; // 열 개수
+    private Vector2 startPos; // 맵 왼쪽 위 좌표
+    private float width; // 맵 너비
+    private float height; // 맵 높이
+    private float cellWidth; // 타일 너비
+    private float cellHeight; // 타일 높이
 
     /* Intializer & Finalizer & Updater */
-    private void Awake()
+    private void Start()
     {
         instance = this;
-        transform.position = Vector3.zero;
-        CellSize = gridLayoutGroup.cellSize.x;
-        Spacing = gridLayoutGroup.spacing.x;
-        I = (int)((canvas.GetComponent<RectTransform>().rect.height + Spacing) / (CellSize + Spacing));
-        J = (int)((canvas.GetComponent<RectTransform>().rect.width + Spacing) / (CellSize + Spacing));
+        startPos = GetStartPos();
+        width = spriteRenderer.bounds.size.x;
+        height = spriteRenderer.bounds.size.y;
+        cellWidth = width / column;
+        cellHeight = height / row;
+
+        // 타일 생성
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < column; j++)
+            {
+                Tile.instances.Add(new Tile(i, j, GetTileWorldPos(i, j)));
+            }
+        }
     }
 
     /* Public Method */
     /// <summary>
-    /// <br>그리드의 [i][j] 오브젝트를 반환합니다.</br>
+    /// 마우스 좌표에 해당하는 타일의 OnClick 메서드를 실행시킵니다.
     /// </summary>
-    public GameObject GetObject(int i, int j)
+    public void OnClick()
     {
-        return gameObject.transform.GetChild(ConvertArrayToIndex(i, j)).gameObject;
+        GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition)).OnClick();
+    }
+
+    /* Private Method */
+    /// <summary>
+    /// 맵의 맨 왼쪽 위 꼭짓점 좌표를 반환합니다.
+    /// </summary>
+    private Vector2 GetStartPos()
+    {
+        Bounds bounds = spriteRenderer.bounds;
+        return new Vector2(bounds.min.x, bounds.max.y);
     }
     /// <summary>
-    /// <br>[i][j] 을 인덱스화 합니다.</br>
+    /// 타일의 월드 좌표를 반환합니다.
     /// </summary>
-    public int ConvertArrayToIndex(int i, int j)
+    private Vector2 GetTileWorldPos(int i, int j)
     {
-        int index = j * (i - 1) + j - 1;
+        float xPos = startPos.x + cellWidth * (j + 0.5f);
+        float yPos = startPos.y - cellHeight * (i + 0.5f);
 
-        return index;
+        return new Vector2(xPos, yPos);
     }
     /// <summary>
-    /// <br>인덱스를 [i][j] 로 변경합니다.</br>
+    /// 월드 좌표와 가장 가까운 타일을 반환합니다.
     /// </summary>
-    public (int i, int j) ConvertIndexToArray(int index)
+    /// <returns></returns>
+    private Tile GetNearestTile(Vector2 worldPos)
     {
-        // 행과 열 인덱스 계산
-        int i = index / J + 1;
-        int j = index % J + 1;
-
-        return (i, j);
+        return Tile.instances.OrderBy(tile => Vector2.Distance(tile.pos, worldPos)).FirstOrDefault();
     }
 }

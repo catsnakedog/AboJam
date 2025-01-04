@@ -88,6 +88,31 @@ public class Abocado : MonoBehaviour
 
         spriteRenderer.sprite = spr_level[(int)level];
     }
+    /// <summary>
+    /// 아보카도 클릭 시 상호작용 입니다.
+    /// </summary>
+    public void OnClick()
+    {
+        switch (level)
+        {
+            // Cultivated : Seed 로 성장
+            case EnumData.Abocado.Cultivated:
+                if (StaticData.Abocado > 0)
+                {
+                    StaticData.Abocado--;
+                    GrowUp(true);
+                }
+                break;
+            // Tree : 타워 업그레이드 패널 On
+            case EnumData.Abocado.Tree:
+                Promotion.instance.gameObject.SetActive(true);
+                break;
+            // Fruited : 수확
+            case EnumData.Abocado.Fruited:
+                Harvest();
+                break;
+        }
+    }
 
     /* Private Method */
     private void LevelUp(bool forced = false)
