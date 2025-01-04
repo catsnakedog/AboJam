@@ -12,11 +12,11 @@ public class Upgrade : MonoBehaviour
     public Button BTN_Knockback;
 
     /* Field & Property */
-    public static Upgrade instacne;
+    public static Upgrade instance;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
-        instacne = this;
+        instance = this;
     }
 }

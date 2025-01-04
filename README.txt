@@ -229,9 +229,21 @@ Price				get set inspector		상품 가격
 purchase			inspector			구매 여부
 
 /* Method */
-Buy								현재 버튼의 상품 구매
+Buy								현재 버튼의 무기 구매
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-[ Upgrade ] : 각 버튼에 접근하여 업그레이드 비용을 관리합니다.
+[ BTN_Upgrade ]
+
+/* Field & Property */
+instances			get set			모든 버튼 인스턴스
+prices				inspector			모든 업그레이드 비용
+Price				get set			현재 업그레이드 비용
+Level				get				현재 레벨
+maxLevel			inspector			만랩
+
+/* Method */
+Upgrade							현재 버튼의 업그레이드 구매
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Upgrade ] : 모든 업그레이드 버튼에 접근할 수 있습니다.
 
 /* Field & Property */
 BTN_Damage		get set			버튼 : 데미지
@@ -239,13 +251,17 @@ BTN_Speed			get set			버튼 : 공격 속도
 BTN_Range			get set			버튼 : 사거리
 BTN_Knockback		get set			버튼 : 넉백
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-[ Weapons ] : 각 버튼에 접근하여 무기 비용을 관리합니다.
+[ Weapons ] : 모든 무기 버튼에 접근할 수 있습니다.
 
 /* Field & Property */
-BTN_Damage		get set			버튼 : 데미지
-BTN_Speed			get set			버튼 : 공격 속도
-BTN_Range			get set			버튼 : 사거리
-BTN_Knockback		get set			버튼 : 넉백
+BTN_Gun			get set			버튼 : 권총
+BTN_Shotgun		get set			버튼 : 샷건
+BTN_Sniper			get set			버튼 : SR
+BTN_Riple			get set			버튼 : AR
+BTN_Knife			get set			버튼 : 칼
+BTN_Bat			get set			버튼 : 방망이
+BTN_Spear			get set			버튼 : 창
+BTN_Chainsaw		get set			버튼 : 전기톱
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ OnOff ] : 상점을 끄거나 킵니다.
 
@@ -268,18 +284,8 @@ On								메시지 출력
 6	6 발 = 양 끝 + 5 등분 지점
 
 
-Vector3 ortho = origin 의 직교
-Vector3 left = origin * -angle / 2
-Vector3 right = origin * angle / 2
-
-Vector3 leftEndPoint = 
-Vector3 rightEndPoint
-
-
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 1	Tree 클릭 > Promotion 열림
 2	버튼 클릭 : Upgrade.Promotion() > 특정 프리팹 타워로 프로모션
 3	Tower 클릭 > Upgrade 열림
 4	버튼 클릭 : 기존 타워의 모듈에 접근해서 능력치 UP !
-
-
