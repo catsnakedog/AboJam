@@ -9,18 +9,20 @@ public class Weapon : MonoBehaviour
     {
         Place1 = 0,
         Place2 = 1,
+        Place3 = 2,
     }
 
     public enum HoldingLocationOrder
     {
         Place1 = 0,
         Place2 = -2,
+        Place3 = -2,
     }
 
     public enum WeaponAttackType
     {
         Melee = 0,
-        Range = 1,
+        Ranged = 1,
         Charge = 2,
         Gage = 3
     }
@@ -48,6 +50,7 @@ public class Weapon : MonoBehaviour
     public float AttackSpeed = 1;
     public bool IsReload = false;
     public bool IsStartAttack = false;
+    public bool IsReloadOnAttack = true;
 
     public void Init()
     {
@@ -59,9 +62,20 @@ public class Weapon : MonoBehaviour
 
     public void SetMain()
     {
+        InitSetMain();
         IsReload = false;
         IsStartAttack = false;
         StartCoroutine(Reload());
+    }
+
+    public virtual void InitSetMain()
+    {
+
+    }
+
+    public virtual void InitSetHold()
+    {
+
     }
 
     public virtual void WeaponSetting()
@@ -82,7 +96,8 @@ public class Weapon : MonoBehaviour
         if (IsReload)
             return;
         AttackLogic();
-        StartCoroutine(Reload());
+        if (IsReloadOnAttack)
+            StartCoroutine(Reload());
     }
 
     public void AttackEnd()
@@ -106,7 +121,7 @@ public class Weapon : MonoBehaviour
     {
     }
 
-    private IEnumerator Reload()
+    public IEnumerator Reload()
     {
         IsReload = true;
         yield return new WaitForSeconds(1 / AttackSpeed);

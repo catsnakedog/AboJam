@@ -11,15 +11,20 @@ Shader "Custom/AttackEffect/Bat"
         _Seed ("Seed", Float) = 0.5
         _RingProbabilityVariation ("Ring Probability Variation", Float) = 0.5
         _BaseColor ("Base Color", Color) = (0.5, 0.5, 0.5, 0.5)
+        _BaseUnActiveColor ("Base UnActive Color",Color) = (0.5, 0.5, 0.5, 0.5)
         _LineColor ("Line Color", Color) = (0.5, 0.5, 0.5, 0.5)
+        _LineUnActiveColor ("Line UnActive Color",Color) = (0.5, 0.5, 0.5, 0.5)
         _BaseAlpha ("Base Alpha", Float) = 1
         _LineThickness ("Line Thickness", Float) = 0.05
         _LineAngle ("Line Angle", Range(0.0, 360.0)) = 45.0
+        _AttackFlag ("Attack Flag", Float) = 0.0
     }
     SubShader
     {
         Tags { "Queue"="Transparent" "RenderType"="Transparent" }
         Blend SrcAlpha OneMinusSrcAlpha
+        ZWrite On
+        Cull Off
         LOD 100
 
         Pass
@@ -37,10 +42,13 @@ Shader "Custom/AttackEffect/Bat"
             float _Seed;
             float _RingProbabilityVariation;
             float4 _BaseColor;
+            float4 _BaseUnActiveColor;
             float4 _LineColor;
+            float4 _LineUnActiveColor;
             float _BaseAlpha;
             float _LineThickness;
             float _LineAngle;
+            float _AttackFlag;
 
             struct appdata_t
             {
@@ -92,6 +100,12 @@ Shader "Custom/AttackEffect/Bat"
                 }
             }
 
+            fixed4 IsActiveColor(fixed3 activeColor, fixed3 unactiveColor ,float alpha)
+            {
+                if (_AttackFlag) return fixed4 (activeColor.rgb, alpha);
+                else return fixed4 (unactiveColor.rgb, alpha);
+            }
+
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 uv = i.uv - 0.5;
@@ -105,25 +119,20 @@ Shader "Custom/AttackEffect/Bat"
                 float maxAngle = _LineAngle + correctedThickness;
 
                 if (IsAngleInRange(angle, minAngle, maxAngle) && distance > _Radius * _RadiusScale && distance <= _LineRadius)
-                {
-                    return float4(_LineColor.rgb, 1.0);
-                }
+                    return IsActiveColor(_LineColor.rgb, _LineUnActiveColor.rgb, 1.0);
 
 
                 if (distance < _InRadius * _RadiusScale) 
-                    return fixed4(_BaseColor.rgb, _BaseAlpha);
+                    return IsActiveColor(_BaseColor.rgb, _BaseUnActiveColor.rgb, _BaseAlpha);
                 if (distance > _Radius * _RadiusScale) 
                     return fixed4(0, 0, 0, 0);
-
-                float baseAlpha = 1.0 - smoothstep(_InRadius * _RadiusScale, _Radius * _RadiusScale, distance);
-                fixed4 baseColor = fixed4(_BaseColor.rgb, baseAlpha);
 
                 float ringIndex = floor(distance / (_GridSize * _RadiusScale));
                 bool isEvenRing = ((uint)ringIndex % 2) == 0;
                 float ringProbability = (isEvenRing ? _RingProbabilityVariation : 1.0) * Random(float2(ringIndex, _Seed), _Seed);
                 float alpha = ringProbability * smoothstep(_InRadius * _RadiusScale, _Radius * _RadiusScale, distance);
 
-                return fixed4(baseColor.rgb, alpha);
+                return IsActiveColor(_BaseColor.rgb, _BaseUnActiveColor.rgb, alpha);
             }
             ENDCG
         }

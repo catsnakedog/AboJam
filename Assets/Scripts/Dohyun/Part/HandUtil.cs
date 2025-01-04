@@ -105,7 +105,6 @@ public static class HandUtil
         // 7. 값 조정
         float adjustedAngle = angle + correctAngle;
 
-        if (!adjustFlip) Debug.Log(angle);
         // 8. 최종 회전값 반환
         return Quaternion.Euler(new Vector3(0, 0, adjustedAngle));
     }

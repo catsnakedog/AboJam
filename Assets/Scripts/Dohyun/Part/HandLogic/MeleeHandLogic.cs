@@ -19,7 +19,7 @@ public class MeleeHandLogic : IHandLogic
             {
                 renderer.sortingLayerName = "Entity";
                 renderer.sortingOrder = (int)HandLayer.afterGun;
-                rot = RimitedForwardToMouse(arm, mainCamera, 25, 25, 90, false);
+                rot = RimitedForwardToMouse(arm, mainCamera, 25, 25, HANDCORRECTANGLE, false);
             }
             else
             {
@@ -49,7 +49,7 @@ public class MeleeHandLogic : IHandLogic
             {
                 renderer.sortingLayerName = "Entity";
                 renderer.sortingOrder = (int)HandLayer.afterGun;
-                rot = RimitedForwardToMouse(arm, mainCamera, 25, 25, 90, false);
+                rot = RimitedForwardToMouse(arm, mainCamera, 25, 25, HANDCORRECTANGLE, false);
             }
             else
             {

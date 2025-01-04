@@ -36,7 +36,24 @@ public class ChargeMeleeWeapon : MeleeWeapon
     {
         IsCharge = false;
         ChargeAttack(ChargeTime);
+        _chargeAction -= ChargeEffect;
         ChargeTime = 0;
+    }
+
+    public override void InitSetMain()
+    {
+        IsCharge = false;
+        _chargeAction = null;
+        ChargeTime = 0;
+        StopAllCoroutines();
+    }
+
+    public override void InitSetHold()
+    {
+        IsCharge = false;
+        _chargeAction = null;
+        ChargeTime = 0;
+        StopAllCoroutines();
     }
 
     virtual public void ChargeEffect()
@@ -47,6 +64,12 @@ public class ChargeMeleeWeapon : MeleeWeapon
     virtual public void ChargeAttack(float chargeTime)
     {
 
+    }
+
+    public override void WeaponSetting()
+    {
+        base.WeaponSetting();
+        AttackType = WeaponAttackType.Charge;
     }
 
     public void Update()

@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Recorder.OutputPath;
+using UnityEngine.Pool;
 
 public class ObjectPool : MonoBehaviour
 {
@@ -10,7 +12,7 @@ public class ObjectPool : MonoBehaviour
     {
         [SerializeField] public Queue<GameObject> PoolQueue;
         [SerializeField] public GameObject PoolObject;
-        [SerializeField] public int PoolSize = 20;       // Ǯ ũ��
+        [SerializeField] public int PoolSize = 20;       // 풀 크기
     }
 
     public static ObjectPool Instance;
@@ -35,18 +37,20 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    public GameObject GetObj(Type type, GameObject ori)
+    public GameObject GetObj(Type type, GameObject ori, int poolSize = 20)
     {
         if (!PoolDic.ContainsKey(type))
         {
             PoolDic[type] = new();
             PoolDic[type].PoolObject = ori;
             PoolDic[type].PoolQueue = new();
-            PoolDic[type].PoolSize = 20;
+            PoolDic[type].PoolSize = poolSize;
 
             for (int i = 0; i < PoolDic[type].PoolSize; i++)
             {
-                PoolDic[type].PoolQueue.Enqueue(Instantiate(PoolDic[type].PoolObject, Root.transform));
+                var obj = Instantiate(PoolDic[type].PoolObject, Root.transform);
+                obj.SetActive(false);
+                PoolDic[type].PoolQueue.Enqueue(obj);
             }
         }
         var pool = PoolDic[type];
@@ -68,6 +72,7 @@ public class ObjectPool : MonoBehaviour
     public void Return(Type type, GameObject obj)
     {
         obj.SetActive(false);
+        obj.transform.SetParent(Root.transform);
         PoolDic[type].PoolQueue.Enqueue(obj);
     }
 }

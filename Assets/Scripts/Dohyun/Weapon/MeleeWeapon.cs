@@ -21,7 +21,8 @@ public class MeleeWeapon : Weapon
     public override void WeaponSetting()
     {
         AttackType = WeaponAttackType.Melee;
-        AttackSpeed = WeaponDatas[Level].AttackSpeed;
+        AttackSpeed = WeaponDatas[Level-1].AttackSpeed;
+        IsReloadOnAttack = false;
         HandLogic = new MeleeHandLogic();
     }
 }

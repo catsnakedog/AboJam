@@ -19,10 +19,10 @@ public class EnumData
         ShotGun,
         Riple,
         Sniper,
+        Bat,
         knife,
         Spear,
         ChainSaw,
-        Bat,
         None,
     }
 

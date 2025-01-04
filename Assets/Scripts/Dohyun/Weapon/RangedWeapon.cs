@@ -25,8 +25,9 @@ public class RangedWeapon : Weapon
 
     public override void WeaponSetting()
     {
-        AttackType = WeaponAttackType.Range;
-        AttackSpeed = WeaponDatas[Level].AttackSpeed;
+        AttackType = WeaponAttackType.Ranged;
+        AttackSpeed = WeaponDatas[Level-1].AttackSpeed;
+        IsReloadOnAttack = true;
         HandLogic = new RangedHandLogic();
     }
 }

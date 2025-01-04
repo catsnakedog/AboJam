@@ -211,7 +211,7 @@ public class Hand
     {
         // 장전 관련 초기화
 
-        int[] holdWeapons = new int[3] { (int)FirstSlot, (int)SecondSlot, (int)FirstSlot };
+        int[] holdWeapons = new int[3] { (int)FirstSlot, (int)SecondSlot, (int)ThirdSlot };
 
         for (int i = 0; i < _weapons.Length; i++)
         {
@@ -229,7 +229,7 @@ public class Hand
                 }
                 else // 손에 들고 있는 무기가 아니라면 홀딩 위치로 이동시킨다
                 {
-                    SetHoldSlotWeaponParent(_weapons[i]);
+                    SetHoldSlotWeapon(_weapons[i]);
                 }
             }
             else // 착용 목록에 없다면 WeaponRoot로 이동시킴. 만약 이미 WeaponRoot라면 스킵
@@ -382,8 +382,7 @@ public class Hand
         _switchProgressTime += Time.deltaTime;
         if (_switchProgressTime >= 0.2f) // 이동 완료
         {
-            _currentWeapon.transform.SetParent(_weaponHoldingLocation[(int)_currentWeapon.HoldingIndex], false);
-            _currentWeapon.Renderer.sortingOrder = (int)_currentWeapon.HoldingOrder;
+            SetHoldSlotWeapon(_currentWeapon);
 
             _currentWeapon = _weapons[(int)CurrentSlotWeaponType];
 
@@ -405,7 +404,7 @@ public class Hand
         _leftArm.transform.rotation = Quaternion.Slerp(_switchLeftOriRot, _switchLeftTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
         _rightArm.transform.rotation = Quaternion.Slerp(_switchRightOriRot, _switchRightTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
 
-        if (_switchProgressTime >= (WeaponSwitchTime-0.4f) /4f) // 이동 완료
+        if (_switchProgressTime >= (WeaponSwitchTime-0.4f) /2f) // 이동 완료
         {
             _leftArm.transform.rotation = _switchLeftTargetRot;
             _rightArm.transform.rotation = _switchRightTargetRot;
@@ -438,7 +437,7 @@ public class Hand
         _leftArm.transform.rotation = Quaternion.Slerp(_switchLeftOriRot, _firstLeftTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
         _rightArm.transform.rotation = Quaternion.Slerp(_switchRightOriRot, _firstLeftTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
 
-        if (_switchProgressTime >= (WeaponSwitchTime - 0.4f) / 4f) // 이동 완료
+        if (_switchProgressTime >= 0.2f) // 이동 완료
         {
             _leftArm.transform.rotation = _firstLeftTargetRot;
             _rightArm.transform.rotation = _firstRightTargetRot;
@@ -459,19 +458,24 @@ public class Hand
         if (Input.GetMouseButtonDown(AttackKeyIndex))
         {
             if (_currentWeapon != null)
-                _currentWeapon.Attack();
+                _currentWeapon.AttackStart();
         }
         if (Input.GetMouseButton(AttackKeyIndex))
         {
-            if (!_currentWeapon.IsReload)
+            if (!_currentWeapon.IsReload && _currentWeapon.AttackType == Weapon.WeaponAttackType.Ranged)
                 ShakeClothes(_currentWeapon.ClothesShake);
             if (_currentWeapon != null)
                 _currentWeapon.Attack();
         }
         if (Input.GetMouseButtonUp(AttackKeyIndex))
         {
+            if (!_currentWeapon.IsReload && _currentWeapon.AttackType == Weapon.WeaponAttackType.Charge)
+            {
+                Debug.Log("Swing!");
+                ShakeClothes(_currentWeapon.ClothesShake);
+            }
             if (_currentWeapon != null)
-                _currentWeapon.Attack();
+                _currentWeapon.AttackEnd();
         }
     }
 
@@ -514,10 +518,22 @@ public class Hand
         weapon.Renderer.sortingOrder = (int)_currentWeapon.HoldingOrder;
     }
 
+    private void SetHoldSlotWeapon(Weapon targetWeapon)
+    {
+        SetHoldSlotWeaponParent(targetWeapon);
+        InitHoldSlotWeaponSetting(targetWeapon);
+    }
+
     private void SetHoldSlotWeaponParent(Weapon targetWeapon)
     {
         targetWeapon.transform.SetParent(_weaponHoldingLocation[(int)targetWeapon.HoldingIndex], false);
         targetWeapon.Renderer.sortingOrder = (int)targetWeapon.HoldingOrder;
+        targetWeapon.transform.localPosition = Vector3.zero;
+    }
+
+    private void InitHoldSlotWeaponSetting(Weapon targetWeapon)
+    {
+        targetWeapon.InitSetHold();
     }
 
     private void ReturnWeaponToRoot(Weapon weapon)
