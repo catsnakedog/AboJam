@@ -95,6 +95,8 @@ public class Abocado : MonoBehaviour
     public void OnClick()
     {
         currentAbocado = this;
+        Reinforcement.instance.Off();
+        Promotion.instance.Off();
 
         switch (level)
         {
@@ -108,7 +110,7 @@ public class Abocado : MonoBehaviour
                 break;
             // Tree : 타워 업그레이드 패널 On
             case EnumData.Abocado.Tree:
-                Promotion.instance.gameObject.SetActive(true);
+                Promotion.instance.On();
                 break;
             // Fruited : 수확
             case EnumData.Abocado.Fruited:

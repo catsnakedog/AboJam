@@ -53,9 +53,14 @@ public class HP : MonoBehaviour
     {
         // HP 비율에 변동이 생겼을 때만 동작
         float HP_ratio_new = HP_current / HP_max;
-        if (HP_ratio == HP_ratio_new) return;
+        if (Mathf.Abs(HP_ratio - HP_ratio_new) < 0.01f) return;
+
+        // UI 업데이트
         HP_ratio = Mathf.Lerp(material.GetFloat("_Fill"), HP_ratio_new, speed);
         material.SetFloat("_Fill", HP_ratio);
+
+        // UI 업데이트 종료 시 Visble 체크
+        if (Mathf.Abs(HP_ratio - HP_ratio_new) < 0.01f) CheckVisible();
     }
     private void OnDestroy()
     {
@@ -81,7 +86,6 @@ public class HP : MonoBehaviour
     public void Heal(float value)
     {
         HP_current = Mathf.Min(HP_current + value, HP_max);
-        if (HP_current == HP_max) CheckVisible();
     }
     /// <summary>
     /// 최대 체력을 조정합니다.
@@ -90,7 +94,7 @@ public class HP : MonoBehaviour
     public void SetMaxHP(float value)
     {
         if (value <= 0) { Debug.Log($"최대 체력은 0 이하로 설정할 수 없습니다,"); return; }
-        if (HP_current > value) { HP_current = value; CheckVisible(); }
+        if (HP_current > value) { HP_current = value; }
         HP_max = value;
     }
     /// <summary>

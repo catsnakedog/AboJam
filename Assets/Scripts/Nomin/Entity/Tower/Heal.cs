@@ -45,6 +45,13 @@ public class Heal : Tower
         this.delay = delay;
         delay_waitForSeconds = new WaitForSeconds(delay);
     }
+    /// <summary>
+    /// 타워를 증강합니다.
+    /// </summary>
+    public override void Reinforce()
+    {
+        base.Reinforce();
+    }
 
     /* Private Method */
     /// <summary>

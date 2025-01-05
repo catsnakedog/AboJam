@@ -35,7 +35,8 @@ public class Tile
     public void OnClick()
     {
         Debug.Log($"타일 [" + i + "][" + j + "] 이 클릭되었습니다.");
-        Promotion.instance.gameObject.SetActive(false);
+        Promotion.instance.Off();
+        Reinforcement.instance.Off();
 
         // NULL : Abocado 프리팹 건설
         if (Go == null) Create(Resources.Load<GameObject>(path_abocado));

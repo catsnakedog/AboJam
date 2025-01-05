@@ -15,15 +15,9 @@ public class Promotion : MonoBehaviour
     /* Field & Property */
     public static Promotion instance; // 싱글턴
     private string path_prefabs = "Prefabs/Entity/Towers/"; // 타워 프리팹 Resources 경로
-    private string path_images = "Images/UI/Promotion/"; // 타워 프리팹 Resources 경로
+    private string path_images = "Images/UI/Promotion/"; // 타워 이미지 Resources 경로
 
     /* Intializer & Finalizer & Updater */
-    public void Awake()
-    {
-        instance = this;
-        Init();
-        gameObject.SetActive(false);
-    }
     private void Init()
     {
         List<GameObject> list_go = new List<GameObject>();
@@ -40,11 +34,26 @@ public class Promotion : MonoBehaviour
 
             // 컴포넌트 설정
             btn.onClick.AddListener(() => Promote(towerType));
-            try { img.sprite = Resources.Load<Sprite>(path_images + towerType); }
-            catch { Debug.Log($"{path_images}{towerType} 에 이미지가 존재하지 않습니다."); }
+            img.sprite = Resources.Load<Sprite>(path_images + towerType);
+            if (img.sprite == null) Debug.Log($"{path_images}{towerType} 에 이미지가 존재하지 않습니다.");
             try { text.text = StaticData.text_promotion[towerType]; }
             catch { Debug.Log($"StaticData.text_promotion 에 {towerType} 설명이 존재하지 않습니다."); }
         }
+    }
+    public void Awake()
+    {
+        instance = this;
+        Init();
+        gameObject.SetActive(false);
+    }
+    public void On()
+    {
+        Reinforcement.instance.Off();
+        instance.gameObject.SetActive(true);
+    }
+    public void Off()
+    {
+        instance.gameObject.SetActive(false);
     }
 
     /* Private Method */

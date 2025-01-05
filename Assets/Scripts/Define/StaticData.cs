@@ -19,6 +19,18 @@ public static class StaticData
         { TowerType.Production, "생산능력이 강화" },
         { TowerType.Heal, "체력이 가장 낮은 아보카도 나무의 체력을 회복" },
     };
+    /* Field & Property */
+    /// <summary>
+    /// <br>Reinforcement 에 표기되는 설명 입니다.</br>
+    /// </summary>
+    public static Dictionary<TowerType, string> text_reinforcement = new Dictionary<TowerType, string>(0)
+    {
+        { TowerType.Guard, "더 많은 체력" },
+        { TowerType.Auto, "세 발씩 공격" },
+        { TowerType.Splash, "넓은 범위 광역공격" },
+        { TowerType.Production, "생산 능력 강화" },
+        { TowerType.Heal, "체력 회복량 증가" },
+    };
     public static int Garu
     {
         get
