@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static UnityEditor.PlayerSettings;
 
 public class Grid : MonoBehaviour
 {
@@ -13,28 +14,37 @@ public class Grid : MonoBehaviour
 
     /* Field & Property */
     public static Grid instance; // 싱글턴
-    public int row = 1; // 행 개수
-    public int column = 1; // 열 개수
-    private Vector2 startPos; // 맵 왼쪽 위 좌표
-    private float width; // 맵 너비
-    private float height; // 맵 높이
-    private float cellWidth; // 타일 너비
-    private float cellHeight; // 타일 높이
+    public int Row { get { return row; } private set { row = value; } } // 행 개수
+    public int Column { get { return column; } private set { column = value; } } // 열 개수
+    public Vector2 StartPos { get { return startPos; } private set { startPos = value; } } // 맵 왼쪽 위 좌표
+    public float Width { get { return width; } private set { width = value; } } // 맵 너비
+    public float Height { get { return height; } private set { height = value; } } // 맵 높이
+    public float CellWidth { get { return cellWidth; } private set { cellWidth = value; } } // 타일 너비
+    public float CellHeight { get { return cellHeight; } private set { cellHeight = value; } } // 타일 높이
+    #region Backing Field
+    [SerializeField] private int row = 1;
+    [SerializeField] private int column = 1;
+    private Vector2 startPos;
+    private float width;
+    private float height;
+    private float cellWidth;
+    private float cellHeight;
+    #endregion
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
         instance = this;
-        startPos = GetStartPos();
-        width = spriteRenderer.bounds.size.x;
-        height = spriteRenderer.bounds.size.y;
-        cellWidth = width / column;
-        cellHeight = height / row;
+        StartPos = GetStartPos();
+        Width = spriteRenderer.bounds.size.x;
+        Height = spriteRenderer.bounds.size.y;
+        CellWidth = Width / Column;
+        CellHeight = Height / Row;
 
         // 타일 생성
-        for (int i = 0; i < row; i++)
+        for (int i = 0; i < Row; i++)
         {
-            for (int j = 0; j < column; j++)
+            for (int j = 0; j < Column; j++)
             {
                 Tile.instances.Add(new Tile(i, j, GetTileWorldPos(i, j)));
             }
@@ -48,6 +58,41 @@ public class Grid : MonoBehaviour
     public void OnClick()
     {
         GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition)).OnClick();
+    }
+    /// <summary>
+    /// <br>행렬 좌표 위치에 지정한 프리팹을 생성합니다.</br>
+    /// <br>해당 위치 타일과 자동 바인딩 됩니다.</br>
+    /// </summary>
+    public void Create((int, int) matrixCoord, GameObject Go)
+    {
+        Tile tile = GetTile(matrixCoord);
+        if (tile.Go != null) Debug.Log($"타일 ({tile.i}, {tile.j}) 에 이미 {tile.Go.name} 가 건설되어 있습니다.");
+        if (tile.Go == null) tile.Go = Instantiate(Go, tile.pos, Quaternion.identity);
+    }
+    /// <summary>
+    /// <br>행렬 좌표 위치에 존재하는 프리팹을 제거합니다.</br>
+    /// <br>해당 위치 타일과 바인딩이 해제 됩니다.</br>
+    /// </summary>
+    public void Delete((int, int) matrixCoord)
+    {
+        Tile tile = GetTile(matrixCoord);
+        Destroy(tile.Go);
+        tile.Go = null;
+    }
+    /// <summary>
+    /// 지정한 행렬 좌표의 타일을 반환합니다.
+    /// </summary>
+    public Tile GetTile((int, int) matrixCoord)
+    {
+        return Tile.instances.Where(tile => tile.i == matrixCoord.Item1 && tile.j == matrixCoord.Item2).FirstOrDefault();
+    }
+    /// <summary>
+    /// 좌표와 가장 가까운 타일을 반환합니다.
+    /// </summary>
+    /// <returns></returns>
+    public Tile GetNearestTile(Vector2 worldPos)
+    {
+        return Tile.instances.OrderBy(tile => Vector2.Distance(tile.pos, worldPos)).FirstOrDefault();
     }
 
     /* Private Method */
@@ -64,17 +109,10 @@ public class Grid : MonoBehaviour
     /// </summary>
     private Vector2 GetTileWorldPos(int i, int j)
     {
-        float xPos = startPos.x + cellWidth * (j + 0.5f);
-        float yPos = startPos.y - cellHeight * (i + 0.5f);
+        float xPos = StartPos.x + CellWidth * (j + 0.5f);
+        float yPos = StartPos.y - CellHeight * (i + 0.5f);
 
         return new Vector2(xPos, yPos);
     }
-    /// <summary>
-    /// 월드 좌표와 가장 가까운 타일을 반환합니다.
-    /// </summary>
-    /// <returns></returns>
-    private Tile GetNearestTile(Vector2 worldPos)
-    {
-        return Tile.instances.OrderBy(tile => Vector2.Distance(tile.pos, worldPos)).FirstOrDefault();
-    }
+
 }

@@ -15,6 +15,7 @@ public class Abocado : MonoBehaviour
 
     /* Field & Property */
     public static List<Abocado> instances = new List<Abocado>(); // 모든 아보카도 인스턴스
+    public static Abocado currentAbocado; // 최근 선택된 아보카도
     public EnumData.Abocado level { get; private set; } // 아보카도 레벨
     public int quality { get; private set; } = 0; // 아보카도 품질 (Promotion)
     public static int quality_max = 1; // 아보카도 최고 품질 (Promotion)
@@ -93,6 +94,10 @@ public class Abocado : MonoBehaviour
     /// </summary>
     public void OnClick()
     {
+        currentAbocado = this;
+        Reinforcement.instance.Off();
+        Promotion.instance.Off();
+
         switch (level)
         {
             // Cultivated : Seed 로 성장
@@ -105,7 +110,7 @@ public class Abocado : MonoBehaviour
                 break;
             // Tree : 타워 업그레이드 패널 On
             case EnumData.Abocado.Tree:
-                Promotion.instance.gameObject.SetActive(true);
+                Promotion.instance.On();
                 break;
             // Fruited : 수확
             case EnumData.Abocado.Fruited:

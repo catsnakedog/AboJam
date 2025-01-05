@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RayCastee2D : MonoBehaviour
 {
+    /* Dependency */
+    public Collider2D collider2D;
+
     /* Field & Property */
     public static List<RayCastee2D> instances = new List<RayCastee2D>();
+    public UnityEvent unityEvent;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -17,9 +22,9 @@ public class RayCastee2D : MonoBehaviour
         instances.Remove(this);
     }
 
-    /* Public Method */
+    /* public Method */
     public void OnClick()
     {
-        Debug.Log($"{name} 이 클릭되었습니다.");
+        unityEvent.Invoke();
     }
 }

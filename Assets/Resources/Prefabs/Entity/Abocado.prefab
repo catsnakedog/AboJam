@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 6781959995807194502}
   - component: {fileID: 7792944748867675779}
   - component: {fileID: 6412532579159748648}
-  - component: {fileID: 8744818624414010556}
+  - component: {fileID: 9180762458127492551}
   - component: {fileID: 7470612201389439767}
-  - component: {fileID: 6093678015939148908}
+  - component: {fileID: 4123785190855690425}
   m_Layer: 0
   m_Name: Abocado
-  m_TagString: Untagged
+  m_TagString: Abocados
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +34,8 @@ Transform:
   m_LocalPosition: {x: -1.156347, y: 11.337287, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7066965896675432760}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6781959995807194502
@@ -82,7 +83,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 3.36, y: 3.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -117,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleFactor: 1.2
   animationDuration: 0.2
---- !u!114 &8744818624414010556
+--- !u!114 &9180762458127492551
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,10 +127,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3932513442676290385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 504fa27d546ffab42b5c4776714e2c8b, type: 3}
+  m_Script: {fileID: 11500000, guid: a6fbdd6736c9392459de34069d89f1de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colider2D: {fileID: 6093678015939148908}
+  collider2D: {fileID: 4123785190855690425}
   unityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -146,7 +147,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 7792944748867675779}
-        m_TargetAssemblyTypeName: AnimationClick, Assembly-CSharp
+        m_TargetAssemblyTypeName: Abocado, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -184,8 +185,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &6093678015939148908
-PolygonCollider2D:
+--- !u!61 &4123785190855690425
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -226,11 +227,88 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 1}
-      - {x: -0.95105654, y: 0.30901697}
-      - {x: -0.5877852, y: -0.80901706}
-      - {x: 0.58778536, y: -0.80901694}
-      - {x: 0.9510565, y: 0.30901712}
-  m_UseDelaunayMesh: 0
+  serializedVersion: 2
+  m_Size: {x: 3.22, y: 3.22}
+  m_EdgeRadius: 0
+--- !u!1001 &4559821360762966545
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2858883287418546351}
+    m_Modifications:
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: speed
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: entity
+      value: 
+      objectReference: {fileID: 3932513442676290385}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: HideFullHP
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5675147325519521188, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_Name
+      value: HP
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+--- !u!4 &7066965896675432760 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+  m_PrefabInstance: {fileID: 4559821360762966545}
+  m_PrefabAsset: {fileID: 0}

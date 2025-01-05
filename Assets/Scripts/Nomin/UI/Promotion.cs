@@ -10,20 +10,14 @@ public class Promotion : MonoBehaviour
 {
     /* Dependency */
     public GameObject button; // 하이라키 연결
-    private Tile currentTile => Tile.currentTile; // 하드 링크
+    private Abocado currentAbocado => Abocado.currentAbocado; // 하드 링크
 
     /* Field & Property */
     public static Promotion instance; // 싱글턴
     private string path_prefabs = "Prefabs/Entity/Towers/"; // 타워 프리팹 Resources 경로
-    private string path_images = "Images/UI/Promotion/"; // 타워 프리팹 Resources 경로
+    private string path_images = "Images/UI/Promotion/"; // 타워 이미지 Resources 경로
 
     /* Intializer & Finalizer & Updater */
-    public void Awake()
-    {
-        instance = this;
-        Init();
-        gameObject.SetActive(false);
-    }
     private void Init()
     {
         List<GameObject> list_go = new List<GameObject>();
@@ -40,11 +34,26 @@ public class Promotion : MonoBehaviour
 
             // 컴포넌트 설정
             btn.onClick.AddListener(() => Promote(towerType));
-            try { img.sprite = Resources.Load<Sprite>(path_images + towerType); }
-            catch { Debug.Log($"{path_images}{towerType} 에 이미지가 존재하지 않습니다."); }
+            img.sprite = Resources.Load<Sprite>(path_images + towerType);
+            if (img.sprite == null) Debug.Log($"{path_images}{towerType} 에 이미지가 존재하지 않습니다.");
             try { text.text = StaticData.text_promotion[towerType]; }
             catch { Debug.Log($"StaticData.text_promotion 에 {towerType} 설명이 존재하지 않습니다."); }
         }
+    }
+    public void Awake()
+    {
+        instance = this;
+        Init();
+        gameObject.SetActive(false);
+    }
+    public void On()
+    {
+        Reinforcement.instance.Off();
+        instance.gameObject.SetActive(true);
+    }
+    public void Off()
+    {
+        instance.gameObject.SetActive(false);
     }
 
     /* Private Method */
@@ -57,7 +66,7 @@ public class Promotion : MonoBehaviour
         // 아보카도 품질 증강
         if (towerType == EnumData.TowerType.Production)
         {
-            currentTile.Go.GetComponent<Abocado>().Promote();
+            currentAbocado.Promote();
             gameObject.SetActive(false);
             return;
         }
@@ -67,6 +76,7 @@ public class Promotion : MonoBehaviour
         if (go_tower == null) { Debug.Log(path_prefabs + towerType + " 에 타워 프리팹이 없습니다."); return; }
 
         // 아보카도 제거 & 타워 건설
+        Tile currentTile = Grid.instance.GetNearestTile(currentAbocado.gameObject.transform.position);
         currentTile.Delete();
         currentTile.Create(go_tower);
         gameObject.SetActive(false);

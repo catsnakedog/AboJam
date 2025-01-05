@@ -27,29 +27,33 @@ Promotion						품질 강화 (수확량 UP)
 
 /* Field */
 instance			get set		싱글턴
-CellSize			get			한 셀 너비
-Spacing			get			셀 사이 공간
-I				get			행 개수
-J				get			열 개수
+Row				get, inspector	행 개수
+Column			get, inspector	열 개수
+StartPos			get			맵의 맨 왼쪽 위 꼭짓점 좌표
+Width				get			맵 너비
+Height			get			맵 높이
+CellWidth			get			한 칸 너비
+CellHeight			get			한 칸 높이
 
 /* Method */
 GetObject						그리드에서 [i][j] 오브젝트 반환
+Create						(i, j) 에 오브젝트 생성
+Delete						(i, j) 에  오브젝트 제거
+GetTile						(i, j) 에  타일 반환
+GetNearestTile					특정 좌표와 가장 가까운 타일 반환
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Tile ]
 
 /* Field */
 instances			get set		모든 타일 인스턴스
-currentTile			get set		마지막으로 클릭한 타일
-Go				get set		타일에 배치된 건물 (아보카도 / 타워)
-I				get			행 번호 (시작 1)
-J				get			열 번호 (시작 1)
-Index				get			타일 고유 번호
-IsWall				get			벽 On / Off
+Go				get set		타일에 배치된 프리팹 (아보카도 / 타워) 
+i				get			행 번호 (시작 0)
+j				get			열 번호 (시작 0)
+pos				get			타일 중심 좌표
 		
 /* Method */
 OnClick						타일 클릭 이벤트
-SwitchWall						이동 가능 On Off
 Create						프리팹 건설
 Delete						프리팹 철거
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -272,20 +276,21 @@ Switch							상점 On / Off
 
 /* Method */
 On								메시지 출력
-
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ RayCaster2D ]
 
+/* Field & Property */
+instance			get set			싱글턴
 
-1	1 발 = 목적지
-2	2 발 = 양 끝
-3	3 발 = 양 끝 + 2 등분 지점
-4	4 발 = 양 끝 + 3 등분 지점
-5	5 발 = 양 끝 + 4 등분 지점
-6	6 발 = 양 끝 + 5 등분 지점
+/* Method */
+RayCastUI							UI 타겟 다수 레이캐스팅
+RayCast							UI 제외 단일 레이캐스팅
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ RayCastee2D ]
 
+/* Field & Property */
+instances			get set			모든 인스턴스
+unityEvent			get set			캐스팅 시 이벤트 핸들러
 
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-1	Tree 클릭 > Promotion 열림
-2	버튼 클릭 : Upgrade.Promotion() > 특정 프리팹 타워로 프로모션
-3	Tower 클릭 > Upgrade 열림
-4	버튼 클릭 : 기존 타워의 모듈에 접근해서 능력치 UP !
+/* Method */
+OnClick							캐스팅 시 이벤트 Invoke
