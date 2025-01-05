@@ -43,18 +43,21 @@ public class ChargeMeleeWeapon : MeleeWeapon
 
     public override void InitSetMain()
     {
-        IsCharge = false;
-        _chargeAction = null;
-        ChargeTime = 0;
+        ResetCharge();
         StopAllCoroutines();
     }
 
     public override void InitSetHold()
     {
+        ResetCharge();
+        StopAllCoroutines();
+    }
+
+    public virtual void ResetCharge()
+    {
         IsCharge = false;
         _chargeAction = null;
         ChargeTime = 0;
-        StopAllCoroutines();
     }
 
     public virtual void SkipSwingEffect()
@@ -70,7 +73,7 @@ public class ChargeMeleeWeapon : MeleeWeapon
 
     virtual public void ChargeAttack(float chargeTime)
     {
-
+        StartCoroutine(Reload());
     }
 
     public override void WeaponSetting()
