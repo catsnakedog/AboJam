@@ -10,7 +10,7 @@ public class Promotion : MonoBehaviour
 {
     /* Dependency */
     public GameObject button; // 하이라키 연결
-    private Tile currentTile => Tile.currentTile; // 하드 링크
+    private Abocado currentAbocado => Abocado.currentAbocado; // 하드 링크
 
     /* Field & Property */
     public static Promotion instance; // 싱글턴
@@ -57,7 +57,7 @@ public class Promotion : MonoBehaviour
         // 아보카도 품질 증강
         if (towerType == EnumData.TowerType.Production)
         {
-            currentTile.Go.GetComponent<Abocado>().Promote();
+            currentAbocado.Promote();
             gameObject.SetActive(false);
             return;
         }
@@ -67,6 +67,7 @@ public class Promotion : MonoBehaviour
         if (go_tower == null) { Debug.Log(path_prefabs + towerType + " 에 타워 프리팹이 없습니다."); return; }
 
         // 아보카도 제거 & 타워 건설
+        Tile currentTile = Grid.instance.GetNearestTile(currentAbocado.gameObject.transform.position);
         currentTile.Delete();
         currentTile.Create(go_tower);
         gameObject.SetActive(false);
