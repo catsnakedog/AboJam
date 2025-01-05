@@ -116,6 +116,8 @@ MonoBehaviour:
   IsReload: 0
   IsStartAttack: 0
   IsReloadOnAttack: 1
+  HandPrio: 0
+  WeaponScalePrio: 0
   AttackEffectObj: {fileID: 9188416504112063306}
   WeaponDatas:
   - Damage: 12
@@ -129,9 +131,9 @@ MonoBehaviour:
   ChargeMinTime: 0
   ChargeTime: 0
   BatPrefab: {fileID: 960485283920717374, guid: 27b772e657f1da24b86aba5a4ba2996e, type: 3}
-  AttackMotionTime: 0.5
-  SwingAngle: 45
-  SwingTime: 0.3
+  AttackRemainTime: 1.5
+  SwingAngle: 70
+  SwingTime: 1
 --- !u!1 &4623565333408794544
 GameObject:
   m_ObjectHideFlags: 0

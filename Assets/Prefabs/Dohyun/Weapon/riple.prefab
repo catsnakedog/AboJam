@@ -88,7 +88,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7542875105934397940}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -0.21900001, y: -0.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -96,7 +96,7 @@ Transform:
   - {fileID: 5155197759769967217}
   - {fileID: 1749792385394760301}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &159845221034874658
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -161,6 +161,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 343c54f196c6b5e4b8b204b5df3f25fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Level: 1
+  ClothesShake: 20
+  SecondHandLocation: {fileID: 5155197759769967217}
+  HoldingIndex: 1
+  HoldingOrder: -2
+  Renderer: {fileID: 159845221034874658}
+  HandState:
+    StandardHand: 0
+    LeftUse: 1
+    RightUse: 1
+  WeaponType: 2
+  AttackType: 0
+  AttackSpeed: 1
+  IsReload: 0
+  IsStartAttack: 0
+  IsReloadOnAttack: 1
+  HandPrio: 0
+  WeaponScalePrio: 0
+  FireLocation: {fileID: 1749792385394760301}
+  BulletObj: {fileID: 8668373932551009970, guid: 577ac13fc15daa3429320723afb788f7, type: 3}
   WeaponDatas:
   - Damage: 1
     BulletSpeed: 10
@@ -180,17 +200,3 @@ MonoBehaviour:
     AttackSpeed: 0
     Range: 0
     bulletPenetration: 0
-  Level: 1
-  ClothesShake: 20
-  SecondHandLocation: {fileID: 5155197759769967217}
-  HoldingIndex: 1
-  HoldingOrder: -2
-  Renderer: {fileID: 159845221034874658}
-  HandState:
-    StandardHand: 0
-    LeftUse: 1
-    RightUse: 1
-  WeaponType: 2
-  IsReload: 0
-  FireLocation: {fileID: 1749792385394760301}
-  BulletObj: {fileID: 8668373932551009970, guid: 577ac13fc15daa3429320723afb788f7, type: 3}

@@ -796,9 +796,9 @@ MonoBehaviour:
   Hand:
     AttackKeyIndex: 0
     SlotChangeKey: 114
-    FirstSlot: 0
-    SecondSlot: 0
-    ThirdSlot: 0
+    FirstSlot: 1
+    SecondSlot: 2
+    ThirdSlot: 4
     CurrentSlotIndex: 0
     WeaponSwitchTime: 1
     ShakeAmount: 0
@@ -952,14 +952,6 @@ PrefabInstance:
     - target: {fileID: 4114027984415787247, guid: 0f59dad402b1f9643b82d752ad5147ab, type: 3}
       propertyPath: m_Name
       value: gun
-      objectReference: {fileID: 0}
-    - target: {fileID: 4114027984415787247, guid: 0f59dad402b1f9643b82d752ad5147ab, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6328982051557456961, guid: 0f59dad402b1f9643b82d752ad5147ab, type: 3}
-      propertyPath: m_SortingOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7680782085869631971, guid: 0f59dad402b1f9643b82d752ad5147ab, type: 3}
       propertyPath: m_LocalPosition.x

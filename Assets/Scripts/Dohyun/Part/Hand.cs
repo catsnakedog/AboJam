@@ -273,6 +273,7 @@ public class Hand
 
 
     private int _lastPlayerFlip = 1;
+    private int _lastMouseFlip = 1;
     /// <summary>
     /// 현재플레이어 상황이 뒤집힌 상황인지 계산하고 적용시킨다
     /// </summary>
@@ -283,8 +284,13 @@ public class Hand
         if (_lastPlayerFlip != _playerFlip)
             ShakeAmount = -ShakeAmount;
         _lastPlayerFlip = _playerFlip;
+
         // 마우스가 플레이어 상대 방향 (1 : 왼쪽, -1 : 오른쪽)
         _mouseFlip = _player.transform.position.x > ScreenToWorld2D(Input.mousePosition, _mainCamera).x ? 1 : -1;
+        if (_mouseFlip != _lastMouseFlip)
+            if (_currentWeapon.AttackType == WeaponAttackType.Charge)
+                ((ChargeMeleeWeapon)_currentWeapon).SkipSwingEffect();
+        _lastMouseFlip = _mouseFlip;
         // 3. 최종 방향 결정 (1: 기본, -1: 뒤집힘)
         _flip = _playerFlip * _mouseFlip;
         SetFlip();
@@ -303,10 +309,13 @@ public class Hand
 
         // 360도로 회전시켜 방향을 나타내기에 우측으로 가는경우 (정방향 기준) y축 플립해줘야한다.
         // 하지만 이 또한 플레이어가 뒤집히면 반대로 바뀌기에 플레이어 방향을 기준으로 보정해준다.
-        if (_currentWeapon.HandState.StandardHand) // 오른손에 있을때만
-            _currentWeapon.transform.localScale = new Vector3(1, -_mouseFlip, 1);
-        else
-            _currentWeapon.transform.localScale = new Vector3(1, _mouseFlip, 1);
+        if(!_currentWeapon.WeaponScalePrio)
+        {
+            if (_currentWeapon.HandState.StandardHand) // 오른손에 있을때만
+                _currentWeapon.transform.localScale = new Vector3(1, -_mouseFlip, 1);
+            else
+                _currentWeapon.transform.localScale = new Vector3(1, _mouseFlip, 1);
+        }
 
         // 5. _changeHand 플래그 설정
         _changeHand = (_flip == -1);
@@ -317,6 +326,8 @@ public class Hand
     /// </summary>
     private void SetArmRot()
     {
+        if (_currentWeapon.HandPrio)
+            return;
         _currentWeapon.HandLogic.SetLeftArm(_leftArm, _leftRenderer, _currentWeapon, _changeHand, _mainCamera);
         _currentWeapon.HandLogic.SetRightArm(_rightArm, _rightRenderer, _currentWeapon, _changeHand, _mainCamera);
     }
@@ -470,10 +481,7 @@ public class Hand
         if (Input.GetMouseButtonUp(AttackKeyIndex))
         {
             if (!_currentWeapon.IsReload && _currentWeapon.AttackType == Weapon.WeaponAttackType.Charge)
-            {
-                Debug.Log("Swing!");
                 ShakeClothes(_currentWeapon.ClothesShake);
-            }
             if (_currentWeapon != null)
                 _currentWeapon.AttackEnd();
         }

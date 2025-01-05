@@ -9,6 +9,7 @@ public class ChargeMeleeWeapon : MeleeWeapon
     public float ChargeMaxTime = 2;
     public float ChargeMinTime = 0;
     public float ChargeTime = 0;
+    public Coroutine SwingCoroutine;
 
     private Action _chargeAction = null;
 
@@ -54,6 +55,12 @@ public class ChargeMeleeWeapon : MeleeWeapon
         _chargeAction = null;
         ChargeTime = 0;
         StopAllCoroutines();
+    }
+
+    public virtual void SkipSwingEffect()
+    {
+        if (SwingCoroutine != null)
+            StopCoroutine(SwingCoroutine);
     }
 
     virtual public void ChargeEffect()

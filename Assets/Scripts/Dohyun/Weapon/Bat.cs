@@ -8,7 +8,7 @@ using static HandUtil;
 public class Bat : ChargeMeleeWeapon
 {
     public GameObject BatPrefab;
-    public float AttackMotionTime;
+    public float AttackRemainTime;
     public float SwingAngle;
     public float SwingTime;
 
@@ -23,12 +23,13 @@ public class Bat : ChargeMeleeWeapon
     private float _radius;
     private bool _standardHand;
 
-
     public override void InitSetMain()
     {
         base.InitSetMain();
         AttackEffectObj.SetActive(false);
         HandState.StandardHand = _standardHand;
+        HandPrio = false;
+        WeaponScalePrio = false;
         transform.localRotation = Quaternion.Euler(0, 0, 90);
     }
 
@@ -37,6 +38,8 @@ public class Bat : ChargeMeleeWeapon
         base.InitSetHold();
         AttackEffectObj.SetActive(false);
         HandState.StandardHand = _standardHand;
+        HandPrio = false;
+        WeaponScalePrio = false;
         transform.localRotation = Quaternion.Euler(0, 0, 90);
         transform.localScale = new Vector3(1, 1, 1);
         if (_batEffectObj != null && _batEffectObj.activeSelf)
@@ -45,46 +48,53 @@ public class Bat : ChargeMeleeWeapon
 
     public override void ChargeAttack(float chargeTime)
     {
-        StartCoroutine(SwingBat());
+        StartCoroutine(Reload());
+        _batEffectObj.transform.SetParent(null, true);
+        SkipSwingEffect();
+        SwingCoroutine = StartCoroutine(SwingBat());
         _attackProperty.SetFloat("_AttackFlag", 1.0f);
         _batEffectRenderer.SetPropertyBlock(_attackProperty);
         _batObj.Attack();
-        StartCoroutine(SetChargeAttackEnd());
+        StartCoroutine(SetChargeAttackEnd(_batEffectObj, _attackProperty));
+    }
+
+    public override void SkipSwingEffect()
+    {
+        base.SkipSwingEffect();
+        HandState.StandardHand = _standardHand;
+        AttackEffectObj.SetActive(false);
+        transform.localRotation = Quaternion.Euler(0, 0, 90);
     }
 
     private IEnumerator SwingBat()
     {
-        if(transform.localScale.y == -1)
+        if (transform.localScale.y == -1)
         {
             HandState.StandardHand = !_standardHand;
             transform.localRotation = Quaternion.Euler(0, 0, 180);
             AttackEffectObj.SetActive(true);
-
-            yield return new WaitForSeconds(1 / AttackSpeed);
-            HandState.StandardHand = _standardHand;
-            AttackEffectObj.SetActive(false);
-            transform.localRotation = Quaternion.Euler(0, 0, 90);
         }
         else
         {
             HandState.StandardHand = !_standardHand;
             transform.localRotation = Quaternion.Euler(0, 0, 0);
             AttackEffectObj.SetActive(true);
-
-            yield return new WaitForSeconds(1 / AttackSpeed);
-            HandState.StandardHand = _standardHand;
-            AttackEffectObj.SetActive(false);
-            transform.localRotation = Quaternion.Euler(0, 0, 90);
         }
+
+        yield return new WaitForSeconds(SwingTime);
+        HandState.StandardHand = _standardHand;
+        AttackEffectObj.SetActive(false);
+        transform.localRotation = Quaternion.Euler(0, 0, 90);
     }
 
-    private IEnumerator SetChargeAttackEnd()
+    private IEnumerator SetChargeAttackEnd(GameObject batEffectObj, MaterialPropertyBlock attackProperty)
     {
-        yield return new WaitForSeconds(AttackMotionTime);
-        StartCoroutine(Reload());
-        ObjectPool.Instance.Return(_batObjType, _batEffectObj);
-        _attackProperty.SetFloat("_RadiusScale", 0.0f);
-        _attackProperty.SetFloat("_AttackFlag", 0.0f);
+        yield return new WaitForSeconds(AttackRemainTime);
+        batEffectObj.transform.localScale = new Vector3(4, 4, 1);
+        ObjectPool.Instance.Return(_batObjType, batEffectObj);
+        batEffectObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        attackProperty.SetFloat("_RadiusScale", 0.0f);
+        attackProperty.SetFloat("_AttackFlag", 0.0f);
     }
 
     public override void AttackStartLogic()

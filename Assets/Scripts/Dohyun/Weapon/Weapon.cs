@@ -51,10 +51,14 @@ public class Weapon : MonoBehaviour
     public bool IsReload = false;
     public bool IsStartAttack = false;
     public bool IsReloadOnAttack = true;
+    public bool HandPrio = false;
+    public bool WeaponScalePrio = false;
 
     public void Init()
     {
         WeaponSetting();
+        HandPrio = false;
+        WeaponScalePrio = false;
         IsReload = false;
         IsStartAttack = false;
         StartCoroutine(Reload());
