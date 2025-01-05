@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3330159118826112336}
   - component: {fileID: 1193637438243774845}
   - component: {fileID: -2095641447550997026}
+  - component: {fileID: -7006969550972949814}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colider2D: {fileID: -2095641447550997026}
   explosion: {fileID: 3100893671775424701, guid: 707676d65791ac848b55594c829b5396, type: 3}
+  launcher: {fileID: 0}
   clashTags:
   - Player
   damage: 10
@@ -195,3 +197,24 @@ PolygonCollider2D:
       - {x: 0.39999998, y: -0.85999995}
       - {x: 0.62, y: -0.76}
   m_UseDelaunayMesh: 0
+--- !u!95 &-7006969550972949814
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6225409795156279537}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
