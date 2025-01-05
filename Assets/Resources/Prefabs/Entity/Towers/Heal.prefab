@@ -55,7 +55,7 @@ MonoBehaviour:
   launcher: {fileID: 2033390269121756830}
   delay: 0.4
   detection: 10
-  ratio: 0.8
+  ratio: 0.9999
 --- !u!114 &-3165279363330157103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,9 +312,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 4452280365464044394}
     m_Modifications:
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: speed
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: entity
       value: 
       objectReference: {fileID: 2552858087031951219}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: HideFullHP
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5675147325519521188, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: m_Name
       value: HP

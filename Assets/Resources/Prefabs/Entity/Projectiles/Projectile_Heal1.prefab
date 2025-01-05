@@ -52,6 +52,7 @@ MonoBehaviour:
   launcher: {fileID: 0}
   clashTags:
   - Towers
+  - Abocados
   damage: -7
   penetrate: 1
 --- !u!212 &1193637438243774845

@@ -117,8 +117,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colider2D: {fileID: -109754202756310999}
   explosion: {fileID: 0}
+  launcher: {fileID: 0}
   clashTags:
   - Towers
+  - Abocados
   damage: 10
   penetrate: 1
 --- !u!60 &-109754202756310999

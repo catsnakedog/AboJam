@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colider2D: {fileID: 1469443515481340077}
   explosion: {fileID: 3100893671775424701, guid: 707676d65791ac848b55594c829b5396, type: 3}
+  launcher: {fileID: 0}
   clashTags:
   - Player
   damage: 3
