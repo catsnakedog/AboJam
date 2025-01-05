@@ -15,6 +15,8 @@ Shader "Custom/AttackEffect/ChainSaw"
     {
         Tags { "Queue"="Transparent" "RenderType"="Transparent" }
         Blend SrcAlpha OneMinusSrcAlpha
+        ZWrite Off
+        Cull Off
         LOD 100
 
         Pass
