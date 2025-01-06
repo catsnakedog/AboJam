@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targeter: {fileID: 6905039974460121565}
-  radius: 3
+  radius: 1.5
   damage: 20
   time: 0.5
 --- !u!114 &6905039974460121565
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 949761987
   m_SortingLayer: 2
   m_SortingOrder: 999
-  m_Sprite: {fileID: 21300000, guid: 42981da77d28489449500562c7a0dc51, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 39a9e48bae0bcf740ab2812899c87fff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -125,7 +125,7 @@ Animator:
   m_GameObject: {fileID: 3100893671775424701}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 365b90cfc6348414292ef7448ec48f9a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 91d760711397afa47805428e8bc25bd9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

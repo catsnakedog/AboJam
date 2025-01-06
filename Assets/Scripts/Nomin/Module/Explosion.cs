@@ -8,7 +8,7 @@ public class Explosion : MonoBehaviour
     /* Field & Property */
     public Coroutine coroutine;
     public Targeter targeter; // 조준경
-    public List<Explosion> instances = new List<Explosion>();
+    public static List<Explosion> instances = new List<Explosion>();
     public float radius = 5f; // 폭발 반경
     public float damage = 3f; // 폭발 데미지
     public float time = 2f; // 폭발 시간

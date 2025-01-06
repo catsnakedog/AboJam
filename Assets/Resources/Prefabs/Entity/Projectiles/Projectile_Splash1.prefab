@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1469443515481340077}
   - component: {fileID: 5506396183404060204}
   m_Layer: 0
-  m_Name: Projectile_Splash0
+  m_Name: Projectile_Splash1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,11 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colider2D: {fileID: 1469443515481340077}
-  explosion: {fileID: 3100893671775424701, guid: 6bcbde903cf01d244b6fd78298ca76a4, type: 3}
+  explosion: {fileID: 3100893671775424701, guid: 0d82fe44e7aea9645b061ff57238f3e9, type: 3}
   launcher: {fileID: 0}
   clashTags:
   - Player
-  damage: 10
+  damage: 15
   penetrate: 1
 --- !u!212 &1193637438243774845
 SpriteRenderer:
@@ -95,7 +95,7 @@ SpriteRenderer:
   m_SortingLayerID: -1511687805
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 15c73f116ddc6474691bc9631740a956, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 97a158095e0e4764f87c84f35c3ee831, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -165,7 +165,7 @@ Animator:
   m_GameObject: {fileID: 6225409795156279537}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0dc608a73024b314bbd552de2b49e634, type: 2}
+  m_Controller: {fileID: 9100000, guid: cb8fda35fc786854293ac8d4230a36d1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

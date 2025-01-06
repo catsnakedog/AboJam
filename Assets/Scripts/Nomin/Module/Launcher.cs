@@ -159,6 +159,7 @@ public class Launcher : MonoBehaviour
     public void SetProjectile(GameObject projectile)
     {
         this.Projectile = projectile;
+        foreach (var item in pool) Destroy(item);
         pool.Clear();
     }
 
