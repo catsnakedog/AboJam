@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.WSA;
 using static UnityEditor.PlayerSettings;
 using static UnityEditor.ShaderData;
@@ -12,7 +14,7 @@ using static UnityEditor.ShaderData;
 public class Launcher : MonoBehaviour
 {
     /* Dependency */
-    public GameObject projectile; // 발사체
+    public GameObject Projectile { get { return projectile; } private set { projectile = value; } } // 발사체
     public Targeter targeter; // 조준경
 
     /* Field & Property */
@@ -22,6 +24,9 @@ public class Launcher : MonoBehaviour
     public float speed = 0.02f; // 발사체 속도
     public float range = 5f; // 발사체 유효 사거리 (!= 타겟 감지 거리)
 
+    /* Backing Field */
+    [SerializeField] private GameObject projectile;
+
     /* Intializer & Finalizer */
     private void Awake()
     {
@@ -29,7 +34,7 @@ public class Launcher : MonoBehaviour
     }
     private void Start()
     {
-        if (projectile == null) Debug.Log($"{gameObject.name} 의 Launcher 에 Projectile 이 연결되지 않았습니다.");
+        if (Projectile == null) Debug.Log($"{gameObject.name} 의 Launcher 에 Projectile 이 연결되지 않았습니다.");
         instances.Add(this);
     }
     private void OnDestroy()
@@ -70,7 +75,7 @@ public class Launcher : MonoBehaviour
     /// <param name="angle">발사각 변경</param>
     public void Launch(Targeter.TargetType targetType, float detection, float ratio = 1f, float angle = 0f)
     {
-        GameObject target = targeter.Targetting(targetType, projectile.GetComponent<Projectile>().clashTags, detection, ratio);
+        GameObject target = targeter.Targetting(targetType, Projectile.GetComponent<Projectile>().clashTags, detection, ratio);
         if (target != null) Launch(target.transform.position, angle);
     }
 
@@ -105,7 +110,7 @@ public class Launcher : MonoBehaviour
     /// <returns>새로 생성된 발사체 입니다.</returns>
     private GameObject Create()
     {
-        GameObject projectile = Instantiate(this.projectile, pool_root.transform); ;
+        GameObject projectile = Instantiate(this.Projectile, pool_root.transform); ;
 
         pool.Add(projectile);
         return projectile;
@@ -118,6 +123,7 @@ public class Launcher : MonoBehaviour
     private IEnumerator CorLaunch(GameObject projectile, Vector3 destination)
     {
         Vector3 startPos = transform.position;
+        Align(projectile, destination);
 
         while (projectile != null && projectile.activeSelf == true)
         {
@@ -132,6 +138,28 @@ public class Launcher : MonoBehaviour
 
             yield return new WaitForSeconds(0.016f); // 대략 60 프레임 기준
         }
+    }
+    /// <summary>
+    /// <br>발사체가 타겟을 바라보게끔 정렬합니다.</br>
+    /// <br>y+ 축으로 정렬된 발사체 기준이며, 로컬 축이 다를 경우 보정값 (angle) 을 입력합니다.</br>
+    /// </summary>
+    /// <param name="projectile">발사체</param>
+    /// <param name="destination">타겟</param>
+    /// <param name="angle">보정값</param>
+    private void Align(GameObject projectile, Vector3 destination, float angle = 0)
+    {
+        Vector3 direction = destination - projectile.transform.position;
+        float value = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f + angle;
+        projectile.transform.rotation = Quaternion.Euler(0f, 0f, value);
+    }
+    /// <summary>
+    /// 발사체를 변경합니다.
+    /// </summary>
+    /// <param name="projectile"></param>
+    public void SetProjectile(GameObject projectile)
+    {
+        this.Projectile = projectile;
+        pool.Clear();
     }
 
     /* Test Method */

@@ -12,6 +12,7 @@ public class Heal : Tower
     public float ratio = 0.8f; // 체력 회복 기준 비율
     private WaitForSeconds delay_waitForSeconds;
     private Coroutine corHeal;
+    private string path_projectile = $"Prefabs/Entity/Projectiles/Projectile_Heal";
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -48,12 +49,16 @@ public class Heal : Tower
     }
     /// <summary>
     /// <br>타워를 증강합니다.</br>
-    /// <br>연사 속도가 증가합니다.</br>
+    /// <br>발사체가 업그레이드 됩니다.</br>
     /// </summary>
     public override void Reinforce()
     {
         base.Reinforce();
-        SetDelay(delay * 0.7f);
+
+        // 상위 발사체로 변경
+        GameObject projectile = Resources.Load<GameObject>(path_projectile + Level);
+        if (projectile == null) { Debug.Log($"{path_projectile + Level} 가 존재하지 않습니다."); return; }
+        else launcher.SetProjectile(projectile);
     }
 
     /* Private Method */
