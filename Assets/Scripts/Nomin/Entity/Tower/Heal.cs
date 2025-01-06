@@ -29,7 +29,7 @@ public class Heal : Tower
 
     /* Public Method */
     /// <summary>
-    /// 인접한 적에게 공격을 개시합니다.
+    /// 인접한 타워에게 치유를 개시합니다.
     /// </summary>
     /// <param name="OnOff">치유 모드 On / Off</param>
     public void Healing(bool OnOff)
@@ -38,7 +38,7 @@ public class Heal : Tower
         else StopCoroutine(corHeal);
     }
     /// <summary>
-    /// 공격 딜레이를 재설정 합니다.
+    /// 치유 딜레이를 재설정 합니다.
     /// </summary>
     /// <param name="delay">딜레이</param>
     public void SetDelay(float delay)
@@ -47,11 +47,13 @@ public class Heal : Tower
         delay_waitForSeconds = new WaitForSeconds(delay);
     }
     /// <summary>
-    /// 타워를 증강합니다.
+    /// <br>타워를 증강합니다.</br>
+    /// <br>연사 속도가 증가합니다.</br>
     /// </summary>
     public override void Reinforce()
     {
         base.Reinforce();
+        SetDelay(delay * 0.7f);
     }
 
     /* Private Method */

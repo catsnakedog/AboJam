@@ -475,6 +475,18 @@ PrefabInstance:
       propertyPath: ratio
       value: 0.9999
       objectReference: {fileID: 0}
+    - target: {fileID: 5854290326818662696, guid: 338c165384c9cd14c93346f188e8a5c4, type: 3}
+      propertyPath: reinforceCost.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854290326818662696, guid: 338c165384c9cd14c93346f188e8a5c4, type: 3}
+      propertyPath: reinforceCost.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854290326818662696, guid: 338c165384c9cd14c93346f188e8a5c4, type: 3}
+      propertyPath: reinforceCost.Array.data[1]
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
