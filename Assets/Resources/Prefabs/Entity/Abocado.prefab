@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6781959995807194502}
+  hp: {fileID: 8862693264221764112}
   harvest: 1
 --- !u!114 &6412532579159748648
 MonoBehaviour:
@@ -312,3 +313,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
   m_PrefabInstance: {fileID: 4559821360762966545}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8862693264221764112 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+  m_PrefabInstance: {fileID: 4559821360762966545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4c0c43b5173ad4885e0326efe2b3f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

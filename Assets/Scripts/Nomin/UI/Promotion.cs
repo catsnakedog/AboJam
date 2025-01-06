@@ -12,6 +12,8 @@ public class Promotion : MonoBehaviour
     public GameObject button; // 하이라키 연결
     private Abocado currentAbocado => Abocado.currentAbocado; // 하드 링크
     private Message message => Message.instance; // 하드 링크
+    private Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
+    private Demolition demolition => Demolition.instance; // 하드 링크
 
     /* Field & Property */
     public static Promotion instance; // 싱글턴
@@ -56,7 +58,8 @@ public class Promotion : MonoBehaviour
     }
     public void On()
     {
-        Reinforcement.instance.Off();
+        reinforcement.Off();
+        demolition.Off();
         instance.gameObject.SetActive(true);
     }
     public void Off()

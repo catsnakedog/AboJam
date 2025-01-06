@@ -12,6 +12,8 @@ public class Reinforcement : MonoBehaviour
     /* Dependency */
     private Tower currentTower => Tower.currentTower; // 하드 링크
     private Message message => Message.instance; // 하드 링크
+    private Promotion promotion => Promotion.instance; // 하드 링크
+    private Demolition demolition => Demolition.instance; // 하드 링크
     public Button BTN_reinforce;
     public Image IMG_tower;
     public TextMeshProUGUI TMP_explain;
@@ -49,7 +51,8 @@ public class Reinforcement : MonoBehaviour
     public void On()
     {
         Init();
-        Promotion.instance.Off();
+        promotion.Off();
+        demolition.Off();
         gameObject.SetActive(true);
     }
     public void Off()
