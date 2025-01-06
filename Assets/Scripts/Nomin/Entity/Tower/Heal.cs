@@ -16,6 +16,7 @@ public class Heal : Tower
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        base.Start();
         instances.Add(this);
         delay_waitForSeconds = new WaitForSeconds(delay);
 

@@ -21,6 +21,7 @@ public class Guard : Tower
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        base.Start();
         instances.Add(this);
     }
     private void OnDestroy()

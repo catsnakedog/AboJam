@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
     /* Dependency */
     public HP hp;
+    private Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
 
     /* Field & Property */
     public static List<Tower> instances = new List<Tower>(); // 모든 타워 인스턴스
@@ -18,10 +20,10 @@ public class Tower : MonoBehaviour
     [SerializeField] private int[] reinforceCost; 
 
     /* Intializer & Finalizer & Updater */
-    private void Start()
+    public virtual void Start()
     {
         instances.Add(this);
-        MaxLevel = reinforceCost.Length - 1;
+        MaxLevel = ReinforceCost.Length - 1;
     }
     private void OnDestroy()
     {
@@ -35,14 +37,15 @@ public class Tower : MonoBehaviour
     public void OnClick()
     {
         currentTower = this;
-        Reinforcement.instance.On();
+        reinforcement.On();
     }
     /// <summary>
-    /// 타워를 증강합니다.
+    /// <br>타워를 증강합니다.</br>
+    /// <br>공통 증강만 정의되어 있으며, 개별 증강은 자식 스크립트에서 구현됩니다.</br>
     /// </summary>
     public virtual void Reinforce()
     {
-        // 초기화
+        // 타워 공통 증강
         Debug.Log($"{name} 증강");
         hp.Heal(hp.HP_max);
         Level++;

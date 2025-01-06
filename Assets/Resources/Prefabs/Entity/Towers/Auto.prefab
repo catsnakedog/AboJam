@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: {fileID: 3580031304758939475}
+  reinforceCost: 
   launcher: {fileID: 2033390269121756830}
   delay: 0.3
   detection: 5
