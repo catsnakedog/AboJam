@@ -9,7 +9,8 @@ public class Guard : Tower
 
     /* Public Method */
     /// <summary>
-    /// 타워를 증강합니다.
+    /// <br>타워를 증강합니다.</br>
+    /// <br>체력이 많아집니다.</br>
     /// </summary>
     public override void Reinforce()
     {

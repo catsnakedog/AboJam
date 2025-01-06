@@ -23,7 +23,7 @@ public class Tower : MonoBehaviour
     public virtual void Start()
     {
         instances.Add(this);
-        MaxLevel = ReinforceCost.Length - 1;
+        MaxLevel = ReinforceCost.Length;
     }
     private void OnDestroy()
     {

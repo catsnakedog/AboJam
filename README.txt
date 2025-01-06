@@ -163,6 +163,9 @@ HP
 
 /* Field & Property */
 instances			get set			모든 타워 인스턴스
+
+/* Method */
+Reinforce							타워 증강
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Auto : Tower ]
 

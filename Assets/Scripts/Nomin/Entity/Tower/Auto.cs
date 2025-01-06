@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Auto : Tower
 {
+    /* Dependency */
+    public Targeter targeter;
+
     /* Field & Property */
     public static List<Auto> instances = new List<Auto>(); // 모든 연사 타워 인스턴스
     public Launcher launcher;
@@ -11,6 +14,8 @@ public class Auto : Tower
     public float detection = 5f; // 적 감지 범위
     private WaitForSeconds delay_waitForSeconds;
     private Coroutine corFire;
+    public float angle = 90f;
+    public int subCount = 0;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -46,11 +51,13 @@ public class Auto : Tower
         delay_waitForSeconds = new WaitForSeconds(delay);
     }
     /// <summary>
-    /// 타워를 증강합니다.
+    /// <br>타워를 증강합니다.</br>
+    /// <br>사격 시 발사체가 2 발 추가됩니다.</br>
     /// </summary>
     public override void Reinforce()
     {
         base.Reinforce();
+        subCount++;
     }
 
     /* Private Method */
@@ -61,7 +68,20 @@ public class Auto : Tower
     {
         while (true)
         {
+            // 메인 탄환
             launcher.Launch(Targeter.TargetType.Near, detection);
+
+            // 서브 탄환
+            for (int i = 1; i <= subCount; i++)
+            {
+                float currentAngle = ((angle / 2) / subCount) * i;
+
+                Debug.Log(currentAngle);
+
+                launcher.Launch(Targeter.TargetType.Near, detection, angle: currentAngle);
+                launcher.Launch(Targeter.TargetType.Near, detection, angle: -currentAngle);
+            }
+
             yield return delay_waitForSeconds;
         }
     }

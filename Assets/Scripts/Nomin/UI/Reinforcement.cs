@@ -67,8 +67,8 @@ public class Reinforcement : MonoBehaviour
         if (currentTower.Level == currentTower.MaxLevel) { message.On("타워가 이미 최대 레벨입니다.", 2f); return; }
 
         // 결제
-        if (StaticData.Abocado < currentTower.ReinforceCost[currentTower.Level]) { message.On("증강 비용이 부족합니다.", 2f); return; }
-        StaticData.Abocado -= currentTower.ReinforceCost[currentTower.Level];
+        if (StaticData.Garu < currentTower.ReinforceCost[currentTower.Level]) { message.On("증강 비용이 부족합니다.", 2f); return; }
+        StaticData.Garu -= currentTower.ReinforceCost[currentTower.Level];
 
         currentTower.Reinforce();
         Off();

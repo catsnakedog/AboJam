@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
@@ -43,12 +44,20 @@ public class Launcher : MonoBehaviour
     /// 발사체를 목적지까지 등속으로 발사합니다.
     /// </summary>
     /// <param name="destination">목적지</param>
-    public void Launch(Vector3 destination)
+    /// <param name="angle">발사각 변경</param>
+    public void Launch(Vector3 destination, float angle = 0f)
     {
         // 발사체 장전 (풀링 or 생성)
         GameObject projectile = SearchPool() ?? Create();
         projectile.GetComponent<Projectile>().launcher = gameObject;
         projectile.transform.position = transform.position;
+
+        // 발사각 정렬
+        if (angle != 0)
+        {
+            Vector3 direction = Quaternion.Euler(0, 0, angle) * (destination - transform.position);
+            destination = transform.position + direction;
+        }
 
         StartCoroutine(CorLaunch(projectile, destination));
     }
@@ -56,12 +65,13 @@ public class Launcher : MonoBehaviour
     /// 일정 거리 이내의 적을 자동 타게팅하여 발사합니다.
     /// </summary>
     /// <param name="targetType">타게팅 기준</param>
-    /// <param name="range">타겟 감지 거리 (!= 유효 사거리)</param>
+    /// <param name="detection">타겟 감지 거리 (!= 유효 사거리)</param>
     /// <param name="ratio">일정 비율 이하의 체력만 타게팅 (0 ~ 1)</param>
-    public void Launch(Targeter.TargetType targetType, float detection, float ratio = 1f)
+    /// <param name="angle">발사각 변경</param>
+    public void Launch(Targeter.TargetType targetType, float detection, float ratio = 1f, float angle = 0f)
     {
         GameObject target = targeter.Targetting(targetType, projectile.GetComponent<Projectile>().clashTags, detection, ratio);
-        if (target != null) Launch(target.transform.position);
+        if (target != null) Launch(target.transform.position, angle);
     }
 
     /* Private Method */
@@ -115,7 +125,7 @@ public class Launcher : MonoBehaviour
             Vector3 direction = (destination - startPos).normalized;
             Vector3 antiDirection = (destination - projectile.transform.position).normalized;
 
-            projectile.transform.position = projectile.transform.position += direction * speed;
+            projectile.transform.position += direction * speed;
 
             // 사거리를 벗어나면 비활성화
             if (range < (projectile.transform.position - startPos).magnitude) projectile.GetComponent<Projectile>().Disappear();
