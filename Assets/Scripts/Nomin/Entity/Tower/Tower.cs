@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Tower : MonoBehaviour
+public class Tower : MonoBehaviour
 {
     /* Dependency */
     public HP hp;
@@ -10,6 +10,23 @@ public abstract class Tower : MonoBehaviour
     /* Field & Property */
     public static List<Tower> instances = new List<Tower>(); // 모든 타워 인스턴스
     public static Tower currentTower; // 최근 선택된 타워
+    public int Level { get; private set; } = 0; // 현재 레벨
+    public int MaxLevel { get; private set; } // 최대 레벨
+    public int[] ReinforceCost { get { return reinforceCost; } private set { reinforceCost = value; } } // 레벨업 비용 (개수 = 최대 레벨 결정)
+
+    /* Backing Field */
+    [SerializeField] private int[] reinforceCost; 
+
+    /* Intializer & Finalizer & Updater */
+    private void Start()
+    {
+        instances.Add(this);
+        MaxLevel = reinforceCost.Length - 1;
+    }
+    private void OnDestroy()
+    {
+        instances.Remove(this);
+    }
 
     /* Public Method */
     /// <summary>
@@ -25,17 +42,9 @@ public abstract class Tower : MonoBehaviour
     /// </summary>
     public virtual void Reinforce()
     {
+        // 초기화
         Debug.Log($"{name} 증강");
         hp.Heal(hp.HP_max);
-    }
-
-    /* Intializer & Finalizer & Updater */
-    private void Start()
-    {
-        instances.Add(this);
-    }
-    private void OnDestroy()
-    {
-        instances.Remove(this);
+        Level++;
     }
 }

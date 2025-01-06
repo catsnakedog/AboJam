@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class Reinforcement : MonoBehaviour
 {
     /* Dependency */
     private Tower currentTower => Tower.currentTower; // 하드 링크
-    public Button button;
-    public Image image;
-    public TextMeshProUGUI tmp;
+    public Button BTN_reinforce;
+    public Image IMG_tower;
+    public TextMeshProUGUI TMP_explain;
+    public TextMeshProUGUI TMP_level;
+    public TextMeshProUGUI TMP_price;
 
     /* Field & Property */
     public static Reinforcement instance; // 싱글턴
@@ -24,15 +27,21 @@ public class Reinforcement : MonoBehaviour
         string towerTypeString = currentTower.GetType().ToString();
         EnumData.TowerType towerType = (EnumData.TowerType)Enum.Parse(typeof(EnumData.TowerType), towerTypeString);
 
-        // 이미지 & 설명 초기화
-        image.sprite = Resources.Load<Sprite>(path_images + towerTypeString);
-        if (image.sprite == null) Debug.Log($"{path_images}{towerTypeString} 에 이미지가 존재하지 않습니다.");
-        try { tmp.text = StaticData.text_reinforcement[towerType]; }
+        // 타워 이미지 & 설명 표기
+        IMG_tower.sprite = Resources.Load<Sprite>($"{path_images}{towerTypeString}/Level{currentTower.Level}");
+        if (IMG_tower.sprite == null) Debug.Log($"{path_images}{towerTypeString}/Level{currentTower.Level} 이미지가 존재하지 않습니다.");
+        try { TMP_explain.text = StaticData.text_reinforcement[towerType]; }
         catch { Debug.Log($"StaticData.text_reinforcement 에 {towerType} 설명이 존재하지 않습니다."); }
+
+        // 레벨 & 증강 가격 표기
+        TMP_level.text = $"Lv. {(currentTower.Level + 1).ToString()}";
+        if (currentTower.Level == currentTower.MaxLevel) TMP_price.text = "MAX";
+        else TMP_price.text = currentTower.ReinforceCost[currentTower.Level].ToString();
     }
     public void Awake()
     {
         instance = this;
+        BTN_reinforce.onClick.AddListener(Reinforce);
         gameObject.SetActive(false);
     }
     public void On()
