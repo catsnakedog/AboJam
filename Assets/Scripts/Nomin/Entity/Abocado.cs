@@ -110,7 +110,7 @@ public class Abocado : MonoBehaviour
                 break;
             // Tree : 타워 업그레이드 패널 On
             case EnumData.Abocado.Tree:
-                Promotion.instance.On();
+                if (quality == 0) Promotion.instance.On();
                 break;
             // Fruited : 수확
             case EnumData.Abocado.Fruited:

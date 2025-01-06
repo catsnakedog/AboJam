@@ -61,6 +61,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 502892762527098066, guid: d134c1f8c1a794643b9cddeaadec890b, type: 3}
+  price_guard: 1
+  price_auto: 2
+  price_production: 3
+  price_heal: 4
+  price_splash: 5
 --- !u!114 &1638757630489576022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +112,7 @@ MonoBehaviour:
     m_Left: 10
     m_Right: 10
     m_Top: 10
-    m_Bottom: 50
+    m_Bottom: 100
   m_ChildAlignment: 0
   m_Spacing: 10
   m_ChildForceExpandWidth: 1

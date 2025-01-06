@@ -60,7 +60,12 @@ Delete						프리팹 철거
 [ Promotion ]
 
 /* Field */
-instance			get set		싱글턴
+instance			get set inspector	싱글턴
+price_guard			get set inspector	방어 타워 건설 비용
+price_auto			get set inspector	연사 타워 건설 비용
+price_production		get set inspector	생산 타워 건설 비용
+price_heal			get set inspector	회복 타워 건설 비용
+price_splash			get set inspector	광역 타워 건설 비용
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ HP ]
 
