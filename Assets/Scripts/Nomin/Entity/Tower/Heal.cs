@@ -12,10 +12,12 @@ public class Heal : Tower
     public float ratio = 0.8f; // 체력 회복 기준 비율
     private WaitForSeconds delay_waitForSeconds;
     private Coroutine corHeal;
+    private string path_projectile = $"Prefabs/Entity/Projectiles/Projectile_Heal";
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        base.Start();
         instances.Add(this);
         delay_waitForSeconds = new WaitForSeconds(delay);
 
@@ -28,7 +30,7 @@ public class Heal : Tower
 
     /* Public Method */
     /// <summary>
-    /// 인접한 적에게 공격을 개시합니다.
+    /// 인접한 타워에게 치유를 개시합니다.
     /// </summary>
     /// <param name="OnOff">치유 모드 On / Off</param>
     public void Healing(bool OnOff)
@@ -37,7 +39,7 @@ public class Heal : Tower
         else StopCoroutine(corHeal);
     }
     /// <summary>
-    /// 공격 딜레이를 재설정 합니다.
+    /// 치유 딜레이를 재설정 합니다.
     /// </summary>
     /// <param name="delay">딜레이</param>
     public void SetDelay(float delay)
@@ -46,11 +48,17 @@ public class Heal : Tower
         delay_waitForSeconds = new WaitForSeconds(delay);
     }
     /// <summary>
-    /// 타워를 증강합니다.
+    /// <br>타워를 증강합니다.</br>
+    /// <br>발사체가 업그레이드 됩니다.</br>
     /// </summary>
     public override void Reinforce()
     {
         base.Reinforce();
+
+        // 상위 발사체로 변경
+        GameObject projectile = Resources.Load<GameObject>(path_projectile + Level);
+        if (projectile == null) { Debug.Log($"{path_projectile + Level} 가 존재하지 않습니다."); return; }
+        else launcher.SetProjectile(projectile);
     }
 
     /* Private Method */

@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: {fileID: 3580031304758939475}
+  reinforceCost: 050000000a000000
   launcher: {fileID: 2033390269121756830}
   delay: 0.4
   detection: 10
@@ -289,7 +290,7 @@ PrefabInstance:
     - target: {fileID: 8178899645152688462, guid: 219404723b5f75449a11722423d768d0, type: 3}
       propertyPath: projectile
       value: 
-      objectReference: {fileID: 6225409795156279537, guid: 9e928550810c04d4093deceed9b52587, type: 3}
+      objectReference: {fileID: 6225409795156279537, guid: 8bd18aaa1330ff847bd2cb4a71936c0a, type: 3}
     - target: {fileID: 9014998458699668142, guid: 219404723b5f75449a11722423d768d0, type: 3}
       propertyPath: m_Name
       value: Launcher

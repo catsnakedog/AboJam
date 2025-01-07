@@ -12,6 +12,7 @@ public class Tile
 {
     /* Field & Property */
     public static List<Tile> instances = new List<Tile>(); // 모든 타일 인스턴스
+    public static Tile currentTile; // 최근 선택된 타일
     public GameObject Go { get; set; } = null; // 타일에 배치된 프리팹
     public readonly int i;
     public readonly int j;
@@ -37,6 +38,7 @@ public class Tile
         Debug.Log($"타일 [" + i + "][" + j + "] 이 클릭되었습니다.");
         Promotion.instance.Off();
         Reinforcement.instance.Off();
+        currentTile = this;
 
         // NULL : Abocado 프리팹 건설
         if (Go == null) Create(Resources.Load<GameObject>(path_abocado));

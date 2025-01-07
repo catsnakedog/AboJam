@@ -11,10 +11,12 @@ public class Splash : Tower
     public float detection = 8f; // 적 감지 범위
     private WaitForSeconds delay_waitForSeconds;
     private Coroutine corFire;
+    private string path_projectile = $"Prefabs/Entity/Projectiles/Projectile_Splash";
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        base.Start();
         instances.Add(this);
         delay_waitForSeconds = new WaitForSeconds(delay);
 
@@ -45,11 +47,17 @@ public class Splash : Tower
         delay_waitForSeconds = new WaitForSeconds(delay);
     }
     /// <summary>
-    /// 타워를 증강합니다.
+    /// <br>타워를 증강합니다.</br>
+    /// <br>발사체가 업그레이드 됩니다.</br>
     /// </summary>
     public override void Reinforce()
     {
         base.Reinforce();
+
+        // 상위 발사체로 변경
+        GameObject projectile = Resources.Load<GameObject>(path_projectile + Level);
+        if (projectile == null) { Debug.Log($"{path_projectile + Level} 가 존재하지 않습니다."); return; }
+        else launcher.SetProjectile(projectile);
     }
 
     /* Private Method */

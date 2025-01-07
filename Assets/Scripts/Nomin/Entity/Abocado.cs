@@ -12,6 +12,7 @@ public class Abocado : MonoBehaviour
 {
     /* Dependency */
     public SpriteRenderer spriteRenderer; // 하이라키 연결
+    public HP hp; // 하이라키 연결
 
     /* Field & Property */
     public static List<Abocado> instances = new List<Abocado>(); // 모든 아보카도 인스턴스
@@ -110,7 +111,7 @@ public class Abocado : MonoBehaviour
                 break;
             // Tree : 타워 업그레이드 패널 On
             case EnumData.Abocado.Tree:
-                Promotion.instance.On();
+                if (quality == 0) Promotion.instance.On();
                 break;
             // Fruited : 수확
             case EnumData.Abocado.Fruited:
@@ -127,6 +128,7 @@ public class Abocado : MonoBehaviour
 
         level++;
         spriteRenderer.sprite = spr_level[(int)level];
+        hp.Heal(hp.HP_max);
     }
     private void LevelDown()
     {

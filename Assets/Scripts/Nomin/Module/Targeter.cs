@@ -67,7 +67,7 @@ public class Targeter : MonoBehaviour
                 if (HP.HP_current <= HP.HP_max * ratio) targetsWithHP.Add(new KeyValuePair<GameObject, float>(HP.entity, HP.HP_current));
             }
         }
-        targetsWithHP.OrderBy(pair => pair.Value).ToList();
+        targetsWithHP = targetsWithHP.OrderBy(pair => pair.Value).ToList();
 
         if (targetsWithHP.Count > 0) return targetsWithHP[0].Key;
         else return null;

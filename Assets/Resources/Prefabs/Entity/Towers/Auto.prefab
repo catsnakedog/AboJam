@@ -52,9 +52,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: {fileID: 3580031304758939475}
+  reinforceCost: 050000000a000000
+  targeter: {fileID: 8667929782200526038}
   launcher: {fileID: 2033390269121756830}
   delay: 0.3
   detection: 5
+  angle: 60
+  subCount: 0
 --- !u!114 &-3262881341599887264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,6 +312,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8191f7230413def4da28884b1a429664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8667929782200526038 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1581863529454985990, guid: 219404723b5f75449a11722423d768d0, type: 3}
+  m_PrefabInstance: {fileID: 7906425705080555472}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd9f5cb9999dd74fbf15d8282423113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8365421256467801938
