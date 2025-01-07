@@ -118,6 +118,7 @@ public class Hand
     /// 무기 교체 중인지, 교체 중엔 다른 행동은 안한다
     /// </summary>
     private bool _isSwitchWeapon = false;
+    private bool _isHoldingWeapon = false;
     /// <summary>
     /// 무기 교체 종료 위치
     /// </summary>
@@ -195,11 +196,13 @@ public class Hand
     /// </summary>
     private void SetWeaponData()
     {
-        var count = _weaponRoot.transform.childCount;
+        var count = (int)EnumData.Weapon.None;
         _weapons = new Weapon[count];
         for (int i = 0; i < _weaponRoot.transform.childCount; i++)
         {
-            _weapons[i] = _weaponRoot.transform.GetChild(i).GetComponent<Weapon>();
+            var weapon = _weaponRoot.transform.GetChild(i);
+            EnumData.Weapon enumWeapon = (EnumData.Weapon)Enum.Parse(typeof(EnumData.Weapon), weapon.name);
+            _weapons[(int)enumWeapon] = weapon.GetComponent<Weapon>();
         }
     }
 
@@ -235,6 +238,8 @@ public class Hand
             else // 착용 목록에 없다면 WeaponRoot로 이동시킴. 만약 이미 WeaponRoot라면 스킵
             // 사용은 안하지만 활성화 되어있는 총들을 정리하기 위해 activeSelf로 처리
             {
+                if (_weapons[i] == null)
+                    continue;
                 if (_weapons[i].gameObject.activeSelf)
                 {
                     ReturnWeaponToRoot(_weapons[i]);
@@ -287,10 +292,7 @@ public class Hand
 
         // 마우스가 플레이어 상대 방향 (1 : 왼쪽, -1 : 오른쪽)
         _mouseFlip = _player.transform.position.x > ScreenToWorld2D(Input.mousePosition, _mainCamera).x ? 1 : -1;
-        if (_mouseFlip != _lastMouseFlip)
-            if (_currentWeapon.AttackType == WeaponAttackType.Charge)
-                ((ChargeMeleeWeapon)_currentWeapon).SkipSwingEffect();
-        _lastMouseFlip = _mouseFlip;
+  
         // 3. 최종 방향 결정 (1: 기본, -1: 뒤집힘)
         _flip = _playerFlip * _mouseFlip;
         SetFlip();
@@ -317,6 +319,15 @@ public class Hand
                 _currentWeapon.transform.localScale = new Vector3(1, _mouseFlip, 1);
         }
 
+        if (_mouseFlip != _lastMouseFlip)
+        {
+            if (_currentWeapon.AttackType == WeaponAttackType.Charge)
+                ((ChargeMeleeWeapon)_currentWeapon).SkipSwingEffect();
+            if (_currentWeapon.AttackType == WeaponAttackType.Gage)
+                ((GageMeleeWeapon)_currentWeapon).WeaponAngleCorrection();
+        }
+        _lastMouseFlip = _mouseFlip;
+
         // 5. _changeHand 플래그 설정
         _changeHand = (_flip == -1);
     }
@@ -339,17 +350,13 @@ public class Hand
     {
         if (Input.GetKeyDown(SlotChangeKey))
         {
+            if (_isSwitchWeapon)
+                return;
             if (CurrentSlotIndex == WeaponSlot.FirstMelee)
                 CurrentSlotIndex = WeaponSlot.FirstRanged;
             else
                 CurrentSlotIndex++;
-            if(_isSwitchWeapon)
-            {
-            }
-            else
-            {
-                SwitchWeapon();
-            }
+            SwitchWeapon();
         }
     }
 
@@ -368,11 +375,13 @@ public class Hand
         _switchRightOriRot = _rightArm.transform.rotation;
         _switchProgressTime = 0;
 
+        _currentWeapon.InitBeforeChange();
         HandAction += HoldStandardWeapon;
     }
 
     private void HoldStandardWeapon() // 무기를 홀더에 넣는 과정, 실행되면 무조건 끝나야함 !최우선!
     {
+        _isHoldingWeapon = true;
         _switchProgressTime += Time.deltaTime; // 이동은 시간 비례로 이동
         _leftArm.transform.rotation = Quaternion.Slerp(_switchLeftOriRot, _switchLeftTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
         _rightArm.transform.rotation = Quaternion.Slerp(_switchRightOriRot, _switchRightTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
@@ -394,6 +403,7 @@ public class Hand
         if (_switchProgressTime >= 0.2f) // 이동 완료
         {
             SetHoldSlotWeapon(_currentWeapon);
+            _isHoldingWeapon = false;
 
             _currentWeapon = _weapons[(int)CurrentSlotWeaponType];
 
@@ -466,6 +476,8 @@ public class Hand
     {
         if (CurrentSlotWeaponType == EnumData.Weapon.None)
             return;
+        if (_isSwitchWeapon)
+            return;
         if (Input.GetMouseButtonDown(AttackKeyIndex))
         {
             if (_currentWeapon != null)
@@ -474,6 +486,8 @@ public class Hand
         if (Input.GetMouseButton(AttackKeyIndex))
         {
             if (!_currentWeapon.IsReload && _currentWeapon.AttackType == Weapon.WeaponAttackType.Ranged)
+                ShakeClothes(_currentWeapon.ClothesShake);
+            if (_currentWeapon.AttackType == Weapon.WeaponAttackType.Gage)
                 ShakeClothes(_currentWeapon.ClothesShake);
             if (_currentWeapon != null)
                 _currentWeapon.Attack();
@@ -512,6 +526,8 @@ public class Hand
             _lastWeaponParent = false;
         }
         _currentWeapon.transform.localPosition = Vector3.zero;
+        if (_currentWeapon.AttackType == WeaponAttackType.Gage)
+            ((GageMeleeWeapon)_currentWeapon).ShakeWeaponCorrection();
     }
 
     private void InitCurrentSlotSetting()

@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1715197653643489688}
   - component: {fileID: 1771934170554604540}
   m_Layer: 0
-  m_Name: machine
+  m_Name: Machine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,8 +140,8 @@ MonoBehaviour:
     StandardHand: 0
     LeftUse: 1
     RightUse: 1
-  WeaponType: 3
-  AttackType: 0
+  WeaponType: 2
+  AttackType: 1
   AttackSpeed: 1
   IsReload: 0
   IsStartAttack: 0

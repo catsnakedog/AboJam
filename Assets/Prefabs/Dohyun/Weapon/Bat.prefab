@@ -128,7 +128,7 @@ MonoBehaviour:
     AttackSpeed: 1
   IsCharge: 0
   ChargeMaxTime: 3
-  ChargeMinTime: 0
+  ChargeMinTime: 1
   ChargeTime: 0
   BatPrefab: {fileID: 960485283920717374, guid: 27b772e657f1da24b86aba5a4ba2996e, type: 3}
   AttackRemainTime: 1.5
