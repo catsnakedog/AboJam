@@ -28,10 +28,9 @@ public class Receiver : MonoBehaviour
         map.Enable();
         map.FindAction("Click").performed += (context) =>
         {
-            Debug.Log("클릭");
             List<RaycastResult> ui = rayCaster2D.RayCastUI(Input.mousePosition);
             if (ui.Count == 0) { promotion.Off(); reinforcement.Off(); demolition.Off(); }
-        };
+        }; // Click
         map.FindAction("Interaction").performed += (context) =>
         {
             // 레이 캐스팅
@@ -42,12 +41,12 @@ public class Receiver : MonoBehaviour
             RayCastee2D rayCastee = hit.Value.collider.GetComponent<RayCastee2D>();
             if (rayCastee == null) return;
             rayCastee.OnClick();
-        };
+        }; // Click + F 키다운
         map.FindAction("Demolition").performed += (context) =>
         {
             Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             Tile.currentTile = tile;
             if (tile.Go != null) demolition.On();
-        };
+        }; // Click + G 키다운
     }
 }
