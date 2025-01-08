@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6328982051557456961}
   - component: {fileID: 7697415097785152743}
   m_Layer: 0
-  m_Name: Gun
+  m_Name: gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
     LeftUse: 0
     RightUse: 1
   WeaponType: 0
-  AttackType: 1
+  AttackType: 0
   AttackSpeed: 1
   IsReload: 0
   IsStartAttack: 0

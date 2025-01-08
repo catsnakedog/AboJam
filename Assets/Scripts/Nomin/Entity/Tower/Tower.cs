@@ -8,6 +8,7 @@ public class Tower : MonoBehaviour
     /* Dependency */
     public HP hp;
     private Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
+    private Message message => Message.instance; // 하드 링크
 
     /* Field & Property */
     public static List<Tower> instances = new List<Tower>(); // 모든 타워 인스턴스
@@ -45,6 +46,8 @@ public class Tower : MonoBehaviour
     /// </summary>
     public virtual void Reinforce()
     {
+        message.On("타워 증강에 성공하였습니다.", 2f);
+
         // 타워 공통 증강
         Debug.Log($"{name} 증강");
         hp.Heal(hp.HP_max);

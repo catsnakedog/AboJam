@@ -82,11 +82,6 @@ public class Weapon : MonoBehaviour
 
     }
 
-    public virtual void InitBeforeChange()
-    {
-
-    }
-
     public virtual void WeaponSetting()
     {
 

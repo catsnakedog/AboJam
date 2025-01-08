@@ -9,14 +9,14 @@ public class MeleeWeapon : Weapon
     public Type AttackEffectType = typeof(Type);
 
     [System.Serializable]
-    public class MeleeWeaponData
+    public class RangedWeaponData
     {
         public float Damage;
         public float AttackSpeed;
     }
 
     [SerializeField]
-    public List<MeleeWeaponData> WeaponDatas;
+    public List<RangedWeaponData> WeaponDatas;
 
     public override void WeaponSetting()
     {

@@ -383,7 +383,6 @@ Transform:
   - {fileID: 6039857533242710}
   - {fileID: 1802197031158235857}
   - {fileID: 2119659269585556139}
-  - {fileID: 8728208961560424194}
   m_Father: {fileID: 3293042334221703534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4669506698893862023
@@ -798,7 +797,7 @@ MonoBehaviour:
     AttackKeyIndex: 0
     SlotChangeKey: 114
     FirstSlot: 1
-    SecondSlot: 7
+    SecondSlot: 2
     ThirdSlot: 4
     CurrentSlotIndex: 0
     WeaponSwitchTime: 1
@@ -952,7 +951,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4114027984415787247, guid: 0f59dad402b1f9643b82d752ad5147ab, type: 3}
       propertyPath: m_Name
-      value: Gun
+      value: gun
       objectReference: {fileID: 0}
     - target: {fileID: 7680782085869631971, guid: 0f59dad402b1f9643b82d752ad5147ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1054,7 +1053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7542875105934397940, guid: b8633be656a1d224e838f640f04581df, type: 3}
       propertyPath: m_Name
-      value: Sniper
+      value: riple
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1138,7 +1137,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1110897257742691295, guid: 42d2adaecbe223d458551de2f0f9de2d, type: 3}
       propertyPath: m_Name
-      value: Riple
+      value: machine
       objectReference: {fileID: 0}
     - target: {fileID: 2490901743872019025, guid: 42d2adaecbe223d458551de2f0f9de2d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1190,68 +1189,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2490901743872019025, guid: 42d2adaecbe223d458551de2f0f9de2d, type: 3}
   m_PrefabInstance: {fileID: 4292991845330831488}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7551051605810008754
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 6736974892123951392}
-    m_Modifications:
-    - target: {fileID: 447258465915831800, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_Name
-      value: ChainSaw
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
---- !u!4 &8728208961560424194 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1290961495060020656, guid: 8c1cc288ad0471848a31c8e84f886137, type: 3}
-  m_PrefabInstance: {fileID: 7551051605810008754}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7574210815247864488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1262,7 +1199,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2695098845453761773, guid: d34759796371cbe468b215df2a115a12, type: 3}
       propertyPath: m_Name
-      value: ShotGun
+      value: shot
       objectReference: {fileID: 0}
     - target: {fileID: 7069640313956723244, guid: d34759796371cbe468b215df2a115a12, type: 3}
       propertyPath: m_LocalPosition.x

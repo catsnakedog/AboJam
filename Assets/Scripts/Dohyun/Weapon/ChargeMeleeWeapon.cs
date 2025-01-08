@@ -31,12 +31,6 @@ public class ChargeMeleeWeapon : MeleeWeapon
         IsCharge = true;
         _chargeAction = ChargeEffect;
         ChargeTime = 0;
-        ChargeAttackStart();
-    }
-
-    virtual public void ChargeAttackStart()
-    {
-
     }
 
     public override void AttackEndLogic()

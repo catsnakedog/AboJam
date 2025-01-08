@@ -76,8 +76,6 @@ public class Auto : Tower
             {
                 float currentAngle = ((angle / 2) / subCount) * i;
 
-                Debug.Log(currentAngle);
-
                 launcher.Launch(Targeter.TargetType.Near, detection, angle: currentAngle);
                 launcher.Launch(Targeter.TargetType.Near, detection, angle: -currentAngle);
             }
