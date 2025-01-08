@@ -10,10 +10,6 @@ public class RayCaster2D : MonoBehaviour
     /* Dependency */
     public GraphicRaycaster graphicRaycaster;
     public EventSystem eventSystem;
-    public Promotion promotion => Promotion.instance; // 하드 링크
-    public Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
-    public Demolition demolition => Demolition.instance; // 하드 링크
-    public Grid grid => Grid.instance; // 하드 링크
 
     /* Field & Property */
     public static RayCaster2D instance;
@@ -24,36 +20,6 @@ public class RayCaster2D : MonoBehaviour
     {
         pointerEventData = new PointerEventData(eventSystem);
         instance = this;
-    }
-    private void Update()
-    {
-        // 좌클릭 시 UI 닫음 (단, UI 클릭은 제외)
-        if (!Input.GetMouseButtonDown(0)) return;
-        List<RaycastResult> ui = RayCastUI(Input.mousePosition);
-        if (ui.Count == 0) { promotion.Off(); reinforcement.Off(); demolition.Off(); }
-
-        // 레이 캐스팅
-        RaycastHit2D? hit = RayCast(Input.mousePosition);
-        if (hit == null) return;
-
-        // F 키다운 시 타워 & 아보카도 상호작용
-        if (Input.GetKey(KeyCode.F))
-        {
-            // 충돌 대상의 RayCastee2D.OnClick 실행
-            RayCastee2D rayCastee = hit.Value.collider.GetComponent<RayCastee2D>();
-            if (rayCastee == null) return;
-            rayCastee.OnClick();
-            return;
-        }
-
-        // G 키다운 시 해당 위치 철거 패널 On
-        if (Input.GetKey(KeyCode.G))
-        {
-            Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            Tile.currentTile = tile;
-            if(tile.Go != null) demolition.On();
-            return;
-        }
     }
 
     /* Public Mehtod */

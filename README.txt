@@ -302,3 +302,8 @@ unityEvent			get set			캐스팅 시 이벤트 핸들러
 
 /* Method */
 OnClick							캐스팅 시 이벤트 Invoke
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Receiver ]
+
+/* Field & Property */
+instance			get set			싱글턴

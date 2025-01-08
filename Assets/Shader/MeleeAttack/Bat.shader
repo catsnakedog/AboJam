@@ -23,7 +23,7 @@ Shader "Custom/AttackEffect/Bat"
     {
         Tags { "Queue"="Transparent" "RenderType"="Transparent" }
         Blend SrcAlpha OneMinusSrcAlpha
-        ZWrite Off
+        ZWrite On
         Cull Off
         LOD 100
 

@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 159845221034874658}
   - component: {fileID: 7679251322420297017}
   m_Layer: 0
-  m_Name: Riple
+  m_Name: riple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,8 +171,8 @@ MonoBehaviour:
     StandardHand: 0
     LeftUse: 1
     RightUse: 1
-  WeaponType: 3
-  AttackType: 1
+  WeaponType: 2
+  AttackType: 0
   AttackSpeed: 1
   IsReload: 0
   IsStartAttack: 0
