@@ -37,6 +37,13 @@ public class Bat : ChargeMeleeWeapon
             ObjectPool.Instance.Return(_batObjType, _batAttackEffectObj);
     }
 
+    public override void InitBeforeChange()
+    {
+        HandState.StandardHand = _standardHand;
+        AttackEffectObj.SetActive(false);
+        transform.localRotation = Quaternion.Euler(0, 0, 90);
+    }
+
     public void ResetValue()
     {
         AttackEffectObj.SetActive(false);
@@ -48,12 +55,21 @@ public class Bat : ChargeMeleeWeapon
 
     public override void ChargeAttack(float chargeTime)
     {
+        if(chargeTime < ChargeMinTime)
+        {
+            ResetValue();
+            transform.localScale = new Vector3(1, 1, 1);
+            if (_batAttackEffectObj != null && _batAttackEffectObj.activeSelf)
+                ObjectPool.Instance.Return(_batObjType, _batAttackEffectObj);
+
+            return;
+        }
         _batAttackEffectObj.transform.SetParent(null, true);
         SkipSwingEffect();
         SwingCoroutine = StartCoroutine(SwingBat());
         _attackProperty.SetFloat("_AttackFlag", 1.0f);
         _batAttackEffectRenderer.SetPropertyBlock(_attackProperty);
-        StartCoroutine(SetChargeAttackRemain(_batAttackEffectObj, _attackProperty));
+        StartCoroutine(SetChargeAttackRemain(_batAttackEffectObj, _attackProperty.GetFloat("_RadiusScale"), _attackProperty.GetFloat("_AttackFlag"), _attackProperty.GetFloat("_LineAngle")));
     }
 
     public override void SkipSwingEffect()
@@ -85,24 +101,31 @@ public class Bat : ChargeMeleeWeapon
         transform.localRotation = Quaternion.Euler(0, 0, 90);
     }
 
-    private IEnumerator SetChargeAttackRemain(GameObject batEffectObj, MaterialPropertyBlock attackProperty)
+    private IEnumerator SetChargeAttackRemain(GameObject batEffectObj, float radiusScale, float attackFlag, float lineAngle)
     {
+        MaterialPropertyBlock property = new();
+        property.SetFloat("_RadiusScale", radiusScale);
+        property.SetFloat("_AttackFlag", attackFlag);
+        property.SetFloat("_LineAngle", lineAngle);
+        _batAttackEffectRenderer.SetPropertyBlock(property);
         yield return new WaitForSeconds(AttackRemainTime);
         batEffectObj.transform.localScale = new Vector3(4, 4, 1);
         ObjectPool.Instance.Return(_batObjType, batEffectObj);
         batEffectObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        attackProperty.SetFloat("_RadiusScale", 0.0f);
-        attackProperty.SetFloat("_AttackFlag", 0.0f);
+        property.SetFloat("_RadiusScale", 0.0f);
+        property.SetFloat("_AttackFlag", 0.0f);
     }
 
-    public override void AttackStartLogic()
+    public override void ChargeAttackStart()
     {
-        base.AttackStartLogic();
+        SkipSwingEffect();
         _batAttackEffectObj = ObjectPool.Instance.GetObj(_batObjType, BatPrefab, 3);
         _batAttackEffectObj.transform.SetParent(_effectRoot, false);
         _batAttackEffectObj.transform.localPosition = new Vector3(Mathf.Cos(Mathf.Deg2Rad * _angle) * _radius, Mathf.Sin(Mathf.Deg2Rad * _angle) * _radius);
         _batAttackEffectRenderer = _batAttackEffectObj.GetComponent<SpriteRenderer>();
         _radius = _batAttackEffectRenderer.material.GetFloat("_LineRadius") * 4;
+        _attackProperty.SetFloat("_AttackFlag", 0.0f);
+        _batAttackEffectRenderer.SetPropertyBlock(_attackProperty);
     }
 
     public override void WeaponSetting()

@@ -62,6 +62,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AngleProbabilityScale: 1.18
+    - _AttackFlag: 1
     - _BaseAlpha: 0.9
     - _BaseAngle: 360
     - _BaseAngleSurvivalProbability: 1.55
@@ -72,6 +73,11 @@ Material:
     - _DistanceWeight: 30.98
     - _DotSize: 0.1
     - _DstBlend: 0
+    - _EffecValue: 1
+    - _EffectAngle: 0
+    - _EffectRadius: 0.33
+    - _EffectSeed: 2.8
+    - _EffectValue: 3.64
     - _EndAngle: 360
     - _FadeAngleRange: 360
     - _FullVisibleAngleRange: 6
@@ -91,16 +97,19 @@ Material:
     - _Parallax: 0.02
     - _Radius: 0.3
     - _RingProbabilityVariation: 1.4
-    - _Seed: 13.91
+    - _Seed: 13
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _StartAngle: 0
     - _UVSec: 0
     - _VisibleRange: 360
+    - _WaveAmplitude: 0.5
+    - _WaveFrequency: 50
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.3820755, g: 0.6328535, b: 1, a: 0.5176471}
+    - _BaseUnActiveColor: {r: 0.51886785, g: 0.51886785, b: 0.51886785, a: 0.8}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
