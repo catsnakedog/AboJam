@@ -131,10 +131,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1403625458435368283, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
-      propertyPath: ChargeMinTime
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3293042334221703534, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -174,22 +170,6 @@ PrefabInstance:
     - target: {fileID: 3293042334221703534, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558452927610835882, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
-      propertyPath: ShakeValue
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558452927610835882, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
-      propertyPath: AngleCorrection
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558452927610835882, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
-      propertyPath: AttackAngleCorretion
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 4558452927610835882, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
-      propertyPath: DefaultAngleCorrection
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8005709912248172947, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Name

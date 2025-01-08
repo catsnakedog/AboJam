@@ -6,12 +6,17 @@ using UnityEngine.EventSystems;
 using static HandUtil;
 
 [System.Serializable]
-public class Head
+public class Head : IObserver
 {
     public Action HeadAction;
     private GameObject _player;
     private GameObject _headObj;
     private Camera _mainCamera;
+
+    public void OnNotify(string state)
+    {
+
+    }
 
     public void Init()
     {

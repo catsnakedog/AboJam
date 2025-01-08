@@ -7,7 +7,7 @@ using static Weapon;
 using static HandUtil;
 
 [System.Serializable]
-public class Hand
+public class Hand : IObserver
 {
     public enum HandType
     {
@@ -150,6 +150,10 @@ public class Hand
     /// 무기들 회전값 자체 보정 없으면 안됨 매직 넘버 맞음 건드리지 마삼
     /// </summary>
     const float HandAngleCorrection = 90;
+
+    public void OnNotify(string state)
+    { 
+    }
 
     public void Init()
     {

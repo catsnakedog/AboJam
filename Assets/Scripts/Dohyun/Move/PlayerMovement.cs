@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerMovement : Movement
+public class PlayerMovement : Movement, IObserver
 {
-    public float Drag = 5f; // °ü¼º È¿°ú¸¦ À§ÇÑ µå·¡±× °ª
+    public float Drag = 5f; // ê´€ì„± íš¨ê³¼ë¥¼ ìœ„í•œ ë“œë˜ê·¸ ê°’
     public Animator BodyAnimator;
     public Animator ClothesAnimator;
     public Animator HeadAnimator;
 
     private Vector2 _movement;
+
+    public void OnNotify(string state)
+    {
+
+    }
 
     public override void InitFirst()
     {
@@ -21,11 +26,11 @@ public class PlayerMovement : Movement
 
     public void ProcessInput()
     {
-        // ÀÔ·Â Ã³¸®
-        _movement.x = Input.GetAxisRaw("Horizontal"); // ¿ŞÂÊ/¿À¸¥ÂÊ ÀÔ·Â (A, D ¶Ç´Â ¡ç, ¡æ)
-        _movement.y = Input.GetAxisRaw("Vertical");   // À§/¾Æ·¡ ÀÔ·Â (W, S ¶Ç´Â ¡è, ¡é)
+        // ì…ë ¥ ì²˜ë¦¬
+        _movement.x = Input.GetAxisRaw("Horizontal"); // ì™¼ìª½/ì˜¤ë¥¸ìª½ ì…ë ¥ (A, D ë˜ëŠ” â†, â†’)
+        _movement.y = Input.GetAxisRaw("Vertical");   // ìœ„/ì•„ë˜ ì…ë ¥ (W, S ë˜ëŠ” â†‘, â†“)
 
-        // ÀÔ·Â º¤ÅÍ¸¦ Á¤±ÔÈ­ÇÏ¿© ´ë°¢¼± ÀÌµ¿ ¼Óµµ ÀÏ°ü¼º À¯Áö
+        // ì…ë ¥ ë²¡í„°ë¥¼ ì •ê·œí™”í•˜ì—¬ ëŒ€ê°ì„  ì´ë™ ì†ë„ ì¼ê´€ì„± ìœ ì§€
         _movement = _movement.normalized;
     }
 
