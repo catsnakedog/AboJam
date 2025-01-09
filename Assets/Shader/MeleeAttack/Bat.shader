@@ -102,8 +102,9 @@ Shader "Custom/AttackEffect/Bat"
 
             fixed4 IsActiveColor(fixed3 activeColor, fixed3 unactiveColor ,float alpha)
             {
-                if (_AttackFlag) return fixed4 (activeColor.rgb, alpha);
-                else return fixed4 (unactiveColor.rgb, alpha);
+            float clampAlpha = clamp(alpha, 0, 1);
+                if (_AttackFlag) return fixed4 (activeColor.rgb, clampAlpha);
+                else return fixed4 (unactiveColor.rgb, clampAlpha);
             }
 
             fixed4 frag (v2f i) : SV_Target

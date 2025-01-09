@@ -75,24 +75,13 @@ Shader "Custom/AttackEffect/ChainSaw"
                 return float(n) / 2147483647.0;
             }
 
-            // Gamma to Linear conversion
-            float4 GammaToLinear(float4 color)
-            {
-                return float4(pow(color.rgb, 2.2), color.a);
-            }
-
-            // Linear to Gamma conversion
-            float4 LinearToGamma(float4 color)
-            {
-                return float4(pow(color.rgb, 1.0 / 2.2), color.a);
-            }
 
             // Return active or inactive color with HDR support
             fixed4 IsActiveColor(float alpha)
             {
                 float4 activeColor = _AttackFlag > 0.5 ? _BaseColor : _BaseUnActiveColor;
-                activeColor = GammaToLinear(activeColor); // Convert to linear space for HDR
-                return LinearToGamma(float4(activeColor.rgb, alpha)); // Convert back to gamma space
+                float clampAlpha = clamp(alpha, 0, 1);
+                return float4(activeColor.rgb, clampAlpha);
             }
 
             v2f vert (appdata_t v)
