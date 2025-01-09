@@ -11,7 +11,6 @@ public class HP : MonoBehaviour
     /* Dependency */
     public SpriteRenderer spr_empty;
     public SpriteRenderer spr_max;
-    public Light2D light2D; // Null 가능
     public GameObject entity; // HP 모듈을 적용할 대상
 
     /* Field & Property */
@@ -126,13 +125,11 @@ public class HP : MonoBehaviour
         {
             spr_empty.enabled = false;
             spr_max.enabled = false;
-            if (light2D != null) light2D.enabled = false;
         }
         else
         {
             spr_empty.enabled = true;
             spr_max.enabled = true;
-            if (light2D != null) light2D.enabled = true;
         }
     }
 
