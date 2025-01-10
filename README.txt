@@ -320,3 +320,12 @@ night                   get set              밤의 전역 빛 프리셋
 
 /* Method */
 Set                     get set              전역 빛을 프리셋으로 보간
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Light ]
+
+/* Field & Preperty */
+instances               get set inspector    모든 인스턴스
+onTime                  get set inspector    빛 On 시간
+keepTime                get set inspector    빛 Keep 시간
+offTime                 get set inspector    빛 Off 시간
+frame                   get set inspector    초당 빛 변화
