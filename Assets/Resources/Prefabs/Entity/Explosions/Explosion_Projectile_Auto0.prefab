@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3100893671775424701}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7521682, y: 2.7756996, z: 0.000000021071173}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -147,15 +147,35 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 77680411934169540, guid: a1313b041dbf19a47b837c190b8d8cd3, type: 3}
       propertyPath: onTime
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 77680411934169540, guid: a1313b041dbf19a47b837c190b8d8cd3, type: 3}
       propertyPath: offTime
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 77680411934169540, guid: a1313b041dbf19a47b837c190b8d8cd3, type: 3}
       propertyPath: keepTime
-      value: 0.5
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205892278098318508, guid: a1313b041dbf19a47b837c190b8d8cd3, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13836467
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205892278098318508, guid: a1313b041dbf19a47b837c190b8d8cd3, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205892278098318508, guid: a1313b041dbf19a47b837c190b8d8cd3, type: 3}
+      propertyPath: m_Color.r
+      value: 0.99992913
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205892278098318508, guid: a1313b041dbf19a47b837c190b8d8cd3, type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205892278098318508, guid: a1313b041dbf19a47b837c190b8d8cd3, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5041889053341477472, guid: a1313b041dbf19a47b837c190b8d8cd3, type: 3}
       propertyPath: m_Name

@@ -10,19 +10,18 @@ public class Light : MonoBehaviour
 
     /* Field & Property */
     public static List<Light> instances = new List<Light>();
-
     public float onTime = 1f; // 빛 On 시간
     public float keepTime = 2f; // 빛 Keep 시간
     public float offTime = 1f; // 빛 Off 시간
 
     private float intensity;
     private WaitForSeconds waitForSeconds; // 갱신 시간
-    private int frame = 60; // 초당 60 번 색상 변화
-    private int delay;
+    private float frame = 60; // 초당 60 번 색상 변화
+    private float delay;
     private Coroutine lastCor;
 
     /* Intializer & Finalizer & Updater */
-    private void Start()
+    private void Awake()
     {
         instances.Add(this);
         intensity = light2D.intensity;
@@ -56,11 +55,13 @@ public class Light : MonoBehaviour
             if (ratio > 1) ratio = 1;
 
             light2D.intensity = Mathf.Lerp(0, intensity, ratio);
+            Debug.Log(intensity);
 
             yield return waitForSeconds;
         }
 
         // 빛 유지
+        Debug.Log(intensity);
         yield return new WaitForSeconds(keepTime);
 
         // 빛 소등
@@ -72,6 +73,7 @@ public class Light : MonoBehaviour
             if (ratio > 1) ratio = 1;
 
             light2D.intensity = Mathf.Lerp(intensity, 0, ratio);
+            Debug.Log(intensity);
 
             yield return waitForSeconds;
         }
