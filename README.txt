@@ -92,11 +92,13 @@ instance                get set              싱글턴
 timeFlow                get set inspector    시간 흐름 On / Off
 secondsPerDay           inspector            게임의 하루 = secondsPerDay 초
 startTime               inspector            게임 시작 시각
-morningStartTime        get set inspector    낮 시작 시각
-morningEndTime          get set inspector    낮 종료 시각
+morningTime             get set inspector    낮 시작 시각
+sunsetTime              get set inspector    해질녘 시작 시간
+nightTime               get set inspector    밤 시작 시각
 isMorning               get                  Morning / Night 조회
 dateTime                get set              게임 시각
 morningStart            get set inspector    아침 시작 시 실행될 메서드
+sunsetStart             get set inspector    해질녘 시작 시 실행될 메서드
 nightStart              get set inspector    밤 시작 시 실행될 메서드
 
 /* Method */
@@ -307,3 +309,14 @@ OnClick                                      캐스팅 시 이벤트 Invoke
 
 /* Field & Property */
 instance                get set              싱글턴
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Global Light ]
+
+/* Field & Property */
+instance                get set              싱글턴
+morning                 get set              아침의 전역 빛 프리셋
+sunset                  get set              해질녘의 전역 빛 프리셋
+night                   get set              밤의 전역 빛 프리셋
+
+/* Method */
+Set                     get set              전역 빛을 프리셋으로 보간

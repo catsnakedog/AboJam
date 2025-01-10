@@ -39,8 +39,7 @@ public class Launcher : MonoBehaviour
     }
     private void OnDestroy()
     {
-        // 생성된 발사체 제거
-        foreach (var item in pool) Destroy(item);
+        foreach (var item in pool) Destroy(item); // 생성된 발사체 제거
         instances.Remove(this);
     }
 

@@ -15,12 +15,12 @@ public class Projectile : MonoBehaviour
     public static List<Projectile> instances_enable = new List<Projectile>(); // 모든 발사체 인스턴스 (활성화)
     public static List<Projectile> instances_disable = new List<Projectile>(); // 모든 발사체 인스턴스 (비활성화)
     [HideInInspector] public GameObject launcher; // 발사기 참조
+    public List<GameObject> pool { get; private set; } = new List<GameObject>(); // 폭발 풀링
     public GameObject pool_root { get; private set; }
     public string[] clashTags; // 충돌 대상 태그
     public float damage = 10f; // 발사체 데미지
     public int penetrate = 1; // 총 관통 수
     private int penetrate_current; // 남은 관통 수
-    private Explosion explosion_script;
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
@@ -37,14 +37,6 @@ public class Projectile : MonoBehaviour
         }
         if (clashTags.Length == 0) Debug.Log($"{name} 의 Projectile 의 충돌 대상 태그가 할당되지 않았습니다.");
         if (colider2D == null) Debug.Log($"{name} 의 Projectile 에서 colider 가 설정되지 않았습니다.");
-
-        // 폭발 모듈 초기화
-        if (explosion != null)
-        {
-            explosion = Instantiate(explosion, pool_root.transform);
-            explosion_script = explosion.GetComponent<Explosion>();
-            explosion.SetActive(false);
-        }
     }
     private void OnEnable()
     {
@@ -59,9 +51,9 @@ public class Projectile : MonoBehaviour
     }
     private void OnDestroy()
     {
+        foreach (var item in pool) Destroy(item); // 생성된 폭발 제거
         instances_enable.Remove(this);
         instances_disable.Remove(this);
-        Destroy(explosion);
     }
 
     /* Public Method */
@@ -77,13 +69,12 @@ public class Projectile : MonoBehaviour
             // 발사기를 포함한 조상 오브젝트는 충돌 대상에서 제외
             if (launcher != null) if (GetParentList(launcher.transform).Contains(target)) return;
 
-            // 폭발
             if (explosion != null)
             {
-                if (explosion_script.coroutine != null) explosion_script.StopCoroutine(explosion_script.coroutine);
-                explosion.SetActive(true);
+                // 폭발 (풀링 or 생성)
+                GameObject explosion = SearchPool() ?? Create();
                 explosion.transform.position = transform.position;
-                explosion_script.Explode(clashTags);
+                explosion.GetComponent<Explosion>().Explode(clashTags);
             }
 
             // 타겟 HP 에 데미지 / 회복 연산
@@ -101,6 +92,16 @@ public class Projectile : MonoBehaviour
     public void Disappear()
     {
         gameObject.SetActive(false);
+    }
+    /// <summary>
+    /// 폭발을 변경합니다.
+    /// </summary>
+    /// <param name="explosion"></param>
+    public void SetProjectile(GameObject explosion)
+    {
+        this.explosion = explosion;
+        foreach (var item in pool) Destroy(item);
+        pool.Clear();
     }
 
     /* Private Method */
@@ -128,5 +129,40 @@ public class Projectile : MonoBehaviour
         }
 
         return parents;
+    }
+    /// <summary>
+    /// 폭발을 새로 생성합니다.
+    /// </summary>
+    /// <returns>새로 생성된 폭발 입니다.</returns>
+    private GameObject Create()
+    {
+        GameObject explosion = Instantiate(this.explosion, pool_root.transform); ;
+
+        pool.Add(explosion);
+        return explosion;
+    }
+    /// <summary>
+    /// <br>pool 에서 비활성화된 폭발을 찾습니다.</br>
+    /// </summary>
+    /// <returns>
+    /// <br>pool 에서 사용 가능한 발사체 입니다.</br>
+    /// <br>사용 가능한 폭발이 없으면 null 을 반환합니다.</br>
+    /// </returns>
+    private GameObject SearchPool()
+    {
+        GameObject go = null;
+
+        // pool 에서 비활성화된 폭발을 찾습니다.
+        foreach (var explosion in pool)
+        {
+            if (explosion.activeSelf == false)
+            {
+                go = explosion;
+                go.SetActive(true);
+                break;
+            }
+        }
+
+        return go;
     }
 }
