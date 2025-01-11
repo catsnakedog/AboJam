@@ -15,8 +15,8 @@ public class Launcher : MonoBehaviour
 {
     /* Dependency */
     public GameObject Projectile { get { return projectile; } private set { projectile = value; } } // 발사체
-    public Targeter targeter; // 조준경
     public Pooling pooling; // 풀링
+    public Targeter targeter; // 조준경
 
     /* Field & Property */
     public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
@@ -27,11 +27,14 @@ public class Launcher : MonoBehaviour
     [SerializeField] private GameObject projectile;
 
     /* Intializer & Finalizer */
+    private void Awake()
+    {
+        if (Projectile != null) pooling.Set(Projectile);
+    }
     private void Start()
     {
         instances.Add(this);
         if (Projectile == null) Debug.Log($"{gameObject.name} 의 Launcher 에 Projectile 이 연결되지 않았습니다.");
-        pooling.obj = projectile;
     }
     private void OnDestroy()
     {

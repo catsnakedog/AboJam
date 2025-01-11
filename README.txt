@@ -319,13 +319,25 @@ sunset                  get set              해질녘의 전역 빛 프리셋
 night                   get set              밤의 전역 빛 프리셋
 
 /* Method */
-Set                     get set              전역 빛을 프리셋으로 보간
+Set                                          전역 빛을 프리셋으로 보간
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Light ]
 
-/* Field & Preperty */
-instances               get set inspector    모든 인스턴스
+/* Field & Property */
+instances               get set              모든 인스턴스
 onTime                  get set inspector    빛 On 시간
 keepTime                get set inspector    빛 Keep 시간
 offTime                 get set inspector    빛 Off 시간
 frame                   get set inspector    초당 빛 변화
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Pooling ]
+
+/* Field & Property */
+instances               get set              모든 인스턴스
+Pool                              get                           논리 풀 (참조)
+Pool_root               get                  물리 풀 (하이라키, 공유)
+Obj                     get                  풀링 대상 오브젝트
+
+/* Method */
+Get                                          관리되는 오브젝트를 반환합니다.
+Set                                          풀링 오브젝트를 설정합니다. (Awake Only)

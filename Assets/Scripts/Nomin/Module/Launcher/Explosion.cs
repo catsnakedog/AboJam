@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Explosion : MonoBehaviour
 {
     /* Dependency */
-    public GameObject light2D; // 없어도 작동
+    public GameObject Light2D { get { return light2D; } private set { light2D = value; } } // 빛, 없어도 작동
     public Targeter targeter; // 조준경
+    public Pooling pooling; // 풀링
 
     /* Field & Property */
     public static List<Explosion> instances = new List<Explosion>();
@@ -16,7 +18,14 @@ public class Explosion : MonoBehaviour
     public float time = 2f; // 폭발 시간
     private Coroutine lastCor;
 
+    /* Backing Field */
+    [SerializeField] private GameObject light2D;
+
     /* Initializer & Finalizer & Updater */
+    private void Awake()
+    {
+        if (Light2D != null) pooling.Set(Light2D);
+    }
     private void Start()
     {
         instances.Add(this);
@@ -37,6 +46,13 @@ public class Explosion : MonoBehaviour
         SplashDamage(tags, radius);
         if (lastCor != null) StopCoroutine(lastCor);
         lastCor = StartCoroutine(CorOn());
+
+        // 빛 (풀링 or 생성)
+        if (Light2D != null)
+        {
+            GameObject light2D = pooling.Get();
+            light2D.transform.position = transform.position;
+        }
     }
 
     /* Private Method */

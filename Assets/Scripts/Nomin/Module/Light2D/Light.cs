@@ -73,5 +73,6 @@ public class Light : MonoBehaviour
         }
 
         lastCor = null;
+        gameObject.SetActive(false);
     }
 }

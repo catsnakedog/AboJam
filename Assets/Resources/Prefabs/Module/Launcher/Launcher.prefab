@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7538259622620343215}
   - component: {fileID: 8178899645152688462}
-  - component: {fileID: 1581863529454985990}
-  - component: {fileID: 5953298082920619638}
+  - component: {fileID: 8880391559304024594}
+  - component: {fileID: 5746937334601587145}
   m_Layer: 0
   m_Name: Launcher
   m_TagString: Untagged
@@ -46,12 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8191f7230413def4da28884b1a429664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targeter: {fileID: 1581863529454985990}
-  pooling: {fileID: 5953298082920619638}
+  pooling: {fileID: 5746937334601587145}
+  targeter: {fileID: 8880391559304024594}
   speed: 0.3
   range: 5
   projectile: {fileID: 6225409795156279537, guid: fc84bbade06fbee4da200cf4a5e4730f, type: 3}
---- !u!114 &1581863529454985990
+--- !u!114 &8880391559304024594
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,7 +63,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd9f5cb9999dd74fbf15d8282423113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5953298082920619638
+  transform: {fileID: 0}
+--- !u!114 &5746937334601587145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,4 +76,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 455e5237688a2d343ba1d3ac8766deeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obj: {fileID: 0}
