@@ -6,7 +6,7 @@ public class Pooling : MonoBehaviour
 {
     /* Field & Property */
     public static List<Pooling> instances = new List<Pooling>();
-    public List<GameObject> Pool { get; private set; } = new List<GameObject>(); // 발사체 풀링
+    public List<GameObject> Pool { get; private set; } = new List<GameObject>(); // 성능 저하 심하면 Queue 로 바꿈
     public GameObject Pool_root { get; private set; }
     public GameObject Obj { get; private set; }
 

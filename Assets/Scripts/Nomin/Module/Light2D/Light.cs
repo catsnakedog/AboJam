@@ -17,7 +17,7 @@ public class Light : MonoBehaviour
     private float intensity; // 원래 빛 광도
     private WaitForSeconds waitForSeconds;
     private float delay;
-    private Coroutine lastCor;
+    private Coroutine corLast;
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
@@ -33,8 +33,8 @@ public class Light : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (lastCor != null) StopCoroutine(lastCor);
-        lastCor = StartCoroutine(CorLight());
+        if (corLast != null) StopCoroutine(corLast);
+        corLast = StartCoroutine(CorLight());
     }
 
     /* Public Method */
@@ -72,7 +72,7 @@ public class Light : MonoBehaviour
             yield return waitForSeconds;
         }
 
-        lastCor = null;
+        corLast = null;
         gameObject.SetActive(false);
     }
 }

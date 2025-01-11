@@ -54,7 +54,7 @@ MonoBehaviour:
   clashTags:
   - Towers
   damage: -7
-  penetrate: 1
+  penetrate: 2
   explosion: {fileID: 3100893671775424701, guid: 9ba0ae307010e7f41b36e5ffcbcf5c9d, type: 3}
 --- !u!114 &5024335299752214651
 MonoBehaviour:
