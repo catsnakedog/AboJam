@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2279252769181004249}
   - component: {fileID: 3330159118826112336}
+  - component: {fileID: 5024335299752214651}
   - component: {fileID: 1193637438243774845}
   - component: {fileID: 1469443515481340077}
   - component: {fileID: 3808277382358224368}
@@ -47,13 +48,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515f25f316047644287fdc7c1e732075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pooling: {fileID: 5024335299752214651}
   colider2D: {fileID: 1469443515481340077}
-  explosion: {fileID: 3100893671775424701, guid: 9ba0ae307010e7f41b36e5ffcbcf5c9d, type: 3}
   launcher: {fileID: 0}
   clashTags:
   - Towers
   damage: -7
-  penetrate: 1
+  penetrate: 2
+  explosion: {fileID: 3100893671775424701, guid: 9ba0ae307010e7f41b36e5ffcbcf5c9d, type: 3}
+--- !u!114 &5024335299752214651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6225409795156279537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 455e5237688a2d343ba1d3ac8766deeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &1193637438243774845
 SpriteRenderer:
   m_ObjectHideFlags: 0

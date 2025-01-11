@@ -2,18 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Explosion : MonoBehaviour
 {
-    /* Field & Property */
-    public Coroutine coroutine;
+    /* Dependency */
+    public GameObject Light2D { get { return light2D; } private set { light2D = value; } } // 빛, 없어도 작동
     public Targeter targeter; // 조준경
+    public Pooling pooling; // 풀링
+
+    /* Field & Property */
     public static List<Explosion> instances = new List<Explosion>();
     public float radius = 5f; // 폭발 반경
     public float damage = 3f; // 폭발 데미지
     public float time = 2f; // 폭발 시간
+    private Coroutine lastCor;
+
+    /* Backing Field */
+    [SerializeField] private GameObject light2D;
 
     /* Initializer & Finalizer & Updater */
+    private void Awake()
+    {
+        if (Light2D != null) pooling.Set(Light2D);
+    }
     private void Start()
     {
         instances.Add(this);
@@ -32,7 +44,15 @@ public class Explosion : MonoBehaviour
     public void Explode(string[] tags)
     {
         SplashDamage(tags, radius);
-        coroutine = StartCoroutine(CorOn());
+        if (lastCor != null) StopCoroutine(lastCor);
+        lastCor = StartCoroutine(CorOn());
+
+        // 빛 (풀링 or 생성)
+        if (Light2D != null)
+        {
+            GameObject light2D = pooling.Get();
+            light2D.transform.position = transform.position;
+        }
     }
 
     /* Private Method */
@@ -45,6 +65,7 @@ public class Explosion : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         gameObject.SetActive(false);
+        lastCor = null;
     }
     /// <summary>
     /// 일정 거리 이내, 특정 태그의 타겟에게 데미지를 입힙니다.

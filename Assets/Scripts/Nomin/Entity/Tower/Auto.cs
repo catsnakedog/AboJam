@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Auto : Tower
 {
-    /* Dependency */
-    public Targeter targeter;
-
     /* Field & Property */
     public static List<Auto> instances = new List<Auto>(); // 모든 연사 타워 인스턴스
     public Launcher launcher;

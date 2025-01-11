@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5893398439046588921}
-  - component: {fileID: 3010114512267648469}
-  - component: {fileID: 6905039974460121565}
   - component: {fileID: -2039790313233268893}
   - component: {fileID: 600700056944328434}
+  - component: {fileID: 3010114512267648469}
+  - component: {fileID: 6905039974460121565}
+  - component: {fileID: -8338577047358760814}
   m_Layer: 0
   m_Name: Explosion_Projectile_Splash0
   m_TagString: Untagged
@@ -35,34 +36,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3010114512267648469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3100893671775424701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa64b3eb05ccc7c448340e7b3f391639, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targeter: {fileID: 6905039974460121565}
-  radius: 1.5
-  damage: 20
-  time: 0.5
---- !u!114 &6905039974460121565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3100893671775424701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fd9f5cb9999dd74fbf15d8282423113, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &-2039790313233268893
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -136,3 +109,45 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3010114512267648469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100893671775424701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa64b3eb05ccc7c448340e7b3f391639, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light2D: {fileID: 5041889053341477472, guid: b9a2ecfeec6f1db4daf07ebf4d03ec89, type: 3}
+  targeter: {fileID: 6905039974460121565}
+  pooling: {fileID: -8338577047358760814}
+  radius: 1.5
+  damage: 20
+  time: 0.5
+--- !u!114 &6905039974460121565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100893671775424701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fd9f5cb9999dd74fbf15d8282423113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8338577047358760814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100893671775424701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 455e5237688a2d343ba1d3ac8766deeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
