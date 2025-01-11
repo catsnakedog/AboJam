@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa64b3eb05ccc7c448340e7b3f391639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  light2D: {fileID: 0}
   targeter: {fileID: 8977354508500975511}
   radius: 0
   damage: 0

@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    /* Field & Property */
-    public Coroutine coroutine;
+    /* Dependency */
+    public GameObject light2D; // 없어도 작동
     public Targeter targeter; // 조준경
+
+    /* Field & Property */
     public static List<Explosion> instances = new List<Explosion>();
     public float radius = 5f; // 폭발 반경
     public float damage = 3f; // 폭발 데미지
     public float time = 2f; // 폭발 시간
+    private Coroutine lastCor;
 
     /* Initializer & Finalizer & Updater */
     private void Start()
@@ -32,7 +35,8 @@ public class Explosion : MonoBehaviour
     public void Explode(string[] tags)
     {
         SplashDamage(tags, radius);
-        coroutine = StartCoroutine(CorOn());
+        if (lastCor != null) StopCoroutine(lastCor);
+        lastCor = StartCoroutine(CorOn());
     }
 
     /* Private Method */
@@ -45,6 +49,7 @@ public class Explosion : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         gameObject.SetActive(false);
+        lastCor = null;
     }
     /// <summary>
     /// 일정 거리 이내, 특정 태그의 타겟에게 데미지를 입힙니다.
