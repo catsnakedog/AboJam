@@ -7,6 +7,8 @@ using static HandUtil;
 public class MeleeHandLogic : IHandLogic
 {
     const float HANDCORRECTANGLE = 90;
+    public float MaxAngle { get; set; }
+    public float MinAngle { get; set; }
 
     public void SetLeftArm(GameObject arm, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera)
     {
@@ -19,7 +21,7 @@ public class MeleeHandLogic : IHandLogic
             {
                 renderer.sortingLayerName = "Entity";
                 renderer.sortingOrder = (int)HandLayer.afterGun;
-                rot = RimitedForwardToMouse(arm, mainCamera, 25, 25, HANDCORRECTANGLE, false);
+                rot = RimitedForwardToMouse(arm, mainCamera, MaxAngle, MinAngle, HANDCORRECTANGLE, false);
             }
             else
             {
@@ -49,7 +51,7 @@ public class MeleeHandLogic : IHandLogic
             {
                 renderer.sortingLayerName = "Entity";
                 renderer.sortingOrder = (int)HandLayer.afterGun;
-                rot = RimitedForwardToMouse(arm, mainCamera, 25, 25, HANDCORRECTANGLE, false);
+                rot = RimitedForwardToMouse(arm, mainCamera, MaxAngle, MinAngle, HANDCORRECTANGLE, false);
             }
             else
             {

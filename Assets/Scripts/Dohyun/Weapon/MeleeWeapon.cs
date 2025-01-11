@@ -24,5 +24,7 @@ public class MeleeWeapon : Weapon
         AttackSpeed = WeaponDatas[Level-1].AttackSpeed;
         IsReloadOnAttack = false;
         HandLogic = new MeleeHandLogic();
+        HandLogic.MaxAngle = 25;
+        HandLogic.MinAngle = 25;
     }
 }

@@ -4,6 +4,9 @@ using static HandUtil;
 
 public interface IHandLogic
 {
+    public float MaxAngle { get; set; }
+    public float MinAngle { get; set; }
+
     public void SetLeftArm(GameObject arm, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera);
     public void SetRightArm(GameObject arm, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera);
 }

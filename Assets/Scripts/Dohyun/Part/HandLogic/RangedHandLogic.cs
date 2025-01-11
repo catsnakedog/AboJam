@@ -7,6 +7,8 @@ using static HandUtil;
 public class RangedHandLogic : IHandLogic
 {
     const float HANDCORRECTANGLE = 90;
+    public float MaxAngle { get; set; }
+    public float MinAngle { get; set; }
 
     public void SetLeftArm(GameObject arm, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera)
     {

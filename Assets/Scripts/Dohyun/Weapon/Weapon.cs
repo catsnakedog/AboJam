@@ -53,6 +53,7 @@ public class Weapon : MonoBehaviour
     public bool IsReloadOnAttack = true;
     public bool HandPrio = false;
     public bool WeaponScalePrio = false;
+    public bool IsImageWidth = true;
 
     public void Init()
     {

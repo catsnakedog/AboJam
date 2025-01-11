@@ -72,6 +72,7 @@ public class ObjectPool : MonoBehaviour
     public void Return(Type type, GameObject obj)
     {
         obj.SetActive(false);
+        obj.transform.position = Vector3.zero;
         obj.transform.SetParent(Root.transform);
         PoolDic[type].PoolQueue.Enqueue(obj);
     }

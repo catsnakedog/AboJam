@@ -318,9 +318,17 @@ public class Hand : IObserver
         if(!_currentWeapon.WeaponScalePrio)
         {
             if (_currentWeapon.HandState.StandardHand) // 오른손에 있을때만
-                _currentWeapon.transform.localScale = new Vector3(1, -_mouseFlip, 1);
+            {
+                if(_currentWeapon.IsImageWidth)
+                    _currentWeapon.transform.localScale = new Vector3(1, -_mouseFlip, 1);
+                else
+                    _currentWeapon.transform.localScale = new Vector3(-_mouseFlip, 1, 1);
+            }
             else
+                if (_currentWeapon.IsImageWidth)
                 _currentWeapon.transform.localScale = new Vector3(1, _mouseFlip, 1);
+            else
+                _currentWeapon.transform.localScale = new Vector3(_mouseFlip, 1, 1);
         }
 
         if (_mouseFlip != _lastMouseFlip)

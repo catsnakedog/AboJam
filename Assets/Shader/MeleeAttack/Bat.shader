@@ -110,9 +110,10 @@ Shader "Custom/AttackEffect/Bat"
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 uv = i.uv - 0.5;
-                float distance = length(uv);
+                float2 snappedUV = floor(uv / _GridSize + 0.5) * _GridSize;
+                float distance = length(snappedUV);
 
-                float angle = atan2(uv.y, uv.x);
+                float angle = atan2(snappedUV.y, snappedUV.x);
                 angle = degrees(angle < 0 ? angle + 6.28318530718 : angle);
 
                 float correctedThickness = _LineThickness / (smoothstep(_InRadius * _RadiusScale, _LineRadius * _RadiusScale, distance) * (2 - _RadiusScale));
