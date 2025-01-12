@@ -53,8 +53,9 @@ public class Weapon : MonoBehaviour
     public bool IsReloadOnAttack = true;
     public bool HandPrio = false;
     public bool WeaponScalePrio = false;
+    public bool MouseFlipPrio = false;
     public bool IsHandFixed = false;
-    public Vector3 FixedLocation = default;
+    public Quaternion FixedRot = default;
     public bool IsImageWidth = true;
 
     public void Init()

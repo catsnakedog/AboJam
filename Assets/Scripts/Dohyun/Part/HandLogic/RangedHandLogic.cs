@@ -10,7 +10,7 @@ public class RangedHandLogic : IHandLogic
     public float MaxAngle { get; set; }
     public float MinAngle { get; set; }
 
-    public void SetLeftArm(GameObject arm, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera, bool isFixed, Vector3 fixedLocation)
+    public void SetLeftArm(GameObject arm, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera, bool isFixed, Quaternion fixedRot)
     {
         Quaternion rot;
         var weaponData = weapon.HandState;
@@ -22,7 +22,7 @@ public class RangedHandLogic : IHandLogic
                 renderer.sortingLayerName = "Entity";
                 renderer.sortingOrder = (int)HandLayer.afterGun;
                 if (isFixed)
-                    rot = ForwardToObj(arm, fixedLocation, HANDCORRECTANGLE);
+                    rot = fixedRot;
                 else
                     rot = ForwardToMouse(arm, mainCamera, HANDCORRECTANGLE);
             }
@@ -43,7 +43,7 @@ public class RangedHandLogic : IHandLogic
         arm.transform.rotation = rot;
     }
 
-    public void SetRightArm(GameObject arm, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera, bool isFixed, Vector3 fixedLocation)
+    public void SetRightArm(GameObject arm, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera, bool isFixed, Quaternion fixedRot)
     {
         Quaternion rot;
         var weaponData = weapon.HandState;
@@ -55,7 +55,7 @@ public class RangedHandLogic : IHandLogic
                 renderer.sortingLayerName = "Entity";
                 renderer.sortingOrder = (int)HandLayer.afterGun;
                 if(isFixed)
-                    rot = ForwardToObj(arm, fixedLocation, HANDCORRECTANGLE);
+                    rot = fixedRot;
                 else
                     rot = ForwardToMouse(arm, mainCamera, HANDCORRECTANGLE);
             }

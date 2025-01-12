@@ -62,6 +62,7 @@ public class Spear : MeleeWeapon
     public override void InitSetMain()
     {
         IsHandFixed = false;
+        MouseFlipPrio = false;
         base.InitSetMain();
         ResetMotion();
     }
@@ -69,6 +70,7 @@ public class Spear : MeleeWeapon
     public override void InitBeforeChange()
     {
         IsHandFixed = false;
+        MouseFlipPrio = false;
         base.InitBeforeChange();
         ResetMotion();
     }
@@ -83,7 +85,8 @@ public class Spear : MeleeWeapon
     public override void AttackLogic()
     {
         IsHandFixed = true;
-        FixedLocation = HandUtil.ScreenToWorld2D(Input.mousePosition, _mainCamera);
+        MouseFlipPrio = true;
+        FixedRot = transform.parent.parent.rotation;
         GameObject spearObj = ObjectPool.Instance.GetObj(_spearObjType, SpearObj, 10);
         spearObj.transform.localPosition = Vector3.zero;
         spearObj.transform.SetParent(FireLocation, false);
@@ -100,22 +103,23 @@ public class Spear : MeleeWeapon
 
         while (time < motionTime * SpearMotionRate)
         {
-            time += Time.deltaTime;
             process = time / (motionTime * SpearMotionRate);
             transform.localPosition = new Vector3(0, Mathf.Lerp(0, FrontMotionLength, process), 0);
             yield return null;
+            time += Time.deltaTime;
         }
         transform.localPosition = new Vector3(0, FrontMotionLength, 0);
         time = 0;
 
         while (time < motionTime * (1 - SpearMotionRate))
         {
-            time += Time.deltaTime;
             process = time / (motionTime * (1 - SpearMotionRate));
             transform.localPosition = new Vector3(0, Mathf.Lerp(FrontMotionLength, 0, process), 0);
             yield return null;
+            time += Time.deltaTime;
         }
         transform.localPosition = Vector3.zero;
         IsHandFixed = false;
+        MouseFlipPrio = false;
     }
 }

@@ -294,8 +294,9 @@ public class Hand : IObserver
             ShakeAmount = -ShakeAmount;
         _lastPlayerFlip = _playerFlip;
 
+        if(!_currentWeapon.MouseFlipPrio)
         // 마우스가 플레이어 상대 방향 (1 : 왼쪽, -1 : 오른쪽)
-        _mouseFlip = _player.transform.position.x > ScreenToWorld2D(Input.mousePosition, _mainCamera).x ? 1 : -1;
+            _mouseFlip = _player.transform.position.x > ScreenToWorld2D(Input.mousePosition, _mainCamera).x ? 1 : -1;
   
         // 3. 최종 방향 결정 (1: 기본, -1: 뒤집힘)
         _flip = _playerFlip * _mouseFlip;
@@ -351,8 +352,8 @@ public class Hand : IObserver
     {
         if (_currentWeapon.HandPrio)
             return;
-        _currentWeapon.HandLogic.SetLeftArm(_leftArm, _leftRenderer, _currentWeapon, _changeHand, _mainCamera, _currentWeapon.IsHandFixed, _currentWeapon.FixedLocation);
-        _currentWeapon.HandLogic.SetRightArm(_rightArm, _rightRenderer, _currentWeapon, _changeHand, _mainCamera, _currentWeapon.IsHandFixed, _currentWeapon.FixedLocation);
+        _currentWeapon.HandLogic.SetLeftArm(_leftArm, _leftRenderer, _currentWeapon, _changeHand, _mainCamera, _currentWeapon.IsHandFixed, _currentWeapon.FixedRot);
+        _currentWeapon.HandLogic.SetRightArm(_rightArm, _rightRenderer, _currentWeapon, _changeHand, _mainCamera, _currentWeapon.IsHandFixed, _currentWeapon.FixedRot);
     }
 
     /// <summary>

@@ -31,7 +31,6 @@ public class SpearObj : MonoBehaviour
 
         while (time < data.Time)
         {
-            time += Time.deltaTime;
             float process = time / data.Time;
             _property.SetFloat("_HeadWidth", GetLerpValue(data.HeadWidth, process));
             _property.SetFloat("_HeadHeight", GetLerpValue(data.HeadHeight, process));
@@ -42,6 +41,7 @@ public class SpearObj : MonoBehaviour
             _property.SetFloat("_OffsetY", GetLerpValue(data.OffsetY, process));
             _spriteRenderer.SetPropertyBlock(_property);
             yield return null;
+            time += Time.deltaTime;
         }
 
         _property.SetFloat("_HeadWidth", data.HeadWidth.End);
