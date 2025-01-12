@@ -53,6 +53,8 @@ public class Weapon : MonoBehaviour
     public bool IsReloadOnAttack = true;
     public bool HandPrio = false;
     public bool WeaponScalePrio = false;
+    public bool IsHandFixed = false;
+    public Vector3 FixedLocation = default;
     public bool IsImageWidth = true;
 
     public void Init()
@@ -60,6 +62,7 @@ public class Weapon : MonoBehaviour
         WeaponSetting();
         HandPrio = false;
         WeaponScalePrio = false;
+        IsHandFixed = false;
         IsReload = false;
         IsStartAttack = false;
         StartCoroutine(Reload());

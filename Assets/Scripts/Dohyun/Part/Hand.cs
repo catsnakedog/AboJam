@@ -351,8 +351,8 @@ public class Hand : IObserver
     {
         if (_currentWeapon.HandPrio)
             return;
-        _currentWeapon.HandLogic.SetLeftArm(_leftArm, _leftRenderer, _currentWeapon, _changeHand, _mainCamera);
-        _currentWeapon.HandLogic.SetRightArm(_rightArm, _rightRenderer, _currentWeapon, _changeHand, _mainCamera);
+        _currentWeapon.HandLogic.SetLeftArm(_leftArm, _leftRenderer, _currentWeapon, _changeHand, _mainCamera, _currentWeapon.IsHandFixed, _currentWeapon.FixedLocation);
+        _currentWeapon.HandLogic.SetRightArm(_rightArm, _rightRenderer, _currentWeapon, _changeHand, _mainCamera, _currentWeapon.IsHandFixed, _currentWeapon.FixedLocation);
     }
 
     /// <summary>
