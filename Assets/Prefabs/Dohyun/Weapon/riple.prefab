@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 159845221034874658}
   - component: {fileID: 7679251322420297017}
   m_Layer: 0
-  m_Name: Riple
+  m_Name: riple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,6 +179,10 @@ MonoBehaviour:
   IsReloadOnAttack: 1
   HandPrio: 0
   WeaponScalePrio: 0
+  MouseFlipPrio: 0
+  IsHandFixed: 0
+  FixedRot: {x: 0, y: 0, z: 0, w: 0}
+  IsImageWidth: 1
   FireLocation: {fileID: 1749792385394760301}
   BulletObj: {fileID: 8668373932551009970, guid: 577ac13fc15daa3429320723afb788f7, type: 3}
   WeaponDatas:

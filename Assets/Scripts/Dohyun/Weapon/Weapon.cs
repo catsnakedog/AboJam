@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
         Place1 = 0,
         Place2 = 1,
         Place3 = 2,
+        Place4 = 3,
     }
 
     public enum HoldingLocationOrder
@@ -17,6 +18,7 @@ public class Weapon : MonoBehaviour
         Place1 = 0,
         Place2 = -2,
         Place3 = -2,
+        Place4 = -2,
     }
 
     public enum WeaponAttackType

@@ -603,6 +603,7 @@ public class Hand : IObserver
         targetWeapon.transform.SetParent(_weaponHoldingLocation[(int)targetWeapon.HoldingIndex], false);
         targetWeapon.Renderer.sortingOrder = (int)targetWeapon.HoldingOrder;
         targetWeapon.transform.localPosition = Vector3.zero;
+        targetWeapon.transform.localScale = Vector3.one;
     }
 
     private void InitHoldSlotWeaponSetting(Weapon targetWeapon)

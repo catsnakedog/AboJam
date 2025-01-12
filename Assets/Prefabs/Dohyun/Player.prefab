@@ -148,6 +148,7 @@ Transform:
   - {fileID: 2249840185074263775}
   - {fileID: 7922931814216611358}
   - {fileID: 6093092444831047518}
+  - {fileID: 5419384207418851114}
   m_Father: {fileID: 3293042334221703534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2101586876204114446
@@ -524,6 +525,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1575295530024865336}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
+--- !u!1 &6299501298375393125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5419384207418851114}
+  m_Layer: 0
+  m_Name: WeaponHoldingZone4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5419384207418851114
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6299501298375393125}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 0.238, y: 0.082, z: 0}
+  m_LocalScale: {x: 1, y: -1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1575295530024865336}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!1 &7470561245194841023
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,24 +820,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bac48e778020dc489e1f84a23cb425b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement:
+  PlayerMovement:
     MoveSpeed: 2
     MoveDirection: {x: 0, y: 0}
-    Drag: 2
     BodyAnimator: {fileID: 703049206006489552}
     ClothesAnimator: {fileID: 3123073018399263431}
     HeadAnimator: {fileID: 7775993301229177817}
   Hand:
     AttackKeyIndex: 0
     SlotChangeKey: 114
-    FirstSlot: 6
-    SecondSlot: 7
+    FirstSlot: 0
+    SecondSlot: 6
     ThirdSlot: 4
     CurrentSlotIndex: 0
     WeaponSwitchTime: 1
     ShakeAmount: 0
     HealShake: 20
     MaxShake: 25
+    HandShakeAmount: 0
+    HandHealShake: 50
+    HandMoveShake: 70
+    HandMaxShake: 20
 --- !u!1 &8684534289992880213
 GameObject:
   m_ObjectHideFlags: 0
@@ -1368,8 +1403,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8234205934074435828, guid: ca1b5e162cfeffd42bfc693285e66b02, type: 3}
-      propertyPath: ClothesShake
-      value: 2
+      propertyPath: HoldingIndex
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

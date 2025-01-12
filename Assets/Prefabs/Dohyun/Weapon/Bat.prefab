@@ -118,6 +118,10 @@ MonoBehaviour:
   IsReloadOnAttack: 1
   HandPrio: 0
   WeaponScalePrio: 0
+  MouseFlipPrio: 0
+  IsHandFixed: 0
+  FixedRot: {x: 0, y: 0, z: 0, w: 0}
+  IsImageWidth: 1
   AttackEffectObj: {fileID: 9188416504112063306}
   WeaponDatas:
   - Damage: 12
