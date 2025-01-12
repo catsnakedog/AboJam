@@ -498,7 +498,7 @@ public class Hand : IObserver
         }
         if (Input.GetMouseButton(AttackKeyIndex))
         {
-            if (!_currentWeapon.IsReload && _currentWeapon.AttackType == Weapon.WeaponAttackType.Ranged)
+            if (!_currentWeapon.IsReload && _currentWeapon.AttackType == Weapon.WeaponAttackType.Ranged || _currentWeapon.AttackType == Weapon.WeaponAttackType.Melee)
                 ShakeClothes(_currentWeapon.ClothesShake);
             if (_currentWeapon.AttackType == Weapon.WeaponAttackType.Gage)
                 ShakeClothes(_currentWeapon.ClothesShake);
