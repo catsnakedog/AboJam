@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerMovement : Movement, IObserver
 {
-    public float Drag = 5f; // 관성 효과를 위한 드래그 값
     public Animator BodyAnimator;
     public Animator ClothesAnimator;
     public Animator HeadAnimator;

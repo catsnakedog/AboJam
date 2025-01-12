@@ -123,6 +123,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!95 &294059270 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 703049206006489552, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+  m_PrefabInstance: {fileID: 712448816}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &474556306 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7775993301229177817, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+  m_PrefabInstance: {fileID: 712448816}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &712448816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,26 +141,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1784873008328096042, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
-      propertyPath: SpearMotionRate
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 1784873008328096042, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
-      propertyPath: FrontMotionLength
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1784873008328096042, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
-      propertyPath: WeaponDatas.Array.data[0].AttackSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1784873008328096042, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
-      propertyPath: WeaponDatas.Array.data[1].AttackSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1784873008328096042, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
-      propertyPath: WeaponDatas.Array.data[2].AttackSpeed
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 3293042334221703534, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -195,6 +185,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8842748139511423489, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: Hand.HandMaxShake
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842748139511423489, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: Hand.HandHealShake
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842748139511423489, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: Hand.HandMoveShake
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842748139511423489, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: PlayerMovement.BodyAnimator
+      value: 
+      objectReference: {fileID: 294059270}
+    - target: {fileID: 8842748139511423489, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: PlayerMovement.HeadAnimator
+      value: 
+      objectReference: {fileID: 474556306}
+    - target: {fileID: 8842748139511423489, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: PlayerMovement.ClothesAnimator
+      value: 
+      objectReference: {fileID: 1701738393}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -408,6 +422,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1803395074}
   m_SourcePrefab: {fileID: 100100000, guid: ffc089c0ed285c94ea4823eaff4f8b3c, type: 3}
+--- !u!95 &1701738393 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3123073018399263431, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+  m_PrefabInstance: {fileID: 712448816}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1803395069 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4114368738701403615, guid: ffc089c0ed285c94ea4823eaff4f8b3c, type: 3}

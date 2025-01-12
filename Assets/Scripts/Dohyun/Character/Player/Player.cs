@@ -8,13 +8,13 @@ public class Player : Character
     private IPlayerState _currentState;
     private List<IObserver> _observers = new();
 
-    public PlayerMovement playerMovement;
+    public PlayerMovement PlayerMovement;
     public Hand Hand;
     public Head Head;
 
     void Awake()
     {
-        Movement = playerMovement;
+        Movement = PlayerMovement;
         Hand?.Init();
         Head?.Init();
         Init();
@@ -22,7 +22,7 @@ public class Player : Character
 
     private void Update()
     {
-        playerMovement.MoveAction?.Invoke();
+        PlayerMovement.MoveAction?.Invoke();
         Hand.HandAction?.Invoke();
         Head.HeadAction?.Invoke();
     }

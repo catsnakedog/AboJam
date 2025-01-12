@@ -10,7 +10,7 @@ public class MeleeHandLogic : IHandLogic
     public float MaxAngle { get; set; }
     public float MinAngle { get; set; }
 
-    public void SetLeftArm(GameObject arm, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera, bool isFixed, Quaternion fixedRot)
+    public void SetLeftArm(GameObject arm, float armMovePower, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera, bool isFixed, Quaternion fixedRot)
     {
         Quaternion rot;
         var weaponData = weapon.HandState;
@@ -37,13 +37,13 @@ public class MeleeHandLogic : IHandLogic
         {
             renderer.sortingLayerName = "Entity";
             renderer.sortingOrder = (int)HandLayer.afterBody;
-            rot = Quaternion.Euler(new Vector3(0, 0, 0));
+            rot = Quaternion.Euler(new Vector3(0, 0, armMovePower));
         }
 
         arm.transform.rotation = rot;
     }
 
-    public void SetRightArm(GameObject arm, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera, bool isFixed, Quaternion fixedRot)
+    public void SetRightArm(GameObject arm, float armMovePower, SpriteRenderer renderer, Weapon weapon, bool isChangeHand, Camera mainCamera, bool isFixed, Quaternion fixedRot)
     {
         Quaternion rot;
         var weaponData = weapon.HandState;
@@ -70,7 +70,7 @@ public class MeleeHandLogic : IHandLogic
         {
             renderer.sortingLayerName = "Entity";
             renderer.sortingOrder = (int)HandLayer.afterBody;
-            rot = Quaternion.Euler(new Vector3(0, 0, 0));
+            rot = Quaternion.Euler(new Vector3(0, 0, armMovePower));
         }
 
         arm.transform.rotation = rot;

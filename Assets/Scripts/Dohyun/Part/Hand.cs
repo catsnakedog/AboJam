@@ -104,6 +104,7 @@ public class Hand : IObserver
     private List<Transform> _weaponHoldingLocation;
     private Transform _weaponHoldingLocationRoot;
     private GameObject _clothes;
+    private PlayerMovement _movement;
 
     // Flip 판별용 1, -1(뒤집힘) 으로 구분한다
     private int _playerFlip;
@@ -145,6 +146,12 @@ public class Hand : IObserver
     public float HealShake = 0.5f; // 흔들림 회복 시간
     public float MaxShake = 15f; // 최대 흔들림 각도 제한
 
+    // NoneUsed Hand 관련
+    public float HandShakeAmount;
+    public float HandHealShake = 2f; // 흔들림 회복 시간
+    public float HandMoveShake = 1f;
+    public float HandMaxShake = 15f; // 최대 흔들림 각도 제한
+
 
     /// <summary>
     /// 무기들 회전값 자체 보정 없으면 안됨 매직 넘버 맞음 건드리지 마삼
@@ -164,6 +171,7 @@ public class Hand : IObserver
         HandAction = CheckAttack; // 공격했는지 체크
         HandAction += CheckSlotSwitch; // 슬롯이 바뀌었는지 체크
         HandAction += SetClothes;
+        HandAction += SetHandShake;
         HandAction += CheckFlipData; // 방향이 바뀌었는지 체크 후 방향 적용
         HandAction += CheckCurrentSlotWeaponParent; // 무기의 위치가 바뀌었는지 체크 후 적용
         HandAction += SetArmRot; // 손의 방향을 설정
@@ -185,6 +193,7 @@ public class Hand : IObserver
         _leftWeaponLocation = _leftArm.transform.Find("LeftWeaponLocation");
         _rightWeaponLocation = _rightArm.transform.Find("RightWeaponLocation");
         _clothes = _player.transform.Find("Clothes").gameObject;
+        _movement = _player.GetComponent<Player>().PlayerMovement;
         _weaponRoot = _player.transform.Find("WeaponRoot").gameObject;
         _weaponHoldingLocationRoot = _player.transform.Find("WeaponHoldingLocationRoot");
         _weaponHoldingLocation = new();
@@ -280,6 +289,30 @@ public class Hand : IObserver
         ShakeAmount = Mathf.Clamp(ShakeAmount, -MaxShake, MaxShake);
     }
 
+    public void SetHandShake()
+    {
+        ShakeHand();
+
+        if (_playerFlip == 1)
+        {
+            HandShakeAmount -= HandHealShake * Time.deltaTime;
+            if (HandShakeAmount < 0)
+                HandShakeAmount = 0;
+        }
+        else
+        {
+            HandShakeAmount += HandHealShake * Time.deltaTime;
+            if (HandShakeAmount > 0)
+                HandShakeAmount = 0;
+        }
+    }
+
+    public void ShakeHand()
+    {
+        HandShakeAmount -= _movement.MoveDirection.x * HandMoveShake * Time.deltaTime;
+        HandShakeAmount = Mathf.Clamp(HandShakeAmount, -HandMaxShake, HandMaxShake);
+    }
+
 
     private int _lastPlayerFlip = 1;
     private int _lastMouseFlip = 1;
@@ -291,13 +324,17 @@ public class Hand : IObserver
         // 플레이어 Y축 방향 (1 : 기본 방향, -1 : 뒤집힌 방향)
         _playerFlip = _player.transform.localEulerAngles.y == 0 ? 1 : -1;
         if (_lastPlayerFlip != _playerFlip)
+        {
             ShakeAmount = -ShakeAmount;
+            HandShakeAmount = -HandShakeAmount;
+        }
         _lastPlayerFlip = _playerFlip;
 
         if(!_currentWeapon.MouseFlipPrio)
         // 마우스가 플레이어 상대 방향 (1 : 왼쪽, -1 : 오른쪽)
             _mouseFlip = _player.transform.position.x > ScreenToWorld2D(Input.mousePosition, _mainCamera).x ? 1 : -1;
-  
+        
+
         // 3. 최종 방향 결정 (1: 기본, -1: 뒤집힘)
         _flip = _playerFlip * _mouseFlip;
         SetFlip();
@@ -352,8 +389,8 @@ public class Hand : IObserver
     {
         if (_currentWeapon.HandPrio)
             return;
-        _currentWeapon.HandLogic.SetLeftArm(_leftArm, _leftRenderer, _currentWeapon, _changeHand, _mainCamera, _currentWeapon.IsHandFixed, _currentWeapon.FixedRot);
-        _currentWeapon.HandLogic.SetRightArm(_rightArm, _rightRenderer, _currentWeapon, _changeHand, _mainCamera, _currentWeapon.IsHandFixed, _currentWeapon.FixedRot);
+        _currentWeapon.HandLogic.SetLeftArm(_leftArm, HandShakeAmount, _leftRenderer, _currentWeapon, _changeHand, _mainCamera, _currentWeapon.IsHandFixed, _currentWeapon.FixedRot);
+        _currentWeapon.HandLogic.SetRightArm(_rightArm, HandShakeAmount, _rightRenderer, _currentWeapon, _changeHand, _mainCamera, _currentWeapon.IsHandFixed, _currentWeapon.FixedRot);
     }
 
     /// <summary>
