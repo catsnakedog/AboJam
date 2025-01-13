@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class Auto : Tower
 {
+    /* Dependency */
+    [Header("[ Dependency ]")]
+    public Launcher launcher;
+    public GameObject indicator_circle;
+
     /* Field & Property */
     public static List<Auto> instances = new List<Auto>(); // 모든 연사 타워 인스턴스
-    public Launcher launcher;
+
+    [Header("[ Auto ]")]
     [SerializeField] private float delay = 0.1f; // 공격 딜레이
     public float detection = 5f; // 적 감지 범위
-    private WaitForSeconds delay_waitForSeconds;
-    private Coroutine corFire;
     public float angle = 90f;
     public int subCount = 0;
+    private WaitForSeconds delay_waitForSeconds;
+    private Coroutine corFire;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -20,6 +26,10 @@ public class Auto : Tower
         base.Start();
         instances.Add(this);
         delay_waitForSeconds = new WaitForSeconds(delay);
+
+        // 인디케이터 스케일링
+        float scale = launcher.range * 4;
+        indicator_circle.transform.localScale = new Vector2(scale, scale);
 
         Fire(true);
     }
@@ -66,7 +76,9 @@ public class Auto : Tower
         while (true)
         {
             // 메인 탄환
+            launcher.align = true;
             launcher.Launch(Targeter.TargetType.Near, detection);
+            launcher.align = false;
 
             // 서브 탄환
             for (int i = 1; i <= subCount; i++)

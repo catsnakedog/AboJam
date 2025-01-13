@@ -341,10 +341,33 @@ frame                   get set inspector    초당 빛 변화
 
 /* Field & Property */
 instances               get set              모든 인스턴스
-Pool                              get                           논리 풀 (참조)
+Pool                    get                  논리 풀 (참조)
 Pool_root               get                  물리 풀 (하이라키, 공유)
 Obj                     get                  풀링 대상 오브젝트
 
 /* Method */
 Get                                          관리되는 오브젝트를 반환합니다.
 Set                                          풀링 오브젝트를 설정합니다. (Awake Only)
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Indicator_Circle ]
+
+/* Field & Dependency */
+instances               get set              모든 인스턴스
+angle                   get set inspector    각도 범위
+openTime                get set inspector    인디케이터 오픈 시간
+turnSpeed               get set inspector    인디케이터 회전 속도
+frame                   get set inspector    초당 이펙트 변화
+
+/* Public Method */
+Switch                                       다른 인디케이터 종료 및 현재 인디케이터 스위치
+Off                                          인디케이터 종료
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Indicator_Arrow ]
+
+/* Field & Dependency */
+instances               get set              모든 인스턴스
+time                    get set inspector    인디케이터 오픈 시간
+
+/* Public Method */
+Switch                                       다른 인디케이터 종료 및 현재 인디케이터 스위치
+Off                                          인디케이터 종료
