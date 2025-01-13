@@ -36,6 +36,17 @@ public class Launcher : MonoBehaviour
         Center,
         Bottom,
     }
+    [Serializable] public struct Align
+    {
+        public Align(Horizontal horizontal, Vertical vertical)
+        {
+            this.horizontal = horizontal;
+            this.vertical = vertical;
+        }
+
+        public Horizontal horizontal;
+        public Vertical vertical;
+    }
 
     /* Field & Property */
     public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
@@ -50,26 +61,14 @@ public class Launcher : MonoBehaviour
     private WaitForSeconds waitForSeconds;
     private Coroutine corLast;
 
-    [Header("[ Projectile ]")]
-    [SerializeField] private Horizontal alignHorizontal = Horizontal.Center; // 발사 위치 가로 정렬
-    [SerializeField] private Vertical alignVertical = Vertical.Top; // 발사 위치 세로 정렬
-    public Horizontal AlignHorizontal
+    [Header("[ Launch ]")]
+    [SerializeField] private Align muzzleAlign = new Align(Horizontal.Center, Vertical.Top); // 발사 위치 정렬
+    public Align MuzzleAlign
     {
-        get => alignHorizontal;
-
+        get => muzzleAlign;
         set
         {
-            alignHorizontal = value;
-            AlignLauncher();
-        }
-    }
-    public Vertical AlignVertical
-    {
-        get => alignVertical;
-
-        set
-        {
-            alignVertical = value;
+            muzzleAlign = value;
             AlignLauncher();
         }
     }
@@ -102,8 +101,7 @@ public class Launcher : MonoBehaviour
     private void OnValidate()
     {
         Projectile = projectile;
-        AlignHorizontal = alignHorizontal;
-        AlignVertical = alignVertical;
+        MuzzleAlign = muzzleAlign;
     }
 
     /* Public Method */
@@ -227,7 +225,7 @@ public class Launcher : MonoBehaviour
     {
         offset = Vector3.zero;
 
-        switch (AlignHorizontal)
+        switch (muzzleAlign.horizontal)
         {
             case Horizontal.Left:
                 offset.x -= width / 2;
@@ -236,7 +234,7 @@ public class Launcher : MonoBehaviour
                 offset.x += width / 2;
                 break;
         }
-        switch (AlignVertical)
+        switch (muzzleAlign.vertical)
         {
             case Vertical.Top:
                 offset.y += height / 2;

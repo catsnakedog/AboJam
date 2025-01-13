@@ -106,17 +106,24 @@ SkipNight                                    밤 스킵
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Launcher ]
 
-/* Module */
-Targeter
-Projectile
-
 /* Field */
 instances               get set              모든 발사 장치 인스턴스
 pool                    get                  발사체 풀
 pool_hierarchy          get                  발사체 풀 (하이라키 정리용)
-projectile              get set inspector    발사체
+Projectile              get set inspector    발사체
+
+
+# Launcher
+align                   get set inspector    발사기 타겟 정렬
+turnTime                get set inspector    발사기 회전 속도
+angleOffset             get set inspector    발사기 회전 보정치
+frame                   get set inspector    발사기 회전 부드러움 조절
+launchEvent             get set inspector    발사 시 추가 이벤트 연결
+
+# Launch
+MuzzleAlign             get set inspector    발사 위치 정렬
 speed                   get set inspector    발사체 속도
-range                   get set              발사체 유효 사거리
+range                   get set inspector    발사체 유효 사거리
 
 /* Method */
 Launch                                       발사
