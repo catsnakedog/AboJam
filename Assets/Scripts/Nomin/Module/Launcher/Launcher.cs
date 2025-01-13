@@ -18,16 +18,12 @@ using static UnityEditor.ShaderData;
 public class Launcher : MonoBehaviour
 {
     /* Dependency */
-    public GameObject Projectile { get { return projectile; } private set { projectile = value; } } // 발사체
+    [Header("[ Dependency ]")]
+    [SerializeField] private GameObject projectile;
+    public GameObject Projectile { get => projectile; private set => SetProjectile(value); } // 발사체
     public Pooling pooling; // 풀링
     public Targeter targeter; // 조준경
     public SpriteRenderer spriteRenderer;
-
-    /* Field & Property */
-    public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
-    public float speed = 0.02f; // 발사체 속도
-    public float range = 5f; // 발사체 유효 사거리 (!= 타겟 감지 거리)
-    public UnityEvent launchEvent;
     public enum Horizontal
     {
         Left,
@@ -40,49 +36,48 @@ public class Launcher : MonoBehaviour
         Center,
         Bottom,
     }
-    public Horizontal Alignment_Horizontal
-    {
-        get
-        {
-            return alignment_Horizontal;
-        }
-        
-        set
-        {
-            alignment_Horizontal = value;
-            AlignLauncher();
-        }
-    } // 발사 위치 가로 정렬
-    public Vertical Alignment_Vertical
-    {
-        get
-        {
-            return alignment_Vertical;
-        }
 
-        set
-        {
-            alignment_Vertical = value;
-            AlignLauncher();
-        }
-    } // 발사 위치 세로 정렬
-    public float width;
-    public float height;
-    public Vector3 offset = Vector3.zero; // 발사 위치 보정
+    /* Field & Property */
+    public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
 
-    /* Backing Field */
-    [SerializeField] private GameObject projectile;
-    [SerializeField] private Horizontal alignment_Horizontal = Horizontal.Center;
-    [SerializeField] private Vertical alignment_Vertical = Vertical.Top;
-
-    [Header("선택 옵션 : 발사기 회전")]
+    [Header("[ Launcher ]")]
     public bool align = false;
     public float turnTime = 0.1f; // 포신 회전 시간
     public float angleOffset = 0f; // 회전 보정치
     public float frame = 60; // 초당 회전 변화
+    public UnityEvent launchEvent; // 발사 시 추가할 이벤트
     private float delay;
     private WaitForSeconds waitForSeconds;
     private Coroutine corLast;
+
+    [Header("[ Projectile ]")]
+    [SerializeField] private Horizontal alignHorizontal = Horizontal.Center; // 발사 위치 가로 정렬
+    [SerializeField] private Vertical alignVertical = Vertical.Top; // 발사 위치 세로 정렬
+    public Horizontal AlignHorizontal
+    {
+        get => alignHorizontal;
+
+        set
+        {
+            alignHorizontal = value;
+            AlignLauncher();
+        }
+    }
+    public Vertical AlignVertical
+    {
+        get => alignVertical;
+
+        set
+        {
+            alignVertical = value;
+            AlignLauncher();
+        }
+    }
+    public float speed = 0.02f; // 발사체 속도
+    public float range = 5f; // 발사체 유효 사거리 (!= 타겟 감지 거리)
+    private float width;
+    private float height;
+    private Vector3 offset = Vector3.zero; // 발사 위치 보정
 
     /* Intializer & Finalizer */
     private void Awake()
@@ -103,6 +98,12 @@ public class Launcher : MonoBehaviour
     private void OnDestroy()
     {
         instances.Remove(this);
+    }
+    private void OnValidate()
+    {
+        Projectile = projectile;
+        AlignHorizontal = alignHorizontal;
+        AlignVertical = alignVertical;
     }
 
     /* Public Method */
@@ -145,7 +146,7 @@ public class Launcher : MonoBehaviour
     /// <param name="projectile"></param>
     public void SetProjectile(GameObject projectile)
     {
-        this.Projectile = projectile;
+        this.projectile = projectile;
         pooling.Set(this.Projectile);
     }
 
@@ -159,22 +160,22 @@ public class Launcher : MonoBehaviour
     {
         launchEvent?.Invoke();
 
-        // 발사기 정렬
+        // 발사기 각도 정렬
         if (align == true)
         {
             if (corLast != null) StopCoroutine(corLast);
             corLast = StartCoroutine(CorTurn(destination));
         }
 
-        Vector3 startPos = transform.position + offset;
+        // 발사체 위치 정렬
+        Vector3 startPos = transform.position + (transform.rotation * offset);
+        projectile.transform.position = startPos;
         AlignProjectile(projectile, destination);
 
         while (projectile != null && projectile.activeSelf == true)
         {
-            // 진행 방향 & 타겟으로의 방향
+            // 발사체 위치 += 진행 방향 * speed
             Vector3 direction = (destination - startPos).normalized;
-            Vector3 antiDirection = (destination - projectile.transform.position).normalized;
-
             projectile.transform.position += direction * speed;
 
             // 사거리를 벗어나면 비활성화
@@ -226,7 +227,7 @@ public class Launcher : MonoBehaviour
     {
         offset = Vector3.zero;
 
-        switch (Alignment_Horizontal)
+        switch (AlignHorizontal)
         {
             case Horizontal.Left:
                 offset.x -= width / 2;
@@ -235,7 +236,7 @@ public class Launcher : MonoBehaviour
                 offset.x += width / 2;
                 break;
         }
-        switch (Alignment_Vertical)
+        switch (AlignVertical)
         {
             case Vertical.Top:
                 offset.y += height / 2;
