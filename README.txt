@@ -36,10 +36,9 @@ CellWidth               get                  한 칸 너비
 CellHeight              get                  한 칸 높이
 
 /* Method */
-GetObject                                    그리드에서 [i][j] 오브젝트 반환
-Create                                       (i, j) 에 오브젝트 생성
-Delete                                       (i, j) 에  오브젝트 제거
-GetTile                                      (i, j) 에  타일 반환
+Create                                       (i, j) 에 오브젝트 생성 // 타워 & 아보카도 전용
+Delete                                       (i, j) 에 오브젝트 제거 // 타워 & 아보카도 전용
+GetTile                                      (i, j) 의 타일 반환
 GetNearestTile                               특정 좌표와 가장 가까운 타일 반환
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -55,8 +54,8 @@ pos                     get                  타일 중심 좌표
         
 /* Method */
 OnClick                                      타일 클릭 이벤트
-Create                                       프리팹 건설
-Delete                                       프리팹 철거
+Create                                       프리팹 건설 // 타워 & 아보카도 전용
+Delete                                       프리팹 철거 // 타워 & 아보카도 전용
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Promotion ]
 
