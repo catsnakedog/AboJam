@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Heal : Tower
 {
+    /* Dependency */
+    [Header("[ Dependency ]")]
+    public Launcher launcher;
+    public GameObject indicator_circle;
+
     /* Field & Property */
     public static List<Heal> instances = new List<Heal>(); // 모든 회복 타워 인스턴스
-    public Launcher launcher;
+
+    [Header("[ Heal ]")]
     [SerializeField] private float delay = 0.1f; // 공격 딜레이
     public float detection = 5f; // 아군 감지 범위
     public float ratio = 0.8f; // 체력 회복 기준 비율
@@ -20,6 +26,10 @@ public class Heal : Tower
         base.Start();
         instances.Add(this);
         delay_waitForSeconds = new WaitForSeconds(delay);
+
+        // 인디케이터 스케일링
+        float scale = launcher.range * 4;
+        indicator_circle.transform.localScale = new Vector2(scale, scale);
 
         Healing(true);
     }

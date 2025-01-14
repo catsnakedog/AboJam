@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Splash : Tower
 {
+    /* Dependency */
+    [Header("[ Dependency ]")]
+    public Launcher launcher;
+    public GameObject indicator_circle;
+
     /* Field & Property */
     public static List<Splash> instances = new List<Splash>(); // 모든 연사 타워 인스턴스
-    public Launcher launcher;
+
+    [Header("[ Splash ]")]
     [SerializeField] private float delay = 1f; // 공격 딜레이
     public float detection = 8f; // 적 감지 범위
     private WaitForSeconds delay_waitForSeconds;
@@ -19,6 +25,10 @@ public class Splash : Tower
         base.Start();
         instances.Add(this);
         delay_waitForSeconds = new WaitForSeconds(delay);
+
+        // 인디케이터 스케일링
+        float scale = launcher.range * 4;
+        indicator_circle.transform.localScale = new Vector2(scale, scale);
 
         Fire(true);
     }

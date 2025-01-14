@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEditor.Timeline.Actions;
 using UnityEngine.EventSystems;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class Receiver : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Receiver : MonoBehaviour
     private Promotion promotion => Promotion.instance; // 하드 링크
     private Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
     private Demolition demolition => Demolition.instance; // 하드 링크
+    private List<Indicator_Circle> indicator_circle => Indicator_Circle.instances;
+    private List<Indicator_Arrow> indicator_arrow => Indicator_Arrow.instances;
     private Grid grid => Grid.instance; // 하드 링크
 
     /// <summary>
@@ -29,7 +32,7 @@ public class Receiver : MonoBehaviour
         map.FindAction("Click").performed += (context) =>
         {
             List<RaycastResult> ui = rayCaster2D.RayCastUI(Input.mousePosition);
-            if (ui.Count == 0) { promotion.Off(); reinforcement.Off(); demolition.Off(); }
+            if (ui.Count == 0) OffUI();
         }; // Click
         map.FindAction("Interaction").performed += (context) =>
         {
@@ -48,5 +51,18 @@ public class Receiver : MonoBehaviour
             Tile.currentTile = tile;
             if (tile.Go != null) demolition.On();
         }; // Click + G 키다운
+    }
+    /// <summary>
+    /// 모든 UI 요소를 끕니다.
+    /// </summary>
+    private void OffUI()
+    {
+        promotion.Off();
+        reinforcement.Off();
+        demolition.Off();
+
+        // 인디케이터
+        //foreach (var item in indicator_circle) item.Off();
+        //foreach (var item in indicator_arrow) item.Off();
     }
 }

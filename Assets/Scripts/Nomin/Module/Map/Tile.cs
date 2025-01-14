@@ -16,6 +16,7 @@ public class Tile
     public GameObject Go { get; set; } = null; // 타일에 배치된 프리팹
     public readonly int i;
     public readonly int j;
+    public bool isWall;
     public readonly Vector2 pos;
     private string path_abocado = "Prefabs/Entity/Abocado";
 

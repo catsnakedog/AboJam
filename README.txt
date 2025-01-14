@@ -36,10 +36,9 @@ CellWidth               get                  한 칸 너비
 CellHeight              get                  한 칸 높이
 
 /* Method */
-GetObject                                    그리드에서 [i][j] 오브젝트 반환
-Create                                       (i, j) 에 오브젝트 생성
-Delete                                       (i, j) 에  오브젝트 제거
-GetTile                                      (i, j) 에  타일 반환
+Create                                       (i, j) 에 오브젝트 생성 // 타워 & 아보카도 전용
+Delete                                       (i, j) 에 오브젝트 제거 // 타워 & 아보카도 전용
+GetTile                                      (i, j) 의 타일 반환
 GetNearestTile                               특정 좌표와 가장 가까운 타일 반환
 
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -50,12 +49,13 @@ instances               get set              모든 타일 인스턴스
 Go                      get set              타일에 배치된 프리팹 (아보카도 / 타워) 
 i                       get                  행 번호 (시작 0)
 j                       get                  열 번호 (시작 0)
+isWall			get set inspector    벽 판정 On / Off
 pos                     get                  타일 중심 좌표
         
 /* Method */
 OnClick                                      타일 클릭 이벤트
-Create                                       프리팹 건설
-Delete                                       프리팹 철거
+Create                                       프리팹 건설 // 타워 & 아보카도 전용
+Delete                                       프리팹 철거 // 타워 & 아보카도 전용
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Promotion ]
 
@@ -106,17 +106,24 @@ SkipNight                                    밤 스킵
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 [ Launcher ]
 
-/* Module */
-Targeter
-Projectile
-
 /* Field */
 instances               get set              모든 발사 장치 인스턴스
 pool                    get                  발사체 풀
 pool_hierarchy          get                  발사체 풀 (하이라키 정리용)
-projectile              get set inspector    발사체
+Projectile              get set inspector    발사체
+
+
+# Launcher
+align                   get set inspector    발사기 타겟 정렬
+turnTime                get set inspector    발사기 회전 속도
+angleOffset             get set inspector    발사기 회전 보정치
+frame                   get set inspector    발사기 회전 부드러움 조절
+launchEvent             get set inspector    발사 시 추가 이벤트 연결
+
+# Launch
+MuzzleAlign             get set inspector    발사 위치 정렬
 speed                   get set inspector    발사체 속도
-range                   get set              발사체 유효 사거리
+range                   get set inspector    발사체 유효 사거리
 
 /* Method */
 Launch                                       발사
@@ -334,10 +341,33 @@ frame                   get set inspector    초당 빛 변화
 
 /* Field & Property */
 instances               get set              모든 인스턴스
-Pool                              get                           논리 풀 (참조)
+Pool                    get                  논리 풀 (참조)
 Pool_root               get                  물리 풀 (하이라키, 공유)
 Obj                     get                  풀링 대상 오브젝트
 
 /* Method */
 Get                                          관리되는 오브젝트를 반환합니다.
 Set                                          풀링 오브젝트를 설정합니다. (Awake Only)
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Indicator_Circle ]
+
+/* Field & Dependency */
+instances               get set              모든 인스턴스
+angle                   get set inspector    각도 범위
+openTime                get set inspector    인디케이터 오픈 시간
+turnSpeed               get set inspector    인디케이터 회전 속도
+frame                   get set inspector    초당 이펙트 변화
+
+/* Public Method */
+Switch                                       다른 인디케이터 종료 및 현재 인디케이터 스위치
+Off                                          인디케이터 종료
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+[ Indicator_Arrow ]
+
+/* Field & Dependency */
+instances               get set              모든 인스턴스
+time                    get set inspector    인디케이터 오픈 시간
+
+/* Public Method */
+Switch                                       다른 인디케이터 종료 및 현재 인디케이터 스위치
+Off                                          인디케이터 종료
