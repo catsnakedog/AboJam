@@ -1032,8 +1032,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 739212216}
+  - component: {fileID: 739212217}
   m_Layer: 0
-  m_Name: ETC
+  m_Name: Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1057,6 +1058,23 @@ Transform:
   - {fileID: 53318958}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &739212217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739212215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7b39c285afe9242965a1b744e98556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ip: 192.168.184.19
+  port: 1433
+  database: AboJam
+  id: User
+  password: 1234
 --- !u!4 &825439678 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3338927870306475907, guid: ffc089c0ed285c94ea4823eaff4f8b3c, type: 3}
