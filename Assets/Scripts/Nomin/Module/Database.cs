@@ -23,13 +23,10 @@ public class Database : MonoBehaviour
     public SqlConnection Connection { get; private set; }
 
     /* Intializer & Finalizer & Updater */
-    private void Start()
+    private void Awake()
     {
         instance = this;
-    }
-    private void OnValidate()
-    {
-        try { Connection = new SqlConnection($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD}"); }
+        try { Connection = new SqlConnection($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD}"); Debug.Log("DB 연결 성공"); }
         catch { Debug.Log("DB 연결 실패"); }
     }
 
