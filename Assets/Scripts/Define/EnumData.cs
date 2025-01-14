@@ -20,7 +20,7 @@ public class EnumData
         Riple,
         Sniper,
         Bat,
-        knife,
+        Knife,
         Spear,
         ChainSaw,
         None,

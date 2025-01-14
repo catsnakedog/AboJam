@@ -102,7 +102,7 @@ MonoBehaviour:
   Level: 1
   ClothesShake: 2
   SecondHandLocation: {fileID: 69632328130655977}
-  HoldingIndex: 2
+  HoldingIndex: 3
   HoldingOrder: -2
   Renderer: {fileID: 8800354178336667025}
   HandState:
