@@ -50,6 +50,7 @@ instances               get set              모든 타일 인스턴스
 Go                      get set              타일에 배치된 프리팹 (아보카도 / 타워) 
 i                       get                  행 번호 (시작 0)
 j                       get                  열 번호 (시작 0)
+isWall			get set inspector    벽 판정 On / Off
 pos                     get                  타일 중심 좌표
         
 /* Method */
