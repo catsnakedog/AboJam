@@ -1,9 +1,6 @@
-// ObjectPool.cs
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Recorder.OutputPath;
-using UnityEngine.Pool;
 
 public class ObjectPool : MonoBehaviour
 {

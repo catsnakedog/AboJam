@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class EnumData
 {
-    public enum TileType
-    {
-        Empty,
-        BreakWall,
-        Wall,
-        River,
-        Turret,
-    }
-
     public enum Weapon
     {
         Gun,
@@ -51,5 +42,18 @@ public class EnumData
         Splash,
         Production,
         Heal,
+    }
+
+    /// <summary>
+    /// 구분용 인덱스
+    /// </summary>
+    public enum TileIndex
+    {
+        Empty = 0,
+        AboCado = 1,
+        Guard = 2,
+        Auto = 3,
+        Splash = 4,
+        Heal = 5,
     }
 }

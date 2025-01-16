@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static EnumData;
+using static Hand;
 
 public class Promotion : MonoBehaviour
 {
@@ -91,10 +92,21 @@ public class Promotion : MonoBehaviour
         GameObject go_tower = Resources.Load<GameObject>(path_prefabs + towerType);
         if (go_tower == null) { Debug.Log(path_prefabs + towerType + " 에 타워 프리팹이 없습니다."); return; }
 
+        // 타일 인덱스 분별
+        TileIndex tileIndex = towerType switch
+        {
+            TowerType.Production => TileIndex.AboCado,
+            TowerType.Auto => TileIndex.Auto,
+            TowerType.Splash => TileIndex.Splash,
+            TowerType.Heal => TileIndex.Heal,
+            TowerType.Guard => TileIndex.Guard,
+            _ => throw new NotImplementedException()
+        };
+
         // 아보카도 제거 & 타워 건설
         Tile currentTile = Grid.instance.GetNearestTile(currentAbocado.gameObject.transform.position);
         currentTile.Delete();
-        currentTile.Create(go_tower);
+        currentTile.Create(go_tower, tileIndex);
         gameObject.SetActive(false);
     }
     /// <summary>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using TMPro;
 using Unity.VisualScripting;
@@ -42,14 +43,15 @@ public class Tile
         currentTile = this;
 
         // NULL : Abocado 프리팹 건설
-        if (Go == null) Create(Resources.Load<GameObject>(path_abocado));
+        if (Go == null) Create(Resources.Load<GameObject>(path_abocado), EnumData.TileIndex.AboCado);
     }
     /// <summary>
     /// 현재 타일 위치에 지정한 프리팹을 생성합니다.
     /// </summary>
-    public void Create(GameObject Go)
+    public void Create(GameObject Go, EnumData.TileIndex tileIndex)
     {
         Grid.instance.Create((i, j), Go);
+        Grid.instance.GridIndexMap[i, j] = (int)tileIndex;
     }
     /// <summary>
     /// 타일에 존재하는 프리팹을 제거합니다.

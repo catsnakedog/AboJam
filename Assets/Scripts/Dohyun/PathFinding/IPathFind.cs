@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IPathFind : MonoBehaviour
+public interface IPathFind
 {
-    // Start is called before the first frame update
-    void Start()
+    public void MakeRoute()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GetDirection(Vector3 charaterPos)
     {
-        
+
     }
 }
