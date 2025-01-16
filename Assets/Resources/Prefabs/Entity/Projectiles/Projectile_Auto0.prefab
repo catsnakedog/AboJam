@@ -51,7 +51,7 @@ MonoBehaviour:
   colider2D: {fileID: 1469443515481340077}
   launcher: {fileID: 0}
   clashTags:
-  - Player
+  - Enemies
   damage: 3
   penetrate: 1
   explosion: {fileID: 3100893671775424701, guid: 707676d65791ac848b55594c829b5396, type: 3}

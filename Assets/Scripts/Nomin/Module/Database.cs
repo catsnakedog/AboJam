@@ -26,7 +26,11 @@ public class Database : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        try { Connection = new SqlConnection($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD}"); Debug.Log("DB 연결 성공"); }
+        try
+        {
+            Connection = new SqlConnection($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD}"); Debug.Log("DB 연결 성공");
+            Load();
+        }
         catch { Debug.Log("DB 연결 실패"); }
     }
 
@@ -45,6 +49,19 @@ public class Database : MonoBehaviour
         SqlDataAdapter sd = new SqlDataAdapter(cmd);
         DataSet ds = new DataSet();
         sd.Fill(ds, "test");
+
+        // DataSet의 데이터를 출력
+        if (ds.Tables["test"] != null)
+        {
+            DataTable table = ds.Tables["test"];
+            foreach (DataRow row in table.Rows)
+            {
+                foreach (DataColumn column in table.Columns)
+                {
+                    Debug.Log($"{column.ColumnName}: {row[column]} ");
+                }
+            }
+        }
 
         Connection.Close();
     }
