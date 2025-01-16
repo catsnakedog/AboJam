@@ -94,6 +94,11 @@ public class Weapon : MonoBehaviour
 
     }
 
+    public virtual void InitBeforeDisable()
+    {
+
+    }
+
     public virtual void WeaponSetting()
     {
 
@@ -147,5 +152,10 @@ public class Weapon : MonoBehaviour
     private void OnEnable()
     {
         Init();
+    }
+
+    private void OnDisable()
+    {
+        InitBeforeDisable();
     }
 }

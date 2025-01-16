@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,13 @@ using UnityEngine;
 public class Knife : MeleeWeapon
 {
     public float AttackMotionTime = 0.2f;
+    public float AttackEffectTime = 1f;
+    public float AttackEffectSpeed = 1f;
+    public GameObject SlashEffectObj;
+    public Transform FireLocation;
 
     private Coroutine _attackMotionCoroutine;
+    private Type _knifeObjType = typeof(KnifeObj);
 
     public override void WeaponSetting()
     {
@@ -28,7 +34,7 @@ public class Knife : MeleeWeapon
         base.InitSetMain();
         if (_attackMotionCoroutine != null)
             StopCoroutine(_attackMotionCoroutine);
-        AttackEffectObj.SetActive(false);
+        SlashEffectObj.SetActive(false);
         transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
     }
 
@@ -37,18 +43,32 @@ public class Knife : MeleeWeapon
         base.InitBeforeChange();
         if (_attackMotionCoroutine != null)
             StopCoroutine(_attackMotionCoroutine);
-        AttackEffectObj.SetActive(false);
+        SlashEffectObj.SetActive(false);
+        transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
+    }
+
+    public override void InitBeforeDisable()
+    {
+        base.InitBeforeDisable();
+        if (_attackMotionCoroutine != null)
+            StopCoroutine(_attackMotionCoroutine);
+        SlashEffectObj.SetActive(false);
         transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
     }
 
     private IEnumerator AttackMotion()
     {
+        GameObject knifeObj = ObjectPool.Instance.GetObj(_knifeObjType, AttackEffectObj, 10);
+        knifeObj.transform.position = FireLocation.position;
+        knifeObj.transform.SetParent(null, true);
+        knifeObj.GetComponent<KnifeObj>().Init(AttackEffectTime, AttackEffectSpeed, transform.rotation);
+
         float motionTime = 1 / AttackSpeed;
         if (motionTime >= AttackMotionTime)
             motionTime = AttackMotionTime;
         float time = 0;
 
-        AttackEffectObj.SetActive(true);
+        SlashEffectObj.SetActive(true);
         while (time < motionTime - 0.05f)
         {
             float process = time / (motionTime - 0.05f);
@@ -59,7 +79,7 @@ public class Knife : MeleeWeapon
             yield return null;
             time += Time.deltaTime;
         }
-        AttackEffectObj.SetActive(false);
+        SlashEffectObj.SetActive(false);
         transform.localRotation = Quaternion.Euler(0f, 0f, 90f);
     }
 

@@ -45,6 +45,14 @@ public class GageMeleeWeapon : MeleeWeapon
         TriggerEnd();
     }
 
+    public override void InitBeforeDisable()
+    {
+        base.InitBeforeDisable();
+        _gageAction = null;
+        if (_gageBar != null && _gageBar.gameObject != null)
+            Destroy(_gageBar.gameObject);
+    }
+
     public override void WeaponSetting()
     {
         base.WeaponSetting();

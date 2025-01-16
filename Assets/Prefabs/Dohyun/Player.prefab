@@ -830,9 +830,12 @@ MonoBehaviour:
   Hand:
     AttackKeyIndex: 0
     SlotChangeKey: 114
-    FirstSlot: 5
-    SecondSlot: 6
-    ThirdSlot: 4
+    SlotChangeTo1Key: 49
+    SlotChangeTo2Key: 50
+    SlotChangeTo3Key: 51
+    FirstSlot: 0
+    SecondSlot: 1
+    ThirdSlot: 2
     CurrentSlotIndex: 0
     WeaponSwitchTime: 1
     ShakeAmount: 0
@@ -1156,9 +1159,9 @@ PrefabInstance:
       value: Knife
       objectReference: {fileID: 0}
     - target: {fileID: 6633489412637538034, guid: c765ed0d5b9400d439b18685a931705c, type: 3}
-      propertyPath: AttackSpeed
-      value: 5
-      objectReference: {fileID: 0}
+      propertyPath: FireLocation
+      value: 
+      objectReference: {fileID: 1852219805260661674}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

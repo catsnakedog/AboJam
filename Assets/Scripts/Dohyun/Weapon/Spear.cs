@@ -18,6 +18,19 @@ public class Spear : MeleeWeapon
         public StartEndData NoiseX = new(0f, 0.18f);
         public StartEndData NoiseY = new(0f, 0.018f);
         public StartEndData OffsetY = new(0.2f, -0.2f);
+
+        public SpearEffectData(SpearEffectData other)
+        {
+            HeadWidth = other.HeadWidth;
+            HeadHeight = other.HeadHeight;
+            ShaftWidth = other.ShaftWidth;
+            ShaftHeight = other.ShaftHeight;
+            NoiseX = other.NoiseX;
+            NoiseY = other.NoiseY;
+            OffsetY = other.OffsetY;
+            Time = other.Time;
+            Speed = other.Speed;
+        }
     }
     [System.Serializable]
     public class StartEndData

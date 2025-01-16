@@ -44,6 +44,15 @@ public class Bat : ChargeMeleeWeapon
         transform.localRotation = Quaternion.Euler(0, 0, 90);
     }
 
+    public override void InitBeforeDisable()
+    {
+        base.InitBeforeDisable();
+        ResetValue();
+        transform.localScale = new Vector3(1, 1, 1);
+        if (_batAttackEffectObj != null && _batAttackEffectObj.activeSelf)
+            ObjectPool.Instance.Return(_batObjType, _batAttackEffectObj);
+    }
+
     public void ResetValue()
     {
         AttackEffectObj.SetActive(false);

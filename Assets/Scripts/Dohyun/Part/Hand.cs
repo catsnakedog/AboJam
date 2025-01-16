@@ -44,6 +44,9 @@ public class Hand : IObserver
     /// 무기 교체 키
     /// </summary>
     public KeyCode SlotChangeKey = KeyCode.R;
+    public KeyCode SlotChangeTo1Key = KeyCode.Alpha1;
+    public KeyCode SlotChangeTo2Key = KeyCode.Alpha2;
+    public KeyCode SlotChangeTo3Key = KeyCode.Alpha3;
 
 
     // 실질적인 무기 데이터, 각 슬롯에 무엇을 장착 중인지, 어떤 무기를 사용 중인지
@@ -407,6 +410,37 @@ public class Hand : IObserver
             else
                 CurrentSlotIndex++;
             SwitchWeapon();
+        }
+        if (Input.GetKeyDown(SlotChangeTo1Key))
+        {
+            if (_isSwitchWeapon)
+                return;
+            CurrentSlotIndex = WeaponSlot.FirstRanged;
+            SwitchWeapon();
+        }
+        if (Input.GetKeyDown(SlotChangeTo2Key))
+        {
+            if (_isSwitchWeapon)
+                return;
+            CurrentSlotIndex = WeaponSlot.SecondRanged;
+            SwitchWeapon();
+        }
+        if (Input.GetKeyDown(SlotChangeTo3Key))
+        {
+            if (_isSwitchWeapon)
+                return;
+            CurrentSlotIndex = WeaponSlot.FirstMelee;
+            SwitchWeapon();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (_isSwitchWeapon)
+                return;
+            FirstSlot = (EnumData.Weapon)(((int)FirstSlot + 3) % 8);
+            SecondSlot = (EnumData.Weapon)(((int)SecondSlot + 3) % 8);
+            ThirdSlot = (EnumData.Weapon)(((int)ThirdSlot + 3) % 8);
+
+            SetSlotWeapons();
         }
     }
 

@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 6834660997145714181}
   - component: {fileID: 1148478886599301151}
   m_Layer: 0
-  m_Name: KnifeAtackEffect
+  m_Name: KnifeSlashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6834660997145714181
 Transform:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 3523374389775649028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.007, y: 0.405, z: 0}
+  m_LocalPosition: {x: 0.014, y: 0.021, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -227,7 +227,7 @@ MonoBehaviour:
     RightUse: 1
   WeaponType: 5
   AttackType: 0
-  AttackSpeed: 1
+  AttackSpeed: 5
   IsReload: 0
   IsStartAttack: 0
   IsReloadOnAttack: 1
@@ -236,15 +236,20 @@ MonoBehaviour:
   MouseFlipPrio: 0
   IsHandFixed: 0
   FixedRot: {x: 0, y: 0, z: 0, w: 0}
-  IsImageWidth: 0
-  AttackEffectObj: {fileID: 2834721352560057196}
+  IsImageWidth: 1
+  AttackEffectObj: {fileID: 5970677986283275025, guid: 060d6482e5f34444abd2e896ff68bf0d, type: 3}
   WeaponDatas:
   - Damage: 12
-    AttackSpeed: 1
+    AttackSpeed: 4
   - Damage: 12
-    AttackSpeed: 1
+    AttackSpeed: 4
   - Damage: 12
-    AttackSpeed: 1
+    AttackSpeed: 4
+  AttackMotionTime: 0.2
+  AttackEffectTime: 0.4
+  AttackEffectSpeed: 2
+  SlashEffectObj: {fileID: 2834721352560057196}
+  FireLocation: {fileID: 0}
 --- !u!1 &5266136004491341959
 GameObject:
   m_ObjectHideFlags: 0

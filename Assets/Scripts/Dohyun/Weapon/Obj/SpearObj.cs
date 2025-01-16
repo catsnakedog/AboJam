@@ -14,10 +14,11 @@ public class SpearObj : MonoBehaviour
 
     public void Init(SpearEffectData data, Quaternion rot)
     {
+        SpearEffectData effectData = new(data);
         _property = new();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         transform.rotation = rot;
-        StartCoroutine(ShowEffect(data, rot));
+        StartCoroutine(ShowEffect(effectData));
     }
 
     private float GetLerpValue(StartEndData data, float process)
@@ -25,7 +26,7 @@ public class SpearObj : MonoBehaviour
         return Mathf.Lerp(data.Start, data.End, process);
     }
 
-    private IEnumerator ShowEffect(SpearEffectData data, Quaternion rot)
+    private IEnumerator ShowEffect(SpearEffectData data)
     {
         float time = 0;
 

@@ -39,6 +39,13 @@ public class ChainSaw : GageMeleeWeapon
             Destroy(_chainSawEffectObj);
     }
 
+    public override void InitBeforeDisable()
+    {
+        base.InitBeforeDisable();
+        if (_chainSawEffectObj != null)
+            Destroy(_chainSawEffectObj);
+    }
+
     public override void Trigger()
     {
         base.Trigger();
