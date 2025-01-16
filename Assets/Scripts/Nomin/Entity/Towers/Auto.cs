@@ -75,18 +75,23 @@ public class Auto : Tower
     {
         while (true)
         {
-            // 메인 탄환
-            launcher.align = true;
-            launcher.Launch(Targeter.TargetType.Near, detection);
-            launcher.align = false;
+            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, launcher.Projectile.GetComponent<Projectile>().clashTags, detection);
 
-            // 서브 탄환
-            for (int i = 1; i <= subCount; i++)
+            if (target != null)
             {
-                float currentAngle = ((angle / 2) / subCount) * i;
+                // 메인 탄환
+                launcher.align = true;
+                launcher.Launch(Targeter.TargetType.Near, detection);
+                launcher.align = false;
 
-                launcher.Launch(Targeter.TargetType.Near, detection, angle: currentAngle);
-                launcher.Launch(Targeter.TargetType.Near, detection, angle: -currentAngle);
+                // 서브 탄환
+                for (int i = 1; i <= subCount; i++)
+                {
+                    float currentAngle = ((angle / 2) / subCount) * i;
+
+                    launcher.Launch(Targeter.TargetType.Near, detection, angle: currentAngle);
+                    launcher.Launch(Targeter.TargetType.Near, detection, angle: -currentAngle);
+                }
             }
 
             yield return delay_waitForSeconds;

@@ -79,7 +79,9 @@ public class Heal : Tower
     {
         while (true)
         {
-            launcher.Launch(Targeter.TargetType.LowHP, detection, ratio);
+            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.LowHP, launcher.Projectile.GetComponent<Projectile>().clashTags, detection, ratio);
+            if (target != null) launcher.Launch(Targeter.TargetType.LowHP, detection, ratio);
+
             yield return delay_waitForSeconds;
         }
     }

@@ -78,7 +78,9 @@ public class Splash : Tower
     {
         while (true)
         {
-            launcher.Launch(Targeter.TargetType.Near, detection);
+            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, launcher.Projectile.GetComponent<Projectile>().clashTags, detection);
+            if (target != null) launcher.Launch(Targeter.TargetType.Near, detection);
+
             yield return delay_waitForSeconds;
         }
     }
