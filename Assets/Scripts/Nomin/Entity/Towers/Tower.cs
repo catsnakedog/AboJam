@@ -25,16 +25,22 @@ public class Tower : MonoBehaviour
     {
         instances.Add(this);
         Load();
+        hp.death.AddListener(() => Save());
         MaxLevel = ReinforceCost.Length;
-    }
+    } // 최초 생성 시 (최초 초기화)
     private void OnDestroy()
     {
         instances.Remove(this);
-    }
+    } // 완전 파괴 시 (완전 제거)
     public virtual void Load()
     {
         Level = 0;
-    }
+        hp.Load();
+    } // 풀에서 꺼낼 때 (타워 건설)
+    public void Save()
+    {
+        gameObject.SetActive(false);
+    } // 풀에 집어 넣을 때 (타워 파괴)
 
     /* Public Method */
     /// <summary>
@@ -55,7 +61,7 @@ public class Tower : MonoBehaviour
 
         // 타워 공통 증강
         Debug.Log($"{name} 증강");
-        hp.Heal(hp.HP_max);
+        hp.Heal(hp.Hp_max);
         Level++;
     }
 }

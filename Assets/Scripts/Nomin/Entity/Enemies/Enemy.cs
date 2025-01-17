@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
     {
         // 적 공통 증강
         Debug.Log($"{name} 증강");
-        hp.Heal(hp.HP_max);
+        hp.Heal(hp.Hp_max);
         Level++;
     }
 }

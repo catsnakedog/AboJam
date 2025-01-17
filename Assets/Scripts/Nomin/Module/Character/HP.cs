@@ -6,41 +6,32 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
-public class HP : MonoBehaviour
+public class HP : MonoBehaviour, IScriptableObject<SO_HP>
 {
     /* Dependency */
     public SpriteRenderer spr_empty;
     public SpriteRenderer spr_max;
     public GameObject entity; // HP 모듈을 적용할 대상
+    [SerializeField] private SO_HP so; public SO_HP SO { get => so; set => so = value; }
 
     /* Field & Property */
-    [SerializeField] private float HP_MAX = 100f; // 최대 체력 (초기화에만 사용됨)
-    [SerializeField] private float speed = 0.02f; // 체력바 속도
-    [SerializeField] private bool HideFullHP = false; // 최대 체력일 때 체력바 숨기기
     public static List<HP> instances = new List<HP>();
+    [SerializeField] private float speed = 0.02f; // 체력바 속도
+    [SerializeField] private bool hideFullHp = true; // 최대 체력일 때 체력바 숨기기
+    [SerializeField] private float hp_max = 100f; /* 초기 최대 체력 */ public float Hp_max { get; private set; } /* 현재 최대 체력 */
+    public float HP_current { get; private set; } // 현재 체력
+    public float HP_ratio { get; private set; } // 현재 체력 비율
     public UnityEvent death; // HP 가 0 이 되었을 때 작동할 메서드
-    public float HP_max { get; private set; }
-    public float HP_current { get; private set; }
-    public float HP_ratio { get; private set; }
     private Material material; // spr_max 를 우측부터 자르기 위한 머터리얼
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
         instances.Add(this);
+        Load();
         material = spr_max.material;
         spr_max.sortingOrder = spr_empty.sortingOrder + 1;
-        CheckVisible();
         death.AddListener(() => { Debug.Log($"{entity.name} 의 체력이 0 에 도달했습니다."); });
-
-        if (HP_MAX <= 0)
-        {
-            Debug.Log($"{entity.name} 의 체력이 0 이하로 설정되어 있습니다.");
-            enabled = false;
-            return;
-        }
-        HP_max = HP_MAX;
-        HP_current = HP_MAX;
     }
     private void FixedUpdate()
     {
@@ -53,7 +44,7 @@ public class HP : MonoBehaviour
     private void UpdateHP()
     {
         // HP 비율에 변동이 생겼을 때만 동작
-        float HP_ratio_new = HP_current / HP_max;
+        float HP_ratio_new = HP_current / Hp_max;
         if (Mathf.Abs(HP_ratio - HP_ratio_new) < 0.01f) return;
 
         // UI 업데이트
@@ -66,6 +57,14 @@ public class HP : MonoBehaviour
     private void OnDestroy()
     {
         instances.Remove(this);
+    }
+    public void Load()
+    {
+        hideFullHp = SO.hideFullHp;
+        hp_max = SO.hp_max;
+        Hp_max = hp_max;
+        HP_current = hp_max;
+        CheckVisible();
     }
 
     /* Public Method */
@@ -86,7 +85,7 @@ public class HP : MonoBehaviour
     /// <param name="value">회복량</param>
     public void Heal(float value)
     {
-        HP_current = Mathf.Min(HP_current + value, HP_max);
+        HP_current = Mathf.Min(HP_current + value, Hp_max);
     }
     /// <summary>
     /// 최대 체력을 조정합니다.
@@ -96,7 +95,7 @@ public class HP : MonoBehaviour
     {
         if (value <= 0) { Debug.Log($"최대 체력은 0 이하로 설정할 수 없습니다,"); return; }
         if (HP_current > value) { HP_current = value; }
-        HP_max = value;
+        Hp_max = value;
     }
     /// <summary>
     /// 타겟 오브젝트와 연결된 HP 모듈을 탐색합니다.
@@ -121,7 +120,7 @@ public class HP : MonoBehaviour
     private void CheckVisible()
     {
         // 최대 체력이면 체력바 숨김 On / Off
-        if (HideFullHP == true && HP_current == HP_max)
+        if (hideFullHp == true && HP_current == Hp_max)
         {
             spr_empty.enabled = false;
             spr_max.enabled = false;

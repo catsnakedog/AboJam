@@ -128,7 +128,7 @@ public class Abocado : MonoBehaviour
 
         level++;
         spriteRenderer.sprite = spr_level[(int)level];
-        hp.Heal(hp.HP_max);
+        hp.Heal(hp.Hp_max);
     }
     private void LevelDown()
     {

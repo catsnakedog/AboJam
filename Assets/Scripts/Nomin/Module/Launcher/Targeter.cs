@@ -63,7 +63,7 @@ public class Targeter : MonoBehaviour
             if (targets.Contains(HP.entity))
             {
                 // 일정 비율 이하의 HP 만 타게팅
-                if (HP.HP_current <= HP.HP_max * ratio) targetsWithHP.Add(new KeyValuePair<GameObject, float>(HP.entity, HP.HP_current));
+                if (HP.HP_current <= HP.Hp_max * ratio) targetsWithHP.Add(new KeyValuePair<GameObject, float>(HP.entity, HP.HP_current));
             }
         }
         targetsWithHP = targetsWithHP.OrderBy(pair => pair.Value).ToList();

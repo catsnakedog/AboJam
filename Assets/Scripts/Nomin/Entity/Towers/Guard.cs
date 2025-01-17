@@ -16,8 +16,8 @@ public class Guard : Tower, IScriptableObject<SO_Guard>
     public override void Reinforce()
     {
         base.Reinforce();
-        hp.SetMaxHP(hp.HP_max * 1.5f);
-        hp.Heal(hp.HP_max);
+        hp.SetMaxHP(hp.Hp_max * 1.5f);
+        hp.Heal(hp.Hp_max);
     }
 
     /* Intializer & Finalizer & Updater */
