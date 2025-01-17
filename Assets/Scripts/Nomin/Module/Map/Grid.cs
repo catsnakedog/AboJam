@@ -75,6 +75,15 @@ public class Grid : MonoBehaviour
         if (tile.Go == null) tile.Go = Instantiate(Go, tile.pos, Quaternion.identity);
     }
     /// <summary>
+    /// <br>오브젝트를 해당 위치 타일과 바인딩 합니다.</br>
+    /// </summary>
+    public void Bind((int, int) matrixCoord, GameObject Go)
+    {
+        Tile tile = GetTile(matrixCoord);
+        if (tile.Go != null) Debug.Log($"타일 ({tile.i}, {tile.j}) 에 이미 {tile.Go.name} 가 바인딩 되어 있습니다.");
+        if (tile.Go == null) tile.Go = Go;
+    }
+    /// <summary>
     /// <br>행렬 좌표 위치에 존재하는 프리팹을 제거합니다.</br>
     /// <br>해당 위치 타일과 바인딩이 해제 됩니다.</br>
     /// </summary>

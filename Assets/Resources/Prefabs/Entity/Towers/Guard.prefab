@@ -53,6 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: {fileID: 3580031304758939475}
   reinforceCost: 050000000a000000
+  so: {fileID: 11400000, guid: 9127df9b430e5c14eb013d64be360a47, type: 2}
 --- !u!114 &2330620171710835516
 MonoBehaviour:
   m_ObjectHideFlags: 0

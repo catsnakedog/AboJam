@@ -57,6 +57,7 @@ MonoBehaviour:
   reinforceCost: 050000000a000000
   launcher: {fileID: 5557456795515503153}
   indicator_circle: {fileID: 2130840028591414169}
+  so: {fileID: 11400000, guid: 058717d11a653db428094e94ccb89572, type: 2}
   delay: 0.3
   detection: 5
   angle: 60

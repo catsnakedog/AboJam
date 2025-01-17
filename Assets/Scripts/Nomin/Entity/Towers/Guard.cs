@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guard : Tower
+public class Guard : Tower, IScriptableObject<SO_Guard>
 {
     /* Field & Property */
     public static List<Guard> instances = new List<Guard>(); // 모든 방어 타워 인스턴스
+    [SerializeField] private SO_Guard so; public SO_Guard SO { get => so; set => so = value; }
 
     /* Public Method */
     /// <summary>
@@ -24,9 +25,14 @@ public class Guard : Tower
     {
         base.Start();
         instances.Add(this);
+        Load();
     }
     private void OnDestroy()
     {
         instances.Remove(this);
+    }
+    public void Load()
+    {
+        base.Load();
     }
 }

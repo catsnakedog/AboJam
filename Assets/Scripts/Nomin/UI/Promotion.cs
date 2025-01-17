@@ -1,8 +1,11 @@
 using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using static EnumData;
 using static Hand;
@@ -15,6 +18,7 @@ public class Promotion : MonoBehaviour
     private Message message => Message.instance; // 하드 링크
     private Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
     private Demolition demolition => Demolition.instance; // 하드 링크
+    private Pooling[] poolings;
 
     /* Field & Property */
     public static Promotion instance; // 싱글턴
@@ -30,6 +34,18 @@ public class Promotion : MonoBehaviour
     private void Init()
     {
         List<GameObject> list_go = new List<GameObject>();
+
+        // 타워 풀링
+        int towerTypeLength = Enum.GetValues(typeof(EnumData.TowerType)).Length;
+        poolings = new Pooling[towerTypeLength];
+        for (int i = 0; i < towerTypeLength; i++)
+        {
+            if ((EnumData.TowerType)i == EnumData.TowerType.Production) continue;
+            poolings[i] = gameObject.AddComponent<Pooling>();
+            GameObject tower = Resources.Load<GameObject>(path_prefabs + (EnumData.TowerType)i);
+            if (tower == null) { Debug.Log(path_prefabs + (EnumData.TowerType)i + " 에 타워 프리팹이 없습니다."); return; }
+            poolings[i].Set(tower);
+        }
 
         // 타워 종류마다 업그레이드 버튼 생성
         foreach (EnumData.TowerType towerType in Enum.GetValues(typeof(EnumData.TowerType)))
@@ -88,10 +104,6 @@ public class Promotion : MonoBehaviour
             return;
         }
 
-        // 타워 프리팹 불러오기
-        GameObject go_tower = Resources.Load<GameObject>(path_prefabs + towerType);
-        if (go_tower == null) { Debug.Log(path_prefabs + towerType + " 에 타워 프리팹이 없습니다."); return; }
-
         // 타일 인덱스 분별
         TileIndex tileIndex = towerType switch
         {
@@ -103,10 +115,15 @@ public class Promotion : MonoBehaviour
             _ => throw new NotImplementedException()
         };
 
+        // 건설할 타워를 풀에서 Get & 초기화 (리플렉션, 성능 저하 원인이 될 수 있음)
+        GameObject tower = poolings[(int)towerType].Get();
+        Component component = tower.GetComponent($"{towerType}");
+        component.GetType().GetMethod("Load").Invoke(component, null);
+
         // 아보카도 제거 & 타워 건설
         Tile currentTile = Grid.instance.GetNearestTile(currentAbocado.gameObject.transform.position);
         currentTile.Delete();
-        currentTile.Create(go_tower, tileIndex);
+        currentTile.Bind(tower, tileIndex);
         gameObject.SetActive(false);
     }
     /// <summary>

@@ -11,6 +11,7 @@ public class Pooling : MonoBehaviour
     public GameObject Obj { get; private set; }
 
     /* Intializer & Finalizer & Updater */
+    public Pooling() { }
     private void Awake()
     {
         Pool_root = GameObject.Find("@Pooling") ?? new GameObject("@Pooling");

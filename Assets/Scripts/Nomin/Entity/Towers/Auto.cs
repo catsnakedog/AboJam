@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Auto : Tower
+public class Auto : Tower, IScriptableObject<SO_Auto>
 {
     /* Dependency */
     [Header("[ Dependency ]")]
     public Launcher launcher;
     public GameObject indicator_circle;
+    [SerializeField] private SO_Auto so; public SO_Auto SO { get => so; set => so = value; }
 
     /* Field & Property */
     public static List<Auto> instances = new List<Auto>(); // 모든 연사 타워 인스턴스
@@ -25,17 +27,27 @@ public class Auto : Tower
     {
         base.Start();
         instances.Add(this);
-        delay_waitForSeconds = new WaitForSeconds(delay);
-
+        Load();
+            
         // 인디케이터 스케일링
         float scale = launcher.range * 4;
         indicator_circle.transform.localScale = new Vector2(scale, scale);
-
-        Fire(true);
     }
     private void OnDestroy()
     {
         instances.Remove(this);
+    }
+    public void Load()
+    {
+        base.Load();
+
+        delay = SO.delay;
+        detection = SO.detection;
+        angle = SO.angle;
+        subCount = SO.subCount;
+
+        delay_waitForSeconds = new WaitForSeconds(delay);
+        Fire(true);
     }
 
     /* Public Method */

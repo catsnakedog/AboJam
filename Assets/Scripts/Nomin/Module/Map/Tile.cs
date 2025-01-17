@@ -50,7 +50,17 @@ public class Tile
     /// </summary>
     public void Create(GameObject Go, EnumData.TileIndex tileIndex)
     {
+        Go.transform.position = pos;
         Grid.instance.Create((i, j), Go);
+        Grid.instance.GridIndexMap[i, j] = (int)tileIndex;
+    }
+    /// <summary>
+    /// 현재 타일 위치에 지정한 프리팹을 바인딩 합니다.
+    /// </summary>
+    public void Bind(GameObject Go, EnumData.TileIndex tileIndex)
+    {
+        Go.transform.position = pos;
+        Grid.instance.Bind((i, j), Go);
         Grid.instance.GridIndexMap[i, j] = (int)tileIndex;
     }
     /// <summary>

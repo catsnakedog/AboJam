@@ -13,7 +13,7 @@ public class Tower : MonoBehaviour
     /* Field & Property */
     public static List<Tower> instances = new List<Tower>(); // 모든 타워 인스턴스
     public static Tower currentTower; // 최근 선택된 타워
-    public int Level { get; private set; } = 0; // 현재 레벨
+    public int Level { get; private set; } // 현재 레벨
     public int MaxLevel { get; private set; } // 최대 레벨
     public int[] ReinforceCost { get { return reinforceCost; } private set { reinforceCost = value; } } // 레벨업 비용 (개수 = 최대 레벨 결정)
 
@@ -24,11 +24,16 @@ public class Tower : MonoBehaviour
     public virtual void Start()
     {
         instances.Add(this);
+        Load();
         MaxLevel = ReinforceCost.Length;
     }
     private void OnDestroy()
     {
         instances.Remove(this);
+    }
+    public virtual void Load()
+    {
+        Level = 0;
     }
 
     /* Public Method */

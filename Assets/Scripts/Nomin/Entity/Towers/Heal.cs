@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heal : Tower
+public class Heal : Tower, IScriptableObject<SO_Heal>
 {
     /* Dependency */
     [Header("[ Dependency ]")]
     public Launcher launcher;
     public GameObject indicator_circle;
+    [SerializeField] private SO_Heal so; public SO_Heal SO { get => so; set => so = value; }
 
     /* Field & Property */
     public static List<Heal> instances = new List<Heal>(); // 모든 회복 타워 인스턴스
@@ -25,17 +26,27 @@ public class Heal : Tower
     {
         base.Start();
         instances.Add(this);
-        delay_waitForSeconds = new WaitForSeconds(delay);
+        Load();
 
         // 인디케이터 스케일링
         float scale = launcher.range * 4;
         indicator_circle.transform.localScale = new Vector2(scale, scale);
 
-        Healing(true);
     }
     private void OnDestroy()
     {
         instances.Remove(this);
+    }
+    public void Load()
+    {
+        base.Load();
+
+        delay = SO.delay;
+        detection = SO.detection;
+        ratio = SO.ratio;
+
+        delay_waitForSeconds = new WaitForSeconds(delay);
+        Healing(true);
     }
 
     /* Public Method */

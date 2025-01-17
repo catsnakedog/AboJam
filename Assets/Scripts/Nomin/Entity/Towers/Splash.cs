@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Splash : Tower
+public class Splash : Tower, IScriptableObject<SO_Splash>
 {
     /* Dependency */
     [Header("[ Dependency ]")]
     public Launcher launcher;
     public GameObject indicator_circle;
+    [SerializeField] private SO_Splash so; public SO_Splash SO { get => so; set => so = value; }
 
     /* Field & Property */
     public static List<Splash> instances = new List<Splash>(); // 모든 연사 타워 인스턴스
@@ -24,17 +25,26 @@ public class Splash : Tower
     {
         base.Start();
         instances.Add(this);
-        delay_waitForSeconds = new WaitForSeconds(delay);
+        Load();
 
         // 인디케이터 스케일링
         float scale = launcher.range * 4;
         indicator_circle.transform.localScale = new Vector2(scale, scale);
 
-        Fire(true);
     }
     private void OnDestroy()
     {
         instances.Remove(this);
+    }
+    public void Load()
+    {
+        base.Load();
+
+        delay = SO.delay;
+        detection = SO.detection;
+
+        delay_waitForSeconds = new WaitForSeconds(delay);
+        Fire(true);
     }
 
     /* Public Method */
