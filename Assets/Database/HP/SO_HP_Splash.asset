@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SO_HP_Splash
   m_EditorClassIdentifier: 
   hp_max: 100
+  hideFullHp: 1

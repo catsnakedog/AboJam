@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9acf4197d5afd1b4eaf5f67d4fe5e5da, type: 3}
-  m_Name: SO_HP_Heal
+  m_Script: {fileID: 11500000, guid: 14b3a65611ec1dd4fa6fef0d705e79b1, type: 3}
+  m_Name: SO_Abocado
   m_EditorClassIdentifier: 
-  hp_max: 100
-  hideFullHp: 1
+  level: 0
+  quality: 0
+  quality_max: 0
+  harvest: 0

@@ -11,6 +11,9 @@ using UnityEngine.UI;
 
 public class Tile
 {
+    /* Dependency */
+    private Pool pool => Pool.instance; // 하드 링크
+
     /* Field & Property */
     public static List<Tile> instances = new List<Tile>(); // 모든 타일 인스턴스
     public static Tile currentTile; // 최근 선택된 타일
@@ -19,7 +22,6 @@ public class Tile
     public readonly int j;
     public bool isWall;
     public readonly Vector2 pos;
-    private string path_abocado = "Prefabs/Entity/Abocado";
 
     /* Intializer & Finalizer & Updater */
     public Tile(int i, int j, Vector2 pos)
@@ -42,8 +44,14 @@ public class Tile
         Reinforcement.instance.Off();
         currentTile = this;
 
-        // NULL : Abocado 프리팹 건설
-        if (Go == null) Create(Resources.Load<GameObject>(path_abocado), EnumData.TileIndex.AboCado);
+        // NULL: Abocado 프리팹 건설
+        if (Go == null)
+        {
+            Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
+            Abocado abocado = Go.GetComponent<Abocado>();
+            abocado.tile = this;
+            abocado.Load();
+        }
     }
     /// <summary>
     /// 현재 타일 위치에 지정한 프리팹을 생성합니다.
@@ -67,7 +75,7 @@ public class Tile
     /// 타일에 존재하는 프리팹을 제거합니다.
     /// </summary>
     public void Delete()
-    { 
+    {
         Grid.instance.Delete((i, j));
     }
 }

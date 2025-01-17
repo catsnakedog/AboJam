@@ -6,13 +6,17 @@ using Unity.VisualScripting;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static EnumData;
 
-public class Abocado : MonoBehaviour
+public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>
 {
     /* Dependency */
     public SpriteRenderer spriteRenderer; // 하이라키 연결
     public HP hp; // 하이라키 연결
+    public Tile tile; // 바인딩 된 타일
+    private Pool pool => Pool.instance; // 하드 링크
+    [SerializeField] private SO_Abocado so; public SO_Abocado SO { get => so; set => so = value; }
 
     /* Field & Property */
     public static List<Abocado> instances = new List<Abocado>(); // 모든 아보카도 인스턴스
@@ -25,7 +29,7 @@ public class Abocado : MonoBehaviour
     private Sprite[] spr_level; // 레벨에 대응하는 스프라이트
 
     /* Intializer & Finalizer & Updater */
-    private void Start()
+    private void Awake()
     {
         int length_level = Enum.GetValues(typeof(EnumData.Abocado)).Length;
         spr_level = new Sprite[length_level];
@@ -37,17 +41,33 @@ public class Abocado : MonoBehaviour
             if (temp != null) spr_level[i] = temp;
             else spr_level[i] = Resources.Load<Sprite>(path + "Default");
         }
-
-        spriteRenderer.sprite = spr_level[0];
+    } // 최초 생성 시 (최초 초기화 - 1)
+    private void Start()
+    {
         instances.Add(this);
+        hp.death.AddListener(() => Save());
 
         // 아침이 밝을 때 성장시킵니다.
         Date.instance.morningStart.AddListener(() => { this.GrowUp(); });
-    }
+    } // 최초 생성 시 (최초 초기화 - 2)
     private void OnDestroy()
     {
         instances.Remove(this);
-    }
+    } // 오브젝트 삭제 시 (완전 제거)
+    public void Load()
+    {
+        level = SO.level;
+        quality = SO.quality;
+        quality_max = SO.quality_max;
+        harvest = SO.harvest;
+
+        spriteRenderer.sprite = spr_level[0];
+    } // 풀에서 꺼낼 때 (아보카도 건설)
+    public void Save()
+    {
+        pool.Return(gameObject);
+        tile.Go = null;
+    } // 풀에 집어 넣을 때 (아보카도 파괴)
 
     /* Public Method */
     /// <summary>

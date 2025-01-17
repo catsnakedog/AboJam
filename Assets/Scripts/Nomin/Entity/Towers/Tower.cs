@@ -31,7 +31,7 @@ public class Tower : MonoBehaviour
     private void OnDestroy()
     {
         instances.Remove(this);
-    } // 완전 파괴 시 (완전 제거)
+    } // 오브젝트 삭제 시 (완전 제거)
     public virtual void Load()
     {
         Level = 0;
