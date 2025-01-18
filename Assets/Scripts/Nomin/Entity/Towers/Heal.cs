@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heal : Tower, IScriptableObject<SO_Heal>
+public class Heal : Tower, IScriptableObject<SO_Heal>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
@@ -47,7 +47,11 @@ public class Heal : Tower, IScriptableObject<SO_Heal>
 
         delay_waitForSeconds = new WaitForSeconds(delay);
         Healing(true);
-    }
+    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    public void Save()
+    {
+        base.Save();
+    } // 풀에 집어 넣을 때 자동 실행
 
     /* Public Method */
     /// <summary>

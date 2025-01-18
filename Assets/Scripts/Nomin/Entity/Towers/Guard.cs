@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guard : Tower, IScriptableObject<SO_Guard>
+public class Guard : Tower, IScriptableObject<SO_Guard>, IPoolee
 {
     /* Field & Property */
     public static List<Guard> instances = new List<Guard>(); // 모든 방어 타워 인스턴스
@@ -34,5 +34,9 @@ public class Guard : Tower, IScriptableObject<SO_Guard>
     public void Load()
     {
         base.Load();
-    }
+    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    public void Save()
+    {
+        base.Save();
+    } // 풀에 집어 넣을 때 자동 실행
 }

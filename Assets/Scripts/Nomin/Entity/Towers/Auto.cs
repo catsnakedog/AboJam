@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Auto : Tower, IScriptableObject<SO_Auto>
+public class Auto : Tower, IScriptableObject<SO_Auto>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
@@ -48,7 +48,11 @@ public class Auto : Tower, IScriptableObject<SO_Auto>
 
         delay_waitForSeconds = new WaitForSeconds(delay);
         Fire(true);
-    }
+    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    public void Save()
+    {
+        base.Save();
+    } // 풀에 집어 넣을 때 자동 실행
 
     /* Public Method */
     /// <summary>

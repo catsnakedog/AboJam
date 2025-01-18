@@ -41,7 +41,6 @@ public class Tile
     /// </summary>
     public void OnClick()
     {
-        Debug.Log($"타일 [" + i + "][" + j + "] 이 클릭되었습니다.");
         Promotion.instance.Off();
         Reinforcement.instance.Off();
         currentTile = this;

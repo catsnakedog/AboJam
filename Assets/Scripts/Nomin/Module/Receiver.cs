@@ -33,6 +33,13 @@ public class Receiver : MonoBehaviour
         {
             List<RaycastResult> ui = rayCaster2D.RayCastUI(Input.mousePosition);
             if (ui.Count == 0) OffUI();
+
+            // 디버깅 용 코드입니다. 나중에 지울 예정
+            Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            string name;
+            if (tile.Go == null) name = "오브젝트가 없습니다.";
+            else name = tile.Go.name;
+            Debug.Log($"타일 정보\n좌표 : [{tile.i}][{tile.j}] | pos : {tile.pos} | 설치 : {name} | GridIndexMap : {grid.GridIndexMap[tile.i, tile.j]}");
         }; // Click
         map.FindAction("Interaction").performed += (context) =>
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Splash : Tower, IScriptableObject<SO_Splash>
+public class Splash : Tower, IScriptableObject<SO_Splash>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
@@ -45,7 +45,11 @@ public class Splash : Tower, IScriptableObject<SO_Splash>
 
         delay_waitForSeconds = new WaitForSeconds(delay);
         Fire(true);
-    }
+    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    public void Save()
+    {
+        base.Save();
+    } // 풀에 집어 넣을 때 자동 실행
 
     /* Public Method */
     /// <summary>
