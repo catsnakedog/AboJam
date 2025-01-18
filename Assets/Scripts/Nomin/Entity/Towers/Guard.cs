@@ -5,8 +5,8 @@ using UnityEngine;
 public class Guard : Tower, IScriptableObject<SO_Guard>, IPoolee
 {
     /* Field & Property */
-    public static List<Guard> instances = new List<Guard>(); // 모든 방어 타워 인스턴스
     [SerializeField] private SO_Guard so; public SO_Guard SO { get => so; set => so = value; }
+    public static List<Guard> instances = new List<Guard>(); // 모든 방어 타워 인스턴스
 
     /* Public Method */
     /// <summary>

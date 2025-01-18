@@ -7,9 +7,9 @@ public class Auto : Tower, IScriptableObject<SO_Auto>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
+    [SerializeField] private SO_Auto so; public SO_Auto SO { get => so; set => so = value; }
     public Launcher launcher;
     public GameObject indicator_circle;
-    [SerializeField] private SO_Auto so; public SO_Auto SO { get => so; set => so = value; }
 
     /* Field & Property */
     public static List<Auto> instances = new List<Auto>(); // 모든 연사 타워 인스턴스

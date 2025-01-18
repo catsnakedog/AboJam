@@ -141,7 +141,7 @@ public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>, IPoolee
         }
     }
     /// <summary>
-    /// 아보카도가 천천히 죽음을 맞이합니다.
+    /// 천천히 죽음을 맞이합니다.
     /// </summary>
     /// <returns></returns>
     public IEnumerator CorDeath(float time)

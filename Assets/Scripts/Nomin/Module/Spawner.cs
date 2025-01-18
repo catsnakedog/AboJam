@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -11,12 +13,21 @@ public class Spawner : MonoBehaviour
     /// </summary>
     public struct Sector
     {
-        float angleStart;
-        float angleEnd;
-        float radiusIn;
-        float radiusOut;
+        public Sector(float angleStart, float angleEnd, float radiusIn, float radiusOut)
+        {
+            this.angleStart = angleStart;
+            this.angleEnd = angleEnd;
+            this.radiusIn = radiusIn;
+            this.radiusOut = radiusOut;
+        }
+
+        public float angleStart;
+        public float angleEnd;
+        public float radiusIn;
+        public float radiusOut;
     }
     private Pool pool => Pool.instance;
+    public GameObject[] obj;
 
     /* Field & Property */
     public static Spawner instance;
@@ -25,6 +36,9 @@ public class Spawner : MonoBehaviour
     private void Start()
     {
         instance = this;
+
+        // 테스트 코드입니다. 밤마다 스폰시킵니다.
+        Date.instance.nightStart.AddListener(() => StartCoroutine(CorSpawn(new Sector(0, 30, 5, 10), obj, 1, 3)));
     }
 
     /* Public Method */
@@ -42,12 +56,24 @@ public class Spawner : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            
+            GameObject obj = pool.Get(prefabs[Random.Range(0, prefabs.Length)].name);
+            obj.transform.position = transform.position + GetRandomPoint(sector);
 
             yield return waitForSeconds;
         }
     }
 
     /* Private Method */
+    /// <summary>
+    /// 섹터 내에서 랜덤한 위치를 반환합니다.
+    /// </summary>
+    /// <param name="sector"></param>
+    /// <returns></returns>
+    private Vector3 GetRandomPoint(Sector sector)
+    {
+        float radian = Random.Range(sector.angleStart, sector.angleEnd) * Mathf.Deg2Rad;
+        float radius = Random.Range(sector.radiusIn, sector.radiusOut);
 
+        return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0) * radius;
+    }
 }

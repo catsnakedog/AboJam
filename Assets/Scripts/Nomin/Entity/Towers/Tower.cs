@@ -46,7 +46,7 @@ public class Tower : MonoBehaviour
         grid.GetNearestTile(gameObject.transform.position).UnBind();
     } // 풀에 집어 넣을 때 자동 실행
     /// <summary>
-    /// 타워가 천천히 죽음을 맞이합니다.
+    /// 천천히 죽음을 맞이합니다.
     /// </summary>
     /// <returns></returns>
     public IEnumerator CorDeath(float time)

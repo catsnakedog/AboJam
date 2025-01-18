@@ -121,6 +121,7 @@ MonoBehaviour:
   clashTags:
   - Towers
   - Abocados
+  - Enemies
   damage: 10
   penetrate: 1
   explosion: {fileID: 0}

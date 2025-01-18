@@ -6,9 +6,9 @@ public class Heal : Tower, IScriptableObject<SO_Heal>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
+    [SerializeField] private SO_Heal so; public SO_Heal SO { get => so; set => so = value; }
     public Launcher launcher;
     public GameObject indicator_circle;
-    [SerializeField] private SO_Heal so; public SO_Heal SO { get => so; set => so = value; }
 
     /* Field & Property */
     public static List<Heal> instances = new List<Heal>(); // 모든 회복 타워 인스턴스
