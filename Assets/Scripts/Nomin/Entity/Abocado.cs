@@ -9,12 +9,12 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static EnumData;
 
-public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>
+public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>, IPoolee
 {
     /* Dependency */
     public SpriteRenderer spriteRenderer; // 하이라키 연결
     public HP hp; // 하이라키 연결
-    public Tile tile; // 바인딩 된 타일
+    private Grid grid => Grid.instance; // 하드 링크
     private Pool pool => Pool.instance; // 하드 링크
     [SerializeField] private SO_Abocado so; public SO_Abocado SO { get => so; set => so = value; }
 
@@ -45,9 +45,7 @@ public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>
     private void Start()
     {
         instances.Add(this);
-        hp.death.AddListener(() => Save());
-
-        // 아침이 밝을 때 성장시킵니다.
+        hp.death.AddListener(() => StartCoroutine(CorDeath()));
         Date.instance.morningStart.AddListener(() => { this.GrowUp(); });
     } // 최초 생성 시 (최초 초기화 - 2)
     private void OnDestroy()
@@ -56,17 +54,18 @@ public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>
     } // 오브젝트 삭제 시 (완전 제거)
     public void Load()
     {
+        hp.Load();
+
         level = SO.level;
         quality = SO.quality;
         quality_max = SO.quality_max;
         harvest = SO.harvest;
 
         spriteRenderer.sprite = spr_level[0];
-    } // 풀에서 꺼낼 때 (아보카도 건설)
+    } // 풀에서 꺼낼 때 (아보카도 건설) 또는 Database 에서 로드 시
     public void Save()
     {
-        pool.Return(gameObject);
-        tile.Go = null;
+        grid.GetNearestTile(gameObject.transform.position).UnBind();
     } // 풀에 집어 넣을 때 (아보카도 파괴)
 
     /* Public Method */
@@ -157,5 +156,45 @@ public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>
 
         level--;
         spriteRenderer.sprite = spr_level[((int)level)];
+    }
+    private IEnumerator CorDeath()
+    {
+        // 스프라이트 제외 기능 정지
+        Component[] components = GetComponents<Component>().Where(c => c.GetType() != typeof(SpriteRenderer)).ToArray(); ;
+        SwitchComponents(components, false);
+
+        // 투명화
+        float fullTime = 1;
+        float delay = 0.01f;
+        WaitForSeconds waitForSeconds = new WaitForSeconds(delay);
+        float startAlpha = spriteRenderer.color.a;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < fullTime)
+        {
+            elapsedTime += delay;
+            float ratio = elapsedTime / fullTime;
+
+            float alpha = Mathf.Lerp(startAlpha, 0f, ratio);
+            spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, alpha);
+            yield return waitForSeconds;
+        }
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, startAlpha);
+
+        // 기능 복구 후 풀에 집어넣기
+        SwitchComponents(components, true);
+        pool.Return(gameObject);
+
+        /// <summary>
+        /// 컴포넌트를 활성화 / 비활성화 합니다.
+        /// </summary>
+        void SwitchComponents(Component[] components, bool OnOff)
+        {
+            foreach (Component component in components)
+            {
+                if (component is MonoBehaviour monoBehaviour) monoBehaviour.enabled = OnOff;
+                else if (component is Behaviour behaviour) behaviour.enabled = OnOff;
+            }
+        }
     }
 }

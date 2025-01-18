@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9acf4197d5afd1b4eaf5f67d4fe5e5da, type: 3}
   m_Name: SO_HP_Abocado
   m_EditorClassIdentifier: 
-  hp_max: 10
+  hp_max: 50
   hideFullHp: 1

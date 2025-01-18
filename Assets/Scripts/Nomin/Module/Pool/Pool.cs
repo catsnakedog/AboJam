@@ -7,7 +7,8 @@ using static UnityEditor.Recorder.OutputPath;
 
 /// <summary>
 /// <br>풀링할 프리팹을 하이라키에서 연결합니다.</br>
-/// <br>프리팹 이름이 완전히 같으면 안됩니다.</br>
+/// <br>프리팹 이름은 중복될 수 없습니다.</br>
+/// <br>프리팹은 반드시 IPoolee 를 구현해야 합니다.</br>
 /// </summary>
 public class Pool : MonoBehaviour
 {
@@ -32,7 +33,13 @@ public class Pool : MonoBehaviour
     /// </summary>
     public GameObject Get(string name)
     {
-        if (pools.TryGetValue(name, out var queue)) return Search(queue) ?? Create(name);
+        if (pools.TryGetValue(name, out var queue))
+        {
+            GameObject obj = Search(queue) ?? Create(name);
+            obj.SetActive(true);
+            Load(obj);
+            return obj;
+        }
         else { Debug.Log($"Pool 에 {name} 프리팹이 할당되지 않았습니다."); return null; }
     }
     /// <summary>
@@ -48,6 +55,7 @@ public class Pool : MonoBehaviour
     /// </summary>
     public void Return(GameObject obj)
     {
+        Save(obj);
         obj.SetActive(false);
         try { pools[obj.name].Enqueue(obj); }
         catch { Debug.Log($"Pool 에 {name} 프리팹이 존재하지 않습니다."); }
@@ -72,7 +80,23 @@ public class Pool : MonoBehaviour
     /// <returns>새로 생성된 오브젝트 입니다.</returns>
     private GameObject Create(string name)
     {
-        GameObject obj = Array.Find(this.obj, o => o.name == name); // 이름으로 프리팹 검색
-        return Instantiate(obj, root.transform);
+        GameObject prefab = Array.Find(this.obj, o => o.name == name); // 이름으로 프리팹 검색
+        GameObject obj = Instantiate(prefab, root.transform); // 인스턴스화
+        obj.name = name; // 이름 설정 (안하면 Clone 붙어서 Return 시 방해됨)
+        return obj;
+    }
+    /// <summary>
+    /// 풀에서 꺼낸 오브젝트의 초기화 메서드 Load 를 실행합니다.
+    /// </summary>
+    private void Load(GameObject obj)
+    {
+        foreach (var component in obj.GetComponents<MonoBehaviour>()) if (component is IPoolee ipoolee) { ipoolee.Load(); return; }
+    }
+    /// <summary>
+    /// 풀에서 꺼낸 오브젝트의 데이터 저장 메서드 Save 를 실행합니다.
+    /// </summary>
+    private void Save(GameObject obj)
+    {
+        foreach (var component in obj.GetComponents<MonoBehaviour>()) if (component is IPoolee ipoolee) { ipoolee.Save(); return; }
     }
 }

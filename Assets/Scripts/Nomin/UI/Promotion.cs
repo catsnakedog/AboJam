@@ -9,6 +9,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using static EnumData;
 using static Hand;
+using static ObjectPool;
 
 public class Promotion : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class Promotion : MonoBehaviour
     private Message message => Message.instance; // 하드 링크
     private Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
     private Demolition demolition => Demolition.instance; // 하드 링크
-    private Pooling[] poolings;
+    private Pooling[] poolings; // 지울 예정
+    private Pool pool => Pool.instance; // 하드 링크
 
     /* Field & Property */
     public static Promotion instance; // 싱글턴
@@ -122,7 +124,7 @@ public class Promotion : MonoBehaviour
 
         // 아보카도 제거 & 타워 건설
         Tile currentTile = Grid.instance.GetNearestTile(currentAbocado.gameObject.transform.position);
-        currentTile.Delete();
+        pool.Return(currentTile.Go);
         currentTile.Bind(tower, tileIndex);
         gameObject.SetActive(false);
     }
