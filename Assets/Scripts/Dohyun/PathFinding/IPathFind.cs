@@ -4,13 +4,7 @@ using UnityEngine;
 
 public interface IPathFind
 {
-    public void MakeRoute()
-    {
+    public void MakeRoute(Vector3 charaterPos);
 
-    }
-
-    public void GetDirection(Vector3 charaterPos)
-    {
-
-    }
+    public Vector2 GetDirection(Vector3 charaterPos);
 }
