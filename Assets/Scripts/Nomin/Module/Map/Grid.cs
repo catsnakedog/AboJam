@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -140,24 +139,6 @@ public class Grid : MonoBehaviour
             for (int j = 0; j < Grid.instance.Column; j++)
             {
                 sb.Append(Grid.instance.GridIndexMap[i, j]);
-                sb.Append(" ");
-            }
-            sb.Append("\n");
-        }
-        Debug.Log(sb.ToString());
-
-        PathFindMonster1 test = new();
-        test.MakeRoute(GameObject.FindWithTag("Player").transform.position);
-        Debug.Log(test.GetDirection(GameObject.FindWithTag("Player").transform.position).ToString());
-        GameObject.FindWithTag("Player").transform.position = GameObject.FindWithTag("Player").transform.position + (Vector3)test.GetDirection(GameObject.FindWithTag("Player").transform.position);
-
-        var b = GridProcessor.IndexingGrid(gridIndexMap);
-        sb.Clear();
-        for (int i = 0; i < b.GetLength(0); i++)
-        {
-            for (int j = 0; j < b.GetLength(1); j++)
-            {
-                sb.Append(b[i, j]);
                 sb.Append(" ");
             }
             sb.Append("\n");
