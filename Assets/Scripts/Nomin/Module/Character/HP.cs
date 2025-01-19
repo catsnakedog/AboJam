@@ -6,13 +6,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
-public class HP : MonoBehaviour, IScriptableObject<SO_HP>
+public class HP : MonoBehaviour
 {
     /* Dependency */
     public SpriteRenderer spr_empty;
     public SpriteRenderer spr_max;
     public GameObject entity; // HP 모듈을 적용할 대상
-    [SerializeField] private SO_HP so; public SO_HP SO { get => so; set => so = value; }
 
     /* Field & Property */
     public static List<HP> instances = new List<HP>();
@@ -60,8 +59,8 @@ public class HP : MonoBehaviour, IScriptableObject<SO_HP>
     }
     public void Load()
     {
-        hideFullHp = SO.hideFullHp;
-        hp_max = SO.hp_max;
+        // hideFullHp = SO.hideFullHp;
+        // hp_max = SO.hp_max;
         Hp_max = hp_max;
         HP_current = hp_max;
         CheckVisible();

@@ -38,9 +38,12 @@ public class Date : MonoBehaviour
     private DateTime last = DateTime.Now;
 
     /* Intializer & Finalizer & Updater */
-    private void Start()
+    private void Awake()
     {
         instance = this;
+    }
+    private void Start()
+    {
         image = GetComponent<Image>();
         animationClick = GetComponent<AnimationClick>();
         dateTime += StringToTime(startTime);

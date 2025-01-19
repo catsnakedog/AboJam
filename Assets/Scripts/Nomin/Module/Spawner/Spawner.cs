@@ -6,25 +6,22 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    /* Dependency */
-    /// <summary>
-    /// <br>두 원과 각도로 정의된 영역입니다.</br>
-    /// <br>HDD 의 Sector 와 매우 유사합니다.</br>
-    /// </summary>
-    public struct Sector
-    {
-        public Sector(float angleStart, float angleEnd, float radiusIn, float radiusOut)
-        {
-            this.angleStart = angleStart;
-            this.angleEnd = angleEnd;
-            this.radiusIn = radiusIn;
-            this.radiusOut = radiusOut;
-        }
 
-        public float angleStart;
-        public float angleEnd;
-        public float radiusIn;
-        public float radiusOut;
+    public struct Spawn
+    {
+
+    }
+    public struct Spawnees
+    {
+
+    }
+    public struct Wave
+    {
+
+    }
+    public struct Waves
+    {
+
     }
     private Pool pool => Pool.instance;
     public GameObject[] obj;
@@ -38,7 +35,7 @@ public class Spawner : MonoBehaviour
         instance = this;
 
         // 테스트 코드입니다. 밤마다 스폰시킵니다.
-        Date.instance.nightStart.AddListener(() => StartCoroutine(CorSpawn(new Sector(0, 30, 5, 10), obj, 1, 3)));
+        Date.instance.nightStart.AddListener(() => StartCoroutine(CorSpawn(new Sector("test", 0, 30, 5, 10), obj, 1, 3)));
     }
 
     /* Public Method */
@@ -47,12 +44,12 @@ public class Spawner : MonoBehaviour
     /// </summary>
     /// <param name="sector">두 원과 각도로 정의된 영역</param>
     /// <param name="preafabs">랜덤으로 생성될 프리팹</param>
-    /// <param name="delay">몬스터 생성 간격</param>
+    /// <param name="interval">몬스터 생성 간격</param>
     /// <param name="count">몬스터 생성 수</param>
     /// <returns></returns>
-    public IEnumerator CorSpawn(Sector sector, GameObject[] prefabs, float delay, int count)
+    public IEnumerator CorSpawn(Sector sector, GameObject[] prefabs, float interval, int count)
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(delay);
+        WaitForSeconds waitForSeconds = new WaitForSeconds(interval);
 
         for (int i = 0; i < count; i++)
         {
