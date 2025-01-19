@@ -9,6 +9,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 using static EnumData;
 using static Hand;
+using static ObjectPool;
 
 public class Promotion : MonoBehaviour
 {
@@ -18,7 +19,8 @@ public class Promotion : MonoBehaviour
     private Message message => Message.instance; // 하드 링크
     private Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
     private Demolition demolition => Demolition.instance; // 하드 링크
-    private Pooling[] poolings;
+    private Pool pool => Pool.instance; // 하드 링크
+    private Grid grid => Grid.instance; // 하드 링크
 
     /* Field & Property */
     public static Promotion instance; // 싱글턴
@@ -34,18 +36,6 @@ public class Promotion : MonoBehaviour
     private void Init()
     {
         List<GameObject> list_go = new List<GameObject>();
-
-        // 타워 풀링
-        int towerTypeLength = Enum.GetValues(typeof(EnumData.TowerType)).Length;
-        poolings = new Pooling[towerTypeLength];
-        for (int i = 0; i < towerTypeLength; i++)
-        {
-            if ((EnumData.TowerType)i == EnumData.TowerType.Production) continue;
-            poolings[i] = gameObject.AddComponent<Pooling>();
-            GameObject tower = Resources.Load<GameObject>(path_prefabs + (EnumData.TowerType)i);
-            if (tower == null) { Debug.Log(path_prefabs + (EnumData.TowerType)i + " 에 타워 프리팹이 없습니다."); return; }
-            poolings[i].Set(tower);
-        }
 
         // 타워 종류마다 업그레이드 버튼 생성
         foreach (EnumData.TowerType towerType in Enum.GetValues(typeof(EnumData.TowerType)))
@@ -86,11 +76,13 @@ public class Promotion : MonoBehaviour
 
     /* Private Method */
     /// <summary>
-    /// <br>최근 선택된 타일의 아보카도를 타워로 업그레이드합니다.</br>
+    /// <br>최근 선택된 아보카도를 타워로 업그레이드합니다.</br>
     /// </summary>
     /// <param name="towerName">(EnumData.Tower)towerName</param>
     private void Promote(EnumData.TowerType towerType)
     {
+        if (currentAbocado.hp.HP_current <= 0) { message.On("아보카도가 파괴되어 타워를 건설할 수 없습니다.", 2f); return; }
+
         // 결제
         int price = GetPrice(towerType);
         if (StaticData.Garu >= price) message.On("타워가 건설되었습니다.", 2f);
@@ -115,16 +107,10 @@ public class Promotion : MonoBehaviour
             _ => throw new NotImplementedException()
         };
 
-        // 건설할 타워를 풀에서 Get & 초기화 (리플렉션, 성능 저하 원인이 될 수 있음)
-        GameObject tower = poolings[(int)towerType].Get();
-        Component component = tower.GetComponent($"{towerType}");
-        component.GetType().GetMethod("Load").Invoke(component, null);
-
-        // 아보카도 제거 & 타워 건설
-        Tile currentTile = Grid.instance.GetNearestTile(currentAbocado.gameObject.transform.position);
-        currentTile.Delete();
-        currentTile.Bind(tower, tileIndex);
+        // 건설할 타워를 풀에서 Get & 바인딩
         gameObject.SetActive(false);
+        pool.Return(currentAbocado.gameObject);
+        grid.GetNearestTile(currentAbocado.transform.position).Bind(pool.Get(towerType.ToString()), tileIndex);
     }
     /// <summary>
     /// 타워 타입에 맞는 가격을 반환합니다.

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9acf4197d5afd1b4eaf5f67d4fe5e5da, type: 3}
-  m_Name: SO_HP_Abocado
+  m_Name: SO_HP_Gunner
   m_EditorClassIdentifier: 
-  hp_max: 50
+  hp_max: 100
   hideFullHp: 1

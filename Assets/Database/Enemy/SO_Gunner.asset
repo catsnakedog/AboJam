@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9acf4197d5afd1b4eaf5f67d4fe5e5da, type: 3}
-  m_Name: SO_HP_Abocado
+  m_Script: {fileID: 11500000, guid: d5439ce61e306b34184dec790d80d3bc, type: 3}
+  m_Name: SO_Gunner
   m_EditorClassIdentifier: 
-  hp_max: 50
-  hideFullHp: 1
+  delay: 0.8
+  delay_fire: 0.1
+  detection: 5
+  subCount: 2

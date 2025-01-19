@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Splash : Tower, IScriptableObject<SO_Splash>
+public class Splash : Tower, IScriptableObject<SO_Splash>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
+    [SerializeField] private SO_Splash so; public SO_Splash SO { get => so; set => so = value; }
     public Launcher launcher;
     public GameObject indicator_circle;
-    [SerializeField] private SO_Splash so; public SO_Splash SO { get => so; set => so = value; }
 
     /* Field & Property */
     public static List<Splash> instances = new List<Splash>(); // 모든 연사 타워 인스턴스
@@ -45,7 +45,11 @@ public class Splash : Tower, IScriptableObject<SO_Splash>
 
         delay_waitForSeconds = new WaitForSeconds(delay);
         Fire(true);
-    }
+    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    public void Save()
+    {
+        base.Save();
+    } // 풀에 집어 넣을 때 자동 실행
 
     /* Public Method */
     /// <summary>

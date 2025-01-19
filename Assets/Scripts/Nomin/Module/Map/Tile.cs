@@ -8,16 +8,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using static EnumData;
 
 public class Tile
 {
     /* Dependency */
     private Pool pool => Pool.instance; // 하드 링크
+    private Grid grid => Grid.instance; // 하드 링크
 
     /* Field & Property */
     public static List<Tile> instances = new List<Tile>(); // 모든 타일 인스턴스
     public static Tile currentTile; // 최근 선택된 타일
-    public GameObject Go { get; set; } = null; // 타일에 배치된 프리팹
+    public GameObject Go { get; private set; } = null; // 타일에 배치된 프리팹
     public readonly int i;
     public readonly int j;
     public bool isWall;
@@ -39,43 +41,29 @@ public class Tile
     /// </summary>
     public void OnClick()
     {
-        Debug.Log($"타일 [" + i + "][" + j + "] 이 클릭되었습니다.");
         Promotion.instance.Off();
         Reinforcement.instance.Off();
         currentTile = this;
 
-        // NULL: Abocado 프리팹 건설
-        if (Go == null)
-        {
-            Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
-            Abocado abocado = Go.GetComponent<Abocado>();
-            abocado.tile = this;
-            abocado.Load();
-        }
+        // 빈 타일이면 풀에서 아보카도 꺼내서 타일이랑 바인딩
+        if (Go == null) Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
+        else { Debug.Log($"타일 ({i}, {j}) 에 이미 {Go.name} 가 바인딩 되어 있습니다."); return; };
     }
     /// <summary>
-    /// 현재 타일 위치에 지정한 프리팹을 생성합니다.
+    /// 지정한 오브젝트를 타일에 바인딩 합니다.
     /// </summary>
-    public void Create(GameObject Go, EnumData.TileIndex tileIndex)
+    public void Bind(GameObject obj, EnumData.TileIndex tileIndex)
     {
+        Go = obj;
         Go.transform.position = pos;
-        Grid.instance.Create((i, j), Go);
-        Grid.instance.GridIndexMap[i, j] = (int)tileIndex;
+        grid.GridIndexMap[i, j] = (int)tileIndex;
     }
     /// <summary>
-    /// 현재 타일 위치에 지정한 프리팹을 바인딩 합니다.
+    /// 바인딩을 해제합니다.
     /// </summary>
-    public void Bind(GameObject Go, EnumData.TileIndex tileIndex)
+    public void UnBind()
     {
-        Go.transform.position = pos;
-        Grid.instance.Bind((i, j), Go);
-        Grid.instance.GridIndexMap[i, j] = (int)tileIndex;
-    }
-    /// <summary>
-    /// 타일에 존재하는 프리팹을 제거합니다.
-    /// </summary>
-    public void Delete()
-    {
-        Grid.instance.Delete((i, j));
+        Go = null;
+        grid.GridIndexMap[i, j] = (int)EnumData.TileIndex.Empty;
     }
 }
