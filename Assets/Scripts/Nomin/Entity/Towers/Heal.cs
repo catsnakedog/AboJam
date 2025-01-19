@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heal : Tower, IScriptableObject<SO_Heal>, IPoolee
+public class Heal : Tower, IScriptableObject<SO_Heal>
 {
     /* Dependency */
     [Header("[ Dependency ]")]
-    [SerializeField] private SO_Heal so; public SO_Heal SO { get => so; set => so = value; }
     public Launcher launcher;
     public GameObject indicator_circle;
+    [SerializeField] private SO_Heal so; public SO_Heal SO { get => so; set => so = value; }
 
     /* Field & Property */
     public static List<Heal> instances = new List<Heal>(); // 모든 회복 타워 인스턴스
@@ -47,11 +47,7 @@ public class Heal : Tower, IScriptableObject<SO_Heal>, IPoolee
 
         delay_waitForSeconds = new WaitForSeconds(delay);
         Healing(true);
-    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
-    public void Save()
-    {
-        base.Save();
-    } // 풀에 집어 넣을 때 자동 실행
+    }
 
     /* Public Method */
     /// <summary>

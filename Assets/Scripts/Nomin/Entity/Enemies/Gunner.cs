@@ -5,11 +5,10 @@ using UnityEngine.Analytics;
 using static Targeter;
 using static UnityEngine.GraphicsBuffer;
 
-public class Gunner : Enemy, IScriptableObject<SO_Gunner>, IPoolee
+public class Gunner : Enemy
 {
     /* Dependency */
     [Header("[ Dependency ]")]
-    [SerializeField] private SO_Gunner so; public SO_Gunner SO { get => so; set => so = value; }
     public Launcher launcher;
     public GameObject indicator_circle;
     public Animator animator;
@@ -24,6 +23,7 @@ public class Gunner : Enemy, IScriptableObject<SO_Gunner>, IPoolee
     [SerializeField] private float delay_fire = 0.05f; // 사격 간격
     [SerializeField] private float delay_anim = 0.3f; // 애니메이션 대기
     public float detection = 5f; // 적 감지 범위
+    public float angle = 90f;
     public int subCount = 2;
     private WaitForSeconds delay_waitForSeconds;
     private WaitForSeconds delay_waitForSecondsFire;
@@ -49,21 +49,6 @@ public class Gunner : Enemy, IScriptableObject<SO_Gunner>, IPoolee
     {
         instances.Remove(this);
     }
-    public void Load()
-    {
-        base.Load();
-
-        delay = SO.delay;
-        delay_fire = SO.delay_fire;
-        detection = SO.detection;
-        subCount = SO.subCount;
-
-        Fire(true);
-    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
-    public void Save()
-    {
-        base.Save();
-    } // 풀에 집어 넣을 때 자동 실행
 
     /* Public Method */
     /// <summary>

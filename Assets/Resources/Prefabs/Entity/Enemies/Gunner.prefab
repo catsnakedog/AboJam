@@ -55,7 +55,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: {fileID: 415146930711245322}
-  so: {fileID: 11400000, guid: 547f76d5bb1af614a9dd82141a9ef310, type: 2}
   launcher: {fileID: 8889468428612328896}
   indicator_circle: {fileID: 4248338779200015288}
   animator: {fileID: 2428712746383201744}
@@ -65,6 +64,7 @@ MonoBehaviour:
   delay_fire: 0.1
   delay_anim: 0.3
   detection: 5
+  angle: 90
   subCount: 2
 --- !u!114 &9013543737906462685
 MonoBehaviour:
@@ -486,10 +486,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2504864089240091885}
     m_Modifications:
-    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
-      propertyPath: so
-      value: 
-      objectReference: {fileID: 11400000, guid: d550259ffa8fa944a8cc384c0cd1770d, type: 2}
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: speed
       value: 0.04
