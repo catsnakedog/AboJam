@@ -30,12 +30,8 @@ public class DBMS : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        try { Connection = new SqlConnection($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD}"); Debug.Log("DB 연결 성공"); }
+        try { Connection = new ($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD}"); }
         catch { Debug.Log("DB 연결 실패"); }
-    }
-    private void Start()
-    {
-        // GetDatabase("AboJam");
     }
 
     /* Public Method */
@@ -57,6 +53,32 @@ public class DBMS : MonoBehaviour
         }
     }
     /// <summary>
+    /// 데이터베이스를 가져옵니다.
+    /// </summary>
+    public DataSet GetDatabase()
+    {
+        lock (Lock)
+        {
+            Connection.Open();
+
+            DataSet dataSet = new();
+
+            // 모든 테이블 이름 가져오기
+            List<string> tableNames = new();
+            using (SqlCommand command = new("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'", Connection))
+            using (SqlDataReader reader = command.ExecuteReader()) while (reader.Read()) tableNames.Add(reader.GetString(0));
+
+            // 각 테이블 마다 >> 테이블 데이터를 조회하여 >> dataSet 에 추가
+            foreach (string tableName in tableNames)
+                using (SqlDataAdapter adapter = new($"SELECT * FROM [{tableName}]", Connection))
+                    adapter.Fill(dataSet, tableName);
+
+            Connection.Close();
+
+            return dataSet;
+        }
+    }
+    /// <summary>
     /// DB 에 데이터를 작성합니다.
     /// </summary>
     public void Set(string SQL)
@@ -68,48 +90,6 @@ public class DBMS : MonoBehaviour
             using (SqlCommand command = new(SQL, Connection)) command.ExecuteNonQuery();
 
             Connection.Close();
-        }
-    }
-    
-    /// <summary>
-    /// DB 로 게임 데이터를 덮어씌웁니다.
-    /// </summary>
-    public void Load(string dbName)
-    {
-        DataSet dataSet = GetDatabase(dbName);
-
-        // 테이블 마다
-        foreach (DataTable dataTable in dataSet.Tables)
-        {
-            // 테이블 이름의 리소스 폴더 접근
-        }
-    }
-
-    /* Private Method */
-    /// <summary>
-    /// 데이터베이스를 가져옵니다.
-    /// </summary>
-    private DataSet GetDatabase(string dbName)
-    {
-        lock(Lock)
-        {
-            Connection.Open();
-
-            DataSet dataSet = new();
-
-            // 모든 테이블 이름 가져오기
-            List<string> tableNames = new();
-            using (SqlCommand command = new ("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'", Connection))
-            using (SqlDataReader reader = command.ExecuteReader()) while (reader.Read()) tableNames.Add(reader.GetString(0));
-
-            // 각 테이블 마다 >> 테이블 데이터를 조회하여 >> dataSet 에 추가
-            foreach (string tableName in tableNames)
-                using (SqlDataAdapter adapter = new ($"SELECT * FROM [{tableName}]", Connection))
-                    adapter.Fill(dataSet, tableName);
-
-            Connection.Close();
-
-            return dataSet;
         }
     }
 }
