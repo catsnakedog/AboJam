@@ -37,10 +37,8 @@ public class Database_AboJam : MonoBehaviour
         new Table_HP("Splash", 100, true),
         new Table_HP("Gunner", 100, true),
     };
-    public Table_Abocado[] Abocado =
-    {
-        new Table_Abocado("Abocado", EnumData.Abocado.Cultivated, 0, 1, 1, 1)
-    };
+    public Table_Abocado[] Abocado = { new Table_Abocado("Abocado", EnumData.Abocado.Cultivated, 0, 1, 1, 1) };
+    public Table_Gunner[] Gunner = { new Table_Gunner("Gunner", 0.8f, 0.1f, 5f, 2) };
 
     /* Public Method */
     /// <summary>
@@ -54,31 +52,44 @@ public class Database_AboJam : MonoBehaviour
 
             ImportHP();
             ImportAbocado();
+            ImportGunner();
 
             void ImportHP()
             {
-                DataTable dataTableHP = dataSet.Tables["HP"];
-                dataTableHP.PrimaryKey = new DataColumn[] { dataTableHP.Columns["HPID"] };
+                DataTable dataTable = dataSet.Tables["HP"];
+                dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["HPID"] };
                 foreach (Table_HP hp in HP)
                 {
-                    DataRow dataRow = dataTableHP.Rows.Find(hp.HPID);
+                    DataRow dataRow = dataTable.Rows.Find(hp.HPID);
                     hp.Hp_max = Convert.ToSingle(dataRow["Hp_max"]);
                     hp.HideFullHP = Convert.ToBoolean(dataRow["HideFullHP"]);
                 }
             }
             void ImportAbocado()
             {
-
-                DataTable dataTableAbocado = dataSet.Tables["Abocado"];
-                dataTableAbocado.PrimaryKey = new DataColumn[] { dataTableAbocado.Columns["AbocadoID"] };
+                DataTable dataTable = dataSet.Tables["Abocado"];
+                dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["abocadoID"] };
                 foreach (Table_Abocado abocado in Abocado)
                 {
-                    DataRow dataRow = dataTableAbocado.Rows.Find(abocado.abocadoID);
+                    DataRow dataRow = dataTable.Rows.Find(abocado.abocadoID);
                     abocado.level = Enum.Parse<EnumData.Abocado>(Convert.ToString(dataRow["level"]));
                     abocado.quality = Convert.ToInt32(dataRow["quality"]);
                     abocado.quality_max = Convert.ToInt32(dataRow["quality_max"]);
                     abocado.harvest = Convert.ToInt32(dataRow["harvest"]);
                     abocado.harvestPlus = Convert.ToInt32(dataRow["harvestPlus"]);
+                }
+            }
+            void ImportGunner()
+            {
+                DataTable dataTable = dataSet.Tables["Gunner"];
+                dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["gunnerID"] };
+                foreach (Table_Gunner gunner in Gunner)
+                {
+                    DataRow dataRow = dataTable.Rows.Find(gunner.gunnerID);
+                    gunner.delay = Convert.ToSingle(dataRow["delay"]);
+                    gunner.delay_fire = Convert.ToSingle(dataRow["delay_fire"]);
+                    gunner.detection = Convert.ToSingle(dataRow["detection"]);
+                    gunner.subCount = Convert.ToInt32(dataRow["subCount"]);
                 }
             }
         }
@@ -104,5 +115,16 @@ public class Database_AboJam : MonoBehaviour
         quality_max = data.quality_max;
         harvest = data.harvest;
         harvestPlus = data.harvestPlus;
+    }
+    /// <summary>
+    /// 런타임 DB / Gunner 테이블 / GunnerID 레코드 => Gunner 인스턴스
+    /// </summary>
+    public void ExportGunner(string gunnerID, ref float delay, ref float delay_fire, ref float detection, ref int subCount)
+    {
+        Table_Gunner data = Gunner.FirstOrDefault(gunner => gunner.gunnerID == gunnerID);
+        delay = data.delay;
+        delay_fire = data.delay_fire;
+        detection = data.detection;
+        subCount = data.subCount;
     }
 }

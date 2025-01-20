@@ -718,7 +718,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 623437328}
         m_TargetAssemblyTypeName: Database_AboJam, Assembly-CSharp
-        m_MethodName: Load
+        m_MethodName: Import
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

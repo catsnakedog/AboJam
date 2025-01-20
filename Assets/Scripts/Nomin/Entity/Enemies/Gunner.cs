@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.InputSystem.HID;
 using static Targeter;
 using static UnityEngine.GraphicsBuffer;
 
-public class Gunner : Enemy, IScriptableObject<SO_Gunner>, IPoolee
+public class Gunner : Enemy, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
-    [SerializeField] private SO_Gunner so; public SO_Gunner SO { get => so; set => so = value; }
     public Launcher launcher;
     public GameObject indicator_circle;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
     public Move move;
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    [SerializeField] private string gunnerID; // Primary Key
 
     /* Field & Property */
     public static List<Gunner> instances = new List<Gunner>(); // 모든 거너 인스턴스
@@ -53,10 +55,7 @@ public class Gunner : Enemy, IScriptableObject<SO_Gunner>, IPoolee
     {
         base.Load();
 
-        delay = SO.delay;
-        delay_fire = SO.delay_fire;
-        detection = SO.detection;
-        subCount = SO.subCount;
+        database_abojam.ExportGunner(gunnerID, ref delay, ref delay_fire, ref detection, ref subCount);
 
         Fire(true);
     } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
