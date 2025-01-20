@@ -53,9 +53,23 @@ public class DBMS : MonoBehaviour
         }
     }
     /// <summary>
-    /// 데이터베이스를 가져옵니다.
+    /// DB 에 데이터를 작성합니다.
     /// </summary>
-    public DataSet GetDatabase()
+    public void Set(string SQL)
+    {
+        lock (Lock)
+        {
+            Connection.Open();
+
+            using (SqlCommand command = new(SQL, Connection)) command.ExecuteNonQuery();
+
+            Connection.Close();
+        }
+    }
+    /// <summary>
+    /// 서버에서 DataSet 을 가져옵니다.
+    /// </summary>
+    public DataSet GetDataSet()
     {
         lock (Lock)
         {
@@ -76,20 +90,6 @@ public class DBMS : MonoBehaviour
             Connection.Close();
 
             return dataSet;
-        }
-    }
-    /// <summary>
-    /// DB 에 데이터를 작성합니다.
-    /// </summary>
-    public void Set(string SQL)
-    {
-        lock (Lock)
-        {
-            Connection.Open();
-
-            using (SqlCommand command = new(SQL, Connection)) command.ExecuteNonQuery();
-
-            Connection.Close();
         }
     }
 }

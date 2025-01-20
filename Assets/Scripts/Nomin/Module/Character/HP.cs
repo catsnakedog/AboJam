@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using UnityEditor.Experimental.Licensing;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
+using static UnityEngine.GraphicsBuffer;
 
 public class HP : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class HP : MonoBehaviour
 
     /* Field & Property */
     public static List<HP> instances = new List<HP>();
+    [SerializeField] private string HPID;
     [SerializeField] private float speed = 0.02f; // 체력바 속도
     [SerializeField] private bool hideFullHp = true; // 최대 체력일 때 체력바 숨기기
     [SerializeField] private float hp_max = 100f; /* 초기 최대 체력 */ public float Hp_max { get; private set; } /* 현재 최대 체력 */
@@ -59,8 +62,11 @@ public class HP : MonoBehaviour
     }
     public void Load()
     {
-        // hideFullHp = SO.hideFullHp;
-        // hp_max = SO.hp_max;
+        // 런타임 데이터베이스에서 로드합니다.
+        Table_HP data = Database_AboJam.instance.HP.FirstOrDefault(hp => hp.HPID == HPID);
+        hideFullHp = data.HideFullHP;
+        hp_max = data.Hp_max;
+
         Hp_max = hp_max;
         HP_current = hp_max;
         CheckVisible();

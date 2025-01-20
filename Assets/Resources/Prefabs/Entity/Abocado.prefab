@@ -245,6 +245,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: fc93969820d792d4c9b8275d4eb7f184, type: 2}
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: HPID
+      value: Abocado
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: speed
       value: 0.04
       objectReference: {fileID: 0}

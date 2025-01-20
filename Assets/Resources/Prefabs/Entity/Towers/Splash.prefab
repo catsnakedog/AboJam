@@ -55,9 +55,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: {fileID: 3580031304758939475}
   reinforceCost: 050000000a000000
+  so: {fileID: 11400000, guid: e99f1ac3768d07d42a6a0628ae063a19, type: 2}
   launcher: {fileID: 1906722261477387749}
   indicator_circle: {fileID: 7920355262542515973}
-  so: {fileID: 11400000, guid: e99f1ac3768d07d42a6a0628ae063a19, type: 2}
   delay: 1
   detection: 5
 --- !u!114 &5268194723775470118
@@ -491,6 +491,10 @@ PrefabInstance:
       propertyPath: so
       value: 
       objectReference: {fileID: 11400000, guid: b82a75a52ce313e49b1aeef20cd0c84e, type: 2}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: HPID
+      value: Splash
+      objectReference: {fileID: 0}
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: speed
       value: 0.04
