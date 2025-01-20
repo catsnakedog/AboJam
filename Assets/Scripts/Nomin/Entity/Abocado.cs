@@ -6,26 +6,29 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static EnumData;
 
-public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>, IPoolee
+public class Abocado : MonoBehaviour, IPoolee
 {
     /* Dependency */
     public SpriteRenderer spriteRenderer; // 하이라키 연결
     public HP hp; // 하이라키 연결
     private Grid grid => Grid.instance; // 하드 링크
     private Pool pool => Pool.instance; // 하드 링크
-    [SerializeField] private SO_Abocado so; public SO_Abocado SO { get => so; set => so = value; }
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    [SerializeField] private string abocadoID; // Primary Key
 
     /* Field & Property */
     public static List<Abocado> instances = new List<Abocado>(); // 모든 아보카도 인스턴스
     public static Abocado currentAbocado; // 최근 선택된 아보카도
-    public EnumData.Abocado level { get; private set; } // 아보카도 레벨
-    public int quality { get; private set; } = 0; // 아보카도 품질 (Promotion)
+    private EnumData.Abocado level; public EnumData.Abocado Level { get => level; private set => level = value; } // 아보카도 레벨
+    private int quality = 0; public int Quality { get => quality; private set => quality = value; } // 아보카도 품질 (Promotion)
     public static int quality_max = 1; // 아보카도 최고 품질 (Promotion)
     public int harvest = 1; // 수확량
+    public int harvestPlus = 1; // 수확 증가량
     private string path = "Images/Abocado/"; // 아보카도 이미지 Resources 경로
     private Sprite[] spr_level; // 레벨에 대응하는 스프라이트
     private (int, int) coord;
@@ -56,13 +59,8 @@ public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>, IPoolee
     } // 오브젝트 삭제 시 (완전 제거)
     public void Load()
     {
+        database_abojam.ExportAbocado(abocadoID, ref level, ref quality, ref quality_max, ref harvest, ref harvestPlus);
         hp.Load();
-
-        level = SO.level;
-        quality = SO.quality;
-        quality_max = SO.quality_max;
-        harvest = SO.harvest;
-
         spriteRenderer.sprite = spr_level[0];
     } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
     public void Save()
@@ -84,7 +82,7 @@ public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>, IPoolee
     /// </summary>
     public void Harvest()
     {
-        if (level == EnumData.Abocado.Fruited)
+        if (Level == EnumData.Abocado.Fruited)
         {
             StaticData.Abocado += harvest;
             LevelDown();
@@ -96,20 +94,20 @@ public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>, IPoolee
     /// </summary>
     public void Promote()
     {
-        if (quality == quality_max)
+        if (Quality == quality_max)
         {
             Debug.Log("이미 최고 품질입니다.");
             return;
         }
 
-        quality++;
-        harvest++;
+        Quality++;
+        harvest += harvestPlus;
 
-        spr_level[(int)EnumData.Abocado.Tree] = Resources.Load<Sprite>($"{path}{EnumData.Abocado.Tree}{string.Concat(Enumerable.Repeat("+", quality))}");
-        spr_level[(int)EnumData.Abocado.Fruited] = Resources.Load<Sprite>($"{path}{EnumData.Abocado.Fruited}{string.Concat(Enumerable.Repeat("+", quality))}");
+        spr_level[(int)EnumData.Abocado.Tree] = Resources.Load<Sprite>($"{path}{EnumData.Abocado.Tree}{string.Concat(Enumerable.Repeat("+", Quality))}");
+        spr_level[(int)EnumData.Abocado.Fruited] = Resources.Load<Sprite>($"{path}{EnumData.Abocado.Fruited}{string.Concat(Enumerable.Repeat("+", Quality))}");
         if (spr_level[(int)EnumData.Abocado.Tree] == null || spr_level[(int)EnumData.Abocado.Fruited] == null) Debug.Log("아보카도 품질에 맞는 이미지가 없습니다.");
 
-        spriteRenderer.sprite = spr_level[(int)level];
+        spriteRenderer.sprite = spr_level[(int)Level];
     }
     /// <summary>
     /// 아보카도 클릭 시 상호작용 입니다.
@@ -120,7 +118,7 @@ public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>, IPoolee
         Reinforcement.instance.Off();
         Promotion.instance.Off();
 
-        switch (level)
+        switch (Level)
         {
             // Cultivated : Seed 로 성장
             case EnumData.Abocado.Cultivated:
@@ -132,7 +130,7 @@ public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>, IPoolee
                 break;
             // Tree : 타워 업그레이드 패널 On
             case EnumData.Abocado.Tree:
-                if (quality == 0) Promotion.instance.On();
+                if (Quality == 0) Promotion.instance.On();
                 break;
             // Fruited : 수확
             case EnumData.Abocado.Fruited:
@@ -202,18 +200,18 @@ public class Abocado : MonoBehaviour, IScriptableObject<SO_Abocado>, IPoolee
     private void LevelUp(bool forced = false)
     {
         // 개간 상태, 열매 상태는 레벨 업 X
-        if ((level == EnumData.Abocado.Cultivated || level == EnumData.Abocado.Fruited) && forced == false) return;
+        if ((Level == EnumData.Abocado.Cultivated || Level == EnumData.Abocado.Fruited) && forced == false) return;
 
-        level++;
-        spriteRenderer.sprite = spr_level[(int)level];
+        Level++;
+        spriteRenderer.sprite = spr_level[(int)Level];
         hp.Heal(hp.Hp_max);
     }
     private void LevelDown()
     {
         // 개간 상태, 씨앗 상태는 레벨 다운 X
-        if ((level == EnumData.Abocado.Cultivated || level == EnumData.Abocado.Seed)) return;
+        if ((Level == EnumData.Abocado.Cultivated || Level == EnumData.Abocado.Seed)) return;
 
-        level--;
-        spriteRenderer.sprite = spr_level[((int)level)];
+        Level--;
+        spriteRenderer.sprite = spr_level[((int)Level)];
     }
 }

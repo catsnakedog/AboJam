@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 0
   quality: 0
-  quality_max: 0
-  harvest: 0
+  quality_max: 1
+  harvest: 1

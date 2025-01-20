@@ -36,37 +36,6 @@ public class DBMS : MonoBehaviour
 
     /* Public Method */
     /// <summary>
-    /// DB 에서 데이터를 가져옵니다.
-    /// </summary>
-    public DataTable Get(string SQL)
-    {
-        lock (Lock)
-        {
-            Connection.Open();
-
-            DataTable dataTable = new();
-            using (SqlDataAdapter adapter = new(new(SQL, Connection))) adapter.Fill(dataTable);
-
-            Connection.Close();
-
-            return dataTable;
-        }
-    }
-    /// <summary>
-    /// DB 에 데이터를 작성합니다.
-    /// </summary>
-    public void Set(string SQL)
-    {
-        lock (Lock)
-        {
-            Connection.Open();
-
-            using (SqlCommand command = new(SQL, Connection)) command.ExecuteNonQuery();
-
-            Connection.Close();
-        }
-    }
-    /// <summary>
     /// 서버에서 DataSet 을 가져옵니다.
     /// </summary>
     public DataSet GetDataSet()
@@ -93,15 +62,3 @@ public class DBMS : MonoBehaviour
         }
     }
 }
-
-
-    /*
-    [ 게임 시작 파이프라인 ]
-    Database.Load() // DBMS >> SO
-    인스턴스 Awake 시 Init() // SO >> 인스턴스화
-
-    [ 런타임 쿼리 파이프라인 ]
-    SSMS // QUERY >> DBMS
-    Database.Load() // DBMS >> SO
-    인스턴스.Init() // SO >> 기존 인스턴스
-    */

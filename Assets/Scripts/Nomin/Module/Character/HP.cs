@@ -14,10 +14,11 @@ public class HP : MonoBehaviour
     public SpriteRenderer spr_empty;
     public SpriteRenderer spr_max;
     public GameObject entity; // HP 모듈을 적용할 대상
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    [SerializeField] private string HPID; // Primary Key
 
     /* Field & Property */
     public static List<HP> instances = new List<HP>();
-    [SerializeField] private string HPID;
     [SerializeField] private float speed = 0.02f; // 체력바 속도
     [SerializeField] private bool hideFullHp = true; // 최대 체력일 때 체력바 숨기기
     [SerializeField] private float hp_max = 100f; /* 초기 최대 체력 */ public float Hp_max { get; private set; } /* 현재 최대 체력 */
@@ -62,10 +63,7 @@ public class HP : MonoBehaviour
     }
     public void Load()
     {
-        // 런타임 데이터베이스에서 로드합니다.
-        Table_HP data = Database_AboJam.instance.HP.FirstOrDefault(hp => hp.HPID == HPID);
-        hideFullHp = data.HideFullHP;
-        hp_max = data.Hp_max;
+        database_abojam.ExportHP(HPID, ref hp_max, ref hideFullHp);
 
         Hp_max = hp_max;
         HP_current = hp_max;

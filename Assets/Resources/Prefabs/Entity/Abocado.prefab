@@ -104,8 +104,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6781959995807194502}
   hp: {fileID: 8862693264221764112}
-  so: {fileID: 11400000, guid: 141bc9807977c1a489786989529b5c89, type: 2}
+  abocadoID: Abocado
   harvest: 1
+  harvestPlus: 1
 --- !u!114 &6412532579159748648
 MonoBehaviour:
   m_ObjectHideFlags: 0
