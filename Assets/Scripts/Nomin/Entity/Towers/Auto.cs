@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Auto : Tower, IScriptableObject<SO_Auto>, IPoolee
+public class Auto : Tower, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
-    [SerializeField] private SO_Auto so; public SO_Auto SO { get => so; set => so = value; }
     public Launcher launcher;
     public GameObject indicator_circle;
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    [SerializeField] private string autoID; // Primary Key
 
     /* Field & Property */
     public static List<Auto> instances = new List<Auto>(); // 모든 연사 타워 인스턴스
@@ -19,6 +20,7 @@ public class Auto : Tower, IScriptableObject<SO_Auto>, IPoolee
     public float detection = 5f; // 적 감지 범위
     public float angle = 90f;
     public int subCount = 0;
+    public int subCountPlus = 1;
     private WaitForSeconds delay_waitForSeconds;
     private Coroutine corFire;
 
@@ -41,10 +43,7 @@ public class Auto : Tower, IScriptableObject<SO_Auto>, IPoolee
     {
         base.Load();
 
-        delay = SO.delay;
-        detection = SO.detection;
-        angle = SO.angle;
-        subCount = SO.subCount;
+        database_abojam.ExportAuto(autoID, ref delay, ref detection, ref angle, ref subCount, ref subCountPlus);
 
         delay_waitForSeconds = new WaitForSeconds(delay);
         Fire(true);
@@ -80,7 +79,7 @@ public class Auto : Tower, IScriptableObject<SO_Auto>, IPoolee
     public override void Reinforce()
     {
         base.Reinforce();
-        subCount++;
+        subCount += subCountPlus;
     }
 
     /* Private Method */

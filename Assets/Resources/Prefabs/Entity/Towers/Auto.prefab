@@ -55,13 +55,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: {fileID: 3580031304758939475}
   reinforceCost: 050000000a000000
-  so: {fileID: 11400000, guid: 058717d11a653db428094e94ccb89572, type: 2}
   launcher: {fileID: 5557456795515503153}
   indicator_circle: {fileID: 2130840028591414169}
+  autoID: Auto
   delay: 0.3
   detection: 5
   angle: 60
   subCount: 0
+  subCountPlus: 1
 --- !u!114 &-3262881341599887264
 MonoBehaviour:
   m_ObjectHideFlags: 0

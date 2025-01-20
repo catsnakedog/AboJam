@@ -39,6 +39,7 @@ public class Database_AboJam : MonoBehaviour
     };
     public Table_Abocado[] Abocado = { new Table_Abocado("Abocado", EnumData.Abocado.Cultivated, 0, 1, 1, 1) };
     public Table_Gunner[] Gunner = { new Table_Gunner("Gunner", 0.8f, 0.1f, 5f, 2) };
+    public Table_Auto[] Auto = { new Table_Auto("Auto", 0.3f, 5f, 60f, 0, 1) };
 
     /* Public Method */
     /// <summary>
@@ -53,6 +54,7 @@ public class Database_AboJam : MonoBehaviour
             ImportHP();
             ImportAbocado();
             ImportGunner();
+            ImportAuto();
 
             void ImportHP()
             {
@@ -92,6 +94,20 @@ public class Database_AboJam : MonoBehaviour
                     gunner.subCount = Convert.ToInt32(dataRow["subCount"]);
                 }
             }
+            void ImportAuto()
+            {
+                DataTable dataTable = dataSet.Tables["Auto"];
+                dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["AutoID"] };
+                foreach (Table_Auto auto in Auto)
+                {
+                    DataRow dataRow = dataTable.Rows.Find(auto.autoID);
+                    auto.delay = Convert.ToSingle(dataRow["delay"]);
+                    auto.detection = Convert.ToSingle(dataRow["detection"]);
+                    auto.angle = Convert.ToSingle(dataRow["angle"]);
+                    auto.subCount = Convert.ToInt32(dataRow["subCount"]);
+                    auto.subCountPlus = Convert.ToInt32(dataRow["subCountPlus"]);
+                }
+            }
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
@@ -126,5 +142,17 @@ public class Database_AboJam : MonoBehaviour
         delay_fire = data.delay_fire;
         detection = data.detection;
         subCount = data.subCount;
+    }
+    /// <summary>
+    /// 런타임 DB / Auto 테이블 / AutoID 레코드 => Auto 인스턴스
+    /// </summary>
+    public void ExportAuto(string autoID, ref float delay, ref float detection, ref float angle, ref int subCount, ref int subCountPlus)
+    {
+        Table_Auto data = Auto.FirstOrDefault(auto => auto.autoID == autoID);
+        delay = data.delay;
+        detection = data.detection;
+        angle = data.angle;
+        subCount = data.subCount;
+        subCountPlus = data.subCountPlus;
     }
 }
