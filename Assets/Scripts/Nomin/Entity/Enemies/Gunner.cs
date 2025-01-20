@@ -58,7 +58,7 @@ public class Gunner : Enemy, IPoolee
         database_abojam.ExportGunner(gunnerID, ref delay, ref delay_fire, ref detection, ref subCount);
 
         Fire(true);
-    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()
     {
         base.Save();

@@ -62,7 +62,7 @@ public class Abocado : MonoBehaviour, IPoolee
         database_abojam.ExportAbocado(abocadoID, ref level, ref quality, ref quality_max, ref harvest, ref harvestPlus);
         hp.Load();
         spriteRenderer.sprite = spr_level[0];
-    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()
     {
         grid.GetNearestTile(gameObject.transform.position).UnBind();

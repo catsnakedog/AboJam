@@ -40,6 +40,7 @@ public class Database_AboJam : MonoBehaviour
     public Table_Abocado[] Abocado = { new Table_Abocado("Abocado", EnumData.Abocado.Cultivated, 0, 1, 1, 1) };
     public Table_Gunner[] Gunner = { new Table_Gunner("Gunner", 0.8f, 0.1f, 5f, 2) };
     public Table_Auto[] Auto = { new Table_Auto("Auto", 0.3f, 5f, 60f, 0, 1) };
+    public Table_Guard[] Guard = { new Table_Guard("Guard", 1.5f) };
 
     /* Public Method */
     /// <summary>
@@ -55,6 +56,7 @@ public class Database_AboJam : MonoBehaviour
             ImportAbocado();
             ImportGunner();
             ImportAuto();
+            ImportGuard();
 
             void ImportHP()
             {
@@ -97,7 +99,7 @@ public class Database_AboJam : MonoBehaviour
             void ImportAuto()
             {
                 DataTable dataTable = dataSet.Tables["Auto"];
-                dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["AutoID"] };
+                dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["autoID"] };
                 foreach (Table_Auto auto in Auto)
                 {
                     DataRow dataRow = dataTable.Rows.Find(auto.autoID);
@@ -106,6 +108,16 @@ public class Database_AboJam : MonoBehaviour
                     auto.angle = Convert.ToSingle(dataRow["angle"]);
                     auto.subCount = Convert.ToInt32(dataRow["subCount"]);
                     auto.subCountPlus = Convert.ToInt32(dataRow["subCountPlus"]);
+                }
+            }
+            void ImportGuard()
+            {
+                DataTable dataTable = dataSet.Tables["Guard"];
+                dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["guardID"] };
+                foreach (Table_Guard guard in Guard)
+                {
+                    DataRow dataRow = dataTable.Rows.Find(guard.guardID);
+                    guard.hpMultiply = Convert.ToSingle(dataRow["hpMultiply"]);
                 }
             }
         }
@@ -154,5 +166,13 @@ public class Database_AboJam : MonoBehaviour
         angle = data.angle;
         subCount = data.subCount;
         subCountPlus = data.subCountPlus;
+    }
+    /// <summary>
+    /// 런타임 DB / Guard 테이블 / GuardID 레코드 => Guard 인스턴스
+    /// </summary>
+    public void ExportGuard(string guardID, ref float hpMultiply)
+    {
+        Table_Guard data = Guard.FirstOrDefault(guard => guard.guardID == guardID);
+        hpMultiply = data.hpMultiply;
     }
 }

@@ -47,7 +47,7 @@ public class Auto : Tower, IPoolee
 
         delay_waitForSeconds = new WaitForSeconds(delay);
         Fire(true);
-    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()
     {
         base.Save();

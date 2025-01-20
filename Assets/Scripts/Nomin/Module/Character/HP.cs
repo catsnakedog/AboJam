@@ -68,7 +68,7 @@ public class HP : MonoBehaviour
         Hp_max = hp_max;
         HP_current = hp_max;
         CheckVisible();
-    }
+    } // Import 시 자동 실행
 
     /* Public Method */
     /// <summary>

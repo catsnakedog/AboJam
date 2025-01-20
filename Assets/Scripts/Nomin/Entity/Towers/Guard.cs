@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guard : Tower, IScriptableObject<SO_Guard>, IPoolee
+public class Guard : Tower, IPoolee
 {
     /* Field & Property */
-    [SerializeField] private SO_Guard so; public SO_Guard SO { get => so; set => so = value; }
     public static List<Guard> instances = new List<Guard>(); // 모든 방어 타워 인스턴스
+    public float hpMultiply = 1.5f;
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    [SerializeField] private string guardID; // Primary Key
 
     /* Public Method */
     /// <summary>
@@ -16,7 +18,7 @@ public class Guard : Tower, IScriptableObject<SO_Guard>, IPoolee
     public override void Reinforce()
     {
         base.Reinforce();
-        hp.SetMaxHP(hp.Hp_max * 1.5f);
+        hp.SetMaxHP(hp.Hp_max * hpMultiply);
         hp.Heal(hp.Hp_max);
     }
 
@@ -34,7 +36,9 @@ public class Guard : Tower, IScriptableObject<SO_Guard>, IPoolee
     public void Load()
     {
         base.Load();
-    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+
+        database_abojam.ExportGuard(guardID, ref hpMultiply);
+    } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()
     {
         base.Save();
