@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6745941090410616633}
+  - component: {fileID: -8323773861710579376}
   - component: {fileID: 4680852556808483399}
   m_Layer: 0
   m_Name: Light2D_Tower
@@ -32,6 +33,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8323773861710579376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4782334756880676126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248a11df6728de04a911fbf5521db9b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light2D: {fileID: 4680852556808483399}
+  onTime: 0.1
+  keepTime: 99999
+  offTime: 0.1
+  frame: 60
 --- !u!114 &4680852556808483399
 MonoBehaviour:
   m_ObjectHideFlags: 0
