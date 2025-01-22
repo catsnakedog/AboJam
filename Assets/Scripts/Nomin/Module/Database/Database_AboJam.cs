@@ -41,6 +41,7 @@ public class Database_AboJam : MonoBehaviour
     public Table_Gunner[] Gunner = { new Table_Gunner("Gunner", 0.8f, 0.1f, 5f, 2) };
     public Table_Auto[] Auto = { new Table_Auto("Auto", 0.3f, 5f, 60f, 0, 1) };
     public Table_Guard[] Guard = { new Table_Guard("Guard", 1.5f) };
+    public Table_Splash[] Splash = { new Table_Splash("Splash", 1f, 5f) };
 
     /* Public Method */
     /// <summary>
@@ -57,6 +58,7 @@ public class Database_AboJam : MonoBehaviour
             ImportGunner();
             ImportAuto();
             ImportGuard();
+            ImportSplash();
 
             void ImportHP()
             {
@@ -120,6 +122,17 @@ public class Database_AboJam : MonoBehaviour
                     guard.hpMultiply = Convert.ToSingle(dataRow["hpMultiply"]);
                 }
             }
+            void ImportSplash()
+            {
+                DataTable dataTable = dataSet.Tables["Splash"];
+                dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["splashID"] };
+                foreach (Table_Splash splash in Splash)
+                {
+                    DataRow dataRow = dataTable.Rows.Find(splash.splashID);
+                    splash.delay = Convert.ToSingle(dataRow["delay"]);
+                    splash.detection = Convert.ToSingle(dataRow["detection"]);
+                }
+            }
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
@@ -174,5 +187,14 @@ public class Database_AboJam : MonoBehaviour
     {
         Table_Guard data = Guard.FirstOrDefault(guard => guard.guardID == guardID);
         hpMultiply = data.hpMultiply;
+    }
+    /// <summary>
+    /// 런타임 DB / Splash 테이블 / SplashID 레코드 => Splash 인스턴스
+    /// </summary>
+    public void ExportSplash(string splashID, ref float delay, ref float detection)
+    {
+        Table_Splash data = Splash.FirstOrDefault(splash => splash.splashID == splashID);
+        delay = data.delay;
+        detection = data.detection;
     }
 }
