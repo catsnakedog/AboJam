@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Light : MonoBehaviour
+public class Light : MonoBehaviour, IPoolee
 {
     /* Dependency */
     public Light2D light2D;
+    public Pool pool => Pool.instance;
 
     /* Field & Property */
     public static List<Light> instances = new List<Light>();
@@ -36,6 +38,8 @@ public class Light : MonoBehaviour
         if (corLast != null) StopCoroutine(corLast);
         corLast = StartCoroutine(CorLight());
     }
+    public void Load() { } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    public void Save() { } // 풀에 집어 넣을 때 자동 실행
 
     /* Public Method */
     /// <summary>
@@ -73,6 +77,6 @@ public class Light : MonoBehaviour
         }
 
         corLast = null;
-        gameObject.SetActive(false);
+        pool.Return(gameObject);
     }
 }

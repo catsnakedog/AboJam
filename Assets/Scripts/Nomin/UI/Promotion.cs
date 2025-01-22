@@ -24,7 +24,6 @@ public class Promotion : MonoBehaviour
 
     /* Field & Property */
     public static Promotion instance; // 싱글턴
-    private string path_prefabs = "Prefabs/Entity/Towers/"; // 타워 프리팹 Resources 경로
     private string path_images = "Images/UI/Promotion/"; // 타워 이미지 Resources 경로
     public int price_guard = 1;
     public int price_auto = 2;

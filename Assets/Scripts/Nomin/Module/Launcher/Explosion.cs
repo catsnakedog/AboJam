@@ -9,7 +9,7 @@ public class Explosion : MonoBehaviour
     /* Dependency */
     public GameObject Light2D { get { return light2D; } private set { light2D = value; } } // 빛, 없어도 작동
     public Targeter targeter; // 조준경
-    public Pooling pooling; // 풀링
+    public Pool pool => Pool.instance;
 
     /* Field & Property */
     public static List<Explosion> instances = new List<Explosion>();
@@ -22,10 +22,6 @@ public class Explosion : MonoBehaviour
     [SerializeField] private GameObject light2D;
 
     /* Initializer & Finalizer & Updater */
-    private void Awake()
-    {
-        if (Light2D != null) pooling.Set(Light2D);
-    }
     private void Start()
     {
         instances.Add(this);
@@ -50,7 +46,7 @@ public class Explosion : MonoBehaviour
         // 빛 (풀링 or 생성)
         if (Light2D != null)
         {
-            GameObject light2D = pooling.Get();
+            GameObject light2D = pool.Get(Light2D.name);
             light2D.transform.position = transform.position;
         }
     }

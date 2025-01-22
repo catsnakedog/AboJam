@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEditor.Search;
 using UnityEngine;
 using static UnityEditor.Recorder.OutputPath;
@@ -13,8 +14,8 @@ using static UnityEditor.Recorder.OutputPath;
 public class Pool : MonoBehaviour
 {
     /* Dependency */
-    public GameObject[] obj; // 풀링 대상 오브젝트
-    public GameObject root; // 모든 풀링 오브젝트의 부모
+    [System.Serializable] public class ObjectGroup { public GameObject root; public GameObject[] objects; }
+    public ObjectGroup[] objectGroups;
 
     /* Field & Property */
     public static Pool instance;
@@ -24,7 +25,17 @@ public class Pool : MonoBehaviour
     private void Start()
     {
         instance = this;
-        for (int i = 0; i < obj.Length; i++) pools.Add(obj[i].name, new Queue<GameObject>());
+
+        // 오브젝트 그룹 마다
+        foreach (var objectGroup in objectGroups)
+        {
+            // 오브젝트 마다
+            for (int i = 0; i < objectGroup.objects.Length; i++)
+            {
+                // 각 오브젝트를 전체 풀에 추가
+                pools.Add(objectGroup.objects[i].name, new Queue<GameObject>());
+            }
+        }
     }
 
     /* Public Method */
@@ -80,7 +91,15 @@ public class Pool : MonoBehaviour
     /// <returns>새로 생성된 오브젝트 입니다.</returns>
     private GameObject Create(string name)
     {
-        GameObject prefab = Array.Find(this.obj, o => o.name == name); // 이름으로 프리팹 검색
+        GameObject prefab = null;
+        GameObject root = null;
+
+        foreach (var objectGroup in objectGroups)
+        {
+            prefab = Array.Find(objectGroup.objects, o => o.name == name);
+            if (prefab != null) { root = objectGroup.root; break; }
+        }
+
         GameObject obj = Instantiate(prefab, root.transform); // 인스턴스화
         obj.name = name; // 이름 설정 (안하면 Clone 붙어서 Return 시 방해됨)
         return obj;
