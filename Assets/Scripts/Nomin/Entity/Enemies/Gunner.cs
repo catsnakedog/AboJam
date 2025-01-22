@@ -101,7 +101,7 @@ public class Gunner : Enemy, IPoolee
     {
         while (true)
         {
-            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, launcher.Projectile.GetComponent<Projectile>().clashTags, detection);
+            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, launcher.projectile.GetComponent<Projectile>().clashTags, detection);
 
             if (target != null)
             {

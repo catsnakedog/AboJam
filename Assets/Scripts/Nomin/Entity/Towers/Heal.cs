@@ -83,7 +83,7 @@ public class Heal : Tower, IPoolee
         // 상위 발사체로 변경
         GameObject projectile = Resources.Load<GameObject>(path_projectile + Level);
         if (projectile == null) { Debug.Log($"{path_projectile + Level} 가 존재하지 않습니다."); return; }
-        else launcher.SetProjectile(projectile);
+        else launcher.projectile = projectile;
     }
 
     /* Private Method */
@@ -94,7 +94,7 @@ public class Heal : Tower, IPoolee
     {
         while (true)
         {
-            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.LowHP, launcher.Projectile.GetComponent<Projectile>().clashTags, detection, ratio);
+            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.LowHP, launcher.projectile.GetComponent<Projectile>().clashTags, detection, ratio);
             if (target != null) launcher.Launch(Targeter.TargetType.LowHP, detection, ratio);
 
             yield return delay_waitForSeconds;

@@ -19,9 +19,8 @@ public class Launcher : MonoBehaviour
 {
     /* Dependency */
     [Header("[ Dependency ]")]
-    [SerializeField] private GameObject projectile;
-    public GameObject Projectile { get => projectile; private set => SetProjectile(value); } // 발사체
-    public Pooling pooling; // 풀링
+    public GameObject projectile;
+    public Pool pool => Pool.instance;
     public Targeter targeter; // 조준경
     public SpriteRenderer spriteRenderer;
     public enum Horizontal
@@ -81,14 +80,13 @@ public class Launcher : MonoBehaviour
     /* Intializer & Finalizer */
     private void Awake()
     {
-        if (Projectile != null) pooling.Set(Projectile);
         delay = 1 / frame;
         waitForSeconds = new WaitForSeconds(delay);
     }
     private void Start()
     {
         instances.Add(this);
-        if (Projectile == null) Debug.Log($"{gameObject.name} 의 Launcher 에 Projectile 이 연결되지 않았습니다.");
+        if (projectile == null) Debug.Log($"{gameObject.name} 의 Launcher 에 Projectile 이 연결되지 않았습니다.");
         width = spriteRenderer.bounds.size.x;
         height = spriteRenderer.bounds.size.y;
 
@@ -100,7 +98,6 @@ public class Launcher : MonoBehaviour
     }
     private void OnValidate()
     {
-        Projectile = projectile;
         MuzzleAlign = muzzleAlign;
     }
 
@@ -113,7 +110,7 @@ public class Launcher : MonoBehaviour
     public void Launch(Vector3 destination, float angle = 0f)
     {
         // 발사체 장전 (풀링 or 생성)
-        GameObject projectile = pooling.Get();
+        GameObject projectile = pool.Get(this.projectile.gameObject.name);
         projectile.GetComponent<Projectile>().launcher = gameObject;
         projectile.transform.position = transform.position;
 
@@ -135,17 +132,8 @@ public class Launcher : MonoBehaviour
     /// <param name="angle">발사각 변경</param>
     public void Launch(Targeter.TargetType targetType, float detection, float ratio = 1f, float angle = 0f)
     {
-        GameObject target = targeter.Targetting(targetType, Projectile.GetComponent<Projectile>().clashTags, detection, ratio);
+        GameObject target = targeter.Targetting(targetType, projectile.GetComponent<Projectile>().clashTags, detection, ratio);
         if (target != null) Launch(target.transform.position, angle);
-    }
-    /// <summary>
-    /// 발사체를 변경합니다.
-    /// </summary>
-    /// <param name="projectile"></param>
-    public void SetProjectile(GameObject projectile)
-    {
-        this.projectile = projectile;
-        pooling.Set(this.Projectile);
     }
 
     /* Private Method */
@@ -177,7 +165,7 @@ public class Launcher : MonoBehaviour
             projectile.transform.position += direction * speed;
 
             // 사거리를 벗어나면 비활성화
-            if (range < (projectile.transform.position - startPos).magnitude) projectile.GetComponent<Projectile>().Disappear();
+            if (range < (projectile.transform.position - startPos).magnitude) pool.Return(projectile.GetComponent<Projectile>().gameObject);
 
             yield return new WaitForSeconds(0.016f); // 대략 60 프레임 기준
         }

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2279252769181004249}
   - component: {fileID: 3330159118826112336}
-  - component: {fileID: 7783262328259039906}
   - component: {fileID: 1193637438243774845}
   - component: {fileID: 1469443515481340077}
   - component: {fileID: 5506396183404060204}
@@ -48,26 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515f25f316047644287fdc7c1e732075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooling: {fileID: 7783262328259039906}
+  explosion: {fileID: 3100893671775424701, guid: 6bcbde903cf01d244b6fd78298ca76a4, type: 3}
   colider2D: {fileID: 1469443515481340077}
   launcher: {fileID: 0}
   clashTags:
   - Enemies
   damage: 10
   penetrate: 1
-  explosion: {fileID: 3100893671775424701, guid: 6bcbde903cf01d244b6fd78298ca76a4, type: 3}
---- !u!114 &7783262328259039906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6225409795156279537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 455e5237688a2d343ba1d3ac8766deeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &1193637438243774845
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -9,8 +9,8 @@ using UnityEngine.Rendering.Universal;
 public class Projectile : MonoBehaviour
 {
     /* Dependency */
-    public GameObject Explosion { get { return explosion; } private set { explosion = value; } } // 폭발, 없어도 작동
-    public Pooling pooling; // 풀링
+    public GameObject explosion; // 폭발, 없어도 작동
+    public Pool pool => Pool.instance;
     public Collider2D colider2D;
 
     /* Field & Property */
@@ -22,14 +22,7 @@ public class Projectile : MonoBehaviour
     public int penetrate = 1; // 총 관통 수
     private int penetrate_current; // 남은 관통 수
 
-    /* Backing Field */
-    [SerializeField] private GameObject explosion;
-
     /* Intializer & Finalizer & Updater */
-    private void Awake()
-    {
-        if (Explosion != null) pooling.Set(Explosion);
-    }
     private void Start()
     {
         // 예외처리
@@ -72,9 +65,9 @@ public class Projectile : MonoBehaviour
             if (launcher != null) if (GetParentList(launcher.transform).Contains(target)) return;
 
             // 폭발 (풀링 or 생성)
-            if (Explosion != null)
+            if (explosion != null)
             {
-                GameObject explosion = pooling.Get();
+                GameObject explosion = pool.Get(this.explosion.name);
                 explosion.transform.position = transform.position;
                 explosion.GetComponent<Explosion>().Explode(clashTags);
             }
@@ -85,24 +78,8 @@ public class Projectile : MonoBehaviour
 
             // 관통 게산
             penetrate_current--;
-            if (penetrate_current == 0) Disappear();
+            if (penetrate_current == 0) pool.Return(gameObject);
         }
-    }
-    /// <summary>
-    /// 발사체를 비활성화합니다.
-    /// </summary>
-    public void Disappear()
-    {
-        gameObject.SetActive(false);
-    }
-    /// <summary>
-    /// 폭발을 변경합니다.
-    /// </summary>
-    /// <param name="explosion"></param>
-    public void SetExplosion(GameObject explosion)
-    {
-        this.Explosion = explosion;
-        pooling.Set(this.Explosion);
     }
 
     /* Private Method */

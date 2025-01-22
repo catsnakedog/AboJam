@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: -2039790313233268893}
   - component: {fileID: 600700056944328434}
   - component: {fileID: 3010114512267648469}
-  - component: {fileID: -4665992068350506841}
   - component: {fileID: 8977354508500975511}
   m_Layer: 0
   m_Name: Explosion_Projectile_Gunner0
@@ -121,24 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa64b3eb05ccc7c448340e7b3f391639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  light2D: {fileID: 5041889053341477472, guid: e8b431b32048ed74493857ab3336c8a1, type: 3}
   targeter: {fileID: 8977354508500975511}
-  pooling: {fileID: -4665992068350506841}
   radius: 0
   damage: 0
   time: 1
-  light2D: {fileID: 5041889053341477472, guid: e8b431b32048ed74493857ab3336c8a1, type: 3}
---- !u!114 &-4665992068350506841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3100893671775424701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 455e5237688a2d343ba1d3ac8766deeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8977354508500975511
 MonoBehaviour:
   m_ObjectHideFlags: 0

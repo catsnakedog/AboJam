@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 600700056944328434}
   - component: {fileID: 3010114512267648469}
   - component: {fileID: 8977354508500975511}
-  - component: {fileID: 4254649637702372049}
   m_Layer: 0
   m_Name: Explosion_Projectile_Heal1
   m_TagString: Untagged
@@ -123,7 +122,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   light2D: {fileID: 5041889053341477472, guid: 3d31d33101e69d948862f186f7d8d354, type: 3}
   targeter: {fileID: 8977354508500975511}
-  pooling: {fileID: 4254649637702372049}
   radius: 0
   damage: 0
   time: 0.2
@@ -137,17 +135,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fd9f5cb9999dd74fbf15d8282423113, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4254649637702372049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3100893671775424701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 455e5237688a2d343ba1d3ac8766deeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -69,7 +69,7 @@ public class Pool : MonoBehaviour
         Save(obj);
         obj.SetActive(false);
         try { pools[obj.name].Enqueue(obj); }
-        catch { Debug.Log($"Pool 에 {name} 프리팹이 존재하지 않습니다."); }
+        catch { Debug.Log($"Pool 에 {obj.name} 프리팹이 존재하지 않습니다."); }
     }
 
     /* Private Method */

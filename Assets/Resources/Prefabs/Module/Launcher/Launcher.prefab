@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 567434958869266621}
   - component: {fileID: 8178899645152688462}
   - component: {fileID: 8880391559304024594}
-  - component: {fileID: 5746937334601587145}
   - component: {fileID: 7862260774638442120}
   m_Layer: 0
   m_Name: Launcher
@@ -100,11 +99,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8191f7230413def4da28884b1a429664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooling: {fileID: 5746937334601587145}
+  projectile: {fileID: 6225409795156279537, guid: fc84bbade06fbee4da200cf4a5e4730f, type: 3}
   targeter: {fileID: 8880391559304024594}
   spriteRenderer: {fileID: 567434958869266621}
-  speed: 0.3
-  range: 5
+  align: 1
+  turnTime: 0.1
+  angleOffset: 0
+  frame: 60
   launchEvent:
     m_PersistentCalls:
       m_Calls:
@@ -120,16 +121,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  width: 0
-  height: 0
-  offset: {x: 0, y: 0, z: 0}
-  projectile: {fileID: 6225409795156279537, guid: fc84bbade06fbee4da200cf4a5e4730f, type: 3}
-  alignment_Horizontal: 1
-  alignment_Vertical: 0
-  align: 1
-  turnTime: 0.1
-  angleOffset: 0
-  frame: 60
+  muzzleAlign:
+    horizontal: 1
+    vertical: 0
+  speed: 0.3
+  range: 5
 --- !u!114 &8880391559304024594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,18 +136,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fd9f5cb9999dd74fbf15d8282423113, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5746937334601587145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9014998458699668142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 455e5237688a2d343ba1d3ac8766deeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7862260774638442120

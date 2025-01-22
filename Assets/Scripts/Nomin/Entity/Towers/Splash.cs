@@ -82,7 +82,7 @@ public class Splash : Tower, IPoolee
         // 상위 발사체로 변경
         GameObject projectile = Resources.Load<GameObject>(path_projectile + Level);
         if (projectile == null) { Debug.Log($"{path_projectile + Level} 가 존재하지 않습니다."); return; }
-        else launcher.SetProjectile(projectile);
+        else launcher.projectile = projectile;
     }
 
     /* Private Method */
@@ -93,7 +93,7 @@ public class Splash : Tower, IPoolee
     {
         while (true)
         {
-            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, launcher.Projectile.GetComponent<Projectile>().clashTags, detection);
+            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, launcher.projectile.GetComponent<Projectile>().clashTags, detection);
             if (target != null) launcher.Launch(Targeter.TargetType.Near, detection);
 
             yield return delay_waitForSeconds;

@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 public class Explosion : MonoBehaviour
 {
     /* Dependency */
-    public GameObject Light2D { get { return light2D; } private set { light2D = value; } } // 빛, 없어도 작동
+    public GameObject light2D; // 빛, 없어도 작동
     public Targeter targeter; // 조준경
     public Pool pool => Pool.instance;
 
@@ -17,9 +17,6 @@ public class Explosion : MonoBehaviour
     public float damage = 3f; // 폭발 데미지
     public float time = 2f; // 폭발 시간
     private Coroutine lastCor;
-
-    /* Backing Field */
-    [SerializeField] private GameObject light2D;
 
     /* Initializer & Finalizer & Updater */
     private void Start()
@@ -44,9 +41,9 @@ public class Explosion : MonoBehaviour
         lastCor = StartCoroutine(CorOn());
 
         // 빛 (풀링 or 생성)
-        if (Light2D != null)
+        if (light2D != null)
         {
-            GameObject light2D = pool.Get(Light2D.name);
+            GameObject light2D = pool.Get(this.light2D.name);
             light2D.transform.position = transform.position;
         }
     }
@@ -60,7 +57,7 @@ public class Explosion : MonoBehaviour
     private IEnumerator CorOn()
     {
         yield return new WaitForSeconds(time);
-        gameObject.SetActive(false);
+        pool.Return(gameObject);
         lastCor = null;
     }
     /// <summary>
