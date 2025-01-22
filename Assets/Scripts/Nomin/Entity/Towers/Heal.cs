@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Heal : Tower, IScriptableObject<SO_Heal>, IPoolee
+public class Heal : Tower, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
-    [SerializeField] private SO_Heal so; public SO_Heal SO { get => so; set => so = value; }
     public Launcher launcher;
     public GameObject indicator_circle;
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    [SerializeField] private string healID; // Primary Key
 
     /* Field & Property */
     public static List<Heal> instances = new List<Heal>(); // 모든 회복 타워 인스턴스
@@ -41,9 +43,7 @@ public class Heal : Tower, IScriptableObject<SO_Heal>, IPoolee
     {
         base.Load();
 
-        delay = SO.delay;
-        detection = SO.detection;
-        ratio = SO.ratio;
+        database_abojam.ExportHeal(healID, ref delay, ref detection, ref ratio);
 
         delay_waitForSeconds = new WaitForSeconds(delay);
         Healing(true);

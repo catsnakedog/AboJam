@@ -42,6 +42,7 @@ public class Database_AboJam : MonoBehaviour
     public Table_Auto[] Auto = { new Table_Auto("Auto", 0.3f, 5f, 60f, 0, 1) };
     public Table_Guard[] Guard = { new Table_Guard("Guard", 1.5f) };
     public Table_Splash[] Splash = { new Table_Splash("Splash", 1f, 5f) };
+    public Table_Heal[] Heal = { new Table_Heal("Heal", 0.4f, 10f, 0.9999f) };
 
     /* Public Method */
     /// <summary>
@@ -59,6 +60,7 @@ public class Database_AboJam : MonoBehaviour
             ImportAuto();
             ImportGuard();
             ImportSplash();
+            ImportHeal();
 
             void ImportHP()
             {
@@ -133,6 +135,18 @@ public class Database_AboJam : MonoBehaviour
                     splash.detection = Convert.ToSingle(dataRow["detection"]);
                 }
             }
+            void ImportHeal()
+            {
+                DataTable dataTable = dataSet.Tables["Heal"];
+                dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["healID"] };
+                foreach (Table_Heal heal in Heal)
+                {
+                    DataRow dataRow = dataTable.Rows.Find(heal.healID);
+                    heal.delay = Convert.ToSingle(dataRow["delay"]);
+                    heal.detection = Convert.ToSingle(dataRow["detection"]);
+                    heal.ratio = Convert.ToSingle(dataRow["ratio"]);
+                }
+            }
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
@@ -196,5 +210,15 @@ public class Database_AboJam : MonoBehaviour
         Table_Splash data = Splash.FirstOrDefault(splash => splash.splashID == splashID);
         delay = data.delay;
         detection = data.detection;
+    }
+    /// <summary>
+    /// 런타임 DB / Heal 테이블 / HealID 레코드 => Heal 인스턴스
+    /// </summary>
+    public void ExportHeal(string healID, ref float delay, ref float detection, ref float ratio)
+    {
+        Table_Heal data = Heal.FirstOrDefault(heal => heal.healID == healID);
+        delay = data.delay;
+        detection = data.detection;
+        ratio = data.ratio;
     }
 }
