@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -88,16 +89,16 @@ public class Database_AboJam : MonoBehaviour
         {
             DataSet dataSet = dbms.GetDataSet();
 
-            ImportHP(dataSet);
-            ImportAbocado(dataSet);
-            ImportGunner(dataSet);
-            ImportAuto(dataSet);
-            ImportGuard(dataSet);
-            ImportSplash(dataSet);
-            ImportHeal(dataSet);
-            ImportLight(dataSet);
-            ImportColor(dataSet);
-            ImportExplosion(dataSet);
+            ImportTable(dataSet, ref Abocado);
+            ImportTable(dataSet, ref Gunner);
+            ImportTable(dataSet, ref Auto);
+            ImportTable(dataSet, ref Guard);
+            ImportTable(dataSet, ref Splash);
+            ImportTable(dataSet, ref Heal);
+            ImportTable(dataSet, ref HP);
+            ImportTable(dataSet, ref Light);
+            ImportTable(dataSet, ref Color);
+            ImportTable(dataSet, ref Explosion);
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
@@ -116,198 +117,102 @@ public class Database_AboJam : MonoBehaviour
         foreach (Light item in global::Light.instances) if (item.isActiveAndEnabled) item.Load();
     }
 
-    // 서버 DB / 각 테이블 / ID 레코드 => 런타임 DB
-    // 기획자가 인게임에서 Import 누를 시 호출
-    public void ImportHP(DataSet dataSet)
+    /// <summary>
+    /// <br>서버 DB / 각 테이블 / ID 레코드 => 런타임 DB</br>
+    /// <br>ㅈㄴ어렵네.......</br>
+    /// </summary>
+    /// <typeparam name="T">ITable 을 상속받는 테이블 타입</typeparam>
+    /// <param name="dataSet">서버 DB</param>
+    /// <param name="runtimeTable">타겟 런타임 테이블</param>
+    public void ImportTable<T>(DataSet dataSet, ref T[] runtimeTable) where T : ITable
     {
-        DataTable dataTable = dataSet.Tables["HP"];
-        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["HPID"] };
-        foreach (Table_HP hp in HP)
-        {
-            DataRow dataRow = dataTable.Rows.Find(hp.HPID);
-            hp.Hp_max = Convert.ToSingle(dataRow["Hp_max"]);
-            hp.HideFullHP = Convert.ToBoolean(dataRow["HideFullHP"]);
-        }
-    }
-    public void ImportAbocado(DataSet dataSet)
-    {
-        DataTable dataTable = dataSet.Tables["Abocado"];
-        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["abocadoID"] };
-        foreach (Table_Abocado abocado in Abocado)
-        {
-            DataRow dataRow = dataTable.Rows.Find(abocado.abocadoID);
-            abocado.level = Enum.Parse<EnumData.Abocado>(Convert.ToString(dataRow["level"]));
-            abocado.quality = Convert.ToInt32(dataRow["quality"]);
-            abocado.quality_max = Convert.ToInt32(dataRow["quality_max"]);
-            abocado.harvest = Convert.ToInt32(dataRow["harvest"]);
-            abocado.harvestPlus = Convert.ToInt32(dataRow["harvestPlus"]);
-        }
-    }
-    public void ImportGunner(DataSet dataSet)
-    {
-        DataTable dataTable = dataSet.Tables["Gunner"];
-        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["gunnerID"] };
-        foreach (Table_Gunner gunner in Gunner)
-        {
-            DataRow dataRow = dataTable.Rows.Find(gunner.gunnerID);
-            gunner.delay = Convert.ToSingle(dataRow["delay"]);
-            gunner.delay_fire = Convert.ToSingle(dataRow["delay_fire"]);
-            gunner.detection = Convert.ToSingle(dataRow["detection"]);
-            gunner.subCount = Convert.ToInt32(dataRow["subCount"]);
-        }
-    }
-    public void ImportAuto(DataSet dataSet)
-    {
-        DataTable dataTable = dataSet.Tables["Auto"];
-        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["autoID"] };
-        foreach (Table_Auto auto in Auto)
-        {
-            DataRow dataRow = dataTable.Rows.Find(auto.autoID);
-            auto.delay = Convert.ToSingle(dataRow["delay"]);
-            auto.detection = Convert.ToSingle(dataRow["detection"]);
-            auto.angle = Convert.ToSingle(dataRow["angle"]);
-            auto.subCount = Convert.ToInt32(dataRow["subCount"]);
-            auto.subCountPlus = Convert.ToInt32(dataRow["subCountPlus"]);
-        }
-    }
-    public void ImportGuard(DataSet dataSet)
-    {
-        DataTable dataTable = dataSet.Tables["Guard"];
-        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["guardID"] };
-        foreach (Table_Guard guard in Guard)
-        {
-            DataRow dataRow = dataTable.Rows.Find(guard.guardID);
-            guard.hpMultiply = Convert.ToSingle(dataRow["hpMultiply"]);
-        }
-    }
-    public void ImportSplash(DataSet dataSet)
-    {
-        DataTable dataTable = dataSet.Tables["Splash"];
-        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["splashID"] };
-        foreach (Table_Splash splash in Splash)
-        {
-            DataRow dataRow = dataTable.Rows.Find(splash.splashID);
-            splash.delay = Convert.ToSingle(dataRow["delay"]);
-            splash.detection = Convert.ToSingle(dataRow["detection"]);
-        }
-    }
-    public void ImportHeal(DataSet dataSet)
-    {
-        DataTable dataTable = dataSet.Tables["Heal"];
-        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["healID"] };
-        foreach (Table_Heal heal in Heal)
-        {
-            DataRow dataRow = dataTable.Rows.Find(heal.healID);
-            heal.delay = Convert.ToSingle(dataRow["delay"]);
-            heal.detection = Convert.ToSingle(dataRow["detection"]);
-            heal.ratio = Convert.ToSingle(dataRow["ratio"]);
-        }
-    }
-    public void ImportLight(DataSet dataSet)
-    {
-        DataTable dataTable = dataSet.Tables["Light"];
-        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["lightID"] };
-        foreach (Table_Light light in Light)
-        {
-            DataRow dataRow = dataTable.Rows.Find(light.lightID);
-            light.colorID = Convert.ToString(dataRow["colorID"]);
-            light.radius = Convert.ToSingle(dataRow["radius"]);
-            light.intensity = Convert.ToSingle(dataRow["intensity"]);
-            light.onTime = Convert.ToSingle(dataRow["onTime"]);
-            light.keepTime = Convert.ToSingle(dataRow["keepTime"]);
-            light.offTime = Convert.ToSingle(dataRow["offTime"]);
-            light.frame = Convert.ToInt32(dataRow["frame"]);
-        }
-    }
-    public void ImportColor(DataSet dataSet)
-    {
-        DataTable dataTable = dataSet.Tables["Color"];
-        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["colorID"] };
+        // runtimeTable.TableName 으로 서버에서 테이블을 특정합니다.
+        DataTable dataTable = dataSet.Tables[runtimeTable[0].TableName];
 
+        // 모든 필드 정보 가져오기 (공개/비공개 포함)
+        FieldInfo[] runtimeTableFieldInfos = typeof(T).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+        // 서버 테이블의 레코드 마다
         for (int i = 0; i < dataTable.Rows.Count; i++)
         {
-            string colorID = Convert.ToString(dataTable.Rows[i]["colorID"]);
-            float r = Convert.ToSingle(dataTable.Rows[i]["r"]);
-            float g = Convert.ToSingle(dataTable.Rows[i]["g"]);
-            float b = Convert.ToSingle(dataTable.Rows[i]["b"]);
-            float a = Convert.ToSingle(dataTable.Rows[i]["a"]);
+            // 모든 필드를 런타임 필드 타입에 맞게 컨버팅 후
+            System.Object[] fields = new System.Object[dataTable.Columns.Count];
+            for (int j = 0; j < dataTable.Columns.Count; j++)
+            {
+                // if Enum / Else 나머지 컨버팅
+                if (runtimeTableFieldInfos[j + 1].FieldType.IsEnum) fields[j] = Enum.Parse(runtimeTableFieldInfos[j + 1].FieldType, dataTable.Rows[i][j].ToString());
+                else fields[j] = Convert.ChangeType(dataTable.Rows[i][j], runtimeTableFieldInfos[j + 1].FieldType);
+            }
 
-            Color[i] = new Table_Color(colorID, r, g, b, a);
-        }
-    }
-    public void ImportExplosion(DataSet dataSet)
-    {
-        DataTable dataTable = dataSet.Tables["Explosion"];
-        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["explosionID"] };
+            // 레코드를 생성한 뒤
+            T record = (T)(Activator.CreateInstance(typeof(T), fields));
 
-        for (int i = 0; i < dataTable.Rows.Count; i++)
-        {
-            string explosionID = Convert.ToString(dataTable.Rows[i]["explosionID"]);
-            float scale = Convert.ToSingle(dataTable.Rows[i]["scale"]);
-            float radius = Convert.ToSingle(dataTable.Rows[i]["radius"]);
-            float damage = Convert.ToSingle(dataTable.Rows[i]["damage"]);
-            float time = Convert.ToSingle(dataTable.Rows[i]["time"]);
+            // 런타임 데이터베이스에서 해당 ID 와 매칭되는 레코드 특정
+            T runtimeRecord = (T)runtimeTable.OfType<ITable>().FirstOrDefault(item => item.ID == record.ID);
+            if (runtimeRecord == null) { Debug.Log($"{record.TableName} 에 {record.ID} 와 매칭되는 레코드가 없습니다."); return; }
 
-            Explosion[i] = new Table_Explosion(explosionID, scale, radius, damage, time);
+            // 런타임 데이터베이스 레코드에 생성한 레코드 할당
+            foreach (var property in typeof(T).GetProperties()) property.SetValue(runtimeRecord, property.GetValue(record));
+            foreach (var field in typeof(T).GetFields()) field.SetValue(runtimeRecord, field.GetValue(record));
         }
     }
 
     // 런타임 DB / 각 테이블 / ID 레코드 => 인스턴스
     // 기획자가 인게임에서 Export 누를 시 호출
     // 인스턴스가 Load (풀에서 꺼내지거나, 처음 생성) 될 때 마다 호출
-    public void ExportHP(string HPID, ref float hp_max, ref bool hideFullHp)
+    public void ExportHP(string ID, ref float hp_max, ref bool hideFullHp)
     {
-        Table_HP data = HP.FirstOrDefault(hp => hp.HPID == HPID);
+        Table_HP data = HP.FirstOrDefault(hp => hp.ID == ID);
         hp_max = data.Hp_max;
         hideFullHp = data.HideFullHP;
     }
-    public void ExportAbocado(string abocadoID, ref EnumData.Abocado level, ref int quality, ref int quality_max, ref int harvest, ref int harvestPlus)
+    public void ExportAbocado(string ID, ref EnumData.Abocado level, ref int quality, ref int quality_max, ref int harvest, ref int harvestPlus)
     {
-        Table_Abocado data = Abocado.FirstOrDefault(abocado => abocado.abocadoID == abocadoID);
+        Table_Abocado data = Abocado.FirstOrDefault(abocado => abocado.ID == ID);
         level = data.level;
         quality = data.quality;
         quality_max = data.quality_max;
         harvest = data.harvest;
         harvestPlus = data.harvestPlus;
     }
-    public void ExportGunner(string gunnerID, ref float delay, ref float delay_fire, ref float detection, ref int subCount)
+    public void ExportGunner(string ID, ref float delay, ref float delay_fire, ref float detection, ref int subCount)
     {
-        Table_Gunner data = Gunner.FirstOrDefault(gunner => gunner.gunnerID == gunnerID);
+        Table_Gunner data = Gunner.FirstOrDefault(gunner => gunner.ID == ID);
         delay = data.delay;
         delay_fire = data.delay_fire;
         detection = data.detection;
         subCount = data.subCount;
     }
-    public void ExportAuto(string autoID, ref float delay, ref float detection, ref float angle, ref int subCount, ref int subCountPlus)
+    public void ExportAuto(string ID, ref float delay, ref float detection, ref float angle, ref int subCount, ref int subCountPlus)
     {
-        Table_Auto data = Auto.FirstOrDefault(auto => auto.autoID == autoID);
+        Table_Auto data = Auto.FirstOrDefault(auto => auto.ID == ID);
         delay = data.delay;
         detection = data.detection;
         angle = data.angle;
         subCount = data.subCount;
         subCountPlus = data.subCountPlus;
     }
-    public void ExportGuard(string guardID, ref float hpMultiply)
+    public void ExportGuard(string ID, ref float hpMultiply)
     {
-        Table_Guard data = Guard.FirstOrDefault(guard => guard.guardID == guardID);
+        Table_Guard data = Guard.FirstOrDefault(guard => guard.ID == ID);
         hpMultiply = data.hpMultiply;
     }
-    public void ExportSplash(string splashID, ref float delay, ref float detection)
+    public void ExportSplash(string ID, ref float delay, ref float detection)
     {
-        Table_Splash data = Splash.FirstOrDefault(splash => splash.splashID == splashID);
+        Table_Splash data = Splash.FirstOrDefault(splash => splash.ID == ID);
         delay = data.delay;
         detection = data.detection;
     }
-    public void ExportHeal(string healID, ref float delay, ref float detection, ref float ratio)
+    public void ExportHeal(string ID, ref float delay, ref float detection, ref float ratio)
     {
-        Table_Heal data = Heal.FirstOrDefault(heal => heal.healID == healID);
+        Table_Heal data = Heal.FirstOrDefault(heal => heal.ID == ID);
         delay = data.delay;
         detection = data.detection;
         ratio = data.ratio;
     }
-    public void ExportLight(string lightID, ref Color color, ref float radius, ref float intensity, ref float onTime, ref float keepTime, ref float offTime, ref float frame)
+    public void ExportLight(string ID, ref Color color, ref float radius, ref float intensity, ref float onTime, ref float keepTime, ref float offTime, ref float frame)
     {
-        Table_Light data = Light.FirstOrDefault(light => light.lightID == lightID);
+        Table_Light data = Light.FirstOrDefault(light => light.ID == ID);
         ExportColor(data.colorID, ref color.r, ref color.g, ref color.b, ref color.a);
         radius = data.radius;
         intensity = data.intensity;
@@ -316,17 +221,17 @@ public class Database_AboJam : MonoBehaviour
         offTime = data.offTime;
         frame = data.frame;
     }
-    public void ExportColor(string colorID, ref float r, ref float g, ref float b, ref float a)
+    public void ExportColor(string ID, ref float r, ref float g, ref float b, ref float a)
     {
-        Table_Color data = Color.FirstOrDefault(color => color.colorID == colorID);
+        Table_Color data = Color.FirstOrDefault(color => color.ID == ID);
         r = data.r;
         g = data.g;
         b = data.b;
         a = data.a;
     }
-    public void ExportExplosion(string explosionID, out Vector3 scale, ref float radius, ref float damage, ref float time)
+    public void ExportExplosion(string ID, out Vector3 scale, ref float radius, ref float damage, ref float time)
     {
-        Table_Explosion data = Explosion.FirstOrDefault(explosion => explosion.explosionID == explosionID);
+        Table_Explosion data = Explosion.FirstOrDefault(explosion => explosion.ID == ID);
         scale = new Vector3(data.scale, data.scale);
         radius = data.radius;
         damage = data.damage;

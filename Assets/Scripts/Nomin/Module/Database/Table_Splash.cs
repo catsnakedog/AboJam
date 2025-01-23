@@ -7,17 +7,18 @@ using UnityEngine;
 /// <br>CONSTRAINT : 첫 번째 필드는 PK 입니다.</br>
 /// <br>CONSTRAINT : 컬럼 이름이 서버 테이블과 정확히 일치해야 합니다.</br>
 /// </summary>
-public class Table_Splash
+public class Table_Splash : ITable
 {
     /* Field & Property */
-    public string splashID;
+    public string TableName { get; set; } = "Splash";
+    public string ID { get; set; }
     public float delay;
     public float detection;
 
     /* Intializer & Finalizer & Updater */
-    public Table_Splash(string splashID, float delay, float detection)
+    public Table_Splash(string ID, float delay, float detection)
     {
-        this.splashID = splashID;
+        this.ID = ID;
         this.delay = delay;
         this.detection = detection;
     }

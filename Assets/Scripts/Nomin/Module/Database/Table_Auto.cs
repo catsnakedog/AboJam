@@ -7,10 +7,11 @@ using UnityEngine;
 /// <br>CONSTRAINT : 첫 번째 필드는 PK 입니다.</br>
 /// <br>CONSTRAINT : 컬럼 이름이 서버 테이블과 정확히 일치해야 합니다.</br>
 /// </summary>
-public class Table_Auto
+public class Table_Auto : ITable
 {
     /* Field & Property */
-    public string autoID;
+    public string TableName { get; set; } = "Auto";
+    public string ID { get; set; }
     public float delay;
     public float detection;
     public float angle;
@@ -18,9 +19,9 @@ public class Table_Auto
     public int subCountPlus;
 
     /* Intializer & Finalizer & Updater */
-    public Table_Auto(string autoID, float delay, float detection, float angle, int subCount, int subCountPlus)
+    public Table_Auto(string ID, float delay, float detection, float angle, int subCount, int subCountPlus)
     {
-        this.autoID = autoID;
+        this.ID = ID;
         this.delay = delay;
         this.detection = detection;
         this.angle = angle;

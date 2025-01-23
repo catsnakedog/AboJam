@@ -7,18 +7,19 @@ using UnityEngine;
 /// <br>CONSTRAINT : 첫 번째 필드는 PK 입니다.</br>
 /// <br>CONSTRAINT : 컬럼 이름이 서버 테이블과 정확히 일치해야 합니다.</br>
 /// </summary>
-public class Table_Heal
+public class Table_Heal : ITable
 {
     /* Field & Property */
-    public string healID;
+    public string TableName { get; set; } = "Heal";
+    public string ID { get; set; }
     public float delay;
     public float detection;
     public float ratio;
 
     /* Intializer & Finalizer & Updater */
-    public Table_Heal(string healID, float delay, float detection, float ratio)
+    public Table_Heal(string ID, float delay, float detection, float ratio)
     {
-        this.healID = healID;
+        this.ID = ID;
         this.delay = delay;
         this.detection = detection;
         this.ratio = ratio;

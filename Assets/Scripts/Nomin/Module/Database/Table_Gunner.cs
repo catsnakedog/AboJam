@@ -7,19 +7,20 @@ using UnityEngine;
 /// <br>CONSTRAINT : 첫 번째 필드는 PK 입니다.</br>
 /// <br>CONSTRAINT : 컬럼 이름이 서버 테이블과 정확히 일치해야 합니다.</br>
 /// </summary>
-public class Table_Gunner
+public class Table_Gunner : ITable
 {
     /* Field & Property */
-    public string gunnerID;
+    public string TableName { get; set; } = "Gunner";
+    public string ID { get; set; }
     public float delay;
     public float delay_fire;
     public float detection;
     public int subCount;
 
     /* Intializer & Finalizer & Updater */
-    public Table_Gunner(string gunnerID, float delay, float delay_fire, float detection, int subCount)
+    public Table_Gunner(string ID, float delay, float delay_fire, float detection, int subCount)
     {
-        this.gunnerID = gunnerID;
+        this.ID = ID;
         this.delay = delay;
         this.delay_fire = delay_fire;
         this.detection = detection;
