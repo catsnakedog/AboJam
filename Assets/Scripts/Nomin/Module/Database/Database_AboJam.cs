@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 using UnityEngine.Windows;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 /// <summary>
 /// 런타임 데이터베이스입니다.
@@ -65,6 +68,15 @@ public class Database_AboJam : MonoBehaviour
         new Table_Color("Color_Light_Explosion_Projectile_Splash1", 255f, 0f, 255f, 1f),
         new Table_Color("Color_Light_Tower", 255f, 255f, 255f, 1f),
     };
+    public Table_Explosion[] Explosion =
+    {
+        new Table_Explosion("Explosion_Projectile_Auto0", 2f, 0f, 0f, 1f),
+        new Table_Explosion("Explosion_Projectile_Gunner0", 2f, 0f, 0f, 1f),
+        new Table_Explosion("Explosion_Projectile_Heal0", 5f, 0f, 0f, 0.8f),
+        new Table_Explosion("Explosion_Projectile_Heal1", 3f, 0f, 0f, 0.2f),
+        new Table_Explosion("Explosion_Projectile_Splash0", 5f, 1.5f, 20f, 0.5f),
+        new Table_Explosion("Explosion_Projectile_Splash1", 6f, 3f, 40f, 0.5f),
+    };
 
     /* Public Method */
     /// <summary>
@@ -85,6 +97,7 @@ public class Database_AboJam : MonoBehaviour
             ImportHeal(dataSet);
             ImportLight(dataSet);
             ImportColor(dataSet);
+            ImportExplosion(dataSet);
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
@@ -222,6 +235,22 @@ public class Database_AboJam : MonoBehaviour
             Color[i] = new Table_Color(colorID, r, g, b, a);
         }
     }
+    public void ImportExplosion(DataSet dataSet)
+    {
+        DataTable dataTable = dataSet.Tables["Explosion"];
+        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["explosionID"] };
+
+        for (int i = 0; i < dataTable.Rows.Count; i++)
+        {
+            string explosionID = Convert.ToString(dataTable.Rows[i]["explosionID"]);
+            float scale = Convert.ToSingle(dataTable.Rows[i]["scale"]);
+            float radius = Convert.ToSingle(dataTable.Rows[i]["radius"]);
+            float damage = Convert.ToSingle(dataTable.Rows[i]["damage"]);
+            float time = Convert.ToSingle(dataTable.Rows[i]["time"]);
+
+            Explosion[i] = new Table_Explosion(explosionID, scale, radius, damage, time);
+        }
+    }
 
     // 런타임 DB / 각 테이블 / ID 레코드 => 인스턴스
     // 기획자가 인게임에서 Export 누를 시 호출
@@ -294,5 +323,13 @@ public class Database_AboJam : MonoBehaviour
         g = data.g;
         b = data.b;
         a = data.a;
-     }
+    }
+    public void ExportExplosion(string explosionID, out Vector3 scale, ref float radius, ref float damage, ref float time)
+    {
+        Table_Explosion data = Explosion.FirstOrDefault(explosion => explosion.explosionID == explosionID);
+        scale = new Vector3(data.scale, data.scale);
+        radius = data.radius;
+        damage = data.damage;
+        time = data.time;
+    }
 }

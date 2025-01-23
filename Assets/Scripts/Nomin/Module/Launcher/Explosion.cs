@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-public class Explosion : MonoBehaviour
+public class Explosion : MonoBehaviour, IPoolee
 {
     /* Dependency */
     public GameObject light2D; // 빛, 없어도 작동
     public Targeter targeter; // 조준경
     public Pool pool => Pool.instance;
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    [SerializeField] private string explosionID; // Primary Key
 
     /* Field & Property */
     public static List<Explosion> instances = new List<Explosion>();
-    public float radius = 5f; // 폭발 반경
+    public float radius = 5f; // 폭발 데미지 범위
     public float damage = 3f; // 폭발 데미지
     public float time = 2f; // 폭발 시간
     private Coroutine lastCor;
@@ -27,6 +32,12 @@ public class Explosion : MonoBehaviour
     {
         instances.Remove(this);
     }
+    public void Load()
+    {
+        database_abojam.ExportExplosion(explosionID, out Vector3 scale, ref radius, ref damage, ref time);
+        transform.localScale = scale;
+    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    public void Save() { } // 풀에 집어 넣을 때 자동 실행
 
     /* Public Method */
     /// <summary>
