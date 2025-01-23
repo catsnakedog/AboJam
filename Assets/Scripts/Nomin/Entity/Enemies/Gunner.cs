@@ -16,7 +16,7 @@ public class Gunner : Enemy, IPoolee
     public SpriteRenderer spriteRenderer;
     public Move move;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string gunnerID; // Primary Key
+    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<Gunner> instances = new List<Gunner>(); // 모든 거너 인스턴스
@@ -55,7 +55,7 @@ public class Gunner : Enemy, IPoolee
     {
         base.Load();
 
-        database_abojam.ExportGunner(gunnerID, ref delay, ref delay_fire, ref detection, ref subCount);
+        database_abojam.ExportGunner(ID, ref delay, ref delay_fire, ref detection, ref subCount);
 
         Fire(true);
     } // 풀에서 꺼낼 때 / Import 시 자동 실행

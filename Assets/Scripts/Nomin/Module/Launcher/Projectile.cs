@@ -1,21 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Management.Instrumentation;
 using Unity.Properties;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, IPoolee
 {
     /* Dependency */
     public GameObject explosion; // 폭발, 없어도 작동
     public Pool pool => Pool.instance;
     public Collider2D colider2D;
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
-    public static List<Projectile> instances_enable = new List<Projectile>(); // 모든 발사체 인스턴스 (활성화)
-    public static List<Projectile> instances_disable = new List<Projectile>(); // 모든 발사체 인스턴스 (비활성화)
+    public static List<Projectile> instances = new List<Projectile>(); // 모든 발사체 인스턴스 (활성화)
     [HideInInspector] public GameObject launcher; // 발사기 참조
     public string[] clashTags; // 충돌 대상 태그
     public float damage = 10f; // 발사체 데미지
@@ -33,23 +38,25 @@ public class Projectile : MonoBehaviour
         }
         if (clashTags.Length == 0) Debug.Log($"{name} 의 Projectile 의 충돌 대상 태그가 할당되지 않았습니다.");
         if (colider2D == null) Debug.Log($"{name} 의 Projectile 에서 colider 가 설정되지 않았습니다.");
-    }
-    private void OnEnable()
-    {
-        penetrate_current = penetrate;
-        instances_enable.Add(this);
-        instances_disable.Remove(this);
-    }
-    private void OnDisable()
-    {
-        instances_enable.Remove(this);
-        instances_disable.Add(this);
+        instances.Add(this);
     }
     private void OnDestroy()
     {
-        instances_enable.Remove(this);
-        instances_disable.Remove(this);
+        instances.Remove(this);
     }
+    private void OnEnable()
+    {
+        Load();
+    } // 캐릭터용 임시 Load 입니다. 나중에 지우고, 캐릭터 불릿의 풀링을 바꿔야 합니다.
+    public void Load()
+    {
+        database_abojam.ExportProjectile(ID, ref clashTags, ref damage, ref penetrate);
+        penetrate_current = penetrate;
+    } // 풀에서 꺼낼 때 / Import 시 자동 실행
+    public void Save()
+    {
+
+    } // 풀에 집어 넣을 때 자동 실행
 
     /* Public Method */
     /// <summary>

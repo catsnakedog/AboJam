@@ -10,7 +10,7 @@ public class Splash : Tower, IPoolee
     public Launcher launcher;
     public GameObject indicator_circle;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string splashID; // Primary Key
+    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<Splash> instances = new List<Splash>(); // 모든 연사 타워 인스턴스
@@ -42,7 +42,7 @@ public class Splash : Tower, IPoolee
     {
         base.Load();
 
-        database_abojam.ExportSplash(splashID, ref delay, ref detection);
+        database_abojam.ExportSplash(ID, ref delay, ref detection);
         delay_waitForSeconds = new WaitForSeconds(delay);
 
         Fire(true);

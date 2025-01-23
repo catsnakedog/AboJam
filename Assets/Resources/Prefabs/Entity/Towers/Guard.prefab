@@ -54,7 +54,7 @@ MonoBehaviour:
   hp: {fileID: 3580031304758939475}
   reinforceCost: 050000000a000000
   hpMultiply: 1.5
-  guardID: Guard
+  ID: Guard
 --- !u!114 &2330620171710835516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +303,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4452280365464044394}
     m_Modifications:
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: ID
+      value: Guard
+      objectReference: {fileID: 0}
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: so
       value: 

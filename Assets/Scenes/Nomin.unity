@@ -718,7 +718,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 623437328}
         m_TargetAssemblyTypeName: Database_AboJam, Assembly-CSharp
-        m_MethodName: Import
+        m_MethodName: ImportDatabase
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1471,6 +1471,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 825439678}
     m_Modifications:
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: ID
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: so
       value: 
       objectReference: {fileID: 11400000, guid: ac0ea3af78f549849ba9ce741d90a191, type: 2}
@@ -1979,7 +1983,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 623437328}
         m_TargetAssemblyTypeName: Database_AboJam, Assembly-CSharp
-        m_MethodName: Export
+        m_MethodName: ExportDatabase
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

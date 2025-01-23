@@ -15,7 +15,7 @@ public class HP : MonoBehaviour
     public SpriteRenderer spr_max;
     public GameObject entity; // HP 모듈을 적용할 대상
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string HPID; // Primary Key
+    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<HP> instances = new List<HP>();
@@ -63,7 +63,7 @@ public class HP : MonoBehaviour
     }
     public void Load()
     {
-        database_abojam.ExportHP(HPID, ref hp_max, ref hideFullHp);
+        database_abojam.ExportHP(ID, ref hp_max, ref hideFullHp);
 
         Hp_max = hp_max;
         HP_current = hp_max;

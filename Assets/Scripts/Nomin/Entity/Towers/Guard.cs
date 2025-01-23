@@ -9,7 +9,7 @@ public class Guard : Tower, IPoolee
     public static List<Guard> instances = new List<Guard>(); // 모든 방어 타워 인스턴스
     public float hpMultiply = 1.5f;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string guardID; // Primary Key
+    [SerializeField] private string ID; // Primary Key
 
     /* Public Method */
     /// <summary>
@@ -38,7 +38,7 @@ public class Guard : Tower, IPoolee
     {
         base.Load();
 
-        database_abojam.ExportGuard(guardID, ref hpMultiply);
+        database_abojam.ExportGuard(ID, ref hpMultiply);
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()
     {

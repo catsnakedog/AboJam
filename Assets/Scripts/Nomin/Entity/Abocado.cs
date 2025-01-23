@@ -19,7 +19,7 @@ public class Abocado : MonoBehaviour, IPoolee
     private Grid grid => Grid.instance; // 하드 링크
     private Pool pool => Pool.instance; // 하드 링크
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string abocadoID; // Primary Key
+    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<Abocado> instances = new List<Abocado>(); // 모든 아보카도 인스턴스
@@ -59,7 +59,7 @@ public class Abocado : MonoBehaviour, IPoolee
     } // 오브젝트 삭제 시 (완전 제거)
     public void Load()
     {
-        database_abojam.ExportAbocado(abocadoID, ref level, ref quality, ref quality_max, ref harvest, ref harvestPlus);
+        database_abojam.ExportAbocado(ID, ref level, ref quality, ref quality_max, ref harvest, ref harvestPlus);
         hp.Load();
         spriteRenderer.sprite = spr_level[0];
     } // 풀에서 꺼낼 때 / Import 시 자동 실행

@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 3100893671775424701, guid: 0d82fe44e7aea9645b061ff57238f3e9, type: 3}
   colider2D: {fileID: 1469443515481340077}
+  ID: Projectile_Splash1
   launcher: {fileID: 0}
   clashTags:
   - Enemies

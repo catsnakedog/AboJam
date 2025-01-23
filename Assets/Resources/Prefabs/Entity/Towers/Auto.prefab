@@ -57,7 +57,7 @@ MonoBehaviour:
   reinforceCost: 050000000a000000
   launcher: {fileID: 5557456795515503153}
   indicator_circle: {fileID: 2130840028591414169}
-  autoID: Auto
+  ID: Auto
   delay: 0.3
   detection: 5
   angle: 60
@@ -498,6 +498,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4452280365464044394}
     m_Modifications:
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: ID
+      value: Auto
+      objectReference: {fileID: 0}
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: so
       value: 

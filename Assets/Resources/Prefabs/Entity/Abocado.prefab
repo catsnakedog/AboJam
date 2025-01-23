@@ -104,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6781959995807194502}
   hp: {fileID: 8862693264221764112}
-  abocadoID: Abocado
+  ID: Abocado
   harvest: 1
   harvestPlus: 1
 --- !u!114 &6412532579159748648
@@ -241,6 +241,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2858883287418546351}
     m_Modifications:
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: ID
+      value: Abocado
+      objectReference: {fileID: 0}
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: so
       value: 

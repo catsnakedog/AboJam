@@ -57,7 +57,7 @@ MonoBehaviour:
   reinforceCost: 050000000a000000
   launcher: {fileID: 2033390269121756830}
   indicator_circle: {fileID: 7643453876844604117}
-  healID: Heal
+  ID: Heal
   delay: 0.4
   detection: 10
   ratio: 0.9999
@@ -394,6 +394,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4452280365464044394}
     m_Modifications:
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: ID
+      value: Heal
+      objectReference: {fileID: 0}
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: so
       value: 

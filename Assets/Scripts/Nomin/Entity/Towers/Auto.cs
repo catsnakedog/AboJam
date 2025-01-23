@@ -10,7 +10,7 @@ public class Auto : Tower, IPoolee
     public Launcher launcher;
     public GameObject indicator_circle;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string autoID; // Primary Key
+    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<Auto> instances = new List<Auto>(); // 모든 연사 타워 인스턴스
@@ -43,7 +43,7 @@ public class Auto : Tower, IPoolee
     {
         base.Load();
 
-        database_abojam.ExportAuto(autoID, ref delay, ref detection, ref angle, ref subCount, ref subCountPlus);
+        database_abojam.ExportAuto(ID, ref delay, ref detection, ref angle, ref subCount, ref subCountPlus);
 
         delay_waitForSeconds = new WaitForSeconds(delay);
         Fire(true);

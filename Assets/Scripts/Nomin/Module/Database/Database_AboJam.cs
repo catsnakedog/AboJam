@@ -33,14 +33,8 @@ public class Database_AboJam : MonoBehaviour
     }
 
     /* Runtime Table : 아래는 초기 데이터이며, ImportAll 시 서버 데이터로 덮어씌워집니다. */
-    public Table_Abocado[] Abocado = { new Table_Abocado("Abocado", EnumData.Abocado.Cultivated, 0, 1, 1, 1) };
-    public Table_Gunner[] Gunner = { new Table_Gunner("Gunner", 0.8f, 0.1f, 5f, 2) };
-    public Table_Auto[] Auto = { new Table_Auto("Auto", 0.3f, 5f, 60f, 0, 1) };
-    public Table_Guard[] Guard = { new Table_Guard("Guard", 1.5f) };
-    public Table_Splash[] Splash = { new Table_Splash("Splash", 1f, 5f) };
-    public Table_Heal[] Heal = { new Table_Heal("Heal", 0.4f, 10f, 0.9999f) };
     public Table_HP[] HP =
-    {
+{
         new Table_HP("Player", 100, false),
         new Table_HP("Abocado", 50, true),
         new Table_HP("Auto", 100, true),
@@ -49,6 +43,12 @@ public class Database_AboJam : MonoBehaviour
         new Table_HP("Splash", 100, true),
         new Table_HP("Gunner", 100, true),
     };
+    public Table_Abocado[] Abocado = { new Table_Abocado("Abocado", EnumData.Abocado.Cultivated, 0, 1, 1, 1) };
+    public Table_Gunner[] Gunner = { new Table_Gunner("Gunner", 0.8f, 0.1f, 5f, 2) };
+    public Table_Auto[] Auto = { new Table_Auto("Auto", 0.3f, 5f, 60f, 0, 1) };
+    public Table_Guard[] Guard = { new Table_Guard("Guard", 1.5f) };
+    public Table_Splash[] Splash = { new Table_Splash("Splash", 1f, 5f) };
+    public Table_Heal[] Heal = { new Table_Heal("Heal", 0.4f, 10f, 0.9999f) };
     public Table_Light[] Light =
     {
         new Table_Light("Light_Explosion_Projectile_Auto0", "Color_Light_Explosion_Projectile_Auto0", 1f, 3f, 0.1f, 0.1f, 0.1f, 60),
@@ -78,12 +78,29 @@ public class Database_AboJam : MonoBehaviour
         new Table_Explosion("Explosion_Projectile_Splash0", 5f, 1.5f, 20f, 0.5f),
         new Table_Explosion("Explosion_Projectile_Splash1", 6f, 3f, 40f, 0.5f),
     };
+    public Table_Projectile[] Projectile =
+    {
+        new Table_Projectile("Projectile_Player", "PlayerTargetTags", 3f, 1),
+        new Table_Projectile("Projectile_Auto0", "AutoTargetTags", 3f, 1),
+        new Table_Projectile("Projectile_Gunner0", "EnemyTargetTags", 3f, 1),
+        new Table_Projectile("Projectile_Heal0", "HealTargetTags", -7f, 2),
+        new Table_Projectile("Projectile_Heal1", "HealTargetTags", -11f, 2),
+        new Table_Projectile("Projectile_Splash0", "SplashTargetTags", 10f, 1),
+        new Table_Projectile("Projectile_Splash1", "SplashTargetTags", 15f, 1),
+    };
+    public Table_ClashTags[] ClashTags =
+    {
+        new Table_ClashTags("PlayerTargetTags", "Enemies"),
+        new Table_ClashTags("EnemyTargetTags", "Player,Towers,Abocados"),
+        new Table_ClashTags("AutoTargetTags", "Enemies"),
+        new Table_ClashTags("HealTargetTags","Player,Towers,Abocados"),
+        new Table_ClashTags("SplashTargetTags", "Enemies"),
+    }; // 제 1 형 정규화를 위한 수정이 너무 많아 테이블 분리만 해뒀습니다.
 
     /* Public Method */
-    /// <summary>
-    /// 서버 데이터베이스의 모든 데이터를 런타임 데이터베이스로 받아옵니다.
-    /// </summary>
-    public void Import()
+    // Import : 서버 DB >> 런타임 DB
+    // Export : 런타임 DB >> 인스턴스
+    public void ImportDatabase()
     {
         try
         {
@@ -99,13 +116,12 @@ public class Database_AboJam : MonoBehaviour
             ImportTable(dataSet, ref Light);
             ImportTable(dataSet, ref Color);
             ImportTable(dataSet, ref Explosion);
+            ImportTable(dataSet, ref Projectile);
+            ImportTable(dataSet, ref ClashTags);
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
-    /// <summary>
-    /// 런타임 데이터베이스의 모든 데이터를 인스턴스에 덮어씁니다.
-    /// </summary>
-    public void Export()
+    public void ExportDatabase()
     {
         foreach (HP item in global::HP.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Abocado item in global::Abocado.instances) if (item.isActiveAndEnabled) item.Load();
@@ -115,21 +131,17 @@ public class Database_AboJam : MonoBehaviour
         foreach (Splash item in global::Splash.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Heal item in global::Heal.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Light item in global::Light.instances) if (item.isActiveAndEnabled) item.Load();
+        // Color 는 데이터 상으로만 존재하여 Export 가 불가능합니다.
+        foreach (Explosion item in global::Explosion.instances) if (item.isActiveAndEnabled) item.Load();
+        foreach (Projectile item in global::Projectile.instances) if (item.isActiveAndEnabled) item.Load();
+        // ClashTags 는 데이터 상으로만 존재하여 Export 가 불가능합니다.
     }
-
-    /// <summary>
-    /// <br>서버 DB / 각 테이블 / ID 레코드 => 런타임 DB</br>
-    /// <br>ㅈㄴ어렵네.......</br>
-    /// </summary>
-    /// <typeparam name="T">ITable 을 상속받는 테이블 타입</typeparam>
-    /// <param name="dataSet">서버 DB</param>
-    /// <param name="runtimeTable">타겟 런타임 테이블</param>
     public void ImportTable<T>(DataSet dataSet, ref T[] runtimeTable) where T : ITable
     {
         // runtimeTable.TableName 으로 서버에서 테이블을 특정합니다.
         DataTable dataTable = dataSet.Tables[runtimeTable[0].TableName];
 
-        // 모든 필드 정보 가져오기 (공개/비공개 포함)
+        // 모든 런타임 테이블 필드 정보 조회
         FieldInfo[] runtimeTableFieldInfos = typeof(T).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
         // 서버 테이블의 레코드 마다
@@ -156,10 +168,6 @@ public class Database_AboJam : MonoBehaviour
             foreach (var field in typeof(T).GetFields()) field.SetValue(runtimeRecord, field.GetValue(record));
         }
     }
-
-    // 런타임 DB / 각 테이블 / ID 레코드 => 인스턴스
-    // 기획자가 인게임에서 Export 누를 시 호출
-    // 인스턴스가 Load (풀에서 꺼내지거나, 처음 생성) 될 때 마다 호출
     public void ExportHP(string ID, ref float hp_max, ref bool hideFullHp)
     {
         Table_HP data = HP.FirstOrDefault(hp => hp.ID == ID);
@@ -236,5 +244,17 @@ public class Database_AboJam : MonoBehaviour
         radius = data.radius;
         damage = data.damage;
         time = data.time;
+    }
+    public void ExportProjectile(string ID, ref string[] clashTags, ref float damage, ref int penetrate)
+    {
+        Table_Projectile data = Projectile.FirstOrDefault(projectile => projectile.ID == ID);
+        ExportClashTags(data.clashTagsID, ref clashTags);
+        damage = data.damage;
+        penetrate = data.penetrate;
+    }
+    public void ExportClashTags(string ID, ref string[] clashTags)
+    {
+        Table_ClashTags data = ClashTags.FirstOrDefault(clashTags => clashTags.ID == ID);
+        clashTags = data.clashTags.Split(',');
     }
 }

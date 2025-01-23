@@ -60,7 +60,7 @@ MonoBehaviour:
   animator: {fileID: 2428712746383201744}
   spriteRenderer: {fileID: 4047752045931380342}
   move: {fileID: 9013543737906462685}
-  gunnerID: Gunner
+  ID: Gunner
   delay: 0.8
   delay_fire: 0.1
   delay_anim: 0.3
@@ -486,6 +486,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2504864089240091885}
     m_Modifications:
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: ID
+      value: Gunner
+      objectReference: {fileID: 0}
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: so
       value: 

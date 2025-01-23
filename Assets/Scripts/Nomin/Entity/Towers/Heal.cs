@@ -10,7 +10,7 @@ public class Heal : Tower, IPoolee
     public Launcher launcher;
     public GameObject indicator_circle;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string healID; // Primary Key
+    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<Heal> instances = new List<Heal>(); // 모든 회복 타워 인스턴스
@@ -43,7 +43,7 @@ public class Heal : Tower, IPoolee
     {
         base.Load();
 
-        database_abojam.ExportHeal(healID, ref delay, ref detection, ref ratio);
+        database_abojam.ExportHeal(ID, ref delay, ref detection, ref ratio);
 
         delay_waitForSeconds = new WaitForSeconds(delay);
         Healing(true);

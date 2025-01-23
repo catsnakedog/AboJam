@@ -115,8 +115,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515f25f316047644287fdc7c1e732075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooling: {fileID: 0}
+  explosion: {fileID: 0}
   colider2D: {fileID: -109754202756310999}
+  ID: Projectile_Player
   launcher: {fileID: 0}
   clashTags:
   - Towers
@@ -124,7 +125,6 @@ MonoBehaviour:
   - Enemies
   damage: 10
   penetrate: 1
-  explosion: {fileID: 0}
 --- !u!60 &-109754202756310999
 PolygonCollider2D:
   m_ObjectHideFlags: 0

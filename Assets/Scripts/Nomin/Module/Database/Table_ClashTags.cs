@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Table_Guard : ITable
+public class Table_ClashTags : ITable
 {
     /* Field & Property */
-    public string TableName { get; set; } = "Guard";
+    public string TableName { get; set; } = "ClashTags";
     public string ID { get; set; }
-    public float hpMultiply;
+    public string clashTags;
 
     /* Intializer & Finalizer & Updater */
-    public Table_Guard(string ID, float hpMultiply)
+    public Table_ClashTags(string ID, string clashTags)
     {
         this.ID = ID;
-        this.hpMultiply = hpMultiply;
+        this.clashTags = clashTags;
     }
 }

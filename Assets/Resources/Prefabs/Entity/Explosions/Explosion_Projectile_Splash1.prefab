@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   light2D: {fileID: 5041889053341477472, guid: ef63125bb12e90e419750a1c9b9f56f6, type: 3}
   targeter: {fileID: 6905039974460121565}
-  explosionID: Explosion_Projectile_Splash1
+  ID: Explosion_Projectile_Splash1
   radius: 3
   damage: 40
   time: 0.5

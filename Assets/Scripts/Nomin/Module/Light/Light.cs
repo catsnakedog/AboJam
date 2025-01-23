@@ -10,7 +10,7 @@ public class Light : MonoBehaviour, IPoolee
     public Light2D light2D;
     public Pool pool => Pool.instance;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string lightID; // Primary Key
+    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<Light> instances = new List<Light>();
@@ -43,7 +43,7 @@ public class Light : MonoBehaviour, IPoolee
     }
     public void Load()
     {
-        database_abojam.ExportLight(lightID, ref color, ref radius, ref intensity, ref onTime, ref keepTime, ref offTime, ref frame);
+        database_abojam.ExportLight(ID, ref color, ref radius, ref intensity, ref onTime, ref keepTime, ref offTime, ref frame);
 
         light2D.color = new Color(color.r / 255f, color.g / 255f, color.b / 255f, color.a);
         light2D.pointLightOuterRadius = radius;
