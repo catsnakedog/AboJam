@@ -46,6 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 4680852556808483399}
+  lightID: Light_Tower
+  color: {r: 1, g: 1, b: 1, a: 1}
+  radius: 3
+  intensity: 3
   onTime: 0.1
   keepTime: 99999
   offTime: 0.1

@@ -9,14 +9,18 @@ public class Light : MonoBehaviour, IPoolee
     /* Dependency */
     public Light2D light2D;
     public Pool pool => Pool.instance;
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    [SerializeField] private string lightID; // Primary Key
 
     /* Field & Property */
     public static List<Light> instances = new List<Light>();
+    public Color color = Color.white; // 빛 색상
+    public float radius = 3f; // 빛 반지름
+    public float intensity = 3; // 빛 광도
     public float onTime = 1f; // 빛 On 시간
     public float keepTime = 2f; // 빛 Keep 시간
     public float offTime = 1f; // 빛 Off 시간
     public float frame = 60; // 초당 빛 변화
-    private float intensity; // 원래 빛 광도
     private WaitForSeconds waitForSeconds;
     private float delay;
     private Coroutine corLast;
@@ -25,7 +29,6 @@ public class Light : MonoBehaviour, IPoolee
     private void Awake()
     {
         instances.Add(this);
-        intensity = light2D.intensity;
         delay = 1 / frame;
         waitForSeconds = new WaitForSeconds(delay);
     }
@@ -38,7 +41,14 @@ public class Light : MonoBehaviour, IPoolee
         if (corLast != null) StopCoroutine(corLast);
         corLast = StartCoroutine(CorLight());
     }
-    public void Load() { } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
+    public void Load()
+    {
+        database_abojam.ExportLight(lightID, ref color, ref radius, ref intensity, ref onTime, ref keepTime, ref offTime, ref frame);
+
+        light2D.color = new Color(color.r / 255f, color.g / 255f, color.b / 255f, color.a);
+        light2D.pointLightOuterRadius = radius;
+        light2D.intensity = intensity;
+    } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
     public void Save() { } // 풀에 집어 넣을 때 자동 실행
 
     /* Public Method */

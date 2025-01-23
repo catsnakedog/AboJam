@@ -84,6 +84,7 @@ public class Database_AboJam : MonoBehaviour
             ImportSplash(dataSet);
             ImportHeal(dataSet);
             ImportLight(dataSet);
+            ImportColor(dataSet);
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
@@ -101,6 +102,7 @@ public class Database_AboJam : MonoBehaviour
         foreach (Heal item in global::Heal.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Light item in global::Light.instances) if (item.isActiveAndEnabled) item.Load();
     }
+
     // 서버 DB / 각 테이블 / ID 레코드 => 런타임 DB
     // 기획자가 인게임에서 Import 누를 시 호출
     public void ImportHP(DataSet dataSet)
@@ -204,6 +206,23 @@ public class Database_AboJam : MonoBehaviour
             light.frame = Convert.ToInt32(dataRow["frame"]);
         }
     }
+    public void ImportColor(DataSet dataSet)
+    {
+        DataTable dataTable = dataSet.Tables["Color"];
+        dataTable.PrimaryKey = new DataColumn[] { dataTable.Columns["colorID"] };
+
+        for (int i = 0; i < dataTable.Rows.Count; i++)
+        {
+            string colorID = Convert.ToString(dataTable.Rows[i]["colorID"]);
+            float r = Convert.ToSingle(dataTable.Rows[i]["r"]);
+            float g = Convert.ToSingle(dataTable.Rows[i]["g"]);
+            float b = Convert.ToSingle(dataTable.Rows[i]["b"]);
+            float a = Convert.ToSingle(dataTable.Rows[i]["a"]);
+
+            Color[i] = new Table_Color(colorID, r, g, b, a);
+        }
+    }
+
     // 런타임 DB / 각 테이블 / ID 레코드 => 인스턴스
     // 기획자가 인게임에서 Export 누를 시 호출
     // 인스턴스가 Load (풀에서 꺼내지거나, 처음 생성) 될 때 마다 호출
@@ -257,7 +276,7 @@ public class Database_AboJam : MonoBehaviour
         detection = data.detection;
         ratio = data.ratio;
     }
-    public void ExportLight(string lightID, ref Color color, ref float radius, ref float intensity, ref float onTime, ref float keepTime, ref float offTime, int frame)
+    public void ExportLight(string lightID, ref Color color, ref float radius, ref float intensity, ref float onTime, ref float keepTime, ref float offTime, ref float frame)
     {
         Table_Light data = Light.FirstOrDefault(light => light.lightID == lightID);
         ExportColor(data.colorID, ref color.r, ref color.g, ref color.b, ref color.a);
@@ -266,7 +285,7 @@ public class Database_AboJam : MonoBehaviour
         onTime = data.onTime;
         keepTime = data.keepTime;
         offTime = data.offTime;
-        frame = 0;
+        frame = data.frame;
     }
     public void ExportColor(string colorID, ref float r, ref float g, ref float b, ref float a)
     {
@@ -275,5 +294,5 @@ public class Database_AboJam : MonoBehaviour
         g = data.g;
         b = data.b;
         a = data.a;
-    }
+     }
 }
