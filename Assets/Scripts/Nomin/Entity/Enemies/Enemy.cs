@@ -6,7 +6,9 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy<T1, T2> : RecordInstanceBase<T1, T2>, IEnemy 
+    where T1 : ITable
+    where T2 : IRecord
 {
     /* Dependency */
     public HP hp;
@@ -15,21 +17,22 @@ public class Enemy : MonoBehaviour
     private Grid grid => Grid.instance; // 하드 링크
 
     /* Field & Property */
-    public static List<Enemy> instances = new List<Enemy>(); // 모든 적 인스턴스
-    public static Enemy currentEnemy; // 최근 선택된 적
+    public static List<IEnemy> instances = new List<IEnemy>(); // 모든 적 인스턴스
+    public static IEnemy currentEnemy; // 최근 선택된 적
     public int Level { get; private set; } = 0; // 현재 레벨
     public int MaxLevel { get; private set; } // 최대 레벨
 
     /* Intializer & Finalizer & Updater */
     public virtual void Start()
     {
-        instances.Add(this);
+        base.Start();
+        instances.Add((IEnemy)this);
         Load();
         hp.death.AddListener(() => StartCoroutine(CorDeath(2)));
     }
     private void OnDestroy()
     {
-        instances.Remove(this);
+        instances.Remove((IEnemy)this);
     }
     public virtual void Load()
     {
@@ -69,7 +72,7 @@ public class Enemy : MonoBehaviour
             for (int i = 0; i < spriteRenderers.Length; i++)
             {
                 float alpha = Mathf.Lerp(startAlpha[i], 0f, ratio);
-                spriteRenderers[i].color = new Color(spriteRenderers[i].color.r, spriteRenderers[i].color.g, spriteRenderers[i].color.b, alpha);
+                spriteRenderers[i].color = new UnityEngine.Color(spriteRenderers[i].color.r, spriteRenderers[i].color.g, spriteRenderers[i].color.b, alpha);
             }
 
             yield return waitForSeconds;
@@ -78,7 +81,7 @@ public class Enemy : MonoBehaviour
         // 투명도 복원
         for (int i = 0; i < spriteRenderers.Length; i++)
         {
-            spriteRenderers[i].color = new Color(spriteRenderers[i].color.r, spriteRenderers[i].color.g, spriteRenderers[i].color.b, startAlpha[i]);
+            spriteRenderers[i].color = new UnityEngine.Color(spriteRenderers[i].color.r, spriteRenderers[i].color.g, spriteRenderers[i].color.b, startAlpha[i]);
         }
 
         // 기능 복구 후 풀에 집어넣기

@@ -522,6 +522,10 @@ PrefabInstance:
       propertyPath: HideFullHP
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: initialRecord
+      value: 
+      objectReference: {fileID: 11400000, guid: b162f2d3c711b644cb81e83d6bd6e4b8, type: 2}
     - target: {fileID: 5675147325519521188, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: m_Name
       value: HP

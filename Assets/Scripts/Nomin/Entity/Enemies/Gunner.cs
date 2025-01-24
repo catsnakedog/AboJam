@@ -6,7 +6,7 @@ using UnityEngine.InputSystem.HID;
 using static Targeter;
 using static UnityEngine.GraphicsBuffer;
 
-public class Gunner : Enemy, IPoolee
+public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
@@ -16,7 +16,6 @@ public class Gunner : Enemy, IPoolee
     public SpriteRenderer spriteRenderer;
     public Move move;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<Gunner> instances = new List<Gunner>(); // 모든 거너 인스턴스
@@ -35,8 +34,11 @@ public class Gunner : Enemy, IPoolee
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        startFlag = true;
         base.Start();
         instances.Add(this);
+
         delay_waitForSeconds = new WaitForSeconds(delay - (delay_fire * subCount) - delay_anim);
         delay_waitForSecondsFire = new WaitForSeconds(delay_fire);
         delay_waitForSecondsAnim = new WaitForSeconds(delay_anim);
@@ -53,10 +55,11 @@ public class Gunner : Enemy, IPoolee
     }
     public void Load()
     {
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportGunner(initialRecord.ID, ref delay, ref delay_fire, ref detection, ref subCount);
+
         base.Load();
-
-        database_abojam.ExportGunner(ID, ref delay, ref delay_fire, ref detection, ref subCount);
-
         Fire(true);
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()

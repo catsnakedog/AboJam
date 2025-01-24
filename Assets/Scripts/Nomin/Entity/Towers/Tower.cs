@@ -74,7 +74,7 @@ public class Tower : MonoBehaviour
             for (int i = 0; i < spriteRenderers.Length; i++)
             {
                 float alpha = Mathf.Lerp(startAlpha[i], 0f, ratio);
-                spriteRenderers[i].color = new Color(spriteRenderers[i].color.r, spriteRenderers[i].color.g, spriteRenderers[i].color.b, alpha);
+                spriteRenderers[i].color = new UnityEngine.Color(spriteRenderers[i].color.r, spriteRenderers[i].color.g, spriteRenderers[i].color.b, alpha);
             }
 
             yield return waitForSeconds;
@@ -83,7 +83,7 @@ public class Tower : MonoBehaviour
         // 투명도 복원
         for (int i = 0; i < spriteRenderers.Length; i++)
         {
-            spriteRenderers[i].color = new Color(spriteRenderers[i].color.r, spriteRenderers[i].color.g, spriteRenderers[i].color.b, startAlpha[i]);
+            spriteRenderers[i].color = new UnityEngine.Color(spriteRenderers[i].color.r, spriteRenderers[i].color.g, spriteRenderers[i].color.b, startAlpha[i]);
         }
 
         // 기능 복구 후 풀에 집어넣기

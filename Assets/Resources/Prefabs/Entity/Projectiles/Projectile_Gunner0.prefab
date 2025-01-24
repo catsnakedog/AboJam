@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515f25f316047644287fdc7c1e732075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialRecord: {fileID: 11400000, guid: 79e39740e11bc9549bf3e340025c52e7, type: 2}
   explosion: {fileID: 3100893671775424701, guid: 23c586dcd7f16054192fe532537945ae, type: 3}
   colider2D: {fileID: 1469443515481340077}
   ID: Projectile_Gunner0

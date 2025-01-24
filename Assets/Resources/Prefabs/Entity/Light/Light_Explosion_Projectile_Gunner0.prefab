@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248a11df6728de04a911fbf5521db9b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialRecord: {fileID: 11400000, guid: 9bda8029324070149b6843a51e7531a0, type: 2}
+  startFlag: 0
   light2D: {fileID: 3205892278098318508}
-  ID: Light_Explosion_Projectile_Gunner0
   color: {r: 1, g: 1, b: 1, a: 1}
   radius: 1
   intensity: 3

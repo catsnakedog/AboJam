@@ -10,14 +10,13 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-public class Projectile : MonoBehaviour, IPoolee
+public class Projectile : RecordInstanceBase<Table_Projectile, Record_Projectile>, IPoolee
 {
     /* Dependency */
     public GameObject explosion; // 폭발, 없어도 작동
     public Pool pool => Pool.instance;
     public Collider2D colider2D;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<Projectile> instances = new List<Projectile>(); // 모든 발사체 인스턴스 (활성화)
@@ -30,6 +29,11 @@ public class Projectile : MonoBehaviour, IPoolee
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        startFlag = true;
+        base.Start();
+        instances.Add(this);
+
         // 예외처리
         if (penetrate < 1)
         {
@@ -50,7 +54,10 @@ public class Projectile : MonoBehaviour, IPoolee
     } // 캐릭터용 임시 Load 입니다. 나중에 지우고, 캐릭터 불릿의 풀링을 바꿔야 합니다.
     public void Load()
     {
-        database_abojam.ExportProjectile(ID, ref clashTags, ref damage, ref penetrate);
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportProjectile(initialRecord.ID, ref clashTags, ref damage, ref penetrate);
+
         penetrate_current = penetrate;
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()

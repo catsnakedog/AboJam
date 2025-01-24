@@ -15,8 +15,9 @@ using UnityEngine.Windows;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 /// <summary>
-/// 런타임 데이터베이스입니다.
-/// CONSTRAINT : 런타임 테이블 이름은 반드시 서버 테이블 이름과 같아야 합니다.
+/// <br>런타임 데이터베이스입니다. (현재 Script Execution Order : 100)</br>
+/// <br>CONSTRAINT : 반드시 모든 레코드 인스턴스보다 먼저 Awake 가 호출되어야 합니다.</br>
+/// <br>CONSTRAINT : 런타임 테이블 이름은 반드시 서버 테이블 이름과 같아야 합니다.</br>
 /// </summary>
 public class Database_AboJam : MonoBehaviour
 {
@@ -27,75 +28,21 @@ public class Database_AboJam : MonoBehaviour
     public static Database_AboJam instance;
 
     /* Initializer */
-    private void Awake()
-    {
-        instance = this;
-    }
+    private void Awake() { instance = this; }
 
-    /* Runtime Table : 아래는 초기 데이터이며, ImportAll 시 서버 데이터로 덮어씌워집니다. */
-    public Table_HP[] HP =
-{
-        new Table_HP("Player", 100, false),
-        new Table_HP("Abocado", 50, true),
-        new Table_HP("Auto", 100, true),
-        new Table_HP("Guard", 100, true),
-        new Table_HP("Heal", 100, true),
-        new Table_HP("Splash", 100, true),
-        new Table_HP("Gunner", 100, true),
-    };
-    public Table_Abocado[] Abocado = { new Table_Abocado("Abocado", EnumData.Abocado.Cultivated, 0, 1, 1, 1) };
-    public Table_Gunner[] Gunner = { new Table_Gunner("Gunner", 0.8f, 0.1f, 5f, 2) };
-    public Table_Auto[] Auto = { new Table_Auto("Auto", 0.3f, 5f, 60f, 0, 1) };
-    public Table_Guard[] Guard = { new Table_Guard("Guard", 1.5f) };
-    public Table_Splash[] Splash = { new Table_Splash("Splash", 1f, 5f) };
-    public Table_Heal[] Heal = { new Table_Heal("Heal", 0.4f, 10f, 0.9999f) };
-    public Table_Light[] Light =
-    {
-        new Table_Light("Light_Explosion_Projectile_Auto0", "Color_Light_Explosion_Projectile_Auto0", 1f, 3f, 0.1f, 0.1f, 0.1f, 60),
-        new Table_Light("Light_Explosion_Projectile_Gunner0", "Color_Light_Explosion_Projectile_Gunner0", 1f, 3f, 0.1f, 0.1f, 0.1f, 60),
-        new Table_Light("Light_Explosion_Projectile_Heal0", "Color_Light_Explosion_Projectile_Heal0", 1f, 3f, 0.1f, 0.1f, 0.1f, 60),
-        new Table_Light("Light_Explosion_Projectile_Heal1", "Color_Light_Explosion_Projectile_Heal1", 1f, 5f, 0.1f, 0.1f, 0.1f, 60),
-        new Table_Light("Light_Explosion_Projectile_Splash0", "Color_Light_Explosion_Projectile_Splash0", 3f, 5f, 0.2f, 0.3f, 0.2f, 60),
-        new Table_Light("Light_Explosion_Projectile_Splash1", "Color_Light_Explosion_Projectile_Splash1", 5f, 3f, 0.1f, 0.1f, 0.1f, 60),
-        new Table_Light("Light_Tower", "Color_Light_Tower", 1.5f, 5f, 0.1f, 99999f, 0.1f, 60)
-    };
-    public Table_Color[] Color =
-    {
-        new Table_Color("Color_Light_Explosion_Projectile_Auto0", 253f, 255f, 0f, 1f),
-        new Table_Color("Color_Light_Explosion_Projectile_Gunner0", 253f, 255f, 0f, 1f),
-        new Table_Color("Color_Light_Explosion_Projectile_Heal0", 0f, 156f, 255f, 1f),
-        new Table_Color("Color_Light_Explosion_Projectile_Heal1", 94f, 255f, 0, 1f),
-        new Table_Color("Color_Light_Explosion_Projectile_Splash0", 255f, 45f, 0f, 1f),
-        new Table_Color("Color_Light_Explosion_Projectile_Splash1", 255f, 0f, 255f, 1f),
-        new Table_Color("Color_Light_Tower", 255f, 255f, 255f, 1f),
-    };
-    public Table_Explosion[] Explosion =
-    {
-        new Table_Explosion("Explosion_Projectile_Auto0", 2f, 0f, 0f, 1f),
-        new Table_Explosion("Explosion_Projectile_Gunner0", 2f, 0f, 0f, 1f),
-        new Table_Explosion("Explosion_Projectile_Heal0", 5f, 0f, 0f, 0.8f),
-        new Table_Explosion("Explosion_Projectile_Heal1", 3f, 0f, 0f, 0.2f),
-        new Table_Explosion("Explosion_Projectile_Splash0", 5f, 1.5f, 20f, 0.5f),
-        new Table_Explosion("Explosion_Projectile_Splash1", 6f, 3f, 40f, 0.5f),
-    };
-    public Table_Projectile[] Projectile =
-    {
-        new Table_Projectile("Projectile_Player", "PlayerTargetTags", 3f, 1),
-        new Table_Projectile("Projectile_Auto0", "AutoTargetTags", 3f, 1),
-        new Table_Projectile("Projectile_Gunner0", "EnemyTargetTags", 3f, 1),
-        new Table_Projectile("Projectile_Heal0", "HealTargetTags", -7f, 2),
-        new Table_Projectile("Projectile_Heal1", "HealTargetTags", -11f, 2),
-        new Table_Projectile("Projectile_Splash0", "SplashTargetTags", 10f, 1),
-        new Table_Projectile("Projectile_Splash1", "SplashTargetTags", 15f, 1),
-    };
-    public Table_ClashTags[] ClashTags =
-    {
-        new Table_ClashTags("PlayerTargetTags", "Enemies"),
-        new Table_ClashTags("EnemyTargetTags", "Player,Towers,Abocados"),
-        new Table_ClashTags("AutoTargetTags", "Enemies"),
-        new Table_ClashTags("HealTargetTags","Player,Towers,Abocados"),
-        new Table_ClashTags("SplashTargetTags", "Enemies"),
-    }; // 제 1 형 정규화를 위한 수정이 너무 많아 테이블 분리만 해뒀습니다.
+    /* Runtime Table : ImportTable 시 서버 데이터로 덮어씌워집니다. */
+    public List<Table_HP> HP = new() { new Table_HP("ID", Hp_max: 1f, HideFullHP: true) };
+    public List<Table_Abocado> Abocado = new() { new Table_Abocado("ID", level: EnumData.Abocado.Cultivated, quality: 1, quality_max: 1, harvest: 1, harvestPlus: 1) };
+    public List<Table_Gunner> Gunner = new() { new Table_Gunner("ID", delay: 1f, delay_fire: 1f, detection: 1f, subCount: 1) };
+    public List<Table_Auto> Auto = new() { new Table_Auto("ID", delay: 1f, detection: 1f, angle: 1f, subCount: 1, subCountPlus: 1) };
+    public List<Table_Guard> Guard = new() { new Table_Guard("ID", hpMultiply: 1f) };
+    public List<Table_Splash> Splash = new() { new Table_Splash("ID", delay: 1f, detection: 1f) };
+    public List<Table_Heal> Heal = new() { new Table_Heal("ID", delay: 1f, detection: 1f, ratio: 1f) };
+    public List<Table_Light> Light = new() { new Table_Light("ID", "colorID", radius: 1f, intensity: 1f, onTime: 1f, keepTime: 1f, offTime: 1f, frame: 1) };
+    public List<Table_Color> Color = new() { new Table_Color("ID", r: 1f, g: 1f, b: 1f, a: 1f) };
+    public List<Table_Explosion> Explosion = new() { new Table_Explosion("ID", scale: 1f, radius: 1f, damage: 1f, time: 1f) };
+    public List<Table_Projectile> Projectile = new() { new Table_Projectile("ID", "clashTagsID", damage: 1f, penetrate: 1) };
+    public List<Table_ClashTags> ClashTags = new() { new Table_ClashTags("ID", "clashTags") };
 
     /* Public Method */
     // Import : 서버 DB >> 런타임 DB
@@ -106,13 +53,13 @@ public class Database_AboJam : MonoBehaviour
         {
             DataSet dataSet = dbms.GetDataSet();
 
+            ImportTable(dataSet, ref HP);
             ImportTable(dataSet, ref Abocado);
             ImportTable(dataSet, ref Gunner);
             ImportTable(dataSet, ref Auto);
             ImportTable(dataSet, ref Guard);
             ImportTable(dataSet, ref Splash);
             ImportTable(dataSet, ref Heal);
-            ImportTable(dataSet, ref HP);
             ImportTable(dataSet, ref Light);
             ImportTable(dataSet, ref Color);
             ImportTable(dataSet, ref Explosion);
@@ -136,7 +83,7 @@ public class Database_AboJam : MonoBehaviour
         foreach (Projectile item in global::Projectile.instances) if (item.isActiveAndEnabled) item.Load();
         // ClashTags 는 데이터 상으로만 존재하여 Export 가 불가능합니다.
     }
-    public void ImportTable<T>(DataSet dataSet, ref T[] runtimeTable) where T : ITable
+    public void ImportTable<T>(DataSet dataSet, ref List<T> runtimeTable) where T : ITable
     {
         // runtimeTable.TableName 으로 서버에서 테이블을 특정합니다.
         DataTable dataTable = dataSet.Tables[runtimeTable[0].TableName];
@@ -156,16 +103,17 @@ public class Database_AboJam : MonoBehaviour
                 else fields[j] = Convert.ChangeType(dataTable.Rows[i][j], runtimeTableFieldInfos[j + 1].FieldType);
             }
 
-            // 레코드를 생성한 뒤
+            // 레코드를 생성한 뒤 런타임 데이터베이스에서 해당 ID 와 매칭되는 레코드 특정
             T record = (T)(Activator.CreateInstance(typeof(T), fields));
-
-            // 런타임 데이터베이스에서 해당 ID 와 매칭되는 레코드 특정
             T runtimeRecord = (T)runtimeTable.OfType<ITable>().FirstOrDefault(item => item.ID == record.ID);
-            if (runtimeRecord == null) { Debug.Log($"{record.TableName} 에 {record.ID} 와 매칭되는 레코드가 없습니다."); return; }
 
-            // 런타임 데이터베이스 레코드에 생성한 레코드 할당
-            foreach (var property in typeof(T).GetProperties()) property.SetValue(runtimeRecord, property.GetValue(record));
-            foreach (var field in typeof(T).GetFields()) field.SetValue(runtimeRecord, field.GetValue(record));
+            // 기존 레코드가 있으면 수정, 없으면 생성
+            if (runtimeRecord != null)
+            {
+                foreach (var property in typeof(T).GetProperties()) property.SetValue(runtimeRecord, property.GetValue(record));
+                foreach (var field in typeof(T).GetFields()) field.SetValue(runtimeRecord, field.GetValue(record));
+            }
+            if (runtimeRecord == null) runtimeTable.Add(record);
         }
     }
     public void ExportHP(string ID, ref float hp_max, ref bool hideFullHp)
@@ -218,7 +166,7 @@ public class Database_AboJam : MonoBehaviour
         detection = data.detection;
         ratio = data.ratio;
     }
-    public void ExportLight(string ID, ref Color color, ref float radius, ref float intensity, ref float onTime, ref float keepTime, ref float offTime, ref float frame)
+    public void ExportLight(string ID, ref UnityEngine.Color color, ref float radius, ref float intensity, ref float onTime, ref float keepTime, ref float offTime, ref float frame)
     {
         Table_Light data = Light.FirstOrDefault(light => light.ID == ID);
         ExportColor(data.colorID, ref color.r, ref color.g, ref color.b, ref color.a);

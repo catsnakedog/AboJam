@@ -46,7 +46,7 @@ public class GlobalLight : MonoBehaviour
     private IEnumerator CorSetLight(LightPreset lightPreset, float speed)
     {
         float startIntensity = light2D.intensity;
-        Color startColor = light2D.color;
+        UnityEngine.Color startColor = light2D.color;
         float ratio = 0;
 
         // 광도, 색상을 선형 보간
@@ -56,7 +56,7 @@ public class GlobalLight : MonoBehaviour
             if (ratio > 1) ratio = 1;
 
             light2D.intensity = Mathf.Lerp(startIntensity, lightPreset.intensity, ratio);
-            light2D.color = Color.Lerp(startColor, lightPreset.color, ratio);
+            light2D.color = UnityEngine.Color.Lerp(startColor, lightPreset.color, ratio);
 
             yield return waitForSeconds;
         }

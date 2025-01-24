@@ -120,9 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa64b3eb05ccc7c448340e7b3f391639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialRecord: {fileID: 11400000, guid: 08baa07e70263c74788bfde43b34ba85, type: 2}
+  startFlag: 0
   light2D: {fileID: 5041889053341477472, guid: ef63125bb12e90e419750a1c9b9f56f6, type: 3}
   targeter: {fileID: 6905039974460121565}
-  ID: Explosion_Projectile_Splash1
   radius: 3
   damage: 40
   time: 0.5

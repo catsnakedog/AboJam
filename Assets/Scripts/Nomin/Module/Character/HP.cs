@@ -1,21 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEditor.Experimental.Licensing;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.Rendering.DebugUI;
 
-public class HP : MonoBehaviour
+public class HP : RecordInstanceBase<Table_HP, Record_HP>
 {
     /* Dependency */
     public SpriteRenderer spr_empty;
     public SpriteRenderer spr_max;
     public GameObject entity; // HP 모듈을 적용할 대상
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<HP> instances = new List<HP>();
@@ -30,7 +32,11 @@ public class HP : MonoBehaviour
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        startFlag = true;
+        base.Start();
         instances.Add(this);
+
         Load();
         material = spr_max.material;
         spr_max.sortingOrder = spr_empty.sortingOrder + 1;
@@ -63,7 +69,9 @@ public class HP : MonoBehaviour
     }
     public void Load()
     {
-        database_abojam.ExportHP(ID, ref hp_max, ref hideFullHp);
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportHP(initialRecord.ID, ref hp_max, ref hideFullHp);
 
         Hp_max = hp_max;
         HP_current = hp_max;
