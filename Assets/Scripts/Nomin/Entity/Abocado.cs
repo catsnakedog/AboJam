@@ -11,7 +11,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static EnumData;
 
-public class Abocado : MonoBehaviour, IPoolee
+public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
 {
     /* Dependency */
     public SpriteRenderer spriteRenderer; // 하이라키 연결
@@ -19,14 +19,13 @@ public class Abocado : MonoBehaviour, IPoolee
     private Grid grid => Grid.instance; // 하드 링크
     private Pool pool => Pool.instance; // 하드 링크
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
-    [SerializeField] private string ID; // Primary Key
 
     /* Field & Property */
     public static List<Abocado> instances = new List<Abocado>(); // 모든 아보카도 인스턴스
     public static Abocado currentAbocado; // 최근 선택된 아보카도
     private EnumData.Abocado level; public EnumData.Abocado Level { get => level; private set => level = value; } // 아보카도 레벨
     private int quality = 0; public int Quality { get => quality; private set => quality = value; } // 아보카도 품질 (Promotion)
-    public static int quality_max = 1; // 아보카도 최고 품질 (Promotion)
+    public int quality_max = 1; // 아보카도 최고 품질 (Promotion)
     public int harvest = 1; // 수확량
     public int harvestPlus = 1; // 수확 증가량
     private string path = "Images/Abocado/"; // 아보카도 이미지 Resources 경로
@@ -49,7 +48,12 @@ public class Abocado : MonoBehaviour, IPoolee
     } // 최초 생성 시 (최초 초기화 - 1)
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
+        startFlag = true;
+        base.Start();
         instances.Add(this);
+
         hp.death.AddListener(() => StartCoroutine(CorDeath(2)));
         Date.instance.morningStart.AddListener(() => { this.GrowUp(); });
     } // 최초 생성 시 (최초 초기화 - 2)
@@ -59,7 +63,10 @@ public class Abocado : MonoBehaviour, IPoolee
     } // 오브젝트 삭제 시 (완전 제거)
     public void Load()
     {
-        database_abojam.ExportAbocado(ID, ref level, ref quality, ref quality_max, ref harvest, ref harvestPlus);
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+
+        database_abojam.ExportAbocado(initialRecord.ID, ref level, ref quality, ref quality_max, ref harvest, ref harvestPlus);
         hp.Load();
         spriteRenderer.sprite = spr_level[0];
     } // 풀에서 꺼낼 때 / Import 시 자동 실행

@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Light : RecordInstanceBase<Table_Light, Record_Light>, IPoolee
+public class Light : RecordInstance<Table_Light, Record_Light>, IPoolee
 {
     /* Dependency */
     public Light2D light2D;
@@ -28,6 +28,7 @@ public class Light : RecordInstanceBase<Table_Light, Record_Light>, IPoolee
     private void Start()
     {
         // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
         startFlag = true;
         base.Start();
         instances.Add(this);

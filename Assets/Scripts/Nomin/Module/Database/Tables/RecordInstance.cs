@@ -11,11 +11,13 @@ using UnityEngine;
 /// </summary>
 /// <typeparam name="T1">테이블 타입</typeparam>
 /// <typeparam name="T2">레코드 타입 (ScriptableObject)</typeparam>
-public class RecordInstanceBase<T1, T2> : MonoBehaviour where T1 : ITable where T2 : IRecord
+public class RecordInstance<T1, T2> : MonoBehaviour where T1 : ITable where T2 : IRecord
 {
     /* Dependency */
     private Database_AboJam database_aboJam => Database_AboJam.instance;
     public T2 initialRecord;
+
+    /* Field & Property */
     public bool startFlag = false;
 
     /* Intializer & Finalizer & Updater */

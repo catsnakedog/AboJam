@@ -51,8 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5ed7ccab47d7a478a81cbfb12117c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialRecord: {fileID: 11400000, guid: 2af40dad09b35764ba2f7175090f93f1, type: 2}
+  startFlag: 0
   hp: {fileID: 3580031304758939475}
-  reinforceCost: 050000000a000000
   hpMultiply: 1.5
   ID: Guard
 --- !u!114 &2330620171710835516

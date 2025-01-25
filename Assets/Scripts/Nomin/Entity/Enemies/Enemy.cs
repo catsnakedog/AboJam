@@ -6,19 +6,19 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
-public class Enemy<T1, T2> : RecordInstanceBase<T1, T2>, IEnemy 
+public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy 
     where T1 : ITable
     where T2 : IRecord
 {
     /* Dependency */
     public HP hp;
     public Movement movement;
-    private Pool pool => Pool.instance; // 하드 링크
-    private Grid grid => Grid.instance; // 하드 링크
+    protected Pool pool => Pool.instance; // 하드 링크
+    protected Grid grid => Grid.instance; // 하드 링크
 
     /* Field & Property */
-    public static List<IEnemy> instances = new List<IEnemy>(); // 모든 적 인스턴스
-    public static IEnemy currentEnemy; // 최근 선택된 적
+    public static List<IEnemy> instances => IEnemy.instances;
+    public static IEnemy currentEnemy => IEnemy.currentEnemy;
     public int Level { get; private set; } = 0; // 현재 레벨
     public int MaxLevel { get; private set; } // 최대 레벨
 
@@ -26,13 +26,14 @@ public class Enemy<T1, T2> : RecordInstanceBase<T1, T2>, IEnemy
     public virtual void Start()
     {
         base.Start();
-        instances.Add((IEnemy)this);
+        instances.Add(this);
         Load();
+
         hp.death.AddListener(() => StartCoroutine(CorDeath(2)));
     }
     private void OnDestroy()
     {
-        instances.Remove((IEnemy)this);
+        instances.Remove(this);
     }
     public virtual void Load()
     {
@@ -107,7 +108,7 @@ public class Enemy<T1, T2> : RecordInstanceBase<T1, T2>, IEnemy
     /// </summary>
     public void OnClick()
     {
-        currentEnemy = this;
+        IEnemy.currentEnemy = this;
     }
     /// <summary>
     /// <br>적을 증강합니다.</br>

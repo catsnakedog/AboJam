@@ -132,7 +132,10 @@ public class Launcher : MonoBehaviour
     /// <param name="angle">발사각 변경</param>
     public void Launch(Targeter.TargetType targetType, float detection, float ratio = 1f, float angle = 0f)
     {
-        GameObject target = targeter.Targetting(targetType, projectile.GetComponent<Projectile>().clashTags, detection, ratio);
+        GameObject temp = pool.Get(projectile.name);
+        GameObject target = targeter.Targetting(targetType, temp.GetComponent<Projectile>().ClashTags, detection, ratio);
+        pool.Return(temp);
+
         if (target != null) Launch(target.transform.position, angle);
     }
 

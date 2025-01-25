@@ -53,8 +53,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed2bf2db5f476247b14cd2719973d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialRecord: {fileID: 11400000, guid: 287434f5c0ba71f49915e491e2662ca1, type: 2}
+  startFlag: 0
   hp: {fileID: 3580031304758939475}
-  reinforceCost: 050000000a000000
   launcher: {fileID: 1906722261477387749}
   indicator_circle: {fileID: 7920355262542515973}
   ID: Splash

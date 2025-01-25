@@ -35,6 +35,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     private void Start()
     {
         // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
         startFlag = true;
         base.Start();
         instances.Add(this);
@@ -58,8 +59,8 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
         database_abojam.ExportGunner(initialRecord.ID, ref delay, ref delay_fire, ref detection, ref subCount);
-
         base.Load();
+        
         Fire(true);
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()
@@ -104,7 +105,9 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     {
         while (true)
         {
-            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, launcher.projectile.GetComponent<Projectile>().clashTags, detection);
+            GameObject temp = pool.Get(launcher.projectile.name);
+            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, temp.GetComponent<Projectile>().ClashTags, detection);
+            pool.Return(temp);
 
             if (target != null)
             {

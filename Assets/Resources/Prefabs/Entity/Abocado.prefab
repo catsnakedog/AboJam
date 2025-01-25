@@ -102,9 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26552026f408a60468f10288f2ed6f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialRecord: {fileID: 11400000, guid: 180f4058493f0304788c5ac6559c88a8, type: 2}
+  startFlag: 0
   spriteRenderer: {fileID: 6781959995807194502}
   hp: {fileID: 8862693264221764112}
-  ID: Abocado
+  quality_max: 1
   harvest: 1
   harvestPlus: 1
 --- !u!114 &6412532579159748648

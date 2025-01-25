@@ -53,8 +53,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07064b7959ca9074cb06b27874c4e4ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialRecord: {fileID: 11400000, guid: 1aff4e6198889d54aa52c7f5fd0f85bb, type: 2}
+  startFlag: 0
   hp: {fileID: 3580031304758939475}
-  reinforceCost: 050000000a000000
+  reinforceCost: 
   launcher: {fileID: 5557456795515503153}
   indicator_circle: {fileID: 2130840028591414169}
   ID: Auto

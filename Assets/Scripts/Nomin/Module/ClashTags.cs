@@ -6,8 +6,14 @@ using UnityEditor.Timeline.Actions;
 using UnityEngine.EventSystems;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
-public class ClashTags : RecordInstanceBase<Table_ClashTags, Record_ClashTags>
+public class ClashTags : RecordInstance<Table_ClashTags, Record_ClashTags>
 {
     /* Intializer & Finalizer & Updater */
-    public void Start() { base.Start(); }
+    public void Start()
+    {
+        // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
+        startFlag = true;
+        base.Start();
+    }
 }

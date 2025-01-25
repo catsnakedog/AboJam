@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Rendering.Universal;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-public class Explosion : RecordInstanceBase<Table_Explosion, Record_Explosion>, IPoolee
+public class Explosion : RecordInstance<Table_Explosion, Record_Explosion>, IPoolee
 {
     /* Dependency */
     public GameObject light2D; // 빛, 없어도 작동
@@ -27,6 +27,7 @@ public class Explosion : RecordInstanceBase<Table_Explosion, Record_Explosion>, 
     private void Start()
     {
         // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
         startFlag = true;
         base.Start();
         instances.Add(this);

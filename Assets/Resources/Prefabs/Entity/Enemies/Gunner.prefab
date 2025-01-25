@@ -55,13 +55,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialRecord: {fileID: 11400000, guid: 24e34d54512aa4b408b91c0315153e6a, type: 2}
+  startFlag: 0
   hp: {fileID: 415146930711245322}
   launcher: {fileID: 8889468428612328896}
   indicator_circle: {fileID: 4248338779200015288}
   animator: {fileID: 2428712746383201744}
   spriteRenderer: {fileID: 4047752045931380342}
   move: {fileID: 9013543737906462685}
-  ID: Gunner
   delay: 0.8
   delay_fire: 0.1
   delay_anim: 0.3

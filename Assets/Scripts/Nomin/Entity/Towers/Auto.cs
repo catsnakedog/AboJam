@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using static ObjectPool;
 
-public class Auto : Tower, IPoolee
+public class Auto : Tower<Table_Auto, Record_Auto>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
@@ -27,11 +28,12 @@ public class Auto : Tower, IPoolee
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
+        startFlag = true;
         base.Start();
         instances.Add(this);
-        Load();
             
-        // 인디케이터 스케일링
         float scale = launcher.range * 4;
         indicator_circle.transform.localScale = new Vector2(scale, scale);
     }
@@ -41,10 +43,12 @@ public class Auto : Tower, IPoolee
     }
     public void Load()
     {
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportAuto(ID, ref reinforceCost, ref delay, ref detection, ref angle, ref subCount, ref subCountPlus);
         base.Load();
 
-        database_abojam.ExportAuto(ID, ref delay, ref detection, ref angle, ref subCount, ref subCountPlus);
-
+        MaxLevel = ReinforceCost.Length;
         delay_waitForSeconds = new WaitForSeconds(delay);
         Fire(true);
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
@@ -90,7 +94,9 @@ public class Auto : Tower, IPoolee
     {
         while (true)
         {
-            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, launcher.projectile.GetComponent<Projectile>().clashTags, detection);
+            GameObject temp = pool.Get(launcher.projectile.name);
+            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, temp.GetComponent<Projectile>().ClashTags, detection);
+            pool.Return(temp);
 
             if (target != null)
             {

@@ -10,7 +10,7 @@ using static Unity.Burst.Intrinsics.X86.Avx;
 public class Reinforcement : MonoBehaviour
 {
     /* Dependency */
-    private Tower currentTower => Tower.currentTower; // 하드 링크
+    private ITower currentTower => ITower.currentTower; // 하드 링크
     private Message message => Message.instance; // 하드 링크
     private Promotion promotion => Promotion.instance; // 하드 링크
     private Demolition demolition => Demolition.instance; // 하드 링크

@@ -43,14 +43,14 @@ public class Indicator_Circle : MonoBehaviour
 
     /* Public Method */
     /// <summary>
-    /// 다른 인디케이터는 종료하고, 현재 인디케이터는 스위칭 합니다.
+    /// 다른 인디케이터는 종료하고, 현재 인디케이터는 켭니다.
     /// </summary>
     public void Swtich()
     {
         bool isActive = gameObject.activeSelf;
         foreach (var item in instances) item.gameObject.SetActive(false);
 
-        gameObject.SetActive(!isActive);
+        gameObject.SetActive(true);
     }
     /// <summary>
     /// 인디케이터를 종료합니다.

@@ -11,7 +11,7 @@ using UnityEngine.Rendering.Universal;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.Rendering.DebugUI;
 
-public class HP : RecordInstanceBase<Table_HP, Record_HP>
+public class HP : RecordInstance<Table_HP, Record_HP>
 {
     /* Dependency */
     public SpriteRenderer spr_empty;
@@ -33,11 +33,11 @@ public class HP : RecordInstanceBase<Table_HP, Record_HP>
     private void Start()
     {
         // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
         startFlag = true;
         base.Start();
         instances.Add(this);
 
-        Load();
         material = spr_max.material;
         spr_max.sortingOrder = spr_empty.sortingOrder + 1;
         death.AddListener(() => { Debug.Log($"{entity.name} 의 체력이 0 에 도달했습니다."); });

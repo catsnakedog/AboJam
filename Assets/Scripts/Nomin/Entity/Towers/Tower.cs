@@ -1,36 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using UnityEditor.VersionControl;
 using UnityEngine;
-using static ObjectPool;
 
-public class Tower : MonoBehaviour
+public class Tower<T1, T2> : RecordInstance<T1, T2>, ITower
+    where T1 : ITable
+    where T2 : IRecord
 {
     /* Dependency */
+    [Header("[ Dependency : Tower ]")]
     public HP hp;
     private Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
     private Message message => Message.instance; // 하드 링크
-    private Pool pool => Pool.instance; // 하드 링크
-    private Grid grid => Grid.instance; // 하드 링크
+    protected Pool pool => Pool.instance; // 하드 링크
+    protected Grid grid => Grid.instance; // 하드 링크
 
     /* Field & Property */
-    public static List<Tower> instances = new List<Tower>(); // 모든 타워 인스턴스
-    public static Tower currentTower; // 최근 선택된 타워
-    public int Level { get; private set; } // 현재 레벨
-    public int MaxLevel { get; private set; } // 최대 레벨
-    public int[] ReinforceCost { get { return reinforceCost; } private set { reinforceCost = value; } } // 레벨업 비용 (개수 = 최대 레벨 결정)
+    public static List<ITower> instances => ITower.instances;
+    public static ITower currentTower => ITower.currentTower;
+    public int Level { get; set; } // 현재 레벨
+    public int MaxLevel { get; set; } // 최대 레벨
+    public int[] reinforceCost; public int[] ReinforceCost { get => reinforceCost; set => reinforceCost = value; }// 레벨업 비용 (개수 = 최대 레벨 결정)
 
     /* Backing Field */
-    [SerializeField] private int[] reinforceCost; 
 
     /* Intializer & Finalizer & Updater */
     public virtual void Start()
     {
+        base.Start();
         instances.Add(this);
         Load();
+
         hp.death.AddListener(() => StartCoroutine(CorDeath(2)));
-        MaxLevel = ReinforceCost.Length;
     } // 최초 생성 시 (최초 초기화)
     private void OnDestroy()
     {
@@ -109,7 +112,7 @@ public class Tower : MonoBehaviour
     /// </summary>
     public void OnClick()
     {
-        currentTower = this;
+        ITower.currentTower = this;
         reinforcement.On();
     }
     /// <summary>

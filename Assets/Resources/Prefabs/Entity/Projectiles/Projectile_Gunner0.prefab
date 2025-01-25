@@ -47,13 +47,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialRecord: {fileID: 11400000, guid: 79e39740e11bc9549bf3e340025c52e7, type: 2}
+  startFlag: 0
   explosion: {fileID: 3100893671775424701, guid: 23c586dcd7f16054192fe532537945ae, type: 3}
   colider2D: {fileID: 1469443515481340077}
-  ID: Projectile_Gunner0
   launcher: {fileID: 0}
   clashTags:
   - Player
   - Towers
+  - Abocados
   damage: 3
   penetrate: 1
 --- !u!212 &1193637438243774845

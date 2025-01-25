@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Splash : Tower, IPoolee
+public class Splash : Tower<Table_Splash, Record_Splash>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
@@ -25,9 +25,11 @@ public class Splash : Tower, IPoolee
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
+        startFlag = true;
         base.Start();
         instances.Add(this);
-        Load();
 
         // 인디케이터 스케일링
         float scale = launcher.range * 4;
@@ -40,11 +42,13 @@ public class Splash : Tower, IPoolee
     }
     public void Load()
     {
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportSplash(ID, ref reinforceCost, ref delay, ref detection);
         base.Load();
 
-        database_abojam.ExportSplash(ID, ref delay, ref detection);
+        MaxLevel = ReinforceCost.Length;
         delay_waitForSeconds = new WaitForSeconds(delay);
-
         Fire(true);
     } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
     public void Save()
@@ -93,7 +97,10 @@ public class Splash : Tower, IPoolee
     {
         while (true)
         {
-            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, launcher.projectile.GetComponent<Projectile>().clashTags, detection);
+            GameObject temp = pool.Get(launcher.projectile.name);
+            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, temp.GetComponent<Projectile>().ClashTags, detection);
+            pool.Return(temp);
+
             if (target != null) launcher.Launch(Targeter.TargetType.Near, detection);
 
             yield return delay_waitForSeconds;

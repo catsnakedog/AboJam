@@ -34,10 +34,10 @@ public class Database_AboJam : MonoBehaviour
     public List<Table_HP> HP = new() { new Table_HP("ID", Hp_max: 1f, HideFullHP: true) };
     public List<Table_Abocado> Abocado = new() { new Table_Abocado("ID", level: EnumData.Abocado.Cultivated, quality: 1, quality_max: 1, harvest: 1, harvestPlus: 1) };
     public List<Table_Gunner> Gunner = new() { new Table_Gunner("ID", delay: 1f, delay_fire: 1f, detection: 1f, subCount: 1) };
-    public List<Table_Auto> Auto = new() { new Table_Auto("ID", delay: 1f, detection: 1f, angle: 1f, subCount: 1, subCountPlus: 1) };
-    public List<Table_Guard> Guard = new() { new Table_Guard("ID", hpMultiply: 1f) };
-    public List<Table_Splash> Splash = new() { new Table_Splash("ID", delay: 1f, detection: 1f) };
-    public List<Table_Heal> Heal = new() { new Table_Heal("ID", delay: 1f, detection: 1f, ratio: 1f) };
+    public List<Table_Auto> Auto = new() { new Table_Auto("ID", reinforceCost: new int[] {1, 1}, delay: 1f, detection: 1f, angle: 1f, subCount: 1, subCountPlus: 1) };
+    public List<Table_Guard> Guard = new() { new Table_Guard("ID", reinforceCost: new int[] { 1, 1 }, hpMultiply: 1f) };
+    public List<Table_Splash> Splash = new() { new Table_Splash("ID", reinforceCost: new int[] { 1, 1 }, delay: 1f, detection: 1f) };
+    public List<Table_Heal> Heal = new() { new Table_Heal("ID", reinforceCost: new int[] { 1, 1 }, delay: 1f, detection: 1f, ratio: 1f) };
     public List<Table_Light> Light = new() { new Table_Light("ID", "colorID", radius: 1f, intensity: 1f, onTime: 1f, keepTime: 1f, offTime: 1f, frame: 1) };
     public List<Table_Color> Color = new() { new Table_Color("ID", r: 1f, g: 1f, b: 1f, a: 1f) };
     public List<Table_Explosion> Explosion = new() { new Table_Explosion("ID", scale: 1f, radius: 1f, damage: 1f, time: 1f) };
@@ -139,29 +139,33 @@ public class Database_AboJam : MonoBehaviour
         detection = data.detection;
         subCount = data.subCount;
     }
-    public void ExportAuto(string ID, ref float delay, ref float detection, ref float angle, ref int subCount, ref int subCountPlus)
+    public void ExportAuto(string ID, ref int[] reinforeceCost, ref float delay, ref float detection, ref float angle, ref int subCount, ref int subCountPlus)
     {
         Table_Auto data = Auto.FirstOrDefault(auto => auto.ID == ID);
+        reinforeceCost = data.reinforceCost;
         delay = data.delay;
         detection = data.detection;
         angle = data.angle;
         subCount = data.subCount;
         subCountPlus = data.subCountPlus;
     }
-    public void ExportGuard(string ID, ref float hpMultiply)
+    public void ExportGuard(string ID, ref int[] reinforeceCost, ref float hpMultiply)
     {
         Table_Guard data = Guard.FirstOrDefault(guard => guard.ID == ID);
+        reinforeceCost = data.reinforceCost;
         hpMultiply = data.hpMultiply;
     }
-    public void ExportSplash(string ID, ref float delay, ref float detection)
+    public void ExportSplash(string ID, ref int[] reinforeceCost, ref float delay, ref float detection)
     {
         Table_Splash data = Splash.FirstOrDefault(splash => splash.ID == ID);
+        reinforeceCost = data.reinforceCost;
         delay = data.delay;
         detection = data.detection;
     }
-    public void ExportHeal(string ID, ref float delay, ref float detection, ref float ratio)
+    public void ExportHeal(string ID, ref int[] reinforeceCost, ref float delay, ref float detection, ref float ratio)
     {
         Table_Heal data = Heal.FirstOrDefault(heal => heal.ID == ID);
+        reinforeceCost = data.reinforceCost;
         delay = data.delay;
         detection = data.detection;
         ratio = data.ratio;

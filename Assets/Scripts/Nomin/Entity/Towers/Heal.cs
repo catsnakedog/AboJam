@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Heal : Tower, IPoolee
+public class Heal : Tower<Table_Heal, Record_Heal>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
@@ -26,9 +26,11 @@ public class Heal : Tower, IPoolee
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
+        startFlag = true;
         base.Start();
         instances.Add(this);
-        Load();
 
         // 인디케이터 스케일링
         float scale = launcher.range * 4;
@@ -41,10 +43,12 @@ public class Heal : Tower, IPoolee
     }
     public void Load()
     {
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportHeal(ID, ref reinforceCost, ref delay, ref detection, ref ratio);
         base.Load();
 
-        database_abojam.ExportHeal(ID, ref delay, ref detection, ref ratio);
-
+        MaxLevel = ReinforceCost.Length;
         delay_waitForSeconds = new WaitForSeconds(delay);
         Healing(true);
     } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
@@ -94,7 +98,9 @@ public class Heal : Tower, IPoolee
     {
         while (true)
         {
-            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.LowHP, launcher.projectile.GetComponent<Projectile>().clashTags, detection, ratio);
+            GameObject temp = pool.Get(launcher.projectile.name);
+            GameObject target = launcher.targeter.Targetting(Targeter.TargetType.LowHP, temp.GetComponent<Projectile>().ClashTags, detection, ratio);
+            pool.Return(temp);
             if (target != null) launcher.Launch(Targeter.TargetType.LowHP, detection, ratio);
 
             yield return delay_waitForSeconds;
