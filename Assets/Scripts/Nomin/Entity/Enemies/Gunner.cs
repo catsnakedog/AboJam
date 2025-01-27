@@ -58,7 +58,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     {
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
-        database_abojam.ExportGunner(initialRecord.ID, ref delay, ref delay_fire, ref detection, ref subCount);
+        database_abojam.ExportGunner(initialRecords[0].ID, ref delay, ref delay_fire, ref detection, ref subCount);
         base.Load();
         
         Fire(true);

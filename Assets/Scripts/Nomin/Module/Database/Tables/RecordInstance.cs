@@ -15,7 +15,7 @@ public class RecordInstance<T1, T2> : MonoBehaviour where T1 : ITable where T2 :
 {
     /* Dependency */
     private Database_AboJam database_aboJam => Database_AboJam.instance;
-    public T2 initialRecord;
+    public T2[] initialRecords;
 
     /* Field & Property */
     public bool startFlag = false;
@@ -26,14 +26,14 @@ public class RecordInstance<T1, T2> : MonoBehaviour where T1 : ITable where T2 :
     /// </summary>
     public void Start()
     {
-        if (initialRecord == null) Debug.Log($"{gameObject.name} 의 Scriptable Object 가 할당되지 않았습니다.");
+        foreach (var initialRecord in initialRecords)
+        {
+            if (initialRecord == null) Debug.Log($"{gameObject.name} 의 Scriptable Object 가 할당되지 않았습니다.");
 
-        // 런타임 DB 에서 테이블을 가져옵니다.
-        List<T1> table = GetField<List<T1>>(database_aboJam)[0];
-
-        // 런타임 테이블에 ID 가 같은 레코드가 존재하지 않으면 등록
-        if (table.FirstOrDefault(record => record.ID == initialRecord.ID) == null)
+            // 런타임 DB 의 테이블에 레코드를 삽입합니다.
+            List<T1> table = GetField<List<T1>>(database_aboJam)[0];
             table.Add((T1)Activator.CreateInstance(typeof(T1), GetFields(initialRecord)));
+        }
     }
 
     /// <summary>

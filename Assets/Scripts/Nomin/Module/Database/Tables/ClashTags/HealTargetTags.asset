@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: HealTargetTags
   m_EditorClassIdentifier: 
   id: HealTargetTags
-  clashTags: Player,Towers,Abocados
+  clashTags: Player

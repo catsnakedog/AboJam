@@ -51,9 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5ed7ccab47d7a478a81cbfb12117c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialRecord: {fileID: 11400000, guid: 2af40dad09b35764ba2f7175090f93f1, type: 2}
+  initialRecords:
+  - {fileID: 11400000, guid: 2af40dad09b35764ba2f7175090f93f1, type: 2}
   startFlag: 0
   hp: {fileID: 3580031304758939475}
+  reinforceCost: 
   hpMultiply: 1.5
   ID: Guard
 --- !u!114 &2330620171710835516
@@ -334,6 +336,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: initialRecord
+      value: 
+      objectReference: {fileID: 11400000, guid: 63f3a01ea9d5b1542ae72d479d7baa90, type: 2}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: initialRecords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: initialRecords.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 63f3a01ea9d5b1542ae72d479d7baa90, type: 2}
     - target: {fileID: 5675147325519521188, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}

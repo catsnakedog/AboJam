@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e20dd138adaf91a46a7ffec2175a2c5f, type: 3}
-  m_Name: Record_Splash
+  m_Script: {fileID: 11500000, guid: 7eb69f8ff501a9b49a9e936848d9ca00, type: 3}
+  m_Name: Heal
   m_EditorClassIdentifier: 
-  id: Splash
-  reinforceCostID: ReinforceCost_Splash
-  delay: 0.6
+  id: Heal
+  reinforceCostID: ReinforceCost_Heal
+  delay: 0.3
   detection: 5
+  ratio: 0.9999

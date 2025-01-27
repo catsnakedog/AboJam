@@ -56,7 +56,7 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
     {
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
-        database_abojam.ExportProjectile(initialRecord.ID, ref clashTags, ref damage, ref penetrate);
+        database_abojam.ExportProjectile(initialRecords[0].ID, ref clashTags, ref damage, ref penetrate);
 
         penetrate_current = penetrate;
     } // 풀에서 꺼낼 때 / Import 시 자동 실행

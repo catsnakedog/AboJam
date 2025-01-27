@@ -49,7 +49,7 @@ public class Light : RecordInstance<Table_Light, Record_Light>, IPoolee
     {
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
-        database_abojam.ExportLight(initialRecord.ID, ref color, ref radius, ref intensity, ref onTime, ref keepTime, ref offTime, ref frame);
+        database_abojam.ExportLight(initialRecords[0].ID, ref color, ref radius, ref intensity, ref onTime, ref keepTime, ref offTime, ref frame);
 
         light2D.color = new UnityEngine.Color(color.r / 255f, color.g / 255f, color.b / 255f, color.a);
         light2D.pointLightOuterRadius = radius;

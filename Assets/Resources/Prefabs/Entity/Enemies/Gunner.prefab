@@ -54,7 +54,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c0dd2476f564945b0efe0af17ae17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialRecord: {fileID: 11400000, guid: 24e34d54512aa4b408b91c0315153e6a, type: 2}
+  initialRecords:
+  - {fileID: 11400000, guid: 24e34d54512aa4b408b91c0315153e6a, type: 2}
   startFlag: 0
   hp: {fileID: 415146930711245322}
   launcher: {fileID: 8889468428612328896}
@@ -519,6 +520,14 @@ PrefabInstance:
       propertyPath: scriptableObject
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: initialRecords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: initialRecords.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5630ff7770ac82e4da94e777503a33ae, type: 2}
     - target: {fileID: 5675147325519521188, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: m_Name
       value: HP

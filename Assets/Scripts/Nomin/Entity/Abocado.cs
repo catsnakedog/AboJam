@@ -66,7 +66,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
 
-        database_abojam.ExportAbocado(initialRecord.ID, ref level, ref quality, ref quality_max, ref harvest, ref harvestPlus);
+        database_abojam.ExportAbocado(initialRecords[0].ID, ref level, ref quality, ref quality_max, ref harvest, ref harvestPlus);
         hp.Load();
         spriteRenderer.sprite = spr_level[0];
     } // 풀에서 꺼낼 때 / Import 시 자동 실행

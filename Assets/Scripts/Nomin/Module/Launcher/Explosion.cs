@@ -40,7 +40,7 @@ public class Explosion : RecordInstance<Table_Explosion, Record_Explosion>, IPoo
     {
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
-        database_abojam.ExportExplosion(initialRecord.ID, out Vector3 scale, ref radius, ref damage, ref time);
+        database_abojam.ExportExplosion(initialRecords[0].ID, out Vector3 scale, ref radius, ref damage, ref time);
 
         transform.localScale = scale;
     } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행

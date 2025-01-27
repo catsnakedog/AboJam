@@ -10,5 +10,5 @@ public class Record_ReinforceCost : ScriptableObject, IRecord
 {
     /* Field & Property */
     [SerializeField] private string id;  public string ID { get => id; set => id = value; }
-    public string reinforceCost;
+    public int reinforceCost;
 }

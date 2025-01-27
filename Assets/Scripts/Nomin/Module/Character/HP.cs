@@ -71,7 +71,7 @@ public class HP : RecordInstance<Table_HP, Record_HP>
     {
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
-        database_abojam.ExportHP(initialRecord.ID, ref hp_max, ref hideFullHp);
+        database_abojam.ExportHP(initialRecords[0].ID, ref hp_max, ref hideFullHp);
 
         Hp_max = hp_max;
         HP_current = hp_max;

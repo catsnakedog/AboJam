@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ReinforceCost_Guard
   m_EditorClassIdentifier: 
   id: ReinforceCost_Guard
-  reinforceCost: 1,2,3
+  reinforceCost: 1

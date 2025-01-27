@@ -38,12 +38,12 @@ public class Database_AboJam : MonoBehaviour
     public List<Table_Guard> Guard = new() { new Table_Guard("ID", "reinforceCostID", hpMultiply: 1f) };
     public List<Table_Splash> Splash = new() { new Table_Splash("ID", "reinforceCostID", delay: 1f, detection: 1f) };
     public List<Table_Heal> Heal = new() { new Table_Heal("ID", "reinforceCostID", delay: 1f, detection: 1f, ratio: 1f) };
-    public List<Table_ReinforceCost> ReinforceCost = new() { new Table_ReinforceCost("ID", "reinforceCost") };
+    public List<Table_ReinforceCost> ReinforceCost = new() { new Table_ReinforceCost("ID", reinforceCost: 1) };
     public List<Table_Light> Light = new() { new Table_Light("ID", "colorID", radius: 1f, intensity: 1f, onTime: 1f, keepTime: 1f, offTime: 1f, frame: 1) };
     public List<Table_Color> Color = new() { new Table_Color("ID", r: 1f, g: 1f, b: 1f, a: 1f) };
     public List<Table_Explosion> Explosion = new() { new Table_Explosion("ID", scale: 1f, radius: 1f, damage: 1f, time: 1f) };
     public List<Table_Projectile> Projectile = new() { new Table_Projectile("ID", "clashTagsID", damage: 1f, penetrate: 1) };
-    public List<Table_ClashTags> ClashTags = new() { new Table_ClashTags("ID", "clashTags") };
+    public List<Table_ClashTags> ClashTags = new() { new Table_ClashTags("ID", clashTags: "clashTags") };
 
     /* Public Method */
     // Import : 서버 DB >> 런타임 DB
@@ -79,11 +79,12 @@ public class Database_AboJam : MonoBehaviour
         foreach (Guard item in global::Guard.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Splash item in global::Splash.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Heal item in global::Heal.instances) if (item.isActiveAndEnabled) item.Load();
+        // Readonly : ReinforceCost
         foreach (Light item in global::Light.instances) if (item.isActiveAndEnabled) item.Load();
-        // Color 는 데이터 상으로만 존재하여 Export 가 불가능합니다.
+        // Readonly : Color
         foreach (Explosion item in global::Explosion.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Projectile item in global::Projectile.instances) if (item.isActiveAndEnabled) item.Load();
-        // ClashTags 는 데이터 상으로만 존재하여 Export 가 불가능합니다.
+        // Readonly : ClashTags
     }
     public void ImportTable<T>(DataSet dataSet, ref List<T> runtimeTable) where T : ITable
     {
@@ -105,7 +106,7 @@ public class Database_AboJam : MonoBehaviour
             {
                 try
                 {
-                    // if Enum / Else 나머지 컨버팅r
+                    // if Enum / Else 나머지 컨버팅
                     if (runtimeTableFieldInfos[j + 1].FieldType.IsEnum) fields[j] = Enum.Parse(runtimeTableFieldInfos[j + 1].FieldType, dataTable.Rows[i][j].ToString());
                     else fields[j] = Convert.ChangeType(dataTable.Rows[i][j], runtimeTableFieldInfos[j + 1].FieldType);
                 }
@@ -117,17 +118,8 @@ public class Database_AboJam : MonoBehaviour
                 }
             }
 
-            // 레코드를 생성한 뒤 런타임 데이터베이스에서 해당 ID 와 매칭되는 레코드 특정
-            T record = (T)(Activator.CreateInstance(typeof(T), fields));
-            T runtimeRecord = (T)runtimeTable.OfType<ITable>().FirstOrDefault(item => item.ID == record.ID);
-
-            // 기존 레코드가 있으면 수정, 없으면 생성
-            if (runtimeRecord != null)
-            {
-                foreach (var property in typeof(T).GetProperties()) property.SetValue(runtimeRecord, property.GetValue(record));
-                foreach (var field in typeof(T).GetFields()) field.SetValue(runtimeRecord, field.GetValue(record));
-            }
-            if (runtimeRecord == null) runtimeTable.Add(record);
+            // 런타임 테이블에 생성한 레코드 추가
+            runtimeTable.Add((T)Activator.CreateInstance(typeof(T), fields));
         }
     }
     public void ExportHP(string ID, ref float hp_max, ref bool hideFullHp)
@@ -186,8 +178,10 @@ public class Database_AboJam : MonoBehaviour
     }
     public void ExportReinforceCost(string ID, ref int[] reinforceCost)
     {
-        Table_ReinforceCost data = ReinforceCost.FirstOrDefault(reinforceCost => reinforceCost.ID == ID);
-        reinforceCost = data.reinforceCost.Split(',').Select(int.Parse).ToArray();
+        reinforceCost = ReinforceCost
+            .Where(reinforceCost => reinforceCost.ID == ID)
+            .Select(data => data.reinforceCost)
+            .ToArray();
     }
     public void ExportLight(string ID, ref UnityEngine.Color color, ref float radius, ref float intensity, ref float onTime, ref float keepTime, ref float offTime, ref float frame)
     {
@@ -225,7 +219,9 @@ public class Database_AboJam : MonoBehaviour
     }
     public void ExportClashTags(string ID, ref string[] clashTags)
     {
-        Table_ClashTags data = ClashTags.FirstOrDefault(clashTags => clashTags.ID == ID);
-        clashTags = data.clashTags.Split(',');
+        clashTags = ClashTags
+            .Where(clashTags => clashTags.ID == ID)
+            .Select(data => data.clashTags)
+            .ToArray();
     }
 }

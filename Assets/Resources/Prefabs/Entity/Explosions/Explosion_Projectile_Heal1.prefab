@@ -120,7 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa64b3eb05ccc7c448340e7b3f391639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialRecord: {fileID: 11400000, guid: a124a8daa151cdc4e8f9df47e7fd5a75, type: 2}
+  initialRecords:
+  - {fileID: 11400000, guid: a124a8daa151cdc4e8f9df47e7fd5a75, type: 2}
   startFlag: 0
   light2D: {fileID: 5041889053341477472, guid: 3d31d33101e69d948862f186f7d8d354, type: 3}
   targeter: {fileID: 8977354508500975511}

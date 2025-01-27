@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7352035a9561471478e8951ef58a9f69, type: 3}
-  m_Name: ReinforceCost_Heal
+  m_Script: {fileID: 11500000, guid: ec028051ee1df7449b412e797a064d84, type: 3}
+  m_Name: EnemyTargetTags 2
   m_EditorClassIdentifier: 
-  id: ReinforceCost_Heal
-  reinforceCost: 3
+  id: EnemyTargetTags
+  clashTags: Abocados

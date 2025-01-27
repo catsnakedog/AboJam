@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515f25f316047644287fdc7c1e732075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialRecord: {fileID: 11400000, guid: d30091379f118a646a75656ba0a64ece, type: 2}
+  initialRecords:
+  - {fileID: 11400000, guid: d30091379f118a646a75656ba0a64ece, type: 2}
   startFlag: 0
   explosion: {fileID: 3100893671775424701, guid: 707676d65791ac848b55594c829b5396, type: 3}
   colider2D: {fileID: 1469443515481340077}
