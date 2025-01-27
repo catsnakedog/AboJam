@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3ece3e57f641c47896d5e318bb279f, type: 3}
   m_Name: Record_Guard
   m_EditorClassIdentifier: 
-  id: 
-  hpMultiply: 0
+  id: Guard
+  reinforceCostID: ReinforceCost_Guard
+  hpMultiply: 1.5

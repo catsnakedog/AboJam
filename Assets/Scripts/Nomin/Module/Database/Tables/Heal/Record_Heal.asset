@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eb69f8ff501a9b49a9e936848d9ca00, type: 3}
   m_Name: Record_Heal
   m_EditorClassIdentifier: 
-  id: 
-  delay: 0
-  detection: 0
-  ratio: 0
+  id: Heal
+  reinforceCostID: ReinforceCost_Heal
+  delay: 0.3
+  detection: 5
+  ratio: 0.9999

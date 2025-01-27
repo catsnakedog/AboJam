@@ -8,6 +8,6 @@ public class Record_Guard : ScriptableObject, IRecord
 {
     /* Field & Property */
     [SerializeField] public string id; public string ID { get => id; set => id = value; }
-    public int[] reinforceCost;
+    public string reinforceCostID;
     public float hpMultiply;
 }

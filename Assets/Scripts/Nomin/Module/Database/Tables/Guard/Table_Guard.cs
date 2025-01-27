@@ -7,14 +7,14 @@ public class Table_Guard : ITable
     /* Field & Property */
     public string TableName { get; set; } = "Guard";
     public string ID { get; set; }
-    public int[] reinforceCost;
+    public string reinforceCostID;
     public float hpMultiply;
 
     /* Intializer & Finalizer & Updater */
-    public Table_Guard(string ID, int[] reinforceCost, float hpMultiply)
+    public Table_Guard(string ID, string reinforceCostID, float hpMultiply)
     {
         this.ID = ID;
-        this.reinforceCost = reinforceCost;
+        this.reinforceCostID = reinforceCostID;
         this.hpMultiply = hpMultiply;
     }
 }

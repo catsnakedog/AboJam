@@ -8,18 +8,17 @@ using UnityEngine;
 /// </summary>
 public struct Sector
 {
-    /* Field & Property */
-    public static List<Sector> sectors = new();
-    public string sectorID;
+    public static List<Sector> instances = new();
+    public string ID;
     public float angleStart;
     public float angleEnd;
     public float radiusIn;
     public float radiusOut;
 
     /* Intializer & Finalizer & Updater */
-    public Sector(string sectorID, float angleStart, float angleEnd, float radiusIn, float radiusOut)
+    public Sector(string ID, float angleStart, float angleEnd, float radiusIn, float radiusOut)
     {
-        this.sectorID = sectorID;
+        this.ID = ID;
         this.angleStart = angleStart;
         this.angleEnd = angleEnd;
         this.radiusIn = radiusIn;

@@ -34,10 +34,11 @@ public class Database_AboJam : MonoBehaviour
     public List<Table_HP> HP = new() { new Table_HP("ID", Hp_max: 1f, HideFullHP: true) };
     public List<Table_Abocado> Abocado = new() { new Table_Abocado("ID", level: EnumData.Abocado.Cultivated, quality: 1, quality_max: 1, harvest: 1, harvestPlus: 1) };
     public List<Table_Gunner> Gunner = new() { new Table_Gunner("ID", delay: 1f, delay_fire: 1f, detection: 1f, subCount: 1) };
-    public List<Table_Auto> Auto = new() { new Table_Auto("ID", reinforceCost: new int[] {1, 1}, delay: 1f, detection: 1f, angle: 1f, subCount: 1, subCountPlus: 1) };
-    public List<Table_Guard> Guard = new() { new Table_Guard("ID", reinforceCost: new int[] { 1, 1 }, hpMultiply: 1f) };
-    public List<Table_Splash> Splash = new() { new Table_Splash("ID", reinforceCost: new int[] { 1, 1 }, delay: 1f, detection: 1f) };
-    public List<Table_Heal> Heal = new() { new Table_Heal("ID", reinforceCost: new int[] { 1, 1 }, delay: 1f, detection: 1f, ratio: 1f) };
+    public List<Table_Auto> Auto = new() { new Table_Auto("ID", "reinforceCostID", delay: 1f, detection: 1f, angle: 1f, subCount: 1, subCountPlus: 1) };
+    public List<Table_Guard> Guard = new() { new Table_Guard("ID", "reinforceCostID", hpMultiply: 1f) };
+    public List<Table_Splash> Splash = new() { new Table_Splash("ID", "reinforceCostID", delay: 1f, detection: 1f) };
+    public List<Table_Heal> Heal = new() { new Table_Heal("ID", "reinforceCostID", delay: 1f, detection: 1f, ratio: 1f) };
+    public List<Table_ReinforceCost> ReinforceCost = new() { new Table_ReinforceCost("ID", "reinforceCost") };
     public List<Table_Light> Light = new() { new Table_Light("ID", "colorID", radius: 1f, intensity: 1f, onTime: 1f, keepTime: 1f, offTime: 1f, frame: 1) };
     public List<Table_Color> Color = new() { new Table_Color("ID", r: 1f, g: 1f, b: 1f, a: 1f) };
     public List<Table_Explosion> Explosion = new() { new Table_Explosion("ID", scale: 1f, radius: 1f, damage: 1f, time: 1f) };
@@ -60,6 +61,7 @@ public class Database_AboJam : MonoBehaviour
             ImportTable(dataSet, ref Guard);
             ImportTable(dataSet, ref Splash);
             ImportTable(dataSet, ref Heal);
+            ImportTable(dataSet, ref ReinforceCost);
             ImportTable(dataSet, ref Light);
             ImportTable(dataSet, ref Color);
             ImportTable(dataSet, ref Explosion);
@@ -85,8 +87,11 @@ public class Database_AboJam : MonoBehaviour
     }
     public void ImportTable<T>(DataSet dataSet, ref List<T> runtimeTable) where T : ITable
     {
-        // runtimeTable.TableName 으로 서버에서 테이블을 특정합니다.
+        // runtimeTable.TableName 으로 서버에서 테이블을 특정
         DataTable dataTable = dataSet.Tables[runtimeTable[0].TableName];
+
+        // 런타임 테이블 초기화
+        runtimeTable.Clear();
 
         // 모든 런타임 테이블 필드 정보 조회
         FieldInfo[] runtimeTableFieldInfos = typeof(T).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -98,9 +103,18 @@ public class Database_AboJam : MonoBehaviour
             System.Object[] fields = new System.Object[dataTable.Columns.Count];
             for (int j = 0; j < dataTable.Columns.Count; j++)
             {
-                // if Enum / Else 나머지 컨버팅
-                if (runtimeTableFieldInfos[j + 1].FieldType.IsEnum) fields[j] = Enum.Parse(runtimeTableFieldInfos[j + 1].FieldType, dataTable.Rows[i][j].ToString());
-                else fields[j] = Convert.ChangeType(dataTable.Rows[i][j], runtimeTableFieldInfos[j + 1].FieldType);
+                try
+                {
+                    // if Enum / Else 나머지 컨버팅r
+                    if (runtimeTableFieldInfos[j + 1].FieldType.IsEnum) fields[j] = Enum.Parse(runtimeTableFieldInfos[j + 1].FieldType, dataTable.Rows[i][j].ToString());
+                    else fields[j] = Convert.ChangeType(dataTable.Rows[i][j], runtimeTableFieldInfos[j + 1].FieldType);
+                }
+                catch (Exception)
+                {
+                    Debug.Log($"서버 테이블 {dataTable.TableName} 의 컬럼 {dataTable.Columns[j].ColumnName} 를 {runtimeTableFieldInfos[j + 1].FieldType} 로의 타입 변환이 실패했습니다.");
+                    Debug.Log("서버 테이블과 런타임 테이블의 컬럼 개수, 타입이 정확히 일치하는지 확인해주세요.");
+                    throw;
+                }
             }
 
             // 레코드를 생성한 뒤 런타임 데이터베이스에서 해당 ID 와 매칭되는 레코드 특정
@@ -139,36 +153,41 @@ public class Database_AboJam : MonoBehaviour
         detection = data.detection;
         subCount = data.subCount;
     }
-    public void ExportAuto(string ID, ref int[] reinforeceCost, ref float delay, ref float detection, ref float angle, ref int subCount, ref int subCountPlus)
+    public void ExportAuto(string ID, ref int[] reinforceCost, ref float delay, ref float detection, ref float angle, ref int subCount, ref int subCountPlus)
     {
         Table_Auto data = Auto.FirstOrDefault(auto => auto.ID == ID);
-        reinforeceCost = data.reinforceCost;
+        ExportReinforceCost(data.reinforceCostID, ref reinforceCost);
         delay = data.delay;
         detection = data.detection;
         angle = data.angle;
         subCount = data.subCount;
         subCountPlus = data.subCountPlus;
     }
-    public void ExportGuard(string ID, ref int[] reinforeceCost, ref float hpMultiply)
+    public void ExportGuard(string ID, ref int[] reinforceCost, ref float hpMultiply)
     {
         Table_Guard data = Guard.FirstOrDefault(guard => guard.ID == ID);
-        reinforeceCost = data.reinforceCost;
+        ExportReinforceCost(data.reinforceCostID, ref reinforceCost);
         hpMultiply = data.hpMultiply;
     }
-    public void ExportSplash(string ID, ref int[] reinforeceCost, ref float delay, ref float detection)
+    public void ExportSplash(string ID, ref int[] reinforceCost, ref float delay, ref float detection)
     {
         Table_Splash data = Splash.FirstOrDefault(splash => splash.ID == ID);
-        reinforeceCost = data.reinforceCost;
+        ExportReinforceCost(data.reinforceCostID, ref reinforceCost);
         delay = data.delay;
         detection = data.detection;
     }
-    public void ExportHeal(string ID, ref int[] reinforeceCost, ref float delay, ref float detection, ref float ratio)
+    public void ExportHeal(string ID, ref int[] reinforceCost, ref float delay, ref float detection, ref float ratio)
     {
         Table_Heal data = Heal.FirstOrDefault(heal => heal.ID == ID);
-        reinforeceCost = data.reinforceCost;
+        ExportReinforceCost(data.reinforceCostID, ref reinforceCost);
         delay = data.delay;
         detection = data.detection;
         ratio = data.ratio;
+    }
+    public void ExportReinforceCost(string ID, ref int[] reinforceCost)
+    {
+        Table_ReinforceCost data = ReinforceCost.FirstOrDefault(reinforceCost => reinforceCost.ID == ID);
+        reinforceCost = data.reinforceCost.Split(',').Select(int.Parse).ToArray();
     }
     public void ExportLight(string ID, ref UnityEngine.Color color, ref float radius, ref float intensity, ref float onTime, ref float keepTime, ref float offTime, ref float frame)
     {

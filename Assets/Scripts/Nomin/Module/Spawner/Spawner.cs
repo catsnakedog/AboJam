@@ -6,23 +6,6 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-
-    public struct Spawn
-    {
-
-    }
-    public struct Spawnees
-    {
-
-    }
-    public struct Wave
-    {
-
-    }
-    public struct Waves
-    {
-
-    }
     private Pool pool => Pool.instance;
     public GameObject[] obj;
 

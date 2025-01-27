@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b11b26805175dc746b70f50fd2e4d917, type: 3}
   m_Name: Record_Auto
   m_EditorClassIdentifier: 
-  id: 
-  delay: 0
-  detection: 0
-  angle: 0
+  id: Auto
+  reinforceCostID: ReinforceCost_Auto
+  delay: 0.3
+  detection: 5
+  angle: 60
   subCount: 0
-  subCountPlus: 0
+  subCountPlus: 1
