@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec028051ee1df7449b412e797a064d84, type: 3}
-  m_Name: EnemyTargetTags
+  m_Script: {fileID: 11500000, guid: f279693e9ec702d47b17a6158f36e2ad, type: 3}
+  m_Name: Wave2
   m_EditorClassIdentifier: 
-  id: EnemyTargetTags
-  clashTags: Player
+  id: Wave2
+  delay: 3
+  spawnID: Spawn2

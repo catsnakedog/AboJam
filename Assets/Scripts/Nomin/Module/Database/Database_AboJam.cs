@@ -12,6 +12,7 @@ using UnityEngine.InputSystem.HID;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 using UnityEngine.Windows;
+using static Pool;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 /// <summary>
@@ -23,6 +24,7 @@ public class Database_AboJam : MonoBehaviour
 {
     /* Dependency */
     private DBMS dbms => DBMS.instance;
+    private Pool pool => Pool.instance;
 
     /* Field & Property */
     public static Database_AboJam instance;
@@ -43,7 +45,11 @@ public class Database_AboJam : MonoBehaviour
     public List<Table_Color> Color = new() { new Table_Color("ID", r: 1f, g: 1f, b: 1f, a: 1f) };
     public List<Table_Explosion> Explosion = new() { new Table_Explosion("ID", scale: 1f, radius: 1f, damage: 1f, time: 1f) };
     public List<Table_Projectile> Projectile = new() { new Table_Projectile("ID", "clashTagsID", damage: 1f, penetrate: 1) };
-    public List<Table_ClashTags> ClashTags = new() { new Table_ClashTags("ID", clashTags: "clashTags") };
+    public List<Table_ClashTags> ClashTags = new() { new Table_ClashTags("ID", "clashTags") };
+    public List<Table_Spawnee> Spawnee = new() { new Table_Spawnee("ID", "prefab") };
+    public List<Table_Sector> Sector = new() { new Table_Sector("ID", angleStart: 1f, angleEnd: 1f, radiusIn: 1f, radiusOut: 1f) };
+    public List<Table_Spawn> Spawn = new() { new Table_Spawn("ID", "sectorID", "spawneeID", interval: 1f, count: 1) };
+    public List<Table_Wave> Wave = new() { new Table_Wave("ID", delay: 1f, "spawnID") };
 
     /* Public Method */
     // Import : 서버 DB >> 런타임 DB
@@ -67,6 +73,10 @@ public class Database_AboJam : MonoBehaviour
             ImportTable(dataSet, ref Explosion);
             ImportTable(dataSet, ref Projectile);
             ImportTable(dataSet, ref ClashTags);
+            ImportTable(dataSet, ref Spawnee);
+            ImportTable(dataSet, ref Sector);
+            ImportTable(dataSet, ref Spawn);
+            ImportTable(dataSet, ref Wave);
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
@@ -85,6 +95,10 @@ public class Database_AboJam : MonoBehaviour
         foreach (Explosion item in global::Explosion.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Projectile item in global::Projectile.instances) if (item.isActiveAndEnabled) item.Load();
         // Readonly : ClashTags
+        // Readonly : Spawnee
+        // Readonly : Sector
+        // Readonly : Spawn
+        // Readonly : Wave
     }
     public void ImportTable<T>(DataSet dataSet, ref List<T> runtimeTable) where T : ITable
     {
@@ -223,5 +237,58 @@ public class Database_AboJam : MonoBehaviour
             .Where(clashTags => clashTags.ID == ID)
             .Select(data => data.clashTags)
             .ToArray();
+    }
+    public void ExportWave(string ID, ref float[] delay, ref Spawn[] spawn)
+    {
+        // 런타임 테이블 Wave 중 ID 가 같은 모든 레코드 선택
+        Table_Wave[] datas = Wave.Where(wave => wave.ID == ID).ToArray();
+
+        // 레코드들에서 delay[] 와 spawn[] 추출하여 할당
+        delay = datas.Select(data => data.delay).ToArray();
+        spawn = datas.Select(data =>
+        {
+            Spawn record = new Spawn();
+            ExportSpawn(data.spawnID, ref record.sector, ref record.spawnee, ref record.interval, ref record.count);
+            return record;
+        }).ToArray();
+    }
+    public void ExportSpawn(string ID, ref Sector sector, ref Spawnee spawnee, ref float interval, ref int count)
+    {
+        Table_Spawn data = Spawn.FirstOrDefault(spawn => spawn.ID == ID);
+
+        Sector record_sector = new();
+        ExportSector(data.sectorID, ref record_sector.angleStart, ref record_sector.angleEnd, ref record_sector.radiusIn, ref record_sector.radiusOut);
+        sector = record_sector;
+
+        Spawnee record_spawnee = new();
+        ExportSpawnee(data.spawneeID, ref record_spawnee.prefabs);
+        spawnee = record_spawnee;
+
+        interval = data.interval;
+        count = data.count;
+    }
+    public void ExportSector(string ID, ref float angleStart, ref float angleEnd, ref float radiusIn, ref float radiusOut)
+    {
+        Table_Sector data = Sector.FirstOrDefault(sector => sector.ID == ID);
+
+        angleStart = data.angleStart;
+        angleEnd = data.angleEnd;
+        radiusIn = data.radiusIn;
+        radiusOut = data.radiusOut;
+    }
+    public void ExportSpawnee(string ID, ref GameObject[] prefabs)
+    {
+        List<GameObject> temp = new();
+
+        foreach (string prefabName in Spawnee.Where(spawnee => spawnee.ID == ID).Select(data => data.prefab).ToArray())
+        {
+            foreach (ObjectGroup group in pool.objectGroups)
+            {
+                GameObject prefab = group.objects.FirstOrDefault(obj => obj.name == prefabName);
+                if (prefab != null) { temp.Add(prefab); break; }
+            }
+        }
+
+        prefabs = temp.ToArray();
     }
 }

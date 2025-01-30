@@ -3,43 +3,56 @@ using System.Collections.Generic;
 using System.Drawing.Text;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Spawner : MonoBehaviour
 {
+    /* Dependency */
     private Pool pool => Pool.instance;
-    public GameObject[] obj;
+    private Database_AboJam database_abojam => Database_AboJam.instance;
+    private Message message => Message.instance;
+    private Date date => Date.instance;
 
     /* Field & Property */
     public static Spawner instance;
+    private int waveIndex = 1;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
         instance = this;
-
-        // 테스트 코드입니다. 밤마다 스폰시킵니다.
-        Date.instance.nightStart.AddListener(() => StartCoroutine(CorSpawn(new Sector("test", 0, 30, 5, 10), obj, 1, 3)));
+        date.nightStart.AddListener(() => StartCoroutine(CorWave()));
     }
 
     /* Public Method */
     /// <summary>
-    /// 지정한 영역에 프리팹을 생성합니다.
+    /// 몬스터 웨이브가 시작됩니다.
     /// </summary>
-    /// <param name="sector">두 원과 각도로 정의된 영역</param>
-    /// <param name="preafabs">랜덤으로 생성될 프리팹</param>
-    /// <param name="interval">몬스터 생성 간격</param>
-    /// <param name="count">몬스터 생성 수</param>
-    /// <returns></returns>
-    public IEnumerator CorSpawn(Sector sector, GameObject[] prefabs, float interval, int count)
+    public IEnumerator CorWave()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(interval);
+        if (waveIndex >= database_abojam.Wave.Count) { message.On("다음 웨이브가 없습니다.", 2f); yield break; }
 
-        for (int i = 0; i < count; i++)
+        // 런타임 테이블에서 다음에 진행할 웨이브를 가져옵니다.
+        Wave wave = new Wave();
+        database_abojam.ExportWave(database_abojam.Wave[waveIndex].ID, ref wave.delay, ref wave.spawn);
+        waveIndex++;
+
+        // 웨이브의 모든 스폰 순차 생성
+        for (int i = 0; i < wave.delay.Length; i++)
         {
-            GameObject obj = pool.Get(prefabs[Random.Range(0, prefabs.Length)].name);
-            obj.transform.position = transform.position + GetRandomPoint(sector);
+            if (i == wave.delay.Length - 1) { message.On("곧 아침이 옵니다. 조금만 더 버티세요 !", 2f); }
+            yield return new WaitForSeconds(wave.delay[i]);
 
-            yield return waitForSeconds;
+            // 각 스폰 마다 몬스터 생성
+            for (int j = 0; j < wave.spawn[i].count; j++)
+            {
+                WaitForSeconds waitForSeconds = new(wave.spawn[i].interval);
+
+                GameObject obj = pool.Get(wave.spawn[i].spawnee.prefabs[Random.Range(0, wave.spawn[i].spawnee.prefabs.Length)].name);
+                obj.transform.position = transform.position + GetRandomPoint(wave.spawn[i].sector);
+
+                yield return waitForSeconds;
+            }
         }
     }
 

@@ -22,7 +22,7 @@ public class Tower<T1, T2> : RecordInstance<T1, T2>, ITower
     public static ITower currentTower => ITower.currentTower;
     public int Level { get; set; } // 현재 레벨
     public int MaxLevel { get; set; } // 최대 레벨
-    public int[] reinforceCost; public int[] ReinforceCost { get => reinforceCost; set => reinforceCost = value; }// 레벨업 비용 (개수 = 최대 레벨 결정)
+    public int[] reinforceCost; public int[] ReinforceCost { get => reinforceCost; set => reinforceCost = value; } // 레벨업 비용 (개수 = 최대 레벨 결정)
 
     /* Backing Field */
 

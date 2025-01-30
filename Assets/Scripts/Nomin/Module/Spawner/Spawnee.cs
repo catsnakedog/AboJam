@@ -6,12 +6,9 @@ using UnityEditor.Timeline.Actions;
 using UnityEngine.EventSystems;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
-public class Sector : RecordInstance<Table_Sector, Record_Sector>
+public class Spawnee : RecordInstance<Table_Spawnee, Record_Spawnee>
 {
-    public float angleStart;
-    public float angleEnd;
-    public float radiusIn;
-    public float radiusOut;
+    public GameObject[] prefabs;
 
     /* Intializer & Finalizer & Updater */
     public void Start()

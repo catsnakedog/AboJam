@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec028051ee1df7449b412e797a064d84, type: 3}
-  m_Name: EnemyTargetTags
+  m_Script: {fileID: 11500000, guid: 411df44e8f49c5445855454905b0856a, type: 3}
+  m_Name: Spawn1
   m_EditorClassIdentifier: 
-  id: EnemyTargetTags
-  clashTags: Player
+  id: Spawn1
+  sectorID: North
+  spawneeID: Spawnee1
+  interval: 1
+  count: 3
