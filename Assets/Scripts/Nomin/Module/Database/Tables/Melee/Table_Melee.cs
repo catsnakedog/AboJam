@@ -12,14 +12,16 @@ public class Table_Melee : ITable
     public float radius;
     public float delay;
     public float damage;
+    public float effectTime;
 
     /* Intializer & Finalizer & Updater */
-    public Table_Melee(string ID, string clashTagsID, int penetrate, float radius, float damage)
+    public Table_Melee(string ID, string clashTagsID, int penetrate, float radius, float damage, float effectTime)
     {
         this.ID = ID;
         this.clashTagsID = clashTagsID;
         this.penetrate = penetrate;
         this.radius = radius;
         this.damage = damage;
+        this.effectTime = effectTime;
     }
 }

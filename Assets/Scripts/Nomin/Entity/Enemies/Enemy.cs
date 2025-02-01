@@ -50,10 +50,6 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
     /// <returns></returns>
     public IEnumerator CorDeath(float time)
     {
-        // 스프라이트 제외 기능 정지
-        Component[] components = GetComponents<Component>().Where(c => c.GetType() != typeof(SpriteRenderer)).ToArray(); ;
-        SwitchComponents(components, false);
-
         // 투명화 대상 스프라이트
         SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
         float[] startAlpha = new float[spriteRenderers.Length];
@@ -85,21 +81,7 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
             spriteRenderers[i].color = new UnityEngine.Color(spriteRenderers[i].color.r, spriteRenderers[i].color.g, spriteRenderers[i].color.b, startAlpha[i]);
         }
 
-        // 기능 복구 후 풀에 집어넣기
-        SwitchComponents(components, true);
         pool.Return(gameObject);
-
-        /// <summary>
-        /// 컴포넌트를 활성화 / 비활성화 합니다.
-        /// </summary>
-        void SwitchComponents(Component[] components, bool OnOff)
-        {
-            foreach (Component component in components)
-            {
-                if (component is MonoBehaviour monoBehaviour) monoBehaviour.enabled = OnOff;
-                else if (component is Behaviour behaviour) behaviour.enabled = OnOff;
-            }
-        }
     }
 
     /* Public Method */

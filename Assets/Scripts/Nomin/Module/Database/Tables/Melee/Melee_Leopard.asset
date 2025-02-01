@@ -16,5 +16,5 @@ MonoBehaviour:
   clashTagsID: EnemyTargetTags
   penetrate: 2
   radius: 1
-  delay: 0.5
   damage: 5
+  effectTime: 0.25

@@ -26,7 +26,8 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     [SerializeField] private float delay_anim = 0.3f; // 애니메이션 대기
     public float detection = 5f; // 적 감지 범위
     public int subCount = 2;
-    public Coroutine corFire;
+    private bool isFire = true;
+    private Coroutine corFire;
     private WaitForSeconds delay_waitForSeconds;
     private WaitForSeconds delay_waitForSecondsFire;
     private WaitForSeconds delay_waitForSecondsAnim;
@@ -57,6 +58,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         database_abojam.ExportGunner(initialRecords[0].ID, ref delay, ref delay_fire, ref detection, ref subCount);
         base.Load();
 
+        animator.enabled = true;
         move.isMove = true;
         delay_waitForSeconds = new WaitForSeconds(delay - (delay_fire * subCount) - delay_anim);
         delay_waitForSecondsFire = new WaitForSeconds(delay_fire);
@@ -76,6 +78,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     /// <param name="OnOff">공격 모드 On / Off</param>
     public void Fire(bool OnOff)
     {
+        isFire = OnOff;
         if (OnOff == true) corFire = StartCoroutine(CorFire());
         else StopCoroutine(corFire);
     }
@@ -103,7 +106,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     /// </summary>
     private IEnumerator CorFire()
     {
-        while (true)
+        while (isFire == true)
         {
             GameObject temp = pool.Get(launcher.projectile.name);
             GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, temp.GetComponent<Projectile>().ClashTags, detection);

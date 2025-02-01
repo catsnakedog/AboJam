@@ -14,4 +14,5 @@ public class Record_Melee : ScriptableObject, IRecord
     public int penetrate;
     public float radius;
     public float damage;
+    public float effectTime;
 }

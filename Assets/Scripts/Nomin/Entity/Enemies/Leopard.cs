@@ -27,6 +27,7 @@ public class Leopard : Enemy<Table_Leopard, Record_Leopard>, IPoolee
     public float detection = 1f; // 적 감지 범위
     private WaitForSeconds delay_waitForSeconds;
     private WaitForSeconds delay_waitForSecondsAnim;
+    private bool isAttack = true;
     private Coroutine corAttack;
 
     /* Intializer & Finalizer & Updater */
@@ -55,6 +56,7 @@ public class Leopard : Enemy<Table_Leopard, Record_Leopard>, IPoolee
         database_abojam.ExportLeopard(initialRecords[0].ID, ref delay, ref detection);
         base.Load();
 
+        animator.enabled = true;
         move.isMove = true;
         delay_waitForSeconds = new WaitForSeconds(delay - delay_anim);
         delay_waitForSecondsAnim = new WaitForSeconds(delay_anim);
@@ -73,6 +75,7 @@ public class Leopard : Enemy<Table_Leopard, Record_Leopard>, IPoolee
     /// <param name="OnOff">공격 모드 On / Off</param>
     public void Attack(bool OnOff)
     {
+        isAttack = OnOff;
         if (OnOff == true) corAttack = StartCoroutine(CorAttack());
         else StopCoroutine(corAttack);
     }
@@ -92,7 +95,7 @@ public class Leopard : Enemy<Table_Leopard, Record_Leopard>, IPoolee
     /// </summary>
     private IEnumerator CorAttack()
     {
-        while (true)
+        while (isAttack == true)
         {
             GameObject target = melee.targeter.Targetting(Targeter.TargetType.Near, melee.ClashTags, detection);
 

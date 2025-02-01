@@ -15,8 +15,11 @@ using UnityEngine.WSA;
 
 public class Melee : RecordInstance<Table_Melee, Record_Melee>
 {
+    /* Dependency */
     public Targeter targeter;
-    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    public GameObject effect; // 피격 이펙트, 없어도 작동
+    private Pool pool => Pool.instance;
+    private Database_AboJam database_abojam => Database_AboJam.instance;
 
     /* Field & Property */
     public static List<Melee> instances = new List<Melee>(); // 모든 Melee 인스턴스
@@ -24,6 +27,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     [SerializeField] private int penetrate; // 최대 피격 수
     [SerializeField] private float radius; // 피격 반지름
     [SerializeField] private float damage; // 공격 데미지
+    [SerializeField] private float effectTime; // 이펙트 지속 시간
     private WaitForSeconds waitForSeconds;
 
     /* Intializer & Finalizer */
@@ -45,7 +49,9 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     {
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
-        database_abojam.ExportMelee(initialRecords[0].ID, ref clashTags, ref penetrate, ref radius, ref damage);
+        database_abojam.ExportMelee(initialRecords[0].ID, ref clashTags, ref penetrate, ref radius, ref damage, ref effectTime);
+
+        waitForSeconds = new WaitForSeconds(effectTime);
     } // Import 시 자동 실행
 
     /* Public Method */
@@ -62,7 +68,23 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
         foreach (Collider2D collider in colliders)
         {
             if (currentPenetrate < 1) break;
-            if (clashTags.Contains(collider.tag)) { HP.FindHP(collider.gameObject).Damage(damage); currentPenetrate--; }
+            if (clashTags.Contains(collider.tag))
+            {
+                if(effect != null) StartCoroutine(CorEffect(collider.transform.position));
+                HP.FindHP(collider.gameObject).Damage(damage); currentPenetrate--;
+            }
         }
+    }
+
+    /* Private Method */
+    /// <summary>
+    /// effectTime 만큼 이펙트를 출력시킵니다.
+    /// </summary>
+    private IEnumerator CorEffect(Vector3 pos)
+    {
+        GameObject effect = pool.Get(this.effect.name);
+        effect.transform.position = pos;
+        yield return waitForSeconds;
+        pool.Return(effect);
     }
 }

@@ -31,6 +31,11 @@ public class Move : MonoBehaviour
         }
     }
 
+    public void SetMove(bool OnOff)
+    {
+        isMove = OnOff;
+    }
+
     void Update()
     {
         /* 타겟 지정 */
