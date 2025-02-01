@@ -12,20 +12,17 @@ using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 using UnityEngine.WSA;
-using static UnityEditor.PlayerSettings;
-using static UnityEditor.ShaderData;
-using static UnityEngine.GraphicsBuffer;
 
-public class Melee : RecordInstance<Table_Projectile, Record_Projectile>
+public class Melee : RecordInstance<Table_Melee, Record_Melee>
 {
     public Targeter targeter;
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
 
     /* Field & Property */
     public static List<Melee> instances = new List<Melee>(); // 모든 Melee 인스턴스
     [SerializeField] private string[] clashTags; public string[] ClashTags { get { Start(); return clashTags; } set => clashTags = value; } // 충돌 대상 태그
     [SerializeField] private int penetrate; // 최대 피격 수
     [SerializeField] private float radius; // 피격 반지름
-    [SerializeField] private float delay; // 공격 전 차징 시간
     [SerializeField] private float damage; // 공격 데미지
     private WaitForSeconds waitForSeconds;
 
@@ -38,24 +35,25 @@ public class Melee : RecordInstance<Table_Projectile, Record_Projectile>
         base.Start();
         instances.Add(this);
 
-        waitForSeconds = new WaitForSeconds(delay);
+        Load();
     }
     private void OnDestroy()
     {
         instances.Remove(this);
     }
+    public void Load()
+    {
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportMelee(initialRecords[0].ID, ref clashTags, ref penetrate, ref radius, ref damage);
+    } // Import 시 자동 실행
 
     /* Public Method */
     /// <summary>
     /// 지정한 위치에 원형 범위의 공격을 시전합니다.
     /// </summary>
-    public IEnumerator Attack(Vector3 worldPos)
+    public void Attack(Vector3 worldPos)
     {
-        // 에디터용 드로잉 & 차징
-        Gizmos.color = UnityEngine.Color.red;
-        Gizmos.DrawWireSphere(worldPos, radius);
-        yield return waitForSeconds;
-
         // 범위 내의 모든 타겟 탐색
         Collider2D[] colliders = Physics2D.OverlapCircleAll(worldPos, radius);
         int currentPenetrate = penetrate; // 현재 남은 관통 수

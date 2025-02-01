@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a1ad21e2ff2794dbb8adf0988fc51e, type: 3}
   m_Name: Launcher_Heal
   m_EditorClassIdentifier: 
-  id: 
-  align: 0
-  turnTime: 0
-  angleOffset: 0
-  frame: 0
-  speed: 0
-  range: 0
+  id: Launcher_Heal
+  align: 1
+  turnTime: 0.1
+  angleOffset: -90
+  frame: 60
+  speed: 0.3
+  range: 4

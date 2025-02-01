@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem.HID;
 using static Targeter;
 using static UnityEngine.GraphicsBuffer;
 
-public class Leopard : Enemy<Table_Gunner, Record_Gunner>, IPoolee
+public class Leopard : Enemy<Table_Leopard, Record_Leopard>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
@@ -20,18 +21,21 @@ public class Leopard : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     /* Field & Property */
     public static List<Leopard> instances = new List<Leopard>(); // 모든 표범 인스턴스
 
-    [Header("[ Gunner ]")]
+    [Header("[ Leopard ]")]
     [SerializeField] private float delay = 0.8f; // 공격 딜레이
     [SerializeField] private float delay_anim = 0.3f; // 애니메이션 대기
-    public float detection = 2f; // 적 감지 범위
+    public float detection = 1f; // 적 감지 범위
     private WaitForSeconds delay_waitForSeconds;
-    private WaitForSeconds delay_waitForSecondsFire;
     private WaitForSeconds delay_waitForSecondsAnim;
     private Coroutine corAttack;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
+        startFlag = true;
+        base.Start();
         instances.Add(this);
 
         // 인디케이터 스케일링
@@ -48,9 +52,10 @@ public class Leopard : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     {
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
-        //database_abojam.ExportGunner(initialRecords[0].ID, ref delay, ref delay_fire, ref detection, ref subCount);
+        database_abojam.ExportLeopard(initialRecords[0].ID, ref delay, ref detection);
         base.Load();
 
+        move.isMove = true;
         delay_waitForSeconds = new WaitForSeconds(delay - delay_anim);
         delay_waitForSecondsAnim = new WaitForSeconds(delay_anim);
 

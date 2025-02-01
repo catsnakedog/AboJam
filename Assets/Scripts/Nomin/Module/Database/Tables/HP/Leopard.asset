@@ -9,13 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2a1ad21e2ff2794dbb8adf0988fc51e, type: 3}
-  m_Name: Launcher_Auto
+  m_Script: {fileID: 11500000, guid: d808389f8a2a65e4d8b75de123530f88, type: 3}
+  m_Name: Leopard
   m_EditorClassIdentifier: 
-  id: Launcher_Auto
-  align: 1
-  turnTime: 0.1
-  angleOffset: -90
-  frame: 60
-  speed: 0.3
-  range: 5
+  id: Leopard
+  hp_max: 50
+  hideFullHp: 1

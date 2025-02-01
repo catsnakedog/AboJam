@@ -35,8 +35,10 @@ public class Database_AboJam : MonoBehaviour
     /* Runtime Table : ImportTable 시 서버 데이터로 덮어씌워집니다. */
     public List<Table_HP> HP = new() { new Table_HP("ID", Hp_max: 1f, HideFullHP: true) };
     public List<Table_Launcher> Launcher = new() { new Table_Launcher("ID", align: true, turnTime: 1f, angleOffset: 1f, frame: 1f, speed: 1f, range: 1f) };
+    public List<Table_Melee> Melee = new() { new Table_Melee("ID", "clashTagsID", penetrate: 1, radius: 1f, damage: 1f) };
     public List<Table_Abocado> Abocado = new() { new Table_Abocado("ID", level: EnumData.Abocado.Cultivated, quality: 1, quality_max: 1, harvest: 1, harvestPlus: 1) };
     public List<Table_Gunner> Gunner = new() { new Table_Gunner("ID", delay: 1f, delay_fire: 1f, detection: 1f, subCount: 1) };
+    public List<Table_Leopard> Leopard = new() { new Table_Leopard("ID", delay: 1f, detection: 1f) };
     public List<Table_Auto> Auto = new() { new Table_Auto("ID", "reinforceCostID", delay: 1f, detection: 1f, angle: 1f, subCount: 1, subCountPlus: 1) };
     public List<Table_Guard> Guard = new() { new Table_Guard("ID", "reinforceCostID", hpMultiply: 1f) };
     public List<Table_Splash> Splash = new() { new Table_Splash("ID", "reinforceCostID", delay: 1f, detection: 1f) };
@@ -63,8 +65,10 @@ public class Database_AboJam : MonoBehaviour
 
             ImportTable(dataSet, ref HP);
             ImportTable(dataSet, ref Launcher);
+            ImportTable(dataSet, ref Melee);
             ImportTable(dataSet, ref Abocado);
             ImportTable(dataSet, ref Gunner);
+            ImportTable(dataSet, ref Leopard);
             ImportTable(dataSet, ref Auto);
             ImportTable(dataSet, ref Guard);
             ImportTable(dataSet, ref Splash);
@@ -86,8 +90,10 @@ public class Database_AboJam : MonoBehaviour
     {
         foreach (HP item in global::HP.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Launcher item in global::Launcher.instances) if (item.isActiveAndEnabled) item.Load();
+        foreach (Melee item in global::Melee.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Abocado item in global::Abocado.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Gunner item in global::Gunner.instances) if (item.isActiveAndEnabled) item.Load();
+        foreach (Leopard item in global::Leopard.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Auto item in global::Auto.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Guard item in global::Guard.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Splash item in global::Splash.instances) if (item.isActiveAndEnabled) item.Load();
@@ -156,6 +162,14 @@ public class Database_AboJam : MonoBehaviour
         speed = data.speed;
         range = data.range;
     }
+    public void ExportMelee(string ID, ref string[] clashTags, ref int penetrate, ref float radius, ref float damage)
+    {
+        Table_Melee data = Melee.FirstOrDefault(melee => melee.ID == ID);
+        ExportClashTags(data.clashTagsID, ref clashTags);
+        penetrate = data.penetrate;
+        radius = data.radius;
+        damage = data.damage;
+}
     public void ExportAbocado(string ID, ref EnumData.Abocado level, ref int quality, ref int quality_max, ref int harvest, ref int harvestPlus)
     {
         Table_Abocado data = Abocado.FirstOrDefault(abocado => abocado.ID == ID);
@@ -172,6 +186,12 @@ public class Database_AboJam : MonoBehaviour
         delay_fire = data.delay_fire;
         detection = data.detection;
         subCount = data.subCount;
+    }
+    public void ExportLeopard(string ID, ref float delay, ref float detection)
+    {
+        Table_Leopard data = Leopard.FirstOrDefault(Leopard => Leopard.ID == ID);
+        delay = data.delay;
+        detection = data.detection;
     }
     public void ExportAuto(string ID, ref int[] reinforceCost, ref float delay, ref float detection, ref float angle, ref int subCount, ref int subCountPlus)
     {
