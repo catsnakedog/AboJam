@@ -26,10 +26,10 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     [SerializeField] private float delay_anim = 0.3f; // 애니메이션 대기
     public float detection = 5f; // 적 감지 범위
     public int subCount = 2;
+    public Coroutine corFire;
     private WaitForSeconds delay_waitForSeconds;
     private WaitForSeconds delay_waitForSecondsFire;
     private WaitForSeconds delay_waitForSecondsAnim;
-    private Coroutine corFire;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -39,10 +39,6 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         startFlag = true;
         base.Start();
         instances.Add(this);
-
-        delay_waitForSeconds = new WaitForSeconds(delay - (delay_fire * subCount) - delay_anim);
-        delay_waitForSecondsFire = new WaitForSeconds(delay_fire);
-        delay_waitForSecondsAnim = new WaitForSeconds(delay_anim);
 
         // 인디케이터 스케일링
         float scale = launcher.range * 4;
@@ -60,7 +56,12 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         if (startFlag == false) Start();
         database_abojam.ExportGunner(initialRecords[0].ID, ref delay, ref delay_fire, ref detection, ref subCount);
         base.Load();
-        
+
+        move.isMove = true;
+        delay_waitForSeconds = new WaitForSeconds(delay - (delay_fire * subCount) - delay_anim);
+        delay_waitForSecondsFire = new WaitForSeconds(delay_fire);
+        delay_waitForSecondsAnim = new WaitForSeconds(delay_anim);
+
         Fire(true);
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()
@@ -88,7 +89,6 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         delay_waitForSeconds = new WaitForSeconds(delay);
     }
     /// <summary>
-    /// <br>타워를 증강합니다.</br>
     /// <br>사격 시 발사체가 2 발 추가됩니다.</br>
     /// </summary>
     public override void Reinforce()
@@ -114,6 +114,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
                 // 공격 애니메이션 재생
                 Flip(target.transform.position);
                 animator.Play("Attack", 0, 0f);
+                move.isMove = false;
                 yield return delay_waitForSecondsAnim;
 
                 // 메인 탄환
@@ -127,6 +128,8 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
                     yield return delay_waitForSecondsFire;
                     launcher.Launch(Targeter.TargetType.Near, detection);
                 }
+
+                move.isMove = true;
             }
 
             yield return delay_waitForSeconds;

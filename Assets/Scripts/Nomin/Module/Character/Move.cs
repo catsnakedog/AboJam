@@ -10,6 +10,7 @@ public class Move : MonoBehaviour
 {
     public Gunner gunner;
     public float moveSpeed = 5f; // 이동 속도 (m/s)
+    public bool isMove = true;
 
     void Update()
     {
@@ -26,7 +27,7 @@ public class Move : MonoBehaviour
         Vector3 direction = (destination - transform.position).normalized;
 
         /* 임시 이동 & 애니메이션 */
-        if (distance > gunner.detection * 0.9f)
+        if (distance > gunner.detection * 0.9f && isMove == true)
         {
             transform.position += direction * moveSpeed * Time.deltaTime;
 

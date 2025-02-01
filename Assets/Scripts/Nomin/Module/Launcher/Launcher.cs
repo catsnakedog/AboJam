@@ -15,7 +15,7 @@ using UnityEngine.WSA;
 using static UnityEditor.PlayerSettings;
 using static UnityEditor.ShaderData;
 
-public class Launcher : MonoBehaviour
+public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
 {
     /* Dependency */
     [Header("[ Dependency ]")]
@@ -46,6 +46,7 @@ public class Launcher : MonoBehaviour
         public Horizontal horizontal;
         public Vertical vertical;
     }
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
 
     /* Field & Property */
     public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
@@ -78,19 +79,17 @@ public class Launcher : MonoBehaviour
     private Vector3 offset = Vector3.zero; // 발사 위치 보정
 
     /* Intializer & Finalizer */
-    private void Awake()
-    {
-        delay = 1 / frame;
-        waitForSeconds = new WaitForSeconds(delay);
-    }
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
+        startFlag = true;
+        base.Start();
         instances.Add(this);
+
         if (projectile == null) Debug.Log($"{gameObject.name} 의 Launcher 에 Projectile 이 연결되지 않았습니다.");
         width = spriteRenderer.bounds.size.x;
         height = spriteRenderer.bounds.size.y;
-
-        AlignLauncher();
     }
     private void OnDestroy()
     {
@@ -100,6 +99,16 @@ public class Launcher : MonoBehaviour
     {
         MuzzleAlign = muzzleAlign;
     }
+    public void Load()
+    {
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportLauncher(initialRecords[0].ID, ref align, ref turnTime, ref angleOffset, ref frame, ref speed, ref range);
+
+        delay = 1 / frame;
+        waitForSeconds = new WaitForSeconds(delay);
+        AlignLauncher();
+    } // Import 시 자동 실행
 
     /* Public Method */
     /// <summary>

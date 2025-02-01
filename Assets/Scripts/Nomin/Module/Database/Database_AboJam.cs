@@ -34,6 +34,7 @@ public class Database_AboJam : MonoBehaviour
 
     /* Runtime Table : ImportTable 시 서버 데이터로 덮어씌워집니다. */
     public List<Table_HP> HP = new() { new Table_HP("ID", Hp_max: 1f, HideFullHP: true) };
+    public List<Table_Launcher> Launcher = new() { new Table_Launcher("ID", align: true, turnTime: 1f, angleOffset: 1f, frame: 1f, speed: 1f, range: 1f) };
     public List<Table_Abocado> Abocado = new() { new Table_Abocado("ID", level: EnumData.Abocado.Cultivated, quality: 1, quality_max: 1, harvest: 1, harvestPlus: 1) };
     public List<Table_Gunner> Gunner = new() { new Table_Gunner("ID", delay: 1f, delay_fire: 1f, detection: 1f, subCount: 1) };
     public List<Table_Auto> Auto = new() { new Table_Auto("ID", "reinforceCostID", delay: 1f, detection: 1f, angle: 1f, subCount: 1, subCountPlus: 1) };
@@ -61,6 +62,7 @@ public class Database_AboJam : MonoBehaviour
             DataSet dataSet = dbms.GetDataSet();
 
             ImportTable(dataSet, ref HP);
+            ImportTable(dataSet, ref Launcher);
             ImportTable(dataSet, ref Abocado);
             ImportTable(dataSet, ref Gunner);
             ImportTable(dataSet, ref Auto);
@@ -83,6 +85,7 @@ public class Database_AboJam : MonoBehaviour
     public void ExportDatabase()
     {
         foreach (HP item in global::HP.instances) if (item.isActiveAndEnabled) item.Load();
+        foreach (Launcher item in global::Launcher.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Abocado item in global::Abocado.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Gunner item in global::Gunner.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Auto item in global::Auto.instances) if (item.isActiveAndEnabled) item.Load();
@@ -141,6 +144,17 @@ public class Database_AboJam : MonoBehaviour
         Table_HP data = HP.FirstOrDefault(hp => hp.ID == ID);
         hp_max = data.Hp_max;
         hideFullHp = data.HideFullHP;
+    }
+    public void ExportLauncher(string ID, ref bool align, ref float turnTime, ref float angleOffset, ref float frame, ref float speed, ref float range)
+    {
+        Table_Launcher data = Launcher.FirstOrDefault(launcher => launcher.ID == ID);
+
+        align = data.align;
+        turnTime = data.turnTime;
+        angleOffset = data.angleOffset;
+        frame = data.frame;
+        speed = data.speed;
+        range = data.range;
     }
     public void ExportAbocado(string ID, ref EnumData.Abocado level, ref int quality, ref int quality_max, ref int harvest, ref int harvestPlus)
     {

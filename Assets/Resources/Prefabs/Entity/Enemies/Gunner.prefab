@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunner: {fileID: 767865442766890453}
   moveSpeed: 1
+  isMove: 1
 --- !u!114 &6031077543177188156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +358,14 @@ PrefabInstance:
       propertyPath: angleOffset
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 8178899645152688462, guid: 219404723b5f75449a11722423d768d0, type: 3}
+      propertyPath: initialRecords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8178899645152688462, guid: 219404723b5f75449a11722423d768d0, type: 3}
+      propertyPath: initialRecords.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1f5db427fb92dc9449459319c221dcff, type: 2}
     - target: {fileID: 9014998458699668142, guid: 219404723b5f75449a11722423d768d0, type: 3}
       propertyPath: m_Name
       value: Launcher

@@ -364,6 +364,14 @@ PrefabInstance:
       propertyPath: angleOffset
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 8178899645152688462, guid: 219404723b5f75449a11722423d768d0, type: 3}
+      propertyPath: initialRecords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8178899645152688462, guid: 219404723b5f75449a11722423d768d0, type: 3}
+      propertyPath: initialRecords.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 365ef2e2de4e21a4a81477a88f8ae484, type: 2}
     - target: {fileID: 9014998458699668142, guid: 219404723b5f75449a11722423d768d0, type: 3}
       propertyPath: m_Name
       value: Launcher
