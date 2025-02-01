@@ -7,7 +7,7 @@ using UnityEngine.InputSystem.HID;
 using static Targeter;
 using static UnityEngine.GraphicsBuffer;
 
-public class Leopard : Enemy<Table_Leopard, Record_Leopar>, IPoolee
+public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]
@@ -19,9 +19,9 @@ public class Leopard : Enemy<Table_Leopard, Record_Leopar>, IPoolee
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
 
     /* Field & Property */
-    public static List<Leopard> instances = new List<Leopard>(); // 모든 표범 인스턴스
+    public static List<Thug> instances = new List<Thug>(); // 모든 표범 인스턴스
 
-    [Header("[ Leopard ]")]
+    [Header("[ Thug ]")]
     [SerializeField] private float delay = 0.8f; // 공격 딜레이
     [SerializeField] private float delay_anim = 0.3f; // 애니메이션 대기
     public float detection = 1f; // 적 감지 범위
@@ -53,7 +53,7 @@ public class Leopard : Enemy<Table_Leopard, Record_Leopar>, IPoolee
     {
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
-        database_abojam.ExportLeopard(initialRecords[0].ID, ref delay, ref detection);
+        database_abojam.ExportThug(initialRecords[0].ID, ref delay, ref detection);
         base.Load();
 
         animator.enabled = true;

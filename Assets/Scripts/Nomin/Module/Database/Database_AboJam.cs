@@ -39,6 +39,7 @@ public class Database_AboJam : MonoBehaviour
     public List<Table_Abocado> Abocado = new() { new Table_Abocado("ID", level: EnumData.Abocado.Cultivated, quality: 1, quality_max: 1, harvest: 1, harvestPlus: 1) };
     public List<Table_Gunner> Gunner = new() { new Table_Gunner("ID", delay: 1f, delay_fire: 1f, detection: 1f, subCount: 1) };
     public List<Table_Leopard> Leopard = new() { new Table_Leopard("ID", delay: 1f, detection: 1f) };
+    public List<Table_Thug> Thug = new() { new Table_Thug("ID", delay: 1f, detection: 1f) };
     public List<Table_Auto> Auto = new() { new Table_Auto("ID", "reinforceCostID", delay: 1f, detection: 1f, angle: 1f, subCount: 1, subCountPlus: 1) };
     public List<Table_Guard> Guard = new() { new Table_Guard("ID", "reinforceCostID", hpMultiply: 1f) };
     public List<Table_Splash> Splash = new() { new Table_Splash("ID", "reinforceCostID", delay: 1f, detection: 1f) };
@@ -69,6 +70,7 @@ public class Database_AboJam : MonoBehaviour
             ImportTable(dataSet, ref Abocado);
             ImportTable(dataSet, ref Gunner);
             ImportTable(dataSet, ref Leopard);
+            ImportTable(dataSet, ref Thug);
             ImportTable(dataSet, ref Auto);
             ImportTable(dataSet, ref Guard);
             ImportTable(dataSet, ref Splash);
@@ -94,6 +96,7 @@ public class Database_AboJam : MonoBehaviour
         foreach (Abocado item in global::Abocado.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Gunner item in global::Gunner.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Leopard item in global::Leopard.instances) if (item.isActiveAndEnabled) item.Load();
+        foreach (Thug item in global::Thug.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Auto item in global::Auto.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Guard item in global::Guard.instances) if (item.isActiveAndEnabled) item.Load();
         foreach (Splash item in global::Splash.instances) if (item.isActiveAndEnabled) item.Load();
@@ -191,6 +194,12 @@ public class Database_AboJam : MonoBehaviour
     public void ExportLeopard(string ID, ref float delay, ref float detection)
     {
         Table_Leopard data = Leopard.FirstOrDefault(Leopard => Leopard.ID == ID);
+        delay = data.delay;
+        detection = data.detection;
+    }
+    public void ExportThug(string ID, ref float delay, ref float detection)
+    {
+        Table_Thug data = Thug.FirstOrDefault(Thug => Thug.ID == ID);
         delay = data.delay;
         detection = data.detection;
     }

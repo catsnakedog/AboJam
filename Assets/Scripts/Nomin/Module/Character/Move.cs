@@ -11,6 +11,7 @@ public class Move : MonoBehaviour
     public Targeter targeter;
     public Gunner gunner;
     public Leopard leopard;
+    public Thug thug;
     public float moveSpeed = 5f; // 이동 속도 (m/s)
     public bool isMove = true;
 
@@ -28,6 +29,11 @@ public class Move : MonoBehaviour
         {
             detection = leopard.detection;
             animator = leopard.animator;
+        }
+        if (thug != null)
+        {
+            detection = thug.detection;
+            animator = thug.animator;
         }
     }
 

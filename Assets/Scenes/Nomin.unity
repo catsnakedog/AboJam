@@ -1768,8 +1768,10 @@ MonoBehaviour:
   initialRecords:
   - {fileID: 11400000, guid: d79104c6f3cf79d42a1b5f5881581e9b, type: 2}
   - {fileID: 11400000, guid: 65e33c9e88e06ed409e7e01618cbda04, type: 2}
+  - {fileID: 11400000, guid: 19e7358fd2f48f84d919d6704f4d6ed1, type: 2}
   - {fileID: 11400000, guid: b28839522f3dc314a8a3e799fd5d033a, type: 2}
   - {fileID: 11400000, guid: fb9056cb260fd6641be8cf6e9977e2d7, type: 2}
+  - {fileID: 11400000, guid: d098ee29850be96459b402cb8e99a4fc, type: 2}
   startFlag: 0
   prefabs: []
 --- !u!1 &1612676832
@@ -2792,7 +2794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6084815336702623490, guid: c3de3a16e5d961e42bf89840a77c75d4, type: 3}
       propertyPath: objectGroups.Array.data[2].objects.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6084815336702623490, guid: c3de3a16e5d961e42bf89840a77c75d4, type: 3}
       propertyPath: objectGroups.Array.data[3].objects.Array.size
@@ -2808,7 +2810,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6084815336702623490, guid: c3de3a16e5d961e42bf89840a77c75d4, type: 3}
       propertyPath: objectGroups.Array.data[6].objects.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6084815336702623490, guid: c3de3a16e5d961e42bf89840a77c75d4, type: 3}
       propertyPath: objectGroups.Array.data[0].objects.Array.data[0]
@@ -2865,7 +2867,7 @@ PrefabInstance:
     - target: {fileID: 6084815336702623490, guid: c3de3a16e5d961e42bf89840a77c75d4, type: 3}
       propertyPath: objectGroups.Array.data[2].objects.Array.data[2]
       value: 
-      objectReference: {fileID: 5041889053341477472, guid: 61b029f1850ffb6469d6ec6ffbfd237b, type: 3}
+      objectReference: {fileID: 2042350149255273382, guid: cf4d41f8a2b13fa488900935395d31a8, type: 3}
     - target: {fileID: 6084815336702623490, guid: c3de3a16e5d961e42bf89840a77c75d4, type: 3}
       propertyPath: objectGroups.Array.data[2].objects.Array.data[3]
       value: 
@@ -2965,7 +2967,7 @@ PrefabInstance:
     - target: {fileID: 6084815336702623490, guid: c3de3a16e5d961e42bf89840a77c75d4, type: 3}
       propertyPath: objectGroups.Array.data[6].objects.Array.data[1]
       value: 
-      objectReference: {fileID: 6225409795156279537, guid: 3186b448764c32a4d84fd22af26ea73d, type: 3}
+      objectReference: {fileID: 3100893671775424701, guid: 32134f8126dd1514086366019efe7a13, type: 3}
     - target: {fileID: 6084815336702623490, guid: c3de3a16e5d961e42bf89840a77c75d4, type: 3}
       propertyPath: objectGroups.Array.data[6].objects.Array.data[2]
       value: 
