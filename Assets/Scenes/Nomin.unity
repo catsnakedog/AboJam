@@ -3185,6 +3185,14 @@ PrefabInstance:
       propertyPath: secondsPerDay
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 278122529535980493, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: initialRecords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 278122529535980493, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: initialRecords.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 719f923a077091f41b509392dcf824c4, type: 2}
     - target: {fileID: 757972090498815067, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

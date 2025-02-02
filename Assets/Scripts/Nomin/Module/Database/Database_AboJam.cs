@@ -54,6 +54,7 @@ public class Database_AboJam : MonoBehaviour
     public List<Table_Sector> Sector = new() { new Table_Sector("ID", angleStart: 1f, angleEnd: 1f, radiusIn: 1f, radiusOut: 1f) };
     public List<Table_Spawn> Spawn = new() { new Table_Spawn("ID", "sectorID", "spawneeID", interval: 1f, count: 1) };
     public List<Table_Wave> Wave = new() { new Table_Wave("ID", delay: 1f, "spawnID") };
+    public List<Table_Date> Date = new() { new Table_Date("ID", secondsPerDay: 1, "startTime", "morningTime", "sunsetTime", "nightTime") };
 
     /* Public Method */
     // Import : 서버 DB >> 런타임 DB
@@ -85,6 +86,7 @@ public class Database_AboJam : MonoBehaviour
             ImportTable(dataSet, ref Sector);
             ImportTable(dataSet, ref Spawn);
             ImportTable(dataSet, ref Wave);
+            ImportTable(dataSet, ref Date);
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
@@ -111,6 +113,7 @@ public class Database_AboJam : MonoBehaviour
         // Readonly : Sector
         // Readonly : Spawn
         // Readonly : Wave
+        if (global::Date.instance.isActiveAndEnabled) global::Date.instance.Load();
     }
     public void ImportTable<T>(DataSet dataSet, ref List<T> runtimeTable) where T : ITable
     {
@@ -334,5 +337,14 @@ public class Database_AboJam : MonoBehaviour
         }
 
         prefabs = temp.ToArray();
+    }
+    public void ExportDate(string ID, ref int secondsPerDay, ref string startTime, ref string morningTime, ref string sunsetTime, ref string nightTime)
+    {
+        Table_Date data = Date.FirstOrDefault(date => date.ID == ID);
+        secondsPerDay = data.secondsPerDay;
+        startTime = data.startTime;
+        morningTime = data.morningTime;
+        sunsetTime = data.sunsetTime;
+        nightTime = data.nightTime;
     }
 }

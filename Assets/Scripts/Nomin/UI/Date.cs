@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class Date : MonoBehaviour
+public class Date : RecordInstance<Table_Date, Record_Date>
 {
     /* Dependency */
     public Sprite sprite_morning;
@@ -18,15 +18,16 @@ public class Date : MonoBehaviour
     private Image image;
     private AnimationClick animationClick;
     private GlobalLight globalLight => GlobalLight.instance;
+    private Database_AboJam database_abojam => Database_AboJam.instance;
 
     /* Field & Property */
     public static Date instance; // 싱글턴
     public bool timeFlow = true; // 시간 흐름 On / Off
-    [SerializeField] private double secondsPerDay = 86400;
+    [SerializeField] private int secondsPerDay = 86400;
     [SerializeField] private string startTime = "06:00"; // 게임 시작 시각
-    public string morningTime = "06:00"; // 낮 시작 시각
-    public string sunsetTime = "17:30"; // 해질녘 시작 시간
-    public string nightTime = "20:00"; // 밤 시작 시간
+    [SerializeField] private string morningTime = "06:00"; // 낮 시작 시각
+    [SerializeField] private string sunsetTime = "17:30"; // 해질녘 시작 시간
+    [SerializeField] private string nightTime = "20:00"; // 밤 시작 시간
     public bool isMorning { get; private set; } = true;
     public bool isSunset { get; private set; } = false;
     public bool isNight { get; private set; } = false;
@@ -45,17 +46,30 @@ public class Date : MonoBehaviour
     }
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
+        startFlag = true;
+        base.Start();
+        Load();
+
         image = GetComponent<Image>();
         animationClick = GetComponent<AnimationClick>();
         dateTime += StringToTime(startTime);
         morningStart.AddListener(() => { Debug.Log("아침이 시작되었습니다."); });
         sunsetStart.AddListener(() => { Debug.Log("해질녘이 시작되었습니다."); });
         nightStart.AddListener(() => { Debug.Log("밤이 시작되었습니다."); });
-        start = StringToTime(morningTime);
-        end = StringToTime(nightTime);
         StartCoroutine(CorTime());
         morningStart?.Invoke();
     }
+    public void Load()
+    {
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportDate(initialRecords[0].ID, ref secondsPerDay, ref startTime, ref morningTime, ref sunsetTime, ref nightTime);
+
+        start = StringToTime(morningTime);
+        end = StringToTime(nightTime);
+    } // Import 시 자동 실행
     /// <summary>
     /// <br>게임 시간 Update 를 위한 코루틴 입니다.</br>
     /// </summary>
@@ -83,7 +97,7 @@ public class Date : MonoBehaviour
         DateTime now = DateTime.Now;
         TimeSpan elapsed = now - last; // 1)
         last = now;
-        double ratio = 86400d / secondsPerDay; // 2)
+        double ratio = 86400d / (double)secondsPerDay; // 2)
         dateTime += elapsed * ratio;
 
         // UI 업데이트
