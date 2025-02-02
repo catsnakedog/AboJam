@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Background : MonoBehaviour
+public class Menu : MonoBehaviour
 {
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-        StaticData.Init();
+        StaticData.gameData.dateTime = Date.instance.dateTime.ToString("o"); ;
     }
 }

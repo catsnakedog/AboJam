@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using static EnumData;
 
@@ -19,7 +20,6 @@ public static class StaticData
         { TowerType.Production, "생산능력이 강화" },
         { TowerType.Heal, "체력이 가장 낮은 아보카도 나무의 체력을 회복" },
     };
-    /* Field & Property */
     /// <summary>
     /// <br>Reinforcement 에 표기되는 설명 입니다.</br>
     /// </summary>
@@ -31,7 +31,8 @@ public static class StaticData
         { TowerType.Production, "생산 능력 강화" },
         { TowerType.Heal, "체력 회복량 증가" },
     };
-    public static int Garu
+    public static GameData gameData;
+    private static int garu; public static int Garu
     {
         get
         {
@@ -43,7 +44,7 @@ public static class StaticData
             foreach (var item in Inventory.instances) if (item != null) item.UpdateGaru();
         }
     }
-    public static int Abocado
+    private static int abocado; public static int Abocado
     {
         get
         {
@@ -55,7 +56,7 @@ public static class StaticData
             foreach (var item in Inventory.instances) if (item != null) item.UpdateAbocado();
         }
     }
-    public static int Water
+    private static int water; public static int Water
     {
         get
         {
@@ -67,17 +68,13 @@ public static class StaticData
             foreach (var item in Inventory.instances) if (item != null) item.UpdateWater();
         }
     }
-    #region Backing Field
-    private static int garu;
-    private static int abocado;
-    private static int water;
-    #endregion
 
     /* Intializer & Finalizer & Updater */
-    static StaticData()
+    public static void Init()
     {
         Garu = 0;
         Abocado = 5;
         Water = 10;
+        gameData = new GameData();
     }
 }
