@@ -15,11 +15,9 @@ public class Date : MonoBehaviour
     public Sprite sprite_night;
     public TextMeshProUGUI text_day;
     public TextMeshProUGUI text_time;
-    public GameObject enemyPool;
     private Image image;
     private AnimationClick animationClick;
     private GlobalLight globalLight => GlobalLight.instance;
-    private Spawner spawner => Spawner.instance;
 
     /* Field & Property */
     public static Date instance; // 싱글턴
@@ -69,7 +67,6 @@ public class Date : MonoBehaviour
             UpdateImage();
             if (isSunset == false && dateTime.TimeOfDay > TimeSpan.Parse(sunsetTime)) StartSunset();
             if (isMorning == false && isNight == false) StartNight();
-            UpdateClearCheck();
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -109,25 +106,6 @@ public class Date : MonoBehaviour
             if (isMorning == true) image.sprite = sprite_morning;
             else image.sprite = sprite_night;
             animationClick.OnClick();
-        }
-    }
-    /// <summary>
-    /// <br>밤의 종료를 감지합니다.</br>
-    /// </summary>
-    private void UpdateClearCheck()
-    {
-        if (isNight == true && // 밤이며
-            spawner.waveEnd == true && // 웨이브가 종료되었고
-            CheckMob() == false) // 남은 몬스터가 없으면
-        {
-            spawner.waveEnd = false;
-            SkipNight(); // 밤 종료
-        }
-
-        bool CheckMob()
-        {
-            foreach (Transform child in enemyPool.transform) if (child.gameObject.activeSelf) return true;
-            return false;
         }
     }
 

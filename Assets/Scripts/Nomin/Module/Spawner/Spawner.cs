@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
 
     /* Field & Property */
     public static Spawner instance;
-    private int waveIndex = 1;
+    public int waveIndex = 1;
     public bool waveEnd { get; set; } = false;
 
     /* Intializer & Finalizer & Updater */
