@@ -151,6 +151,9 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
     /// <returns></returns>
     public IEnumerator CorDeath(float time)
     {
+        string originTag = gameObject.tag;
+        gameObject.tag = "Untagged";
+
         // 스프라이트 제외 기능 정지
         Component[] components = GetComponents<Component>().Where(c => c.GetType() != typeof(SpriteRenderer)).ToArray(); ;
         SwitchComponents(components, false);
@@ -188,6 +191,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
 
         // 기능 복구 후 풀에 집어넣기
         SwitchComponents(components, true);
+        gameObject.tag = originTag;
         pool.Return(gameObject);
 
         /// <summary>

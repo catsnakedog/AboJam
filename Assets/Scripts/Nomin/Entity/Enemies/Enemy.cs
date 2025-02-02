@@ -50,6 +50,9 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
     /// <returns></returns>
     public IEnumerator CorDeath(float time)
     {
+        string originTag = gameObject.tag;
+        gameObject.tag = "Untagged";
+
         // 투명화 대상 스프라이트
         SpriteRenderer[] spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
         float[] startAlpha = new float[spriteRenderers.Length];
@@ -81,6 +84,7 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
             spriteRenderers[i].color = new UnityEngine.Color(spriteRenderers[i].color.r, spriteRenderers[i].color.g, spriteRenderers[i].color.b, startAlpha[i]);
         }
 
+        gameObject.tag = originTag;
         pool.Return(gameObject);
     }
 
