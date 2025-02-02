@@ -38,7 +38,6 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
         startFlag = true;
         base.Start();
         instances.Add(this);
-
         Load();
     }
     private void OnDestroy()

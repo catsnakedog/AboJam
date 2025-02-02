@@ -27,6 +27,8 @@ public class Targeter : MonoBehaviour
     /// <returns>가장 가까운 적</returns>
     public GameObject Targetting(TargetType targetType, string[] tags, float detection, float ratio = 1.0f)
     {
+        if (transform.position == Vector3.zero) { Debug.Log("(0, 0, 0) 에선 풀링을 위해 타게팅이 취소됩니다."); return null; }
+
         switch (targetType)
         {
             case TargetType.Near:

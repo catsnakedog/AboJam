@@ -81,6 +81,6 @@ public class Spawner : MonoBehaviour
     {
         spriteRenderer.sortingOrder = spriteOrderIndex;
         spriteOrderIndex++;
-        if (spriteOrderIndex == int.MaxValue) spriteOrderIndex = 0;
+        if (spriteOrderIndex == 32768) spriteOrderIndex = 0;
     }
 }

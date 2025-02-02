@@ -37,6 +37,7 @@ public class HP : RecordInstance<Table_HP, Record_HP>
         startFlag = true;
         base.Start();
         instances.Add(this);
+        Load();
 
         material = spr_max.material;
         spr_max.sortingOrder = spr_empty.sortingOrder + 1;
