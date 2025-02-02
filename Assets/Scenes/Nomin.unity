@@ -3132,6 +3132,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 278122529535980493, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: enemyPool
+      value: 
+      objectReference: {fileID: 1104335684}
+    - target: {fileID: 278122529535980493, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: secondsPerDay
       value: 5
       objectReference: {fileID: 0}

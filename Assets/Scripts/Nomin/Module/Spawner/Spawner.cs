@@ -16,6 +16,7 @@ public class Spawner : MonoBehaviour
     /* Field & Property */
     public static Spawner instance;
     private int waveIndex = 1;
+    public bool waveEnd { get; set; } = false;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -54,6 +55,8 @@ public class Spawner : MonoBehaviour
                 yield return waitForSeconds;
             }
         }
+
+        waveEnd = true;
     }
 
     /* Private Method */
