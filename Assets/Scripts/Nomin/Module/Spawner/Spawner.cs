@@ -17,6 +17,7 @@ public class Spawner : MonoBehaviour
     public static Spawner instance;
     public int waveIndex = 1;
     public bool waveEnd { get; set; } = false;
+    private int spriteOrderIndex = 0;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -51,6 +52,7 @@ public class Spawner : MonoBehaviour
 
                 GameObject obj = pool.Get(wave.spawn[i].spawnee.prefabs[Random.Range(0, wave.spawn[i].spawnee.prefabs.Length)].name);
                 obj.transform.position = transform.position + GetRandomPoint(wave.spawn[i].sector);
+                SetSpriteOrder(obj.GetComponent<SpriteRenderer>());
 
                 yield return waitForSeconds;
             }
@@ -71,5 +73,14 @@ public class Spawner : MonoBehaviour
         float radius = Random.Range(sector.radiusIn, sector.radiusOut);
 
         return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0) * radius;
+    }
+    /// <summary>
+    /// 스프라이트의 순서를 생성 순으로 정렬합니다.
+    /// </summary>
+    private void SetSpriteOrder(SpriteRenderer spriteRenderer)
+    {
+        spriteRenderer.sortingOrder = spriteOrderIndex;
+        spriteOrderIndex++;
+        if (spriteOrderIndex == int.MaxValue) spriteOrderIndex = 0;
     }
 }
