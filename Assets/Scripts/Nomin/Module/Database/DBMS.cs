@@ -23,14 +23,14 @@ public class DBMS : MonoBehaviour
     [SerializeField] private string database; public string DB { get => database; private set => database = value; }
     [SerializeField] private string id; public string ID { get => id; private set => id = value; }
     [SerializeField] private string password; public string PASSWORD { get => password; private set => password = value; }
-    private SqlConnection Connection { get; set; }
-    private object Lock { get; } = new(); // 멀티 스레딩 DB 접근 동기화
+    public SqlConnection Connection { get; set; }
+    public object Lock { get; } = new(); // 멀티 스레딩 DB 접근 동기화
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
     {
         instance = this;
-        try { Connection = new ($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD}"); }
+        try { Connection = new($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD}"); }
         catch { Debug.Log("DB 연결 실패"); }
     }
 
@@ -59,6 +59,25 @@ public class DBMS : MonoBehaviour
             Connection.Close();
 
             return dataSet;
+        }
+    }
+    /// <summary>
+    /// 서버 연결을 검증합니다.
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckConnection()
+    {
+        try
+        {
+            Connection.Open();
+            Console.WriteLine("✅ MSSQL 서버 연결 성공!");
+            Connection.Close();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ 연결 실패: {ex.Message}");
+            return false;
         }
     }
 }

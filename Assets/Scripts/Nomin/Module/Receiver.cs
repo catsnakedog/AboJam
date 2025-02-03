@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor.Timeline.Actions;
 using UnityEngine.EventSystems;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+using Unity.VisualScripting;
 
 public class Receiver : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Receiver : MonoBehaviour
     private List<Indicator_Arrow> indicator_arrow => Indicator_Arrow.instances;
     private Grid grid => Grid.instance; // 하드 링크
 
+    /* Initializer & Finalizer &  Updater */
     /// <summary>
     /// 이벤트 핸들러를 정의합니다.
     /// </summary>
@@ -59,6 +61,16 @@ public class Receiver : MonoBehaviour
             if (tile.Go != null) demolition.On();
         }; // Click + G 키다운
     }
+    private void OnEnable()
+    {
+        inputAction.Enable();
+    }
+    private void OnDisable()
+    {
+        inputAction.Disable();
+    }
+
+    /* Private Method */
     /// <summary>
     /// 모든 UI 요소를 끕니다.
     /// </summary>
