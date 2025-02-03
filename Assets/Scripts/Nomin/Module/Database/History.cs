@@ -6,17 +6,20 @@ using System.Data.SqlClient;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEditor.Rendering;
 using UnityEditor.Searcher;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class History : MonoBehaviour
 {
     /* Dependency */
     public GameObject gameDataLocal;
     public GameObject gameDataServer;
+    public GameObject gameDataMy;
     public GameObject record;
     private LocalData localData => LocalData.instance;
     private DBMS dbms => DBMS.instance;
@@ -98,8 +101,18 @@ public class History : MonoBehaviour
         // 서버 History 테이블 가져오기
         List<GameData> histories = GetHistory(dataSet);
 
-        // 내 기록 찾기
+        // 클라이언트 뷰 초기화
+        foreach (Transform child in gameDataServer.transform) Destroy(child.gameObject);
+        foreach (Transform child in gameDataMy.transform) Destroy(child.gameObject);
+
+        // 내 기록 시각화
         GameData myData = histories.Find(game => game.ID == ID);
+        GameObject obj = Instantiate(record, gameDataMy.transform);
+        obj.GetComponent<Image>().color = UnityEngine.Color.red;
+        DateTime myDateTime = myData.GetDateTime();
+        string myID = AdjustWidth($"[{histories.FindIndex(game => game.ID == ID) + 1} 등] " + myData.ID, 15);
+        string myDate = AdjustWidth($"{myDateTime: y년 d일 hh:mm} 생존 !", 20);
+        gameDataMy.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{myID} {myDate}";
 
         // 서버 기록 Top 100 유지
         if (histories.Count > 100) histories.RemoveRange(100, histories.Count - 100);
@@ -110,8 +123,9 @@ public class History : MonoBehaviour
         for (int i = 0; i < index; i++)
         {
             DateTime dateTime = histories[i].GetDateTime();
-            gameDataServer.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text =
-                $"[{i + 1} 등] {histories[i].ID} 님 {dateTime:y년 d일 hh:mm} 생존 !";
+            string id = AdjustWidth($"[{i + 1} 등] " + histories[i].ID, 15);
+            string date = AdjustWidth($"{dateTime: y년 d일 hh:mm} 생존 !", 20);
+            gameDataServer.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{id} {date}";
         }
 
         /* Local Method */
@@ -186,6 +200,17 @@ public class History : MonoBehaviour
             // 날짜순 정렬 (최신 기록이 먼저 오도록)
             histories.Sort((a, b) => b.GetDateTime().CompareTo(a.GetDateTime()));
             return histories;
+        }
+        string AdjustWidth(string input, int totalWidth)
+        {
+            int currentWidth = 0;
+            foreach (char c in input)
+            {
+                currentWidth += Regex.IsMatch(c.ToString(), @"[\uAC00-\uD7A3]") ? 2 : 1; // 한글이면 2칸, 아니면 1칸
+            }
+
+            int spaceToAdd = totalWidth - currentWidth; // 필요한 공백 개수 계산
+            return spaceToAdd > 0 ? input + new string(' ', spaceToAdd) : input; // 부족한 만큼 공백 추가
         }
     }
 
