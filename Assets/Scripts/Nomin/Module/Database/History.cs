@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Drawing.Text;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TMPro;
+using UnityEditor.MemoryProfiler;
 using UnityEditor.Rendering;
 using UnityEditor.Searcher;
 using UnityEngine;
@@ -23,6 +25,7 @@ public class History : MonoBehaviour
     public GameObject record;
     private LocalData localData => LocalData.instance;
     private DBMS dbms => DBMS.instance;
+    private Message message => Message.instance;
 
     /* Field & Property */
     public static History instance;
@@ -59,8 +62,11 @@ public class History : MonoBehaviour
         {
             DateTime dateTime = gameDatas[i].GetDateTime();
             gameDataLocal.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text =
-                $"[{i + 1}] {dateTime:y년 d일 hh:mm} 생존 !";
+                $"[{i + 1}] 나이 : {dateTime:y살 d일}";
         }
+
+        ID = localData.LoadID();
+        if (ID != null) message.On($"환영합니다, {ID} 님", 3f);
 
         yield return null;
     }
@@ -102,17 +108,20 @@ public class History : MonoBehaviour
         List<GameData> histories = GetHistory(dataSet);
 
         // 클라이언트 뷰 초기화
-        foreach (Transform child in gameDataServer.transform) Destroy(child.gameObject);
-        foreach (Transform child in gameDataMy.transform) Destroy(child.gameObject);
+        while (gameDataServer.transform.childCount > 0) DestroyImmediate(gameDataServer.transform.GetChild(0).gameObject);
+        while (gameDataMy.transform.childCount > 0) DestroyImmediate(gameDataMy.transform.GetChild(0).gameObject);
 
         // 내 기록 시각화
         GameData myData = histories.Find(game => game.ID == ID);
-        GameObject obj = Instantiate(record, gameDataMy.transform);
-        obj.GetComponent<Image>().color = UnityEngine.Color.red;
-        DateTime myDateTime = myData.GetDateTime();
-        string myID = AdjustWidth($"[{histories.FindIndex(game => game.ID == ID) + 1} 등] " + myData.ID, 15);
-        string myDate = AdjustWidth($"{myDateTime: y년 d일 hh:mm} 생존 !", 20);
-        gameDataMy.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{myID} {myDate}";
+        if (myData != null)
+        {
+            GameObject obj = Instantiate(record, gameDataMy.transform);
+            obj.GetComponent<Image>().color = UnityEngine.Color.red;
+            DateTime myDateTime = myData.GetDateTime();
+            string myID = AdjustWidth($"[{histories.FindIndex(game => game.ID == ID) + 1} 등] " + myData.ID, 15);
+            string myDate = AdjustWidth($"나이 : {myDateTime: y살 d일}", 20);
+            gameDataMy.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{myID} {myDate}";
+        }
 
         // 서버 기록 Top 100 유지
         if (histories.Count > 100) histories.RemoveRange(100, histories.Count - 100);
@@ -124,7 +133,7 @@ public class History : MonoBehaviour
         {
             DateTime dateTime = histories[i].GetDateTime();
             string id = AdjustWidth($"[{i + 1} 등] " + histories[i].ID, 15);
-            string date = AdjustWidth($"{dateTime: y년 d일 hh:mm} 생존 !", 20);
+            string date = AdjustWidth($"나이 : {dateTime: y살 d일}", 20);
             gameDataServer.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{id} {date}";
         }
 
@@ -213,8 +222,6 @@ public class History : MonoBehaviour
             return spaceToAdd > 0 ? input + new string(' ', spaceToAdd) : input; // 부족한 만큼 공백 추가
         }
     }
-
-    /* Private Method */
     /// <summary>
     /// <br>현재 클라이언트 고유 ID 를 업데이트 하고 반환합니다.</br>
     /// <br>서버 연결 검증이 우선되어야 합니다.</br>
@@ -225,7 +232,12 @@ public class History : MonoBehaviour
         ID = localData.LoadID();
 
         // 없으면 생성
-        if (ID == null) { CreateID(dataSet); localData.SaveID(ID); await InsertIDAsync(ID); }
+        if (ID == null)
+        {
+            localData.SaveID(CreateID(dataSet));
+            ID = localData.LoadID();
+            await InsertIDAsync(ID);
+        }
 
         /* Local Method */
         string CreateID(DataSet dataSet)
@@ -247,18 +259,19 @@ public class History : MonoBehaviour
         {
             string query = "INSERT INTO ID VALUES (@id)";
 
-            using (SqlConnection connection = dbms.Connection)
+            lock (dbms.Lock)
             {
-                await connection.OpenAsync();
+                dbms.Connection.Open();
 
-                using (SqlCommand cmd = new SqlCommand(query, connection))
+                using (SqlCommand cmd = new SqlCommand(query, dbms.Connection))
                 {
                     cmd.Parameters.AddWithValue("@id", ID);
-                    int rowsAffected = await cmd.ExecuteNonQueryAsync();
+                    int rowsAffected = cmd.ExecuteNonQuery();
                 }
+
+                dbms.Connection.Close();
             }
         }
-
     }
 }
 
@@ -266,8 +279,7 @@ public class History : MonoBehaviour
 // CONSTRAINT : Class
 // CONSTRAINT : Serializable 어트리뷰트
 [Serializable] public class IDData { public string ID; } // 아이디 래퍼 클래스
-[Serializable]
-public class GameData
+[Serializable] public class GameData
 {
     /* Field & Property */
     public string ID;

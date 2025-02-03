@@ -13,7 +13,7 @@ public class Message : MonoBehaviour
     private Coroutine lastCor;
 
     /* Intializer & Finalizer & Updater */
-    private void Start()
+    private void Awake()
     {
         instance = this;
         gameObject.SetActive(false);
