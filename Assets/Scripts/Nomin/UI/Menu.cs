@@ -5,9 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    public void LoadScene(string sceneName)
+    [SerializeField] private GameObject panel;
+
+    public void MenuOnOff()
     {
-        SceneManager.LoadScene(sceneName);
-        StaticData.gameData.dateTime = Date.instance.dateTime.ToString("o"); ;
+        panel.SetActive(!panel.activeSelf);
+        TimeOnOff();
+    }
+    public void TimeOnOff()
+    {
+        if (Time.timeScale != 0) Time.timeScale = 0;
+        else Time.timeScale = 1;
     }
 }

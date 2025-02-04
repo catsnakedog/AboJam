@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TMPro;
@@ -26,6 +27,9 @@ public class History : MonoBehaviour
     private LocalData localData => LocalData.instance;
     private DBMS dbms => DBMS.instance;
     private Message message => Message.instance;
+    [SerializeField] private GameObject loading;
+    private Coroutine corLocalLast;
+    private Coroutine corServerLast;
 
     /* Field & Property */
     public static History instance;
@@ -47,7 +51,7 @@ public class History : MonoBehaviour
     /// </summary>
     public void SetLocalHistory()
     {
-        StartCoroutine(CorSetLocalHistory());
+        if(corLocalLast == null) corLocalLast = StartCoroutine(CorSetLocalHistory());
     }
     private IEnumerator CorSetLocalHistory()
     {
@@ -68,6 +72,7 @@ public class History : MonoBehaviour
         ID = localData.LoadID();
         if (ID != null) message.On($"환영합니다, {ID} 님", 3f);
 
+        corLocalLast = null;
         yield return null;
     }
     /// <summary>
@@ -75,17 +80,26 @@ public class History : MonoBehaviour
     /// </summary>
     public void SetServerHistory()
     {
-        StartCoroutine(CorSetServerHistory());
+        if (corServerLast == null) corServerLast = StartCoroutine(CorSetServerHistory());
     }
     private IEnumerator CorSetServerHistory()
     {
-        // 연결 검증
-        if (!dbms.CheckConnection()) yield break;
+        // 연결 검증 (비동기)
+        message.On("서버 연결 중 입니다. 잠시만 기다려주세요.", 2f);
+        GameObject loading = Instantiate(this.loading, new Vector3(4.78f, 2.69f, 1f), Quaternion.identity);
+        Task<bool> checkTask = Task.Run(() => dbms.CheckConnection());
+        yield return new WaitUntil(() => checkTask.IsCompleted); // 완료될 때까지 기다리기
+        if (checkTask.Result == false)
+        {
+            message.On("네트워크가 불안정하거나, 서버가 닫혀있습니다.\n학교 등 공공기관 와이파이는 연결이 실패할 수 있습니다.", 4f);
+            Destroy(loading);
+            corServerLast = null;
+            yield break;
+        }
 
         // DataSet 가져오기 (비동기)
         Task<DataSet> dataSetTask = Task.Run(() => dbms.GetDataSet());
         yield return new WaitUntil(() => dataSetTask.IsCompleted); // 완료될 때까지 기다리기
-
         DataSet dataSet = dataSetTask.Result; // 비동기 작업이 끝난 후 결과 가져오기
 
         // 고유 ID 검사
@@ -136,6 +150,9 @@ public class History : MonoBehaviour
             string date = AdjustWidth($"나이 : {dateTime: y살 d일}", 20);
             gameDataServer.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{id} {date}";
         }
+
+        if(loading != null) Destroy(loading);
+        corServerLast = null;
 
         /* Local Method */
         async Task InsertHistoryAsync(GameData gameData, DataSet dataSet)

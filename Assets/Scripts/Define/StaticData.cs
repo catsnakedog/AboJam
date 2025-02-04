@@ -70,6 +70,10 @@ public static class StaticData
     }
 
     /* Intializer & Finalizer & Updater */
+    static StaticData()
+    {
+        Abocado = 5;
+    }
     public static void Init()
     {
         Garu = 0;

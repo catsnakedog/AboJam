@@ -57,6 +57,19 @@ public class Verdict : MonoBehaviour
         }
     }
 
+    /* Public Method */
+    /// <summary>
+    /// History 를 갱신합니다.
+    /// </summary>
+    public void SaveHistory()
+    {
+        StaticData.gameData.dateTime = Date.instance.dateTime.ToString("o"); ;
+        //StaticData.gameData.kill;
+        //StaticData.gameData.abocado;
+        //StaticData.gameData.tower;
+        //StaticData.gameData.garu;
+    }
+
     /* Private Method */
     /// <summary>
     /// 게임 클리어를 감지합니다.
@@ -70,7 +83,6 @@ public class Verdict : MonoBehaviour
             date.timeFlow = false;
         }
     }
-
     /// <summary>
     /// 플레이어 HP 가 0 에 도달하면 작동합니다.
     /// </summary>
@@ -82,17 +94,5 @@ public class Verdict : MonoBehaviour
         TextMeshProUGUI resultText = lose.GetComponentInChildren<TextMeshProUGUI>();
         DateTime dateTime = DateTime.Parse(StaticData.gameData.dateTime, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
         resultText.text = $"[ 게임 결과 ]\n 나이: {dateTime: y살 d일}";
-    }
-
-    /// <summary>
-    /// History 를 갱신합니다.
-    /// </summary>
-    private void SaveHistory()
-    {
-        StaticData.gameData.dateTime = Date.instance.dateTime.ToString("o"); ;
-        //StaticData.gameData.kill;
-        //StaticData.gameData.abocado;
-        //StaticData.gameData.tower;
-        //StaticData.gameData.garu;
     }
 }
