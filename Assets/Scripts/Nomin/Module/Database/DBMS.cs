@@ -30,7 +30,7 @@ public class DBMS : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        try { Connection = new($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD}"); }
+        try { Connection = new($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD};Connection Timeout=5"); }
         catch { Debug.Log("DB 연결 실패"); }
     }
 

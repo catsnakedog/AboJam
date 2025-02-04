@@ -30,6 +30,9 @@ public class History : MonoBehaviour
     [SerializeField] private GameObject loading;
     private Coroutine corLocalLast;
     private Coroutine corServerLast;
+    private Coroutine corWaitLast;
+    private float waitTime = 10;
+    private DateTime last = DateTime.MinValue;
 
     /* Field & Property */
     public static History instance;
@@ -91,7 +94,8 @@ public class History : MonoBehaviour
         yield return new WaitUntil(() => checkTask.IsCompleted); // 완료될 때까지 기다리기
         if (checkTask.Result == false)
         {
-            message.On("네트워크가 불안정하거나, 서버가 닫혀있습니다.\n학교 등 공공기관 와이파이는 연결이 실패할 수 있습니다.", 4f);
+            if(corWaitLast == null) corWaitLast = StartCoroutine(CorWait());
+            message.On($"서버 연결에 실패했습니다. {(int)Math.Round(waitTime, MidpointRounding.AwayFromZero)} 초 후에 다시 시도해주세요.\n학교 등 공공기관 와이파이는 연결이 실패할 수 있습니다.", 4f);
             Destroy(loading);
             corServerLast = null;
             yield break;
@@ -239,6 +243,8 @@ public class History : MonoBehaviour
             return spaceToAdd > 0 ? input + new string(' ', spaceToAdd) : input; // 부족한 만큼 공백 추가
         }
     }
+
+    /* Private Method */
     /// <summary>
     /// <br>현재 클라이언트 고유 ID 를 업데이트 하고 반환합니다.</br>
     /// <br>서버 연결 검증이 우선되어야 합니다.</br>
@@ -290,6 +296,27 @@ public class History : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// 대기 시간을 감소시킵니다.
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CorWait()
+    {
+        while (waitTime > 0)
+        {
+            DateTime now = DateTime.Now;
+            TimeSpan elapsed = now - last; // 1)
+            if (elapsed.TotalSeconds > 0.1f * 5) { elapsed = TimeSpan.FromSeconds(0.1f); }
+            last = now;
+            waitTime -= (float)elapsed.TotalSeconds;
+            if (waitTime < 0) waitTime = 0;
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        waitTime = 10;
+        corWaitLast = null;
+    }
 }
 
 /* JSON Serializable Data */
@@ -326,5 +353,5 @@ public class History : MonoBehaviour
     {
         return DateTime.TryParse(dateTime, out DateTime result) ? result : DateTime.MinValue;
     }
-} // 데이터 클래스
+}// 데이터 클래스
 [Serializable] public class GameDataList { public List<GameData> gameDataList = new(); } // 데이터 래퍼 클래스

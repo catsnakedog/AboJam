@@ -38,11 +38,14 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     private TimeSpan start;
     private TimeSpan end;
     private DateTime last = DateTime.Now;
+    private float refreshTime = 0.1f;
+    private WaitForSeconds waitForSeconds;
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
     {
         instance = this;
+        timeFlow = true;
     }
     private void Start()
     {
@@ -60,6 +63,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         nightStart.AddListener(() => { Debug.Log("밤이 시작되었습니다."); });
         StartCoroutine(CorTime());
         morningStart?.Invoke();
+        waitForSeconds = new WaitForSeconds(refreshTime);
     }
     public void Load()
     {
@@ -81,7 +85,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
             UpdateImage();
             if (isSunset == false && dateTime.TimeOfDay > TimeSpan.Parse(sunsetTime)) StartSunset();
             if (isMorning == false && isNight == false) StartNight();
-            yield return new WaitForSeconds(0.1f);
+            yield return waitForSeconds;
         }
     }
     /// <summary>
@@ -96,6 +100,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         // 2) 시간비율 : 현실 하루 (초) / 게임 하루 (초)
         DateTime now = DateTime.Now;
         TimeSpan elapsed = now - last; // 1)
+        if (elapsed.TotalSeconds > refreshTime * 5) { elapsed = TimeSpan.FromSeconds(refreshTime); }
         last = now;
         double ratio = 86400d / (double)secondsPerDay; // 2)
         dateTime += elapsed * ratio;

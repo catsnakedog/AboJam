@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
+    private Date date => Date.instance;
 
     public void MenuOnOff()
     {
@@ -15,6 +16,6 @@ public class Menu : MonoBehaviour
     public void TimeOnOff()
     {
         if (Time.timeScale != 0) Time.timeScale = 0;
-        else Time.timeScale = 1;
+        else  Time.timeScale = 1;
     }
 }
