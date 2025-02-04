@@ -36,8 +36,8 @@ public class History : MonoBehaviour
 
     /* Field & Property */
     public static History instance;
-    private List<GameData> gameDatas = new();
     private string ID; // 클라이언트 고유 ID
+    private List<GameData> gameDatas = new();
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
@@ -323,6 +323,7 @@ public class History : MonoBehaviour
 // CONSTRAINT : Class
 // CONSTRAINT : Serializable 어트리뷰트
 [Serializable] public class IDData { public string ID; } // 아이디 래퍼 클래스
+[Serializable] public class ScenarioData { public int scenarioNumber; } // 시나리오 래퍼 클래스
 [Serializable] public class GameData
 {
     /* Field & Property */
