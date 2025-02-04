@@ -31,7 +31,7 @@ public static class StaticData
         { TowerType.Production, "생산 능력 강화" },
         { TowerType.Heal, "체력 회복량 증가" },
     };
-    public static GameData gameData;
+    public static GameData gameData = new ();
     private static int garu; public static int Garu
     {
         get

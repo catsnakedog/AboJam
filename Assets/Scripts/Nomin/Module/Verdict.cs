@@ -1,16 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using TMPro;
 using UnityEngine;
 
 public class Verdict : MonoBehaviour
 {
     /* Dependency */
+    [SerializeField] private HP playerHP;
+    [SerializeField] private GameObject enemyPool;
+    [SerializeField] private GameObject lose;
+    [SerializeField] private GameObject ui;
+    [SerializeField] private Player player;
     private Date date => Date.instance;
     private Spawner spawner => Spawner.instance;
     private Database_AboJam database_abojam => Database_AboJam.instance;
     private Message message => Message.instance;
-    [SerializeField] private GameObject enemyPool;
 
     /* Field & Property */
     public static Verdict instance;
@@ -22,6 +28,7 @@ public class Verdict : MonoBehaviour
         instance = this;
         waitForSeconds = new WaitForSeconds(0.3f);
         date.morningStart.AddListener(() => CheckGameClear());
+        playerHP.death.AddListener(() => Lose());
 
         StartCoroutine(UpdateCheckNightClear());
     }
@@ -62,5 +69,30 @@ public class Verdict : MonoBehaviour
             message.On("축하합니다. 게임을 클리어하였습니다 !", 3f);
             date.timeFlow = false;
         }
+    }
+
+    /// <summary>
+    /// 플레이어 HP 가 0 에 도달하면 작동합니다.
+    /// </summary>
+    private void Lose()
+    {
+        player.enabled = false;
+        SaveHistory();
+        GameObject lose = Instantiate(this.lose, ui.transform);
+        TextMeshProUGUI resultText = lose.GetComponentInChildren<TextMeshProUGUI>();
+        DateTime dateTime = DateTime.Parse(StaticData.gameData.dateTime, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+        resultText.text = $"[ 게임 결과 ]\n 나이: {dateTime: y살 d일}";
+    }
+
+    /// <summary>
+    /// History 를 갱신합니다.
+    /// </summary>
+    private void SaveHistory()
+    {
+        StaticData.gameData.dateTime = Date.instance.dateTime.ToString("o"); ;
+        //StaticData.gameData.kill;
+        //StaticData.gameData.abocado;
+        //StaticData.gameData.tower;
+        //StaticData.gameData.garu;
     }
 }
