@@ -40,6 +40,7 @@ public static class StaticData
         }
         set
         {
+            if (garu > value) StaticData.gameData.garu += garu - value; // 사용량 만큼 게임 데이터에 추가
             garu = value;
             foreach (var item in Inventory.instances) if (item != null) item.UpdateGaru();
         }

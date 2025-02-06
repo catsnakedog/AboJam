@@ -54,7 +54,7 @@ public class History : MonoBehaviour
     /// </summary>
     public void SetLocalHistory()
     {
-        if(corLocalLast == null) corLocalLast = StartCoroutine(CorSetLocalHistory());
+        if (corLocalLast == null) corLocalLast = StartCoroutine(CorSetLocalHistory());
     }
     private IEnumerator CorSetLocalHistory()
     {
@@ -68,8 +68,9 @@ public class History : MonoBehaviour
         for (int i = 0; i < gameDatas.Count; i++)
         {
             DateTime dateTime = gameDatas[i].GetDateTime();
-            gameDataLocal.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text =
+            gameDataLocal.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text =
                 $"[{i + 1}] 나이 : {dateTime:y살 d일}";
+            gameDataLocal.transform.GetChild(i).GetComponentInChildren<Record>().WriteLog(gameDatas[i]);
         }
 
         ID = localData.LoadID();
@@ -94,7 +95,7 @@ public class History : MonoBehaviour
         yield return new WaitUntil(() => checkTask.IsCompleted); // 완료될 때까지 기다리기
         if (checkTask.Result == false)
         {
-            if(corWaitLast == null) corWaitLast = StartCoroutine(CorWait());
+            if (corWaitLast == null) corWaitLast = StartCoroutine(CorWait());
             message.On($"서버 연결에 실패했습니다. {(int)Math.Round(waitTime, MidpointRounding.AwayFromZero)} 초 후에 다시 시도해주세요.\n학교 등 공공기관 와이파이는 연결이 실패할 수 있습니다.", 4f);
             Destroy(loading);
             corServerLast = null;
@@ -134,11 +135,12 @@ public class History : MonoBehaviour
         if (myData != null)
         {
             GameObject obj = Instantiate(record, gameDataMy.transform);
-            obj.GetComponent<Image>().color = UnityEngine.Color.red;
+            foreach (Image img in obj.GetComponentsInChildren<Image>()) if (img.color.a != 0) img.color = UnityEngine.Color.red;
             DateTime myDateTime = myData.GetDateTime();
             string myID = AdjustWidth($"[{histories.FindIndex(game => game.ID == ID) + 1} 등] " + myData.ID, 15);
             string myDate = AdjustWidth($"나이 : {myDateTime: y살 d일}", 20);
-            gameDataMy.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{myID} {myDate}";
+            gameDataMy.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = $"{myID} {myDate}";
+            gameDataMy.transform.GetChild(0).GetComponentInChildren<Record>().WriteLog(myData);
         }
 
         // 서버 기록 Top 100 유지
@@ -152,10 +154,11 @@ public class History : MonoBehaviour
             DateTime dateTime = histories[i].GetDateTime();
             string id = AdjustWidth($"[{i + 1} 등] " + histories[i].ID, 15);
             string date = AdjustWidth($"나이 : {dateTime: y살 d일}", 20);
-            gameDataServer.transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = $"{id} {date}";
+            gameDataServer.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = $"{id} {date}";
+            gameDataServer.transform.GetChild(i).GetComponentInChildren<Record>().WriteLog(histories[i]);
         }
 
-        if(loading != null) Destroy(loading);
+        if (loading != null) Destroy(loading);
         corServerLast = null;
 
         /* Local Method */
@@ -324,7 +327,8 @@ public class History : MonoBehaviour
 // CONSTRAINT : Serializable 어트리뷰트
 [Serializable] public class IDData { public string ID; } // 아이디 래퍼 클래스
 [Serializable] public class ScenarioData { public int scenarioNumber; } // 시나리오 래퍼 클래스
-[Serializable] public class GameData
+[Serializable]
+public class GameData
 {
     /* Field & Property */
     public string ID;

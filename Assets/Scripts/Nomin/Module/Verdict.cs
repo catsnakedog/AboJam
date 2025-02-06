@@ -64,10 +64,6 @@ public class Verdict : MonoBehaviour
     public void SaveHistory()
     {
         StaticData.gameData.dateTime = Date.instance.dateTime.ToString("o"); ;
-        //StaticData.gameData.kill;
-        //StaticData.gameData.abocado;
-        //StaticData.gameData.tower;
-        //StaticData.gameData.garu;
     }
 
     /* Private Method */

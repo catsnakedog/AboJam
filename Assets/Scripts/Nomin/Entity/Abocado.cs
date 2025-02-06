@@ -132,6 +132,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
                 if (StaticData.Abocado > 0)
                 {
                     StaticData.Abocado--;
+                    StaticData.gameData.abocado++;
                     GrowUp(true);
                 }
                 break;

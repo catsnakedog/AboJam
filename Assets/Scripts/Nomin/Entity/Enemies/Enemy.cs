@@ -50,6 +50,7 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
     /// <returns></returns>
     public IEnumerator CorDeath(float time)
     {
+        StaticData.gameData.kill++;
         string originTag = gameObject.tag;
         gameObject.tag = "Untagged";
 
