@@ -31,6 +31,7 @@ public class Light : RecordInstance<Table_Light, Record_Light>, IPoolee
         if (startFlag == true) return;
         startFlag = true;
         base.Start();
+        Load();
         instances.Add(this);
 
         delay = 1 / frame;

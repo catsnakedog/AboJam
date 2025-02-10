@@ -32,6 +32,7 @@ public class Auto : Tower<Table_Auto, Record_Auto>, IPoolee
         if (startFlag == true) return;
         startFlag = true;
         base.Start();
+        Load();
         instances.Add(this);
             
         float scale = launcher.range * 4;
@@ -47,6 +48,7 @@ public class Auto : Tower<Table_Auto, Record_Auto>, IPoolee
         if (startFlag == false) Start();
         database_abojam.ExportAuto(ID, ref reinforceCost, ref delay, ref detection, ref angle, ref subCount, ref subCountPlus);
         base.Load();
+        launcher.Load();
 
         MaxLevel = ReinforceCost.Length;
         delay_waitForSeconds = new WaitForSeconds(delay);
@@ -56,7 +58,7 @@ public class Auto : Tower<Table_Auto, Record_Auto>, IPoolee
     {
         base.Save();
     } // 풀에 집어 넣을 때 자동 실행
-
+    
     /* Public Method */
     /// <summary>
     /// 인접한 적에게 공격을 개시합니다.

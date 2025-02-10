@@ -77,8 +77,8 @@ public static class StaticData
     }
     public static void Init()
     {
-        Garu = 0;
-        Abocado = 5;
+        Garu = 100;
+        Abocado = 100;
         Water = 10;
         gameData = new GameData();
     }

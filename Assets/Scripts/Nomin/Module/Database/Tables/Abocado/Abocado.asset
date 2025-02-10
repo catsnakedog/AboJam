@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e78881a20ec80049a485bb0d9dccaef, type: 3}
   m_Name: Abocado
   m_EditorClassIdentifier: 
-  id: 
+  id: Abocado
+  level: 0
+  quality: 0
+  quality_max: 2
   harvest: 1
   harvestPlus: 1

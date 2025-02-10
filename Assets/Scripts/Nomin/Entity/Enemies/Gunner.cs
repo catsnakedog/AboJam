@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.UIElements;
 using static Targeter;
 using static UnityEngine.GraphicsBuffer;
 
@@ -39,6 +40,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         if (startFlag == true) return;
         startFlag = true;
         base.Start();
+        Load();
         instances.Add(this);
 
         // 인디케이터 스케일링
@@ -57,6 +59,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         if (startFlag == false) Start();
         database_abojam.ExportGunner(initialRecords[0].ID, ref delay, ref delay_fire, ref detection, ref subCount);
         base.Load();
+        launcher.Load();
 
         animator.enabled = true;
         move.isMove = true;

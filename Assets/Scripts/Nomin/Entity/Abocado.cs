@@ -52,6 +52,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
         if (startFlag == true) return;
         startFlag = true;
         base.Start();
+        Load();
         instances.Add(this);
 
         hp.death.AddListener(() => StartCoroutine(CorDeath(2)));

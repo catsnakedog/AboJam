@@ -85,6 +85,7 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
         if (startFlag == true) return;
         startFlag = true;
         base.Start();
+        Load();
         instances.Add(this);
 
         if (projectile == null) Debug.Log($"{gameObject.name} 의 Launcher 에 Projectile 이 연결되지 않았습니다.");
