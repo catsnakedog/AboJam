@@ -37,13 +37,12 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
         if (startFlag == true) return;
         startFlag = true;
         base.Start();
+        Load();
         instances.Add(this);
 
         // 인디케이터 스케일링
         float scale = detection * 4;
         indicator_circle.transform.localScale = new Vector2(scale, scale);
-
-        Attack(true);
     }
     private void OnDestroy()
     {
@@ -76,8 +75,8 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
     public void Attack(bool OnOff)
     {
         isAttack = OnOff;
+        if (corAttack != null) StopCoroutine(corAttack);
         if (OnOff == true) corAttack = StartCoroutine(CorAttack());
-        else StopCoroutine(corAttack);
     }
     /// <summary>
     /// 공격 딜레이를 재설정 합니다.

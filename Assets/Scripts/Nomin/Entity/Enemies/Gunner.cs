@@ -46,8 +46,6 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         // 인디케이터 스케일링
         float scale = launcher.range * 4;
         indicator_circle.transform.localScale = new Vector2(scale, scale);
-
-        Fire(true);
     }
     private void OnDestroy()
     {
@@ -82,8 +80,8 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     public void Fire(bool OnOff)
     {
         isFire = OnOff;
+        if (corFire != null) StopCoroutine(corFire);
         if (OnOff == true) corFire = StartCoroutine(CorFire());
-        else StopCoroutine(corFire);
     }
     /// <summary>
     /// 공격 딜레이를 재설정 합니다.
