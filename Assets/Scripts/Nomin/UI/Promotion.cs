@@ -84,7 +84,7 @@ public class Promotion : MonoBehaviour
 
         // 결제
         int price = GetPrice(towerType);
-        if (StaticData.Garu >= price) { message.On("타워가 건설되었습니다.", 2f); StaticData.gameData.tower++; }
+        if (StaticData.Garu >= price) { message.On("타워가 건설되었습니다.", 2f); StaticData.Garu -= price; StaticData.gameData.tower++; }
         else { message.On("가루가 부족합니다.", 2f); return; };
 
         // 아보카도 품질 증강
