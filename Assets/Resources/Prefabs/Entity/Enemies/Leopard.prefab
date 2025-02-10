@@ -81,6 +81,7 @@ MonoBehaviour:
   targeter: {fileID: 901584983806797495}
   gunner: {fileID: 0}
   leopard: {fileID: 5060544617370377028}
+  thug: {fileID: 0}
   moveSpeed: 2
   isMove: 1
 --- !u!114 &6031077543177188156
@@ -641,6 +642,10 @@ PrefabInstance:
       propertyPath: effect
       value: 
       objectReference: {fileID: 3100893671775424701, guid: 2c8b9738e70522249891e8a20263209b, type: 3}
+    - target: {fileID: 6737565912326876849, guid: 6c00c703fd9aa5942a4dce550d012dd1, type: 3}
+      propertyPath: knockback
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6737565912326876849, guid: 6c00c703fd9aa5942a4dce550d012dd1, type: 3}
       propertyPath: effectTime
       value: 0.25

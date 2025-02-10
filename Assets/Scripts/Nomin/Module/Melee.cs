@@ -27,8 +27,14 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     [SerializeField] private int penetrate; // 최대 피격 수
     [SerializeField] private float radius; // 피격 반지름
     [SerializeField] private float damage; // 공격 데미지
+    [SerializeField] public float multiplierDamage = 1.0f; // 데미지 계수
+    [SerializeField] private float knockback = 0.1f; // 넉백
+    [SerializeField] public float multiplierKnockback = 1.0f; // 넉백 계수
     [SerializeField] private float effectTime; // 이펙트 지속 시간
+    [SerializeField] float knockbackTime = 0.5f; // 넉백 지속 시간
+    [SerializeField] float updateKnockback = 0.016f; // 넉백 업데이트 시간
     private WaitForSeconds waitForSeconds;
+    private WaitForSeconds waitForSecondsUpdateKnockback;
 
     /* Intializer & Finalizer */
     private void Start()
@@ -51,6 +57,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
         database_abojam.ExportMelee(initialRecords[0].ID, ref clashTags, ref penetrate, ref radius, ref damage, ref effectTime);
 
         waitForSeconds = new WaitForSeconds(effectTime);
+        waitForSecondsUpdateKnockback = new WaitForSeconds(updateKnockback);
     } // Import 시 자동 실행
 
     /* Public Method */
@@ -69,8 +76,9 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
             if (currentPenetrate < 1) break;
             if (clashTags.Contains(collider.tag))
             {
-                if(effect != null) StartCoroutine(CorEffect(collider.transform.position));
-                HP.FindHP(collider.gameObject).Damage(damage); currentPenetrate--;
+                if (effect != null) StartCoroutine(CorEffect(collider.transform.position));
+                HP.FindHP(collider.gameObject).Damage(damage * multiplierDamage); currentPenetrate--;
+                if (new string[] {"Player", "Enemies"}.Contains(collider.tag)) Knockback(collider, knockback * multiplierKnockback);
             }
         }
     }
@@ -85,5 +93,30 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
         effect.transform.position = pos;
         yield return waitForSeconds;
         pool.Return(effect);
+    }
+
+    /// <summary>
+    /// 피격 대상을 무기의 반대 방향으로 일정 거리 이동시킵니다.
+    /// </summary>
+    private void Knockback(Collider2D collider, float knockback)
+    {
+        StartCoroutine(CorKnockback(collider, knockback));
+    }
+    private IEnumerator CorKnockback(Collider2D collider, float knockback)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < knockbackTime)
+        {
+            elapsedTime += updateKnockback;
+            float ratio = elapsedTime / knockbackTime;
+            if (ratio > 1) ratio = 1;
+
+            Vector2 direction = (collider.transform.position - transform.position).normalized;
+            float force = Mathf.Lerp(knockback, 0, ratio);
+            collider.transform.position += (Vector3)(direction * force);
+
+            yield return waitForSecondsUpdateKnockback;
+        }
     }
 }

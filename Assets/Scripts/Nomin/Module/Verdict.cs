@@ -28,7 +28,7 @@ public class Verdict : MonoBehaviour
         instance = this;
         waitForSeconds = new WaitForSeconds(0.3f);
         date.morningStart.AddListener(() => CheckGameClear());
-        playerHP.death.AddListener(() => Lose());
+        //playerHP.death.AddListener(() => Lose());
 
         StartCoroutine(UpdateCheckNightClear());
     }

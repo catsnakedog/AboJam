@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Management.Instrumentation;
+using System.Security.Cryptography.X509Certificates;
 using Unity.Properties;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -19,10 +20,11 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
 
     /* Field & Property */
-    public static List<Projectile> instances = new List<Projectile>(); // 모든 발사체 인스턴스 (활성화)
+    public static List<Projectile> instances = new List<Projectile>(); // 모든 발사체 인스턴스
     [HideInInspector] public GameObject launcher; // 발사기 참조
     [SerializeField] private string[] clashTags; public string[] ClashTags { get { Start(); return clashTags; } set => clashTags = value; } // 충돌 대상 태그
     public float damage = 10f; // 발사체 데미지
+    public float multiplierDamage = 1.0f; // 데미지 계수
     public int penetrate = 1; // 총 관통 수
     private int penetrate_current; // 남은 관통 수
 
@@ -88,7 +90,7 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
             }
 
             // 타겟 HP 에 데미지 / 회복 연산
-            if (damage >= 0) HP.FindHP(target).Damage(damage);
+            if (damage >= 0) HP.FindHP(target).Damage(damage * multiplierDamage);
             else HP.FindHP(target).Heal(-damage);
 
             // 관통 게산

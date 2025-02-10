@@ -643,6 +643,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3100893671775424701, guid: 32134f8126dd1514086366019efe7a13, type: 3}
     - target: {fileID: 6737565912326876849, guid: 6c00c703fd9aa5942a4dce550d012dd1, type: 3}
+      propertyPath: knockback
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6737565912326876849, guid: 6c00c703fd9aa5942a4dce550d012dd1, type: 3}
       propertyPath: effectTime
       value: 0.25
       objectReference: {fileID: 0}

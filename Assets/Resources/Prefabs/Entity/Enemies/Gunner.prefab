@@ -83,6 +83,7 @@ MonoBehaviour:
   targeter: {fileID: 8205990189393884828}
   gunner: {fileID: 767865442766890453}
   leopard: {fileID: 0}
+  thug: {fileID: 0}
   moveSpeed: 1
   isMove: 1
 --- !u!114 &6031077543177188156
