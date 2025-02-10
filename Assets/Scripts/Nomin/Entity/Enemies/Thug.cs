@@ -110,7 +110,7 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
                 // 공격 코드
                 melee.Attack(target.transform.position);
 
-                move.isMove = true;
+                if(hp.HP_current > 0) move.isMove = true;
             }
 
             yield return delay_waitForSeconds;
