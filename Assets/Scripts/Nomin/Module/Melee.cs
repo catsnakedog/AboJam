@@ -54,7 +54,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     {
         // Load 사용 시 필수 고정 구현
         if (startFlag == false) Start();
-        database_abojam.ExportMelee(initialRecords[0].ID, ref clashTags, ref penetrate, ref radius, ref damage, ref effectTime);
+        database_abojam.ExportMelee(initialRecords[0].ID, ref clashTags, ref penetrate, ref radius, ref damage, ref effectTime, ref knockback);
 
         waitForSeconds = new WaitForSeconds(effectTime);
         waitForSecondsUpdateKnockback = new WaitForSeconds(updateKnockback);

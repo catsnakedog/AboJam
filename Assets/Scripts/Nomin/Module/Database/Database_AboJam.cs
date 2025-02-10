@@ -35,7 +35,7 @@ public class Database_AboJam : MonoBehaviour
     /* Runtime Table : ImportTable 시 서버 데이터로 덮어씌워집니다. */
     public List<Table_HP> HP = new() { new Table_HP("ID", Hp_max: 1f, HideFullHP: true) };
     public List<Table_Launcher> Launcher = new() { new Table_Launcher("ID", align: true, turnTime: 1f, angleOffset: 1f, frame: 1f, speed: 1f, range: 1f) };
-    public List<Table_Melee> Melee = new() { new Table_Melee("ID", "clashTagsID", penetrate: 1, radius: 1f, damage: 1f, effectTime: 1f) };
+    public List<Table_Melee> Melee = new() { new Table_Melee("ID", "clashTagsID", penetrate: 1, radius: 1f, damage: 1f, effectTime: 1f, knockback: 1f) };
     public List<Table_Abocado> Abocado = new() { new Table_Abocado("ID", level: EnumData.Abocado.Cultivated, quality: 1, quality_max: 1, harvest: 1, harvestPlus: 1) };
     public List<Table_Gunner> Gunner = new() { new Table_Gunner("ID", delay: 1f, delay_fire: 1f, detection: 1f, subCount: 1) };
     public List<Table_Leopard> Leopard = new() { new Table_Leopard("ID", delay: 1f, detection: 1f) };
@@ -168,7 +168,7 @@ public class Database_AboJam : MonoBehaviour
         speed = data.speed;
         range = data.range;
     }
-    public void ExportMelee(string ID, ref string[] clashTags, ref int penetrate, ref float radius, ref float damage, ref float effectTime)
+    public void ExportMelee(string ID, ref string[] clashTags, ref int penetrate, ref float radius, ref float damage, ref float effectTime, ref float knockback)
     {
         Table_Melee data = Melee.FirstOrDefault(melee => melee.ID == ID);
         ExportClashTags(data.clashTagsID, ref clashTags);
@@ -176,6 +176,7 @@ public class Database_AboJam : MonoBehaviour
         radius = data.radius;
         damage = data.damage;
         effectTime = data.effectTime;
+        knockback = data.knockback;
     }
     public void ExportAbocado(string ID, ref EnumData.Abocado level, ref int quality, ref int quality_max, ref int harvest, ref int harvestPlus)
     {
