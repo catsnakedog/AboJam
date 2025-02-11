@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3010114512267648469}
   - component: {fileID: 8977354508500975511}
   m_Layer: 0
-  m_Name: Explosion_Projectile_Player
+  m_Name: Explosion_Projectile_Player_Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,9 +121,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialRecords:
-  - {fileID: 11400000, guid: d8ea95d9d2eaf804b94cf373ae04ee21, type: 2}
+  - {fileID: 11400000, guid: 414b6884c3c9a904ab68b067a1f227c3, type: 2}
   startFlag: 0
-  light2D: {fileID: 5041889053341477472, guid: 47a82d4888e8a4e459f1b711c7e8e4ba, type: 3}
+  light2D: {fileID: 5041889053341477472, guid: 13743e51c6b740447a05a061c8304471, type: 3}
   targeter: {fileID: 8977354508500975511}
   radius: 0
   damage: 0

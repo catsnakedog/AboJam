@@ -89,8 +89,6 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
         instances.Add(this);
 
         if (projectile == null) Debug.Log($"{gameObject.name} 의 Launcher 에 Projectile 이 연결되지 않았습니다.");
-        width = spriteRenderer.bounds.size.x;
-        height = spriteRenderer.bounds.size.y;
     }
     private void OnDestroy()
     {
@@ -108,6 +106,8 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
 
         delay = 1 / frame;
         waitForSeconds = new WaitForSeconds(delay);
+        width = spriteRenderer.bounds.size.x;
+        height = spriteRenderer.bounds.size.y;
         AlignLauncher();
     } // Import 시 자동 실행
 
@@ -174,7 +174,7 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
         while (projectile != null && projectile.activeSelf == true)
         {
             // 발사체 위치 += 진행 방향 * speed
-            Vector3 direction = (destination - startPos).normalized;
+            Vector3 direction = (new Vector3(destination.x, destination.y, startPos.z) - startPos).normalized;
             projectile.transform.position += direction * speed;
 
             // 사거리를 벗어나면 비활성화

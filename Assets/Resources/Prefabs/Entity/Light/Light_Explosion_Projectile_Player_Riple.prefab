@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 77680411934169540}
   - component: {fileID: 3205892278098318508}
   m_Layer: 0
-  m_Name: Light_Explosion_Projectile_Player
+  m_Name: Light_Explosion_Projectile_Player_Riple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialRecords:
-  - {fileID: 11400000, guid: 6d7f6cddf6bbaf044a914c524a0363bb, type: 2}
+  - {fileID: 11400000, guid: 85c4981981b6dbb4ca33c3be513b0c45, type: 2}
   startFlag: 0
   light2D: {fileID: 3205892278098318508}
   color: {r: 1, g: 1, b: 1, a: 1}

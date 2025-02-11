@@ -6,25 +6,33 @@ public class ShotGun : RangedWeapon
 {
     public override void AttackLogic()
     {
-        for(int i = 0; i < 5; i++)
+        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition), -10);
+        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition), -5);
+        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0);
+        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition), 5);
+        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition), 10);
+
+        /*
+        for (int i = 0; i < 5; i++)
         {
             var obj = ObjectPool.Instance.GetObj(Bullet, BulletObj);
-            var rotation = transform.parent.rotation; // ºÎ¸ðÀÇ È¸Àü °¡Á®¿À±â
+            var rotation = transform.parent.rotation; // ë¶€ëª¨ì˜ íšŒì „ ê°€ì ¸ì˜¤ê¸°
             float spreadAngle = UnityEngine.Random.Range(-WeaponDatas[Level - 1].Spread, WeaponDatas[Level - 1].Spread);
 
-            // ºÎ¸ð ¹æÇâ¿¡ ÆÛÁü °¢µµ¸¦ Ãß°¡ÇÑ È¸Àü °è»ê
+            // ë¶€ëª¨ ë°©í–¥ì— í¼ì§ ê°ë„ë¥¼ ì¶”ê°€í•œ íšŒì „ ê³„ì‚°
             Quaternion spreadRotation = rotation * Quaternion.Euler(0, 0, spreadAngle - 90);
 
-            // °á°úÀûÀ¸·Î ÅºÈ¯ÀÇ ¹æÇâ ¼³Á¤
+            // ê²°ê³¼ì ìœ¼ë¡œ íƒ„í™˜ì˜ ë°©í–¥ ì„¤ì •
             obj.transform.rotation = spreadRotation;
             obj.transform.position = FireLocation.position;
             float angleInDegrees = spreadRotation.eulerAngles.z;
             float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
 
-            // 2. XY Æò¸é¿¡¼­ÀÇ ¹æÇâ º¤ÅÍ °è»ê
+            // 2. XY í‰ë©´ì—ì„œì˜ ë°©í–¥ ë²¡í„° ê³„ì‚°
             Vector3 direction = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians), 0);
 
             obj.GetComponent<Bullet>().Init(spreadRotation, direction, WeaponDatas[Level - 1].Damage, WeaponDatas[Level - 1].bulletPenetration, WeaponDatas[Level - 1].Range, WeaponDatas[Level - 1].BulletSpeed);
         }
+        */
     }
 }

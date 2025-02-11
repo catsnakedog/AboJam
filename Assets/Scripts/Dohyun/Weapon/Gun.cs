@@ -6,22 +6,26 @@ public class Gun : RangedWeapon
 {
     public override void AttackLogic()
     {
+        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+        /*
         var obj = ObjectPool.Instance.GetObj(Bullet, BulletObj);
-        var rotation = transform.parent.rotation; // ºÎ¸ğÀÇ È¸Àü °¡Á®¿À±â
+        var rotation = transform.parent.rotation; // ë¶€ëª¨ì˜ íšŒì „ ê°€ì ¸ì˜¤ê¸°
         float spreadAngle = UnityEngine.Random.Range(-WeaponDatas[Level - 1].Spread, WeaponDatas[Level - 1].Spread);
 
-        // ºÎ¸ğ ¹æÇâ¿¡ ÆÛÁü °¢µµ¸¦ Ãß°¡ÇÑ È¸Àü °è»ê
+        // ë¶€ëª¨ ë°©í–¥ì— í¼ì§ ê°ë„ë¥¼ ì¶”ê°€í•œ íšŒì „ ê³„ì‚°
         Quaternion spreadRotation = rotation * Quaternion.Euler(0, 0, spreadAngle - 90);
 
-        // °á°úÀûÀ¸·Î ÅºÈ¯ÀÇ ¹æÇâ ¼³Á¤
+        // ê²°ê³¼ì ìœ¼ë¡œ íƒ„í™˜ì˜ ë°©í–¥ ì„¤ì •
         obj.transform.rotation = spreadRotation;
         obj.transform.position = FireLocation.position;
         float angleInDegrees = spreadRotation.eulerAngles.z;
         float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
 
-        // 2. XY Æò¸é¿¡¼­ÀÇ ¹æÇâ º¤ÅÍ °è»ê
+        // 2. XY í‰ë©´ì—ì„œì˜ ë°©í–¥ ë²¡í„° ê³„ì‚°
         Vector3 direction = new Vector3(Mathf.Cos(angleInRadians), Mathf.Sin(angleInRadians), 0);
 
         obj.GetComponent<Bullet>().Init(spreadRotation, direction, WeaponDatas[Level - 1].Damage, WeaponDatas[Level - 1].bulletPenetration, WeaponDatas[Level - 1].Range, WeaponDatas[Level - 1].BulletSpeed);
+        */
     }
 }

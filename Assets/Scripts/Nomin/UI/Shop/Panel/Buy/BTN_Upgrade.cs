@@ -9,9 +9,11 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
-public class BTN_Upgrade : MonoBehaviour
+public class BTN_Upgrade : RecordInstance<Table_Upgrade, Record_Upgrade>
 {
     /* Dependency */
+    private Database_AboJam database_abojam => Database_AboJam.instance;
+    public Upgrade upgrade => global::Upgrade.instance;
     public Button button;
     public AnimationClick animationClick;
     public Image image;
@@ -21,13 +23,10 @@ public class BTN_Upgrade : MonoBehaviour
 
     /* Field & Property */
     public static List<BTN_Upgrade> instances = new List<BTN_Upgrade>();
-    [SerializeField] private int[] prices;
-    public int Price
+    [SerializeField] private int maxLevel = 1;
+    private int price; public int Price
     {
-        get
-        {
-            return price;
-        }
+        get => price;
 
         set
         {
@@ -35,13 +34,9 @@ public class BTN_Upgrade : MonoBehaviour
             tmp_price.text = price.ToString();
         }
     }
-    private int price; // 백킹 필드
-    public int Level
+    private int level; public int Level
     {
-        get
-        {
-            return level;
-        }
+        get => level;
 
         private set
         {
@@ -49,18 +44,37 @@ public class BTN_Upgrade : MonoBehaviour
             tmp_level.text = "Lv. " + level.ToString();
         }
     }
-    private int level; // 백킹 필드
-    [SerializeField] private int maxLevel = 1;
+
+    [SerializeField] private string ID; // Primary Key
+    [SerializeField] public int[] reinforceCost; public int[] ReinforceCost { get => reinforceCost; set => reinforceCost = value; } // 레벨업 비용 (개수 = 최대 레벨 결정)
+    [SerializeField] private float coefficient;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
+        startFlag = true;
+        base.Start();
+        Load();
         instances.Add(this);
-        ChangeImage();
-        ChangePrice();
+
         Level = 0;
         button.onClick.AddListener(() => animationClick.OnClick());
         button.onClick.AddListener(() => Buy());
+    }
+    public void Load()
+    {
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportUpgrade(ID, ref reinforceCost, ref coefficient);
+
+        ChangeImage();
+        ChangePrice();
+    } // Import 시 자동 실행
+    private void OnEnable()
+    {
+        Load();
     }
     private void OnDestroy()
     {
@@ -79,6 +93,7 @@ public class BTN_Upgrade : MonoBehaviour
         LevelUp();
         ChangePrice();
         ChangeImage();
+        Upgrade();
     }
 
     /* Private Method */
@@ -134,7 +149,18 @@ public class BTN_Upgrade : MonoBehaviour
     /// </summary>
     private void ChangePrice()
     {
-        try { Price = prices[Level]; }
+        try { Price = reinforceCost[Level]; }
         catch { }
+    }
+    /// <summary>
+    /// ID 에 따라 무기의 각 속성을 업그레이드 합니다.
+    /// </summary>
+    private void Upgrade()
+    {
+        if (ID == "Upgrade_Damage") upgrade.multiplierDamage += coefficient;
+        if (ID == "Upgrade_Knockback") upgrade.multiplierRate += coefficient;
+        if (ID == "Upgrade_Range") upgrade.multiplierRange += coefficient;
+        if (ID == "Upgrade_Rate") upgrade.multiplierKnockback += coefficient;
+        upgrade.Apply();
     }
 }

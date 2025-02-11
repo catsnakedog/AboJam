@@ -124,6 +124,7 @@ MonoBehaviour:
   clashTags:
   - Enemies
   damage: 10
+  multiplierDamage: 1
   penetrate: 1
 --- !u!60 &-109754202756310999
 PolygonCollider2D:

@@ -18,6 +18,7 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
     public Pool pool => Pool.instance;
     public Collider2D colider2D;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
+    private Upgrade upgrade => Upgrade.instance;
 
     /* Field & Property */
     public static List<Projectile> instances = new List<Projectile>(); // 모든 발사체 인스턴스
@@ -62,6 +63,7 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
         database_abojam.ExportProjectile(initialRecords[0].ID, ref clashTags, ref damage, ref penetrate);
 
         penetrate_current = penetrate;
+        if(upgrade != null) upgrade.ApplyRange(this);
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()
     {
@@ -90,7 +92,7 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
             }
 
             // 타겟 HP 에 데미지 / 회복 연산
-            if (damage >= 0) HP.FindHP(target).Damage(damage * multiplierDamage);
+            if (damage >= 0) { HP.FindHP(target).Damage(damage * multiplierDamage); Debug.Log(damage * multiplierDamage); }
             else HP.FindHP(target).Heal(-damage);
 
             // 관통 게산

@@ -55,6 +55,8 @@ public class Database_AboJam : MonoBehaviour
     public List<Table_Spawn> Spawn = new() { new Table_Spawn("ID", "sectorID", "spawneeID", interval: 1f, count: 1) };
     public List<Table_Wave> Wave = new() { new Table_Wave("ID", delay: 1f, "spawnID") };
     public List<Table_Date> Date = new() { new Table_Date("ID", secondsPerDay: 1, "startTime", "morningTime", "sunsetTime", "nightTime") };
+    public List<Table_Upgrade> Upgrade = new() { new Table_Upgrade("ID", "reinforceCostID", coefficient: 0.1f) };
+
 
     /* Public Method */
     // Import : 서버 DB >> 런타임 DB
@@ -87,6 +89,7 @@ public class Database_AboJam : MonoBehaviour
             ImportTable(dataSet, ref Spawn);
             ImportTable(dataSet, ref Wave);
             ImportTable(dataSet, ref Date);
+            ImportTable(dataSet, ref Upgrade);
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
@@ -114,6 +117,7 @@ public class Database_AboJam : MonoBehaviour
         // Readonly : Spawn
         // Readonly : Wave
         if (global::Date.instance.isActiveAndEnabled) global::Date.instance.Load();
+        foreach (BTN_Upgrade item in global::BTN_Upgrade.instances) if (item.isActiveAndEnabled) item.Load();
     }
     public void ImportTable<T>(DataSet dataSet, ref List<T> runtimeTable) where T : ITable
     {
@@ -347,5 +351,11 @@ public class Database_AboJam : MonoBehaviour
         morningTime = data.morningTime;
         sunsetTime = data.sunsetTime;
         nightTime = data.nightTime;
+    }
+    public void ExportUpgrade(string ID, ref int[] reinforceCost, ref float coefficient)
+    {
+        Table_Upgrade data = Upgrade.FirstOrDefault(auto => auto.ID == ID);
+        ExportReinforceCost(data.reinforceCostID, ref reinforceCost);
+        coefficient = data.coefficient;
     }
 }

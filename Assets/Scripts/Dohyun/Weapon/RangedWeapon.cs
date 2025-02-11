@@ -5,6 +5,7 @@ using System;
 
 public class RangedWeapon : Weapon
 {
+    public Launcher launcher;
     public Transform FireLocation;
     public GameObject BulletObj;
     public Type Bullet = typeof(Bullet);

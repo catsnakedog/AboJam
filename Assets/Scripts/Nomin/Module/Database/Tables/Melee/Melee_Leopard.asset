@@ -18,3 +18,4 @@ MonoBehaviour:
   radius: 1
   damage: 5
   effectTime: 0.25
+  knockback: 0.05

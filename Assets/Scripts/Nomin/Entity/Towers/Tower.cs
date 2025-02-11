@@ -24,8 +24,6 @@ public class Tower<T1, T2> : RecordInstance<T1, T2>, ITower
     public int MaxLevel { get; set; } // 최대 레벨
     public int[] reinforceCost; public int[] ReinforceCost { get => reinforceCost; set => reinforceCost = value; } // 레벨업 비용 (개수 = 최대 레벨 결정)
 
-    /* Backing Field */
-
     /* Intializer & Finalizer & Updater */
     public virtual void Start()
     {

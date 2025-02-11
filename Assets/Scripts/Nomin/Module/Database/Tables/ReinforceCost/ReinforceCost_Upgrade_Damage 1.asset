@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8e5b0bde3843d0468338f9b44086d59, type: 3}
-  m_Name: Projectile_Player
+  m_Script: {fileID: 11500000, guid: 7352035a9561471478e8951ef58a9f69, type: 3}
+  m_Name: ReinforceCost_Upgrade_Damage 1
   m_EditorClassIdentifier: 
-  id: Projectile_Player
-  clashTagsID: PlayerTargetTags
-  damage: 3
-  penetrate: 1
+  id: ReinforceCost_Upgrade_Damage
+  reinforceCost: 10
