@@ -25,10 +25,10 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     public static List<Melee> instances = new List<Melee>(); // 모든 Melee 인스턴스
     [SerializeField] private string[] clashTags; public string[] ClashTags { get { Start(); return clashTags; } set => clashTags = value; } // 충돌 대상 태그
     [SerializeField] private int penetrate; // 최대 피격 수
-    [SerializeField] private float radius; // 피격 반지름
-    [SerializeField] private float damage; // 공격 데미지
+    [SerializeField] public float radius; // 피격 반지름
+    [SerializeField] public float damage; // 공격 데미지
     [SerializeField] public float multiplierDamage = 1.0f; // 데미지 계수
-    [SerializeField] private float knockback = 0.1f; // 넉백
+    [SerializeField] public float knockback = 0.1f; // 넉백
     [SerializeField] public float multiplierKnockback = 1.0f; // 넉백 계수
     [SerializeField] private float effectTime; // 이펙트 지속 시간
     [SerializeField] float knockbackTime = 0.5f; // 넉백 지속 시간
@@ -81,8 +81,32 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
                 if (new string[] {"Player", "Enemies"}.Contains(collider.tag)) Knockback(collider, knockback * multiplierKnockback);
             }
         }
-    }
 
+        StartCoroutine(Draw(worldPos, radius, 0.5f));
+    }
+    /// <summary>
+    /// 지정한 위치에 원형 범위의 공격을 시전합니다.
+    /// </summary>
+    public void Attack(Vector3 worldPos, float radius, float damage,  float knockback)
+    {
+        // 범위 내의 모든 타겟 탐색
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(worldPos, radius);
+        int currentPenetrate = penetrate; // 현재 남은 관통 수
+
+        // 태그 검사 후 데미지 적용
+        foreach (Collider2D collider in colliders)
+        {
+            if (currentPenetrate < 1) break;
+            if (clashTags.Contains(collider.tag))
+            {
+                if (effect != null) StartCoroutine(CorEffect(collider.transform.position));
+                HP.FindHP(collider.gameObject).Damage(damage * multiplierDamage); currentPenetrate--;
+                if (new string[] { "Player", "Enemies" }.Contains(collider.tag)) Knockback(collider, knockback * multiplierKnockback);
+            }
+        }
+
+        StartCoroutine(Draw(worldPos, radius, 0.5f));
+    }
     /* Private Method */
     /// <summary>
     /// effectTime 만큼 이펙트를 출력시킵니다.
@@ -93,6 +117,30 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
         effect.transform.position = pos;
         yield return waitForSeconds;
         pool.Return(effect);
+    }
+    /// <summary>
+    /// <br>지정한 반지름의 원을 일정 시간동안 그립니다.</br>
+    /// </summary>
+    private IEnumerator Draw(Vector3 worldPos, float radius, float seconds)
+    {
+        LineRenderer lineRenderer = new GameObject("Circle").AddComponent<LineRenderer>();
+        lineRenderer.startWidth = 0.05f;
+        lineRenderer.endWidth = 0.05f;
+        lineRenderer.loop = true;
+        lineRenderer.positionCount = 50;
+        lineRenderer.sortingLayerName = "Entity";
+        lineRenderer.sortingOrder = 0;
+
+        for (int i = 0; i < 50; i++)
+        {
+            float angle = i * (360f / 50) * Mathf.Deg2Rad;
+            float x = worldPos.x + Mathf.Cos(angle) * radius;
+            float y = worldPos.y + Mathf.Sin(angle) * radius;
+            lineRenderer.SetPosition(i, new Vector3(x, y, worldPos.z));
+        }
+
+        yield return new WaitForSeconds(seconds);
+        Destroy(lineRenderer.gameObject);
     }
 
     /// <summary>

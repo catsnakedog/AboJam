@@ -79,6 +79,13 @@ public class Bat : ChargeMeleeWeapon
         _attackProperty.SetFloat("_AttackFlag", 1.0f);
         _batAttackEffectRenderer.SetPropertyBlock(_attackProperty);
         StartCoroutine(SetChargeAttackRemain(_batAttackEffectObj, _attackProperty.GetFloat("_RadiusScale"), _attackProperty.GetFloat("_AttackFlag"), _attackProperty.GetFloat("_LineAngle")));
+
+        // 차징에 따른 공격 적용
+        Vector3 worldPos = _batAttackEffectObj.transform.position;
+        float radius = melee.radius * _attackProperty.GetFloat("_RadiusScale");
+        float damage = melee.damage * _attackProperty.GetFloat("_RadiusScale");
+        float knockback = melee.knockback * _attackProperty.GetFloat("_RadiusScale");
+        melee.Attack(worldPos, radius, damage, knockback);
     }
 
     public override void SkipSwingEffect()

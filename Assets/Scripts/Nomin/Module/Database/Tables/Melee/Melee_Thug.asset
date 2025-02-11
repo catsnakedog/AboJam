@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Melee_Thug
   clashTagsID: EnemyTargetTags
   penetrate: 2
-  radius: 1
+  radius: 0.5
   damage: 5
   effectTime: 0.25
   knockback: 0.05
