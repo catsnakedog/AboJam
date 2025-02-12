@@ -114,6 +114,9 @@ public class Spear : MeleeWeapon
         float motionTime = 1 / AttackSpeed;
         float process;
 
+        // 공격 적용
+        melee.Attack(melee.transform.position);
+
         while (time < motionTime * SpearMotionRate)
         {
             process = time / (motionTime * SpearMotionRate);
