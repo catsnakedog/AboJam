@@ -19,6 +19,7 @@ public class Receiver : MonoBehaviour
     private List<Indicator_Circle> indicator_circle => Indicator_Circle.instances;
     private List<Indicator_Arrow> indicator_arrow => Indicator_Arrow.instances;
     private Grid grid => Grid.instance;
+    private Farming farming => Farming.instance;
     [SerializeField] private Player player;
 
     /* Initializer & Finalizer &  Updater */
@@ -66,6 +67,7 @@ public class Receiver : MonoBehaviour
         InputActionMap character = inputAction.FindActionMap("Character");
         character.FindAction("Move").performed += (context) =>
         {
+            farming.StopCultivate();
             player.PlayerMovement._movement = context.ReadValue<Vector2>();
         }; // WASD 키다운
         character.FindAction("Move").canceled += (context) =>

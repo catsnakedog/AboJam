@@ -8,7 +8,6 @@ public class PlayerMovement : Movement, IObserver
     public Animator BodyAnimator;
     public Animator ClothesAnimator;
     public Animator HeadAnimator;
-
     public Vector2 _movement;
 
     public void OnNotify(string state)

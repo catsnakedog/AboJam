@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Movement
 {
-    public float MoveSpeed = 2f; // ÀÌµ¿ ¼Óµµ
-    public Vector2 MoveDirection = Vector2.zero; // ÀÌµ¿ ¹æÇâ
-    public Action MoveAction; // ¾÷µ¥ÀÌÅÍ´Â ÇØ´ç À¯´Ö¿¡¼­ ½ÇÇà
+    public float MoveSpeed = 2f; // ì´ë™ ì†ë„
+    public Vector2 MoveDirection = Vector2.zero; // ì´ë™ ë°©í–¥
+    public Action MoveAction; // ì—…ë°ì´í„°ëŠ” í•´ë‹¹ ìœ ë‹›ì—ì„œ ì‹¤í–‰
 
-    protected Rigidbody2D _rb; // ÇØ´ç À¯´Ö Rigidbody2d
+    protected Rigidbody2D _rb; // í•´ë‹¹ ìœ ë‹› Rigidbody2d
 
 
     public virtual void InitFirst()

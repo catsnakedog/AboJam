@@ -17,6 +17,7 @@ public class Tile
     private Grid grid => Grid.instance;
     private Promotion promotion => Promotion.instance;
     private Reinforcement reinforcement => Reinforcement.instance;
+    private Farming farming => Farming.instance;
 
     /* Field & Property */
     public static List<Tile> instances = new List<Tile>(); // 모든 타일 인스턴스
@@ -47,7 +48,8 @@ public class Tile
         reinforcement.Off();
         currentTile = this;
 
-        Abocado.Cultivate(this);
+        // 경작 시작
+        farming.Cultivate(this);
     }
     /// <summary>
     /// 지정한 오브젝트를 타일에 바인딩 합니다.
