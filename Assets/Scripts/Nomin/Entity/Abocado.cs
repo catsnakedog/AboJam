@@ -76,6 +76,17 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
         grid.GetNearestTile(gameObject.transform.position).UnBind();
     } // 풀에 집어 넣을 때 자동 실행
 
+    /* Static Method */
+    /// <summary>
+    /// 타일에 아보카도를 건설합니다.
+    /// </summary>
+    public static void Cultivate(Tile tile)
+    {
+        // 빈 타일이면 풀에서 아보카도 꺼내서 타일이랑 바인딩
+        if (tile.Go == null) tile.Bind(tile.pool.Get("Abocado"), EnumData.TileIndex.AboCado);
+        else { Debug.Log($"타일 ({tile.i}, {tile.j}) 에 이미 {tile.Go.name} 가 바인딩 되어 있습니다."); return; };
+    }
+
     /* Public Method */
     /// <summary>
     /// <br>아보카도가 성장합니다.</br>

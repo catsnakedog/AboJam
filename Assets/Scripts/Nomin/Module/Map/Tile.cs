@@ -13,8 +13,10 @@ using static EnumData;
 public class Tile
 {
     /* Dependency */
-    private Pool pool => Pool.instance; // 하드 링크
-    private Grid grid => Grid.instance; // 하드 링크
+    public Pool pool => Pool.instance;
+    private Grid grid => Grid.instance;
+    private Promotion promotion => Promotion.instance;
+    private Reinforcement reinforcement => Reinforcement.instance;
 
     /* Field & Property */
     public static List<Tile> instances = new List<Tile>(); // 모든 타일 인스턴스
@@ -41,13 +43,11 @@ public class Tile
     /// </summary>
     public void OnClick()
     {
-        Promotion.instance.Off();
-        Reinforcement.instance.Off();
+        promotion.Off();
+        reinforcement.Off();
         currentTile = this;
 
-        // 빈 타일이면 풀에서 아보카도 꺼내서 타일이랑 바인딩
-        if (Go == null) Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
-        else { Debug.Log($"타일 ({i}, {j}) 에 이미 {Go.name} 가 바인딩 되어 있습니다."); return; };
+        Abocado.Cultivate(this);
     }
     /// <summary>
     /// 지정한 오브젝트를 타일에 바인딩 합니다.

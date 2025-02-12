@@ -9,7 +9,7 @@ public class PlayerMovement : Movement, IObserver
     public Animator ClothesAnimator;
     public Animator HeadAnimator;
 
-    private Vector2 _movement;
+    public Vector2 _movement;
 
     public void OnNotify(string state)
     {
@@ -19,7 +19,7 @@ public class PlayerMovement : Movement, IObserver
     public override void InitFirst()
     {
         base.InitFirst();
-        MoveAction = ProcessInput;
+        // MoveAction = ProcessInput;
         MoveAction += SetCharacterDirection;
     }
 

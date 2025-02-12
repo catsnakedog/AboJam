@@ -12,13 +12,14 @@ public class Receiver : MonoBehaviour
     /* Dependency */
     public static Receiver instance;
     public InputActionAsset inputAction;
-    private RayCaster2D rayCaster2D => RayCaster2D.instance; // 하드 링크
-    private Promotion promotion => Promotion.instance; // 하드 링크
-    private Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
-    private Demolition demolition => Demolition.instance; // 하드 링크
+    private RayCaster2D rayCaster2D => RayCaster2D.instance;
+    private Promotion promotion => Promotion.instance;
+    private Reinforcement reinforcement => Reinforcement.instance;
+    private Demolition demolition => Demolition.instance;
     private List<Indicator_Circle> indicator_circle => Indicator_Circle.instances;
     private List<Indicator_Arrow> indicator_arrow => Indicator_Arrow.instances;
-    private Grid grid => Grid.instance; // 하드 링크
+    private Grid grid => Grid.instance;
+    [SerializeField] private Player player;
 
     /* Initializer & Finalizer &  Updater */
     /// <summary>
@@ -60,6 +61,17 @@ public class Receiver : MonoBehaviour
             Tile.currentTile = tile;
             if (tile.Go != null) demolition.On();
         }; // Click + G 키다운
+
+        // 캐릭터 컨트롤 정의
+        InputActionMap character = inputAction.FindActionMap("Character");
+        character.FindAction("Move").performed += (context) =>
+        {
+            player.PlayerMovement._movement = context.ReadValue<Vector2>();
+        }; // WASD 키다운
+        character.FindAction("Move").canceled += (context) =>
+        {
+            player.PlayerMovement._movement = Vector2.zero;
+        };
     }
     private void OnEnable()
     {
