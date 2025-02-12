@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using UnityEngine;
 
 public class ChainSaw : GageMeleeWeapon
@@ -13,6 +14,7 @@ public class ChainSaw : GageMeleeWeapon
     private Transform _effectRoot;
     private MaterialPropertyBlock _attackProperty;
     private float _angle = 0;
+    private Coroutine corLast;
 
     public override void WeaponSetting()
     {
@@ -56,6 +58,17 @@ public class ChainSaw : GageMeleeWeapon
         _attackProperty.SetFloat("_AttackFlag", 1.0f);
         _attackProperty.SetFloat("_EffectAngle", _angle);
         _chainSawEffectRenderer.SetPropertyBlock(_attackProperty);
+
+        // 공격 적용
+        corLast = StartCoroutine(CorAttack());
+        IEnumerator CorAttack()
+        {
+            while (true)
+            {
+                melee.Attack(melee.transform.position);
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
     }
 
     public override void TriggerLogic()
@@ -75,5 +88,8 @@ public class ChainSaw : GageMeleeWeapon
         _attackProperty.SetFloat("_AttackFlag", 0.0f);
         _attackProperty.SetFloat("_EffectAngle", _angle);
         _chainSawEffectRenderer.SetPropertyBlock(_attackProperty);
+
+        // 공격 종료
+        StopCoroutine(corLast);
     }
 }
