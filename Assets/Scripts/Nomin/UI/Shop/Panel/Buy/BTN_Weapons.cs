@@ -6,6 +6,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
@@ -20,6 +21,7 @@ public class BTN_Weapons : MonoBehaviour
     public Sprite sprite_unlock;
     public Sprite sprite_lock;
     public Sprite sprite_select;
+    public Swap swap => Swap.instance;
 
     /* Field & Property */
     public static List<BTN_Weapons> instances_melee = new List<BTN_Weapons>();
@@ -40,6 +42,7 @@ public class BTN_Weapons : MonoBehaviour
     [SerializeField] private int price = 0; // 백킹 필드
     [SerializeField] private bool purchase = false; // 구매 여부
     [SerializeField] private bool isMelee = false; // 근거리 or 원거리 설정
+    [SerializeField] private EnumData.Weapon weapon; // 버튼에 대응하는 무기
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -84,6 +87,7 @@ public class BTN_Weapons : MonoBehaviour
         if (purchase == true)
         {
             Message.instance.On("무기를 장착했습니다.", 2f);
+            swap.SetSlot(weapon);
 
             // 근접 무기 Select 해제
             if (isMelee == true)

@@ -90,6 +90,6 @@ public class ChainSaw : GageMeleeWeapon
         _chainSawEffectRenderer.SetPropertyBlock(_attackProperty);
 
         // 공격 종료
-        StopCoroutine(corLast);
+        if(corLast != null) StopCoroutine(corLast);
     }
 }

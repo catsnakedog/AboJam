@@ -9,6 +9,8 @@ using static HandUtil;
 [System.Serializable]
 public class Hand : IObserver
 {
+    private Swap swap => Swap.instance;
+
     public enum HandType
     {
         Standard = 0,
@@ -121,7 +123,7 @@ public class Hand : IObserver
     /// <summary>
     /// 무기 교체 중인지, 교체 중엔 다른 행동은 안한다
     /// </summary>
-    private bool _isSwitchWeapon = false;
+    private bool _isSwitchWeapon = false; public bool IsSwitchWeapon { get => _isSwitchWeapon; }
     private bool _isHoldingWeapon = false;
     /// <summary>
     /// 무기 교체 종료 위치
@@ -226,7 +228,7 @@ public class Hand : IObserver
     /// 나머지 값들은 무시하고 현재 무기슬롯 데이터 상으로 등록 되어 있는 무기들로 전부 세팅하고 초기화한다
     /// 만약 무기를 교체 중이였다면 전부 초기화 시키고 세팅한다.
     /// </summary>
-    private void SetSlotWeapons()
+    public void SetSlotWeapons()
     {
         // 장전 관련 초기화
 
@@ -403,6 +405,7 @@ public class Hand : IObserver
     {
         if (Input.GetKeyDown(SlotChangeKey))
         {
+            /*
             if (_isSwitchWeapon)
                 return;
             if (CurrentSlotIndex == WeaponSlot.FirstMelee)
@@ -410,6 +413,9 @@ public class Hand : IObserver
             else
                 CurrentSlotIndex++;
             SwitchWeapon();
+            */
+
+            swap.SwapSlot();
         }
         if (Input.GetKeyDown(SlotChangeTo1Key))
         {
@@ -425,6 +431,8 @@ public class Hand : IObserver
             CurrentSlotIndex = WeaponSlot.SecondRanged;
             SwitchWeapon();
         }
+
+        /*
         if (Input.GetKeyDown(SlotChangeTo3Key))
         {
             if (_isSwitchWeapon)
@@ -442,9 +450,10 @@ public class Hand : IObserver
 
             SetSlotWeapons();
         }
+        */
     }
 
-    private void SwitchWeapon()
+    public void SwitchWeapon()
     {
         _isSwitchWeapon = true;
         HandAction -= CheckFlipData;
