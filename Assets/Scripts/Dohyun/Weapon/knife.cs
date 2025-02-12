@@ -58,6 +58,9 @@ public class Knife : MeleeWeapon
 
     private IEnumerator AttackMotion()
     {
+        // 공격 적용
+        melee.Attack(melee.transform.position);
+
         GameObject knifeObj = ObjectPool.Instance.GetObj(_knifeObjType, AttackEffectObj, 10);
         knifeObj.transform.position = FireLocation.position;
         knifeObj.transform.SetParent(null, true);
