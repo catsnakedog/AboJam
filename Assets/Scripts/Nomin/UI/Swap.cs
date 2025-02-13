@@ -20,6 +20,8 @@ public class Swap : MonoBehaviour
     private void Start()
     {
         instance = this;
+        SetSlot(EnumData.Weapon.Gun);
+        SetSlot(EnumData.Weapon.Knife);
     }
 
     /* Public Method */

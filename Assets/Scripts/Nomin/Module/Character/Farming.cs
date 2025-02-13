@@ -44,6 +44,7 @@ public class Farming : MonoBehaviour
     }
     public void StopCultivate()
     {
+        if (gaugeObj == null) return;
         if (corGauge != null) StopCoroutine(corGauge); if (gaugeObj != null) Destroy(gaugeObj);
         if (corMove != null) StopCoroutine(corMove); player.PlayerMovement._movement = Vector2.zero;
         if (corCultivate != null) StopCoroutine(corCultivate);

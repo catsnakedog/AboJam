@@ -7859,6 +7859,10 @@ PrefabInstance:
       propertyPath: weapon
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2288639461799360085, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: purchase
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2744468918610077450, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_fontColor.b
       value: 0
@@ -8078,6 +8082,10 @@ PrefabInstance:
     - target: {fileID: 4611364618310983133, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: weapon
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611364618310983133, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: purchase
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4632136999991687856, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_Pivot.x
@@ -8518,13 +8526,13 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4632136999991687856, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       insertIndex: 2
-      addedObject: {fileID: 252732867}
-    - targetCorrespondingSourceObject: {fileID: 4632136999991687856, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1829027788}
     - targetCorrespondingSourceObject: {fileID: 4632136999991687856, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
-      insertIndex: -1
+      insertIndex: 3
       addedObject: {fileID: 1367765723}
+    - targetCorrespondingSourceObject: {fileID: 4632136999991687856, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 252732867}
     - targetCorrespondingSourceObject: {fileID: 4632136999991687856, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       insertIndex: -1
       addedObject: {fileID: 899843}
