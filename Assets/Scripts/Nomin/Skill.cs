@@ -77,7 +77,10 @@ public class Skill : MonoBehaviour
         // meteorite 방향 계산 및 인스턴스화
         Vector2 direction = (startPos - endPos).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        GameObject meteorite = Instantiate(this.meteorite, startPos, Quaternion.Euler(0, 0, angle));
+        //GameObject meteorite = Instantiate(this.meteorite, startPos, Quaternion.Euler(0, 0, angle));
+        GameObject meteorite = pool.Get(this.meteorite.name);
+        meteorite.transform.position = startPos;
+        meteorite.transform.rotation = Quaternion.Euler(0, 0, angle);
 
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.016f);
 
@@ -91,7 +94,8 @@ public class Skill : MonoBehaviour
                 GameObject explosion = pool.Get(this.explosion.name);
                 explosion.transform.position = endPos;
                 explosion.GetComponent<Explosion>().Explode(clashTags);
-                Destroy(meteorite);
+                //Destroy(meteorite);
+                pool.Return(meteorite);
 
                 break;
             }
