@@ -48,11 +48,17 @@ MonoBehaviour:
   initialRecords: []
   startFlag: 0
   targeter: {fileID: 7094284900168160105}
+  effect: {fileID: 0}
   clashTags: []
   penetrate: 0
   radius: 0
-  delay: 0
   damage: 0
+  multiplierDamage: 1
+  knockback: 3
+  multiplierKnockback: 1
+  effectTime: 0
+  knockbackTime: 0.25
+  updateKnockback: 0.016
 --- !u!114 &7094284900168160105
 MonoBehaviour:
   m_ObjectHideFlags: 0

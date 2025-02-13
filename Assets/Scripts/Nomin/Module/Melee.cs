@@ -31,7 +31,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     [SerializeField] public float knockback = 0.1f; // 넉백
     [SerializeField] public float multiplierKnockback = 1.0f; // 넉백 계수
     [SerializeField] private float effectTime; // 이펙트 지속 시간
-    [SerializeField] float knockbackTime = 0.5f; // 넉백 지속 시간
+    [SerializeField] float knockbackTime = 0.25f; // 넉백 지속 시간
     [SerializeField] float updateKnockback = 0.016f; // 넉백 업데이트 시간
     private WaitForSeconds waitForSeconds;
     private WaitForSeconds waitForSecondsUpdateKnockback;

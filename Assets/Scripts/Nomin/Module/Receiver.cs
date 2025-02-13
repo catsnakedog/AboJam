@@ -52,9 +52,7 @@ public class Receiver : MonoBehaviour
             if (hit == null) return;
 
             // 충돌 대상의 RayCastee2D.OnClick 실행
-            RayCastee2D rayCastee = hit.Value.collider.GetComponent<RayCastee2D>();
-            if (rayCastee == null) return;
-            rayCastee.OnClick();
+            try { hit.Value.collider.GetComponent<RayCastee2D>().OnClick(); } catch { return; }
         }; // Click + F 키다운
         map.FindAction("Demolition").performed += (context) =>
         {
