@@ -27,6 +27,8 @@ public class HP : RecordInstance<Table_HP, Record_HP>
     public float HP_current { get; private set; } // 현재 체력
     public float HP_ratio { get; private set; } // 현재 체력 비율
     public UnityEvent death; // HP 가 0 이 되었을 때 작동할 메서드
+    public UnityEvent damaged; // 데미지를 입었을 때 작동할 메서드
+    public UnityEvent healed; // 힐을 받았을 때 작동할 메서드
     private Material material; // spr_max 를 우측부터 자르기 위한 머터리얼
 
     /* Intializer & Finalizer & Updater */
@@ -90,6 +92,7 @@ public class HP : RecordInstance<Table_HP, Record_HP>
         HP_current = Mathf.Max(HP_current - value, 0);
         if (HP_current == 0) { death?.Invoke(); }
         CheckVisible();
+        damaged?.Invoke();
     }
     /// <summary>
     /// 체력을 회복합니다.
@@ -98,6 +101,7 @@ public class HP : RecordInstance<Table_HP, Record_HP>
     public void Heal(float value)
     {
         HP_current = Mathf.Min(HP_current + value, Hp_max);
+        healed?.Invoke();
     }
     /// <summary>
     /// 최대 체력을 조정합니다.

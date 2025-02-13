@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Farming : MonoBehaviour
 {
     /* Dependency */
     [SerializeField] private Player player;
+    [SerializeField] private GameObject gauge;
     private Grid grid => Grid.instance;
     private Pool pool => Pool.instance;
 
     /* Field & Property */
     public static Farming instance;
-    public Coroutine corCultivate;
-    public Coroutine corMove;
+    private Coroutine corCultivate;
+    private Coroutine corMove;
+    private Coroutine corGauge;
+    private GameObject gaugeObj;
 
     /* Initializer & Finalizer & Updater */
     private void Start()
@@ -32,13 +37,16 @@ public class Farming : MonoBehaviour
     public IEnumerator CorCultivate(Tile tile)
     {
         yield return corMove = StartCoroutine(CorMove(tile.pos, grid.CellWidth));
-        Grind(tile);
+        yield return corGauge = StartCoroutine(CorGauge(1f, 100f, 0.016f));
+
+        if (tile.Go == null) tile.Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
+        else { UnityEngine.Debug.Log($"타일 ({tile.i}, {tile.j}) 에 이미 {tile.Go.name} 가 바인딩 되어 있습니다."); };
     }
     public void StopCultivate()
     {
-        if (corMove != null) StopCoroutine(corMove);
+        if (corGauge != null) StopCoroutine(corGauge); if (gaugeObj != null) Destroy(gaugeObj);
+        if (corMove != null) StopCoroutine(corMove); player.PlayerMovement._movement = Vector2.zero;
         if (corCultivate != null) StopCoroutine(corCultivate);
-        player.PlayerMovement._movement = Vector2.zero;
     }
 
     /* Private Method */
@@ -74,12 +82,23 @@ public class Farming : MonoBehaviour
         player.PlayerMovement._movement = Vector2.zero;
     }
     /// <summary>
-    /// 타일에 아보카도를 바인딩 합니다.
+    /// seconds 초 동안 게이지를 percent % 채웁니다.
     /// </summary>
-    /// <param name="tile"></param>
-    private void Grind(Tile tile)
+    /// <param name="delay">회복 틱 사이 간격</param>
+    private IEnumerator CorGauge(float seconds, float percent, float delay)
     {
-        if (tile.Go == null) tile.Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
-        else { Debug.Log($"타일 ({tile.i}, {tile.j}) 에 이미 {tile.Go.name} 가 바인딩 되어 있습니다."); return; };
+        Vector3 pos = transform.position + new Vector3(0, 1, 0);
+        gaugeObj = Instantiate(this.gauge, pos, Quaternion.identity);
+        Gauge gauge = gaugeObj.GetComponent<Gauge>();
+
+        float healPerTick = (percent / seconds) / (seconds / delay) * 0.01f;
+
+        while (gauge.current < gauge.max)
+        {
+            gauge.Fill(gauge.max * healPerTick);
+            yield return new WaitForSeconds(delay);
+        }
+
+        if(gaugeObj != null) Destroy(gaugeObj);
     }
 }
