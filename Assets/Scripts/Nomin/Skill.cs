@@ -10,6 +10,7 @@ public class Skill : MonoBehaviour
     /* Dependency */
     [SerializeField] private Player player;
     [SerializeField] private SampleButtonAction sampleButtonAction;
+    [SerializeField] private GameObject coolTimer;
     private Pool pool => Pool.instance;
     private Grid grid => Grid.instance;
 
@@ -41,6 +42,9 @@ public class Skill : MonoBehaviour
     public void Meteor()
     {
         StartCoroutine(CorMeteor(range, count, seconds, speed));
+
+        coolTimer.SetActive(true);
+        coolTimer.GetComponent<CoolTimer>().Go(cooldown);
     }
     private IEnumerator CorMeteor(int range, int count, float seconds, float speed)
     {
