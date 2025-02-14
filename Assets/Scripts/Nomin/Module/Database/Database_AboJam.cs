@@ -50,7 +50,7 @@ public class Database_AboJam : MonoBehaviour
     public List<Table_Explosion> Explosion = new() { new Table_Explosion("ID", scale: 1f, radius: 1f, damage: 1f, time: 1f) };
     public List<Table_Projectile> Projectile = new() { new Table_Projectile("ID", "clashTagsID", damage: 1f, penetrate: 1) };
     public List<Table_ClashTags> ClashTags = new() { new Table_ClashTags("ID", "clashTags") };
-    public List<Table_Spawnee> Spawnee = new() { new Table_Spawnee("ID", "prefab") };
+    public List<Table_Spawnee> Spawnee = new() { new Table_Spawnee("ID", "prefab", level: 0) };
     public List<Table_Sector> Sector = new() { new Table_Sector("ID", angleStart: 1f, angleEnd: 1f, radiusIn: 1f, radiusOut: 1f) };
     public List<Table_Spawn> Spawn = new() { new Table_Spawn("ID", "sectorID", "spawneeID", interval: 1f, count: 1) };
     public List<Table_Wave> Wave = new() { new Table_Wave("ID", delay: 1f, "spawnID") };
@@ -313,7 +313,7 @@ public class Database_AboJam : MonoBehaviour
         sector = record_sector;
 
         Spawnee record_spawnee = new();
-        ExportSpawnee(data.spawneeID, ref record_spawnee.prefabs);
+        ExportSpawnee(data.spawneeID, ref record_spawnee.prefabs, ref record_spawnee.levels);
         spawnee = record_spawnee;
 
         interval = data.interval;
@@ -328,7 +328,7 @@ public class Database_AboJam : MonoBehaviour
         radiusIn = data.radiusIn;
         radiusOut = data.radiusOut;
     }
-    public void ExportSpawnee(string ID, ref GameObject[] prefabs)
+    public void ExportSpawnee(string ID, ref GameObject[] prefabs, ref int[] levels)
     {
         List<GameObject> temp = new();
 
@@ -342,6 +342,7 @@ public class Database_AboJam : MonoBehaviour
         }
 
         prefabs = temp.ToArray();
+        levels = Spawnee.Where(spawnee => spawnee.ID == ID).Select(data => data.level).ToArray();
     }
     public void ExportDate(string ID, ref int secondsPerDay, ref string startTime, ref string morningTime, ref string sunsetTime, ref string nightTime)
     {

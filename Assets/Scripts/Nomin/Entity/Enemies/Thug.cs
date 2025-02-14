@@ -54,6 +54,7 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
         if (startFlag == false) Start();
         database_abojam.ExportThug(initialRecords[0].ID, ref delay, ref detection);
         base.Load();
+        melee.Load();
 
         animator.enabled = true;
         move.isMove = true;
@@ -86,6 +87,15 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
     {
         this.delay = delay;
         delay_waitForSeconds = new WaitForSeconds(delay);
+    }
+    /// <summary>
+    /// 레벨업 시 능력치 상승을 정의합니다.
+    /// </summary>
+    public override void Reinforce()
+    {
+        base.Reinforce();
+        hp.SetMaxHP(hp.Hp_max * 1.05f);
+        melee.damage *= 1.05f;
     }
 
     /* Private Method */

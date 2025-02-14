@@ -11,4 +11,5 @@ public class Record_Spawnee : ScriptableObject, IRecord
     /* Field & Property */
     [SerializeField] private string id;  public string ID { get => id; set => id = value; }
     public string prefab;
+    public int level;
 }

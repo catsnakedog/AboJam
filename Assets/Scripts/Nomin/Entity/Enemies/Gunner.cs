@@ -93,11 +93,12 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         delay_waitForSeconds = new WaitForSeconds(delay);
     }
     /// <summary>
-    /// <br>사격 시 발사체가 2 발 추가됩니다.</br>
+    /// 레벨업 시 능력치 상승을 정의합니다.
     /// </summary>
     public override void Reinforce()
     {
         base.Reinforce();
+        hp.SetMaxHP(hp.Hp_max * 1.05f);
         subCount++;
     }
 

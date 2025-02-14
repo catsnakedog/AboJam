@@ -37,8 +37,6 @@ public class Farming : MonoBehaviour
     }
     public IEnumerator CorCultivate(Tile tile)
     {
-        UnityEngine.Debug.Log("경작 시작");
-
         yield return corMove = StartCoroutine(CorMove(tile.pos, grid.CellWidth));
         yield return corGauge = StartCoroutine(CorGauge(1f, 100f, 0.016f));
 
@@ -47,8 +45,6 @@ public class Farming : MonoBehaviour
     }
     public void StopCultivate()
     {
-        UnityEngine.Debug.Log("중단");
-
         if (gaugeObj == null) return;
         if (corGauge != null) StopCoroutine(corGauge); if (gaugeObj != null) Destroy(gaugeObj);
         if (corMove != null) StopCoroutine(corMove); player.PlayerMovement._movement = Vector2.zero;

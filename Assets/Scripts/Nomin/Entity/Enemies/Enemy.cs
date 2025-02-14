@@ -19,7 +19,7 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
     /* Field & Property */
     public static List<IEnemy> instances => IEnemy.instances;
     public static IEnemy currentEnemy => IEnemy.currentEnemy;
-    public int Level { get; private set; } = 0; // 현재 레벨
+    public int Level { get; set; } = 0; // 현재 레벨
     public int MaxLevel { get; private set; } // 최대 레벨
 
     /* Intializer & Finalizer & Updater */
@@ -106,6 +106,5 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
         // 적 공통 증강
         Debug.Log($"{name} 증강");
         hp.Heal(hp.Hp_max);
-        Level++;
     }
 }

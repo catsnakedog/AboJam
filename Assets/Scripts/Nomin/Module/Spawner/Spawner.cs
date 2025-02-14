@@ -50,9 +50,16 @@ public class Spawner : MonoBehaviour
             {
                 WaitForSeconds waitForSeconds = new(wave.spawn[i].interval);
 
-                GameObject obj = pool.Get(wave.spawn[i].spawnee.prefabs[Random.Range(0, wave.spawn[i].spawnee.prefabs.Length)].name);
+                // 생성
+                int random = Random.Range(0, wave.spawn[i].spawnee.prefabs.Length);
+                GameObject obj = pool.Get(wave.spawn[i].spawnee.prefabs[random].name);
                 obj.transform.position = transform.position + GetRandomPoint(wave.spawn[i].sector);
                 SetSpriteOrder(obj.GetComponent<SpriteRenderer>());
+
+                // 지정된 레벨까지 업그레이드
+                IEnemy enemy = obj.GetComponent<IEnemy>();
+                enemy.Level = wave.spawn[i].spawnee.levels[random];
+                for (int k = 0; k < enemy.Level; k++) enemy.Reinforce();
 
                 yield return waitForSeconds;
             }
