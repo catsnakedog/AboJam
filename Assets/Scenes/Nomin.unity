@@ -7361,6 +7361,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb6577aac84446345a92c3b52e14fb4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialRecords:
+  - {fileID: 11400000, guid: 48808348a66f16f4ba71cb647cfe8cf4, type: 2}
+  startFlag: 0
   player: {fileID: 1427187426}
   sampleButtonAction: {fileID: 2068774218}
   coolTimer: {fileID: 1507803501}

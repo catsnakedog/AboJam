@@ -56,6 +56,7 @@ public class Database_AboJam : MonoBehaviour
     public List<Table_Wave> Wave = new() { new Table_Wave("ID", delay: 1f, "spawnID") };
     public List<Table_Date> Date = new() { new Table_Date("ID", secondsPerDay: 1, "startTime", "morningTime", "sunsetTime", "nightTime") };
     public List<Table_Upgrade> Upgrade = new() { new Table_Upgrade("ID", "reinforceCostID", coefficient: 0.1f) };
+    public List<Table_Skill> Skill = new() { new Table_Skill("ID", cooldown: 1f, range: 1, count: 1, seconds: 1f, speed: 1) };
 
 
     /* Public Method */
@@ -90,6 +91,7 @@ public class Database_AboJam : MonoBehaviour
             ImportTable(dataSet, ref Wave);
             ImportTable(dataSet, ref Date);
             ImportTable(dataSet, ref Upgrade);
+            ImportTable(dataSet, ref Skill);
         }
         catch (Exception) { Debug.Log("서버와의 연결이 원활하지 않거나, 잘못된 데이터가 존재합니다."); throw; }
     }
@@ -118,6 +120,7 @@ public class Database_AboJam : MonoBehaviour
         // Readonly : Wave
         if (global::Date.instance.isActiveAndEnabled) global::Date.instance.Load();
         foreach (BTN_Upgrade item in global::BTN_Upgrade.instances) if (item.isActiveAndEnabled) item.Load();
+        if (global::Skill.instance.isActiveAndEnabled) global::Skill.instance.Load();
     }
     public void ImportTable<T>(DataSet dataSet, ref List<T> runtimeTable) where T : ITable
     {
@@ -355,8 +358,17 @@ public class Database_AboJam : MonoBehaviour
     }
     public void ExportUpgrade(string ID, ref int[] reinforceCost, ref float coefficient)
     {
-        Table_Upgrade data = Upgrade.FirstOrDefault(auto => auto.ID == ID);
+        Table_Upgrade data = Upgrade.FirstOrDefault(upgrade => upgrade.ID == ID);
         ExportReinforceCost(data.reinforceCostID, ref reinforceCost);
         coefficient = data.coefficient;
+    }
+    public void ExportSkill(string ID, ref float cooldown, ref int range, ref int count, ref float seconds, ref float speed)
+    {
+        Table_Skill data = Skill.FirstOrDefault(skill => skill.ID == ID);
+        cooldown = data.cooldown;
+        range = data.range;
+        count = data.count;
+        seconds = data.seconds;
+        speed = data.speed;
     }
 }

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static ObjectPool;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
-public class Skill : MonoBehaviour
+public class Skill : RecordInstance<Table_Skill, Record_Skill>
 {
     /* Dependency */
     [SerializeField] private Player player;
@@ -13,11 +15,11 @@ public class Skill : MonoBehaviour
     [SerializeField] private GameObject coolTimer;
     private Pool pool => Pool.instance;
     private Grid grid => Grid.instance;
+    private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
 
     /* Field & Initializer */
+    public static Skill instance;
     public string[] clashTags = { "Enemies" };
-
-    [Header("Meteor")]
     public GameObject meteorite;
     public GameObject explosion;
     public float cooldown;
@@ -26,11 +28,24 @@ public class Skill : MonoBehaviour
     public float seconds;
     public float speed;
 
-    /* Initalizer & Finalizer & Updater */
+    /* Intializer & Finalizer */
     private void Start()
     {
-        sampleButtonAction.activeTime = cooldown;
+        // Start 사용 시 필수 고정 구현
+        if (startFlag == true) return;
+        startFlag = true;
+        base.Start();
+        Load();
+        instance = this;
     }
+    public void Load()
+    {
+        // Load 사용 시 필수 고정 구현
+        if (startFlag == false) Start();
+        database_abojam.ExportSkill(initialRecords[0].ID, ref cooldown, ref range, ref count, ref seconds, ref speed);
+
+        sampleButtonAction.activeTime = cooldown;
+    } // Import 시 자동 실행
 
     /* Public Method */
     /// <summary>
