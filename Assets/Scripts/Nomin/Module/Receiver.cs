@@ -23,62 +23,41 @@ public class Receiver : MonoBehaviour
     [SerializeField] private Player player;
 
     /* Initializer & Finalizer &  Updater */
-    /// <summary>
-    /// 이벤트 핸들러를 정의합니다.
-    /// </summary>
     private void Start()
     {
         instance = this;
-
-        // Map 상호작용 정의
-        InputActionMap map = inputAction.FindActionMap("Map");
-        map.Enable();
-        map.FindAction("Click").performed += (context) =>
-        {
-            List<RaycastResult> ui = rayCaster2D.RayCastUI(Input.mousePosition);
-            if (ui.Count == 0) OffUI();
-
-            // 디버깅 용 코드입니다. 나중에 지울 예정
-            Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            string name;
-            if (tile.Go == null) name = "오브젝트가 없습니다.";
-            else name = tile.Go.name;
-            Debug.Log($"타일 정보\n좌표 : [{tile.i}][{tile.j}] | pos : {tile.pos} | 설치 : {name} | GridIndexMap : {grid.GridIndexMap[tile.i, tile.j]}");
-        }; // Click
-        map.FindAction("Interaction").performed += (context) =>
-        {
-            // 레이 캐스팅
-            RaycastHit2D? hit = rayCaster2D.RayCast(Input.mousePosition);
-            if (hit == null) return;
-
-            // 충돌 대상의 RayCastee2D.OnClick 실행
-            try { hit.Value.collider.GetComponent<RayCastee2D>().OnClick(); } catch { return; }
-        }; // Click + F 키다운
-        map.FindAction("Demolition").performed += (context) =>
-        {
-            Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            Tile.currentTile = tile;
-            if (tile.Go != null) demolition.On();
-        }; // Click + G 키다운
-
-        // 캐릭터 컨트롤 정의
-        InputActionMap character = inputAction.FindActionMap("Character");
-        character.FindAction("Move").performed += (context) =>
-        {
-            farming.StopCultivate();
-            player.PlayerMovement._movement = context.ReadValue<Vector2>();
-        }; // WASD 키다운
-        character.FindAction("Move").canceled += (context) =>
-        {
-            player.PlayerMovement._movement = Vector2.zero;
-        };
     }
     private void OnEnable()
     {
         inputAction.Enable();
+
+        InputActionMap map = inputAction.FindActionMap("Map");
+        map.Enable();
+        map.FindAction("Click").performed -= OnClick;
+        map.FindAction("Click").performed += OnClick;
+        map.FindAction("Interaction").performed -= OnInteraction;
+        map.FindAction("Interaction").performed += OnInteraction;
+        map.FindAction("Demolition").performed -= OnDemolition;
+        map.FindAction("Demolition").performed += OnDemolition;
+
+        InputActionMap character = inputAction.FindActionMap("Character");
+        character.Enable();
+        character.FindAction("Move").performed -= OnMove;
+        character.FindAction("Move").performed += OnMove;
+        character.FindAction("Move").canceled -= OffMove;
+        character.FindAction("Move").canceled += OffMove;
     }
     private void OnDisable()
     {
+        InputActionMap map = inputAction.FindActionMap("Map");
+        map.FindAction("Click").performed -= OnClick;
+        map.FindAction("Interaction").performed -= OnInteraction;
+        map.FindAction("Demolition").performed -= OnDemolition;
+
+        InputActionMap character = inputAction.FindActionMap("Character");
+        character.FindAction("Move").performed -= OnMove;
+        character.FindAction("Move").canceled -= OffMove;
+
         inputAction.Disable();
     }
 
@@ -95,5 +74,62 @@ public class Receiver : MonoBehaviour
         // 인디케이터
         //foreach (var item in indicator_circle) item.Off();
         //foreach (var item in indicator_arrow) item.Off();
+    }
+
+    /* Event Handler */
+    /// <summary>
+    /// Click
+    /// </summary>
+    private void OnClick(InputAction.CallbackContext context)
+    {
+        List<RaycastResult> ui = rayCaster2D.RayCastUI(Input.mousePosition);
+        if (ui.Count == 0) OffUI();
+
+        // 디버깅 용 코드입니다. 나중에 지울 예정
+        Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        string name;
+        if (tile.Go == null) name = "오브젝트가 없습니다.";
+        else name = tile.Go.name;
+        Debug.Log($"타일 정보\n좌표 : [{tile.i}][{tile.j}] | pos : {tile.pos} | 설치 : {name} | GridIndexMap : {grid.GridIndexMap[tile.i, tile.j]}");
+    }
+    /// <summary>
+    /// Click + KeyDown(F)
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnInteraction(InputAction.CallbackContext context)
+    {
+        // 레이 캐스팅
+        RaycastHit2D? hit = rayCaster2D.RayCast(Input.mousePosition);
+        if (hit == null) return;
+
+        // 충돌 대상의 RayCastee2D.OnClick 실행
+        try { hit.Value.collider.GetComponent<RayCastee2D>().OnClick(); } catch { return; }
+    }
+    /// <summary>
+    /// Click + KeyDown(G)
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnDemolition(InputAction.CallbackContext context)
+    {
+        Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        Tile.currentTile = tile;
+        if (tile.Go != null) demolition.On();
+    }
+    /// <summary>
+    /// KeyDown(W | A | S | D)
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnMove(InputAction.CallbackContext context)
+    {
+        farming.StopCultivate();
+        player.PlayerMovement._movement = context.ReadValue<Vector2>();
+    }
+    /// <summary>
+    /// KeyUp(W & A & S & D)
+    /// </summary>
+    /// <param name="context"></param>
+    private void OffMove(InputAction.CallbackContext context)
+    {
+        player.PlayerMovement._movement = Vector2.zero;
     }
 }

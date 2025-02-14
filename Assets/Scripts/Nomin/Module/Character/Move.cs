@@ -17,6 +17,7 @@ public class Move : MonoBehaviour
 
     float detection;
     Animator animator;
+    SpriteRenderer spriteRenderer;
 
     private void Start()
     {
@@ -34,6 +35,10 @@ public class Move : MonoBehaviour
         {
             detection = thug.detection;
             animator = thug.animator;
+        }
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
     }
 
@@ -55,6 +60,9 @@ public class Move : MonoBehaviour
 
         /* 방향 벡터*/
         Vector3 direction = (destination - transform.position).normalized;
+
+        /* 스프라이트 방향 변경 (좌우 반전) */
+        if (spriteRenderer != null) spriteRenderer.flipX = direction.x > 0;
 
         /* 임시 이동 & 애니메이션 */
         if (distance > detection * 0.9f && isMove == true)
