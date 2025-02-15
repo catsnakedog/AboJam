@@ -53,7 +53,7 @@ public class Scenario : MonoBehaviour
         date.timeFlow = false;
         date.text_day.text = $"DAY - 1";
         date.text_time.text = $"0:0";
-        
+
         // UI 조정
         shop.SetActive(false);
         skill.SetActive(false);
@@ -121,7 +121,12 @@ public class Scenario : MonoBehaviour
         WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.5f);
         while (ITower.instances.Count < 1)
         {
-            foreach (Transform child in promotion.transform) { yield return tempWaitForSeconds; mark.On(child.gameObject, 999f); }
+            foreach (Transform child in promotion.transform)
+            {
+                yield return tempWaitForSeconds;
+                if (ITower.instances.Count > 0) break;
+                mark.On(child.gameObject, 999f);
+            }
             yield return waitForSeconds;
         }
 
