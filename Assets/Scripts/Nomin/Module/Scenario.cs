@@ -171,7 +171,7 @@ public class Scenario : MonoBehaviour
                 message.On("이런.. 씨앗을 다 써버리셨군요 !", 999f);
                 yield return new WaitForSeconds(2f);
                 message.On("처음이니 하나만 더 드릴게요.", 999f);
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(2f);
                 StaticData.Abocado++;
                 message.On("모든 종류의 타워를 건설해보세요.", 999f);
             }

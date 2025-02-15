@@ -45,10 +45,10 @@ public class Farming : MonoBehaviour
     }
     public void StopCultivate()
     {
-        if (gaugeObj == null) return;
-        if (corGauge != null) StopCoroutine(corGauge); if (gaugeObj != null) Destroy(gaugeObj);
-        if (corMove != null) StopCoroutine(corMove); player.PlayerMovement._movement = Vector2.zero;
-        if (corCultivate != null) StopCoroutine(corCultivate);
+        if (gaugeObj != null) { Destroy(gaugeObj); gaugeObj = null; }
+        if (corGauge != null) { StopCoroutine(corGauge); corGauge = null; }
+        if (corMove != null) { StopCoroutine(corMove); player.PlayerMovement._movement = Vector2.zero; corMove = null; }
+        if (corCultivate != null) { StopCoroutine(corCultivate); corCultivate = null; }
     }
 
     /* Private Method */
