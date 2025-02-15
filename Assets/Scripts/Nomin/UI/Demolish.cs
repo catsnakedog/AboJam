@@ -18,6 +18,7 @@ public class Demolition : MonoBehaviour
     private void Start()
     {
         instance = this;
+        transform.localPosition = Vector3.zero;
         gameObject.SetActive(false);
     }
     public void On()

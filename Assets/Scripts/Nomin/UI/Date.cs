@@ -23,7 +23,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     /* Field & Property */
     public static Date instance; // 싱글턴
     public bool timeFlow = true; // 시간 흐름 On / Off
-    [SerializeField] private int secondsPerDay = 86400;
+    [SerializeField] public int secondsPerDay = 86400;
     [SerializeField] private string startTime = "06:00"; // 게임 시작 시각
     [SerializeField] private string morningTime = "06:00"; // 낮 시작 시각
     [SerializeField] private string sunsetTime = "17:30"; // 해질녘 시작 시간
