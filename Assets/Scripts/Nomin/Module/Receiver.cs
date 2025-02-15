@@ -22,6 +22,9 @@ public class Receiver : MonoBehaviour
     private Farming farming => Farming.instance;
     [SerializeField] private Player player;
 
+    /* Field & Property */
+    private Coroutine corKeepAttack;
+
     /* Initializer & Finalizer &  Updater */
     private void Start()
     {
@@ -46,6 +49,12 @@ public class Receiver : MonoBehaviour
         character.FindAction("Move").performed += OnMove;
         character.FindAction("Move").canceled -= OffMove;
         character.FindAction("Move").canceled += OffMove;
+        character.FindAction("Attack").started -= OnAttack;
+        character.FindAction("Attack").started += OnAttack;
+        character.FindAction("Attack").performed -= KeepAttack;
+        character.FindAction("Attack").performed += KeepAttack;
+        character.FindAction("Attack").canceled -= OffAttack;
+        character.FindAction("Attack").canceled += OffAttack;
     }
     private void OnDisable()
     {
@@ -57,6 +66,9 @@ public class Receiver : MonoBehaviour
         InputActionMap character = inputAction.FindActionMap("Character");
         character.FindAction("Move").performed -= OnMove;
         character.FindAction("Move").canceled -= OffMove;
+        character.FindAction("Attack").started -= OnAttack;
+        character.FindAction("Attack").performed -= KeepAttack;
+        character.FindAction("Attack").canceled -= OffAttack;
 
         inputAction.Disable();
     }
@@ -76,7 +88,7 @@ public class Receiver : MonoBehaviour
         //foreach (var item in indicator_arrow) item.Off();
     }
 
-    /* Event Handler */
+    /* Map Event Handler */
     /// <summary>
     /// Click
     /// </summary>
@@ -115,6 +127,8 @@ public class Receiver : MonoBehaviour
         Tile.currentTile = tile;
         if (tile.Go != null) demolition.On();
     }
+
+    /* Character Event Handler */
     /// <summary>
     /// KeyDown(W | A | S | D)
     /// </summary>
@@ -131,5 +145,74 @@ public class Receiver : MonoBehaviour
     private void OffMove(InputAction.CallbackContext context)
     {
         player.PlayerMovement._movement = Vector2.zero;
+    }
+    /// <summary>
+    /// KeyDown(Click)
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnAttack(InputAction.CallbackContext context)
+    {
+        if (CheckAttack() == false) return;
+
+        // 공격 개시
+        if (player.Hand._CurrentWeapon != null) player.Hand._CurrentWeapon.AttackStart();
+    }
+    /// <summary>
+    /// Key(Click)
+    /// </summary>
+    /// <param name="context"></param>
+    private void KeepAttack(InputAction.CallbackContext context)
+    {
+        if (corKeepAttack != null) StopCoroutine(corKeepAttack);
+        corKeepAttack = StartCoroutine(CorKeepAttack());
+    }
+    private IEnumerator CorKeepAttack()
+    {
+        while (CheckAttack())
+        {
+            // 근접 무기 옷 흔들기
+            if (!player.Hand._CurrentWeapon.IsReload && player.Hand._CurrentWeapon.AttackType == Weapon.WeaponAttackType.Ranged ||
+                player.Hand._CurrentWeapon.AttackType == Weapon.WeaponAttackType.Melee)
+                player.Hand.ShakeClothes(player.Hand._CurrentWeapon.ClothesShake);
+
+            // 원거리 무기 옷 흔들기
+            if (player.Hand._CurrentWeapon.AttackType == Weapon.WeaponAttackType.Gage)
+                player.Hand.ShakeClothes(player.Hand._CurrentWeapon.ClothesShake);
+
+            // 공격 지속
+            if (player.Hand._CurrentWeapon != null)
+                player.Hand._CurrentWeapon.Attack();
+
+            yield return null;
+        }
+    }
+    /// <summary>
+    /// KeyUp(Click)
+    /// </summary>
+    /// <param name="context"></param>
+    private void OffAttack(InputAction.CallbackContext context)
+    {
+        if (corKeepAttack != null) StopCoroutine(corKeepAttack);
+        if (CheckAttack() == false) return;
+
+        // 게이지 무기 옷 흔들기
+        if (!player.Hand._CurrentWeapon.IsReload && player.Hand._CurrentWeapon.AttackType == Weapon.WeaponAttackType.Charge)
+            player.Hand.ShakeClothes(player.Hand._CurrentWeapon.ClothesShake);
+
+        // 공격 종료
+        if (player.Hand._CurrentWeapon != null)
+            player.Hand._CurrentWeapon.AttackEnd();
+    }
+
+    /* Private Method */
+    /// <summary>
+    /// 공격 시 유효성 검사
+    /// </summary>
+    private bool CheckAttack()
+    {
+        if (Keyboard.current.fKey.isPressed) return false;
+        if (player.Hand.CurrentSlotWeaponType == EnumData.Weapon.None) return false;
+        if (player.Hand.IsSwitchWeapon) return false;
+        return true;
     }
 }

@@ -86,11 +86,11 @@ public class Hand : IObserver
     /// <summary>
     /// 무기들 저장 공간
     /// </summary>
-    private Weapon[] _weapons;
+    private Weapon[] _weapons; public Weapon[] _Weapons { get => _weapons; }
     /// <summary>
     /// 현재 사용 중인 무기
     /// </summary>
-    private Weapon _currentWeapon;
+    private Weapon _currentWeapon; public Weapon _CurrentWeapon { get => _currentWeapon; set => _currentWeapon = value; }
 
     /// <summary>
     /// 변화를 감지하고 새롭게 세팅하기 위한 감지용
@@ -173,7 +173,7 @@ public class Hand : IObserver
 
         CurrentSlotIndex = WeaponSlot.FirstRanged;
         SetWeaponData();
-        HandAction = CheckAttack; // 공격했는지 체크
+        // HandAction = CheckAttack; // 공격했는지 체크
         HandAction += CheckSlotSwitch; // 슬롯이 바뀌었는지 체크
         HandAction += SetClothes;
         HandAction += SetHandShake;
