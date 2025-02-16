@@ -31,13 +31,16 @@ public class History : MonoBehaviour
     private Coroutine corLocalLast;
     private Coroutine corServerLast;
     private Coroutine corWaitLast;
-    private float waitTime = 10;
     private DateTime last = DateTime.MinValue;
 
     /* Field & Property */
     public static History instance;
     private string ID; // 클라이언트 고유 ID
     private List<GameData> gameDatas = new();
+    private float[] retryDelay = { 10, 15, 25, 45 }; // 연결 재시도 대기 시간
+    private int retryIndex = 0; // 연결 재시도 횟수
+    private float waitTime; // 현재 남은 대기 시간
+    private bool isWait = false;
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
@@ -88,19 +91,40 @@ public class History : MonoBehaviour
     }
     private IEnumerator CorSetServerHistory()
     {
-        // 연결 검증 (비동기)
-        message.On("서버 연결 중 입니다. 잠시만 기다려주세요.", 2f);
-        GameObject loading = Instantiate(this.loading, new Vector3(4.78f, 2.69f, 1f), Quaternion.identity);
-        Task<bool> checkTask = Task.Run(() => dbms.CheckConnection());
-        yield return new WaitUntil(() => checkTask.IsCompleted); // 완료될 때까지 기다리기
-        if (checkTask.Result == false)
+        // 연결 실패 후 대기 상태가 아니면
+        if(!isWait)
         {
-            if (corWaitLast == null) corWaitLast = StartCoroutine(CorWait());
+            // 연결 검증 (비동기)
+            message.On("서버 연결 중 입니다. 잠시만 기다려주세요.", 2f);
+            GameObject loading = Instantiate(this.loading, new Vector3(4.78f, 2.69f, 1f), Quaternion.identity);
+            Task<bool> checkTask = Task.Run(() => dbms.CheckConnection());
+            yield return new WaitUntil(() => checkTask.IsCompleted); // 완료될 때까지 기다리기
+
+            // 연결 실패 시 대기 상태 시작
+            if (checkTask.Result == false)
+            {
+                // 대기 시간 조정
+                waitTime = retryDelay[retryIndex];
+                retryIndex++; if (retryIndex >= retryDelay.Length) waitTime = 120;
+
+                // 대기 시작
+                if (corWaitLast == null) corWaitLast = StartCoroutine(CorWait());
+                message.On($"서버 연결에 실패했습니다. {(int)Math.Round(waitTime, MidpointRounding.AwayFromZero)} 초 후에 다시 시도해주세요.\n학교 등 공공기관 와이파이는 연결이 실패할 수 있습니다.", 4f);
+                Destroy(loading);
+                corServerLast = null;
+                yield break;
+            }
+        }
+        // 대기 상태 시 안내 메시지 출력
+        else
+        {
             message.On($"서버 연결에 실패했습니다. {(int)Math.Round(waitTime, MidpointRounding.AwayFromZero)} 초 후에 다시 시도해주세요.\n학교 등 공공기관 와이파이는 연결이 실패할 수 있습니다.", 4f);
-            Destroy(loading);
             corServerLast = null;
             yield break;
         }
+
+        // 연결 성공 시 대기 시간 초기화
+        retryIndex = 0;
 
         // DataSet 가져오기 (비동기)
         Task<DataSet> dataSetTask = Task.Run(() => dbms.GetDataSet());
@@ -305,20 +329,18 @@ public class History : MonoBehaviour
     /// <returns></returns>
     private IEnumerator CorWait()
     {
-        while (waitTime > 0)
-        {
-            DateTime now = DateTime.Now;
-            TimeSpan elapsed = now - last; // 1)
-            if (elapsed.TotalSeconds > 0.1f * 5) { elapsed = TimeSpan.FromSeconds(0.1f); }
-            last = now;
-            waitTime -= (float)elapsed.TotalSeconds;
-            if (waitTime < 0) waitTime = 0;
+        isWait = true;
+        float startTime = Time.time;
+        float endTime = startTime + waitTime;
 
-            yield return new WaitForSeconds(0.1f);
+        while (Time.time < endTime)
+        {
+            waitTime = endTime - Time.time;
+            yield return null;
         }
 
-        waitTime = 10;
         corWaitLast = null;
+        isWait = false;
     }
 }
 
