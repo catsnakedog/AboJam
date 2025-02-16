@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6402427507937476938}
   - component: {fileID: 1304255801497131616}
   - component: {fileID: 2476274463565745787}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Heal
   m_TagString: Towers
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -265,6 +265,10 @@ PrefabInstance:
     - target: {fileID: 4782334756880676126, guid: d82a55c93a84b8a448099d0d3d3323c8, type: 3}
       propertyPath: m_Name
       value: Light2D_Tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 4782334756880676126, guid: d82a55c93a84b8a448099d0d3d3323c8, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6745941090410616633, guid: d82a55c93a84b8a448099d0d3d3323c8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -376,6 +380,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Launcher
       objectReference: {fileID: 0}
+    - target: {fileID: 9014998458699668142, guid: 219404723b5f75449a11722423d768d0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -473,6 +481,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HP
       objectReference: {fileID: 0}
+    - target: {fileID: 5675147325519521188, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6725375438763346729, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: m_LocalScale.x
       value: 3.5
@@ -521,6 +533,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7192309951316103606, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8606690004106154134, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -553,6 +573,10 @@ PrefabInstance:
     - target: {fileID: 2281526784710836163, guid: 0502fd7cf415604468a21f79dbe1508d, type: 3}
       propertyPath: m_Name
       value: Indicator_Circle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2281526784710836163, guid: 0502fd7cf415604468a21f79dbe1508d, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2281526784710836163, guid: 0502fd7cf415604468a21f79dbe1508d, type: 3}
       propertyPath: m_IsActive
