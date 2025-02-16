@@ -60,15 +60,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.990566, g: 0.3052687, b: 0.3052687, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 0755a7bf1dfb7a440bf4fd1ca388713c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 01f126112f9da4a45b77495af82ec42c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -366,11 +366,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3053005469667088702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 249.1177, y: 232.7504}
-  m_Pivot: {x: 0.5, y: 1}
+  m_SizeDelta: {x: -80, y: -155.3482}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1229361615282157370
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -399,7 +399,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAC8C\uC784 \uACB0\uACFC \uD14D\uC2A4\uD2B8"
+  m_text: "\uB098\uC774:  1\uC0B4 2\uC77C\n\uCC98\uCE58: 5\n\uC2EC\uC740 \uC544\uBCF4\uCE74\uB3C4:
+    0\n\uAC74\uC124\uD55C \uD0C0\uC6CC: 0\n\uC0AC\uC6A9\uD55C \uAC00\uB8E8: 5"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
   m_sharedMaterial: {fileID: -6307645790068136302, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
@@ -426,15 +427,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

@@ -103,7 +103,7 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
     private void OnDisable()
     {
         StopAllCoroutines();
-        for (int i = 0; i < projectiles.Count; i++) if (projectiles[i].activeSelf) pool.Return(projectile);
+        try { for (int i = 0; i < projectiles.Count; i++) if (projectiles[i].activeSelf) pool.Return(projectile); } catch { }
     }
     public void Load()
     {

@@ -20,6 +20,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     private AnimationClick animationClick;
     private GlobalLight globalLight => GlobalLight.instance;
     private Database_AboJam database_abojam => Database_AboJam.instance;
+    private Message message => Message.instance;
     public enum GameTime : byte
     {
         Morning,
@@ -153,18 +154,6 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     {
         while (this.gameTime != gameTime) Skip();
     }
-
-    /* Private Method */
-    /// <summary>
-    /// <br>인스펙터의 string 을 TimeSpan 으로 변환합니다.</br>
-    /// </summary>
-    /// <param name="timeString">변환될 string 값</param>
-    /// <returns>TimeSpan 으로 변환된 string 입니다.</returns>
-    private TimeSpan StringToTime(string timeString)
-    {
-        try { TimeSpan time = TimeSpan.Parse(timeString); return time; }
-        catch { Debug.Log($"{gameObject.name} 의 {timeString} 는 유효한 시각이 아닙니다."); return new TimeSpan(0, 0, 0); }
-    }
     /// <summary>
     /// 아침을 스킵하고 해질녘이 시작됩니다.
     /// </summary>
@@ -223,6 +212,25 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         gameTime++;
         if (!Enum.IsDefined(typeof(GameTime), gameTime)) gameTime = 0;
         ChangeImage();
+    }
+    /// <summary>
+    /// 밤에 낮잠을 자려하면 메시지를 출력합니다.
+    /// </summary>
+    public void ViewCheck()
+    {
+        if (gameTime == GameTime.Night) message.On("지금은 낮이 아니에요 !", 2f);
+    }
+
+    /* Private Method */
+    /// <summary>
+    /// <br>인스펙터의 string 을 TimeSpan 으로 변환합니다.</br>
+    /// </summary>
+    /// <param name="timeString">변환될 string 값</param>
+    /// <returns>TimeSpan 으로 변환된 string 입니다.</returns>
+    private TimeSpan StringToTime(string timeString)
+    {
+        try { TimeSpan time = TimeSpan.Parse(timeString); return time; }
+        catch { Debug.Log($"{gameObject.name} 의 {timeString} 는 유효한 시각이 아닙니다."); return new TimeSpan(0, 0, 0); }
     }
     /// <summary>
     /// 시각에 따라 이미지를 변경합니다.

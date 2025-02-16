@@ -50,7 +50,10 @@ public class Move : MonoBehaviour
     void Update()
     {
         /* 타겟 지정 */
-        Vector3 destination = targeter.Targetting(Targeter.TargetType.Near, new string[] { "Player", "Towers", "Abocados" }, 999).transform.position;
+        GameObject target = targeter.Targetting(Targeter.TargetType.Near, new string[] { "Player", "Towers", "Abocados" }, 999);
+        Vector3 destination;
+        if (target != null) destination = target.transform.position;
+        else return;
 
         /* 타겟 - 내 위치 */
         Vector3 vector = destination - transform.position;

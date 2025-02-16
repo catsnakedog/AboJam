@@ -28,7 +28,7 @@ public class Verdict : MonoBehaviour
         instance = this;
         waitForSeconds = new WaitForSeconds(0.3f);
         date.morningStart.AddListener(() => CheckGameClear());
-        //playerHP.death.AddListener(() => Lose());
+        playerHP.death.AddListener(() => Lose());
 
         StartCoroutine(UpdateCheckNightClear());
     }
@@ -85,10 +85,15 @@ public class Verdict : MonoBehaviour
     private void Lose()
     {
         player.enabled = false;
+        player.gameObject.tag = "Untagged";
         SaveHistory();
         GameObject lose = Instantiate(this.lose, ui.transform);
         TextMeshProUGUI resultText = lose.GetComponentInChildren<TextMeshProUGUI>();
         DateTime dateTime = DateTime.Parse(StaticData.gameData.dateTime, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
-        resultText.text = $"[ 게임 결과 ]\n 나이: {dateTime: y살 d일}";
+        resultText.text = $"나이: {dateTime:y살 d일}\n" +
+                          $"처치: {StaticData.gameData.kill}\n" +
+                          $"심은 아보카도: {StaticData.gameData.abocado}\n" +
+                          $"건설한 타워: {StaticData.gameData.tower}\n" +
+                          $"사용한 가루: {StaticData.gameData.garu}";
     }
 }

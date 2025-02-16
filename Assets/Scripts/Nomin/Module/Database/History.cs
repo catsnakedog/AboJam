@@ -92,11 +92,12 @@ public class History : MonoBehaviour
     private IEnumerator CorSetServerHistory()
     {
         // 연결 실패 후 대기 상태가 아니면
+        GameObject loading;
         if(!isWait)
         {
             // 연결 검증 (비동기)
             message.On("서버 연결 중 입니다. 잠시만 기다려주세요.", 2f);
-            GameObject loading = Instantiate(this.loading, new Vector3(4.78f, 2.69f, 1f), Quaternion.identity);
+            loading = Instantiate(this.loading, new Vector3(4.78f, 2.69f, 1f), Quaternion.identity);
             Task<bool> checkTask = Task.Run(() => dbms.CheckConnection());
             yield return new WaitUntil(() => checkTask.IsCompleted); // 완료될 때까지 기다리기
 
