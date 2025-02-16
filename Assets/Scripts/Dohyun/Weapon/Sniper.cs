@@ -6,7 +6,7 @@ public class Sniper : RangedWeapon
 {
     public override void AttackLogic()
     {
-        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        launcher.Launch(launcher.transform.position + launcher.transform.right);
 
         /*
         var obj = ObjectPool.Instance.GetObj(Bullet, BulletObj);

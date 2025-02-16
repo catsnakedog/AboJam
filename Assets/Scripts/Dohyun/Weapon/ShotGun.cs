@@ -6,11 +6,12 @@ public class ShotGun : RangedWeapon
 {
     public override void AttackLogic()
     {
-        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition), -10);
-        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition), -5);
-        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0);
-        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition), 5);
-        launcher.Launch(Camera.main.ScreenToWorldPoint(Input.mousePosition), 10);
+        Vector3 direction = launcher.transform.position + launcher.transform.right;
+        launcher.Launch(direction, -10);
+        launcher.Launch(direction, -5);
+        launcher.Launch(direction, 0);
+        launcher.Launch(direction, 5);
+        launcher.Launch(direction, 10);
 
         /*
         for (int i = 0; i < 5; i++)
