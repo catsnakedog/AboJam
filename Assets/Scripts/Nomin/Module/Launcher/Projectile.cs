@@ -92,7 +92,7 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
             }
 
             // 타겟 HP 에 데미지 / 회복 연산
-            if (damage >= 0) { HP.FindHP(target).Damage(damage * multiplierDamage); Debug.Log(damage * multiplierDamage); }
+            if (damage >= 0) HP.FindHP(target).Damage(damage * multiplierDamage);
             else HP.FindHP(target).Heal(-damage);
 
             // 관통 게산

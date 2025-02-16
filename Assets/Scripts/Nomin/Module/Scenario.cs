@@ -198,7 +198,7 @@ public class Scenario : MonoBehaviour
         date.timeFlow = true;
         int origin = date.secondsPerDay;
         date.secondsPerDay = 10;
-        while (!date.isNight) yield return waitForSeconds;
+        while (date.gameTime != Date.GameTime.Night) yield return waitForSeconds;
         yield return new WaitForSeconds(3f);
 
         //

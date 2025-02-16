@@ -39,12 +39,12 @@ public class Verdict : MonoBehaviour
     {
         while (true)
         {
-            if (date.isNight == true && // 밤이며
+            if (date.gameTime == Date.GameTime.Night && // 밤이며
                 spawner.waveEnd == true && // 웨이브가 종료되었고
                 CheckMob() == false) // 남은 몬스터가 없으면
             {
                 spawner.waveEnd = false;
-                date.SkipNight(); // 밤 종료
+                date.Skip(); // 밤 종료
             }
 
             yield return waitForSeconds;

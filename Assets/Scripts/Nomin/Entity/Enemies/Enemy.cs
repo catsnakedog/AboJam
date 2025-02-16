@@ -103,8 +103,6 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
     /// </summary>
     public virtual void Reinforce()
     {
-        // 적 공통 증강
-        Debug.Log($"{name} 증강");
         hp.Heal(hp.Hp_max);
     }
 }

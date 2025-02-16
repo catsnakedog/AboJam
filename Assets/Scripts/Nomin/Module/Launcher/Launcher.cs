@@ -35,7 +35,8 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
         Center,
         Bottom,
     }
-    [Serializable] public struct Align
+    [Serializable]
+    public struct Align
     {
         public Align(Horizontal horizontal, Vertical vertical)
         {
@@ -102,7 +103,7 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
     private void OnDisable()
     {
         StopAllCoroutines();
-        foreach (GameObject projectile in projectiles) if (projectile.activeSelf) pool.Return(projectile.GetComponent<Projectile>().gameObject);
+        for (int i = 0; i < projectiles.Count; i++) if (projectiles[i].activeSelf) pool.Return(projectile);
     }
     public void Load()
     {

@@ -16,8 +16,9 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
     /* Dependency */
     public SpriteRenderer spriteRenderer; // 하이라키 연결
     public HP hp; // 하이라키 연결
-    private Grid grid => Grid.instance; // 하드 링크
-    private Pool pool => Pool.instance; // 하드 링크
+    private Grid grid => Grid.instance;
+    private Pool pool => Pool.instance;
+    private Message message => Message.instance;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
     [SerializeField] private Player player;
 
@@ -137,6 +138,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
                     StaticData.gameData.abocado++;
                     GrowUp(true);
                 }
+                else message.On("씨앗이 없어요 !", 2f);
                 break;
             // Tree : 타워 업그레이드 패널 On
             case EnumData.Abocado.Tree:
