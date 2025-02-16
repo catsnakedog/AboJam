@@ -4,8 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Record : MonoBehaviour
+public class Record : MonoBehaviour, IScrollHandler
 {
     /* Dependency */
     public GameObject prefab;
@@ -14,6 +15,14 @@ public class Record : MonoBehaviour
     /* Field & Property */
     public string data;
 
+    /// <summary>
+    /// 부모 ScrollRect 로 스크롤 이벤트를 전달합니다.
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnScroll(PointerEventData eventData)
+    {
+        ExecuteEvents.ExecuteHierarchy(transform.parent.gameObject, eventData, ExecuteEvents.scrollHandler);
+    }
     /// <summary>
     /// 로그를 스위칭합니다.
     /// </summary>
