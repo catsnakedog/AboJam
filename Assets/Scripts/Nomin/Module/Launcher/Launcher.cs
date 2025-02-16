@@ -50,6 +50,7 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
 
     /* Field & Property */
     public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
+    private List<GameObject> projectiles = new(); // 모든 Projectile 인스턴스
 
     [Header("[ Launcher ]")]
     public bool align = false;
@@ -98,6 +99,11 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
     {
         MuzzleAlign = muzzleAlign;
     }
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        foreach (GameObject projectile in projectiles) if (projectile.activeSelf) pool.Return(projectile.GetComponent<Projectile>().gameObject);
+    }
     public void Load()
     {
         // Load 사용 시 필수 고정 구현
@@ -123,6 +129,7 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
         GameObject projectile = pool.Get(this.projectile.gameObject.name);
         projectile.GetComponent<Projectile>().launcher = gameObject;
         projectile.transform.position = transform.position;
+        projectiles.Add(projectile);
 
         // 발사각 정렬
         if (angle != 0)
