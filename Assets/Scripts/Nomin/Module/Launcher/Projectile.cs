@@ -30,6 +30,10 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
     private int penetrate_current; // 남은 관통 수
 
     /* Intializer & Finalizer & Updater */
+    private void Awake()
+    {
+        startFlag = false;
+    }
     private void Start()
     {
         // Start 사용 시 필수 고정 구현
@@ -85,7 +89,7 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
 
             // 힐 모드 (damage < 0) 인데 최대 체력인 대상은 충돌 대상에서 제외
             HP targetHP = HP.FindHP(target);
-            if (damage < 0 && targetHP.HP_ratio > 0.999f) return;
+            if (damage < 0 && targetHP.HP_current == targetHP.Hp_max) return;
 
             // 폭발 (풀링 or 생성)
             if (explosion != null)

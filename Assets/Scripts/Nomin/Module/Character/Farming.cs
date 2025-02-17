@@ -14,6 +14,7 @@ public class Farming : MonoBehaviour
 
     /* Field & Property */
     public static Farming instance;
+    public float cultivateTime = 1f; // 경작 시간
     private Coroutine corCultivate;
     private Coroutine corMove;
     private Coroutine corGauge;
@@ -38,7 +39,7 @@ public class Farming : MonoBehaviour
     public IEnumerator CorCultivate(Tile tile)
     {
         yield return corMove = StartCoroutine(CorMove(tile.pos, grid.CellWidth));
-        yield return corGauge = StartCoroutine(CorGauge(1f, 100f, 0.016f));
+        yield return corGauge = StartCoroutine(CorGauge(cultivateTime, 100f, 0.016f));
 
         if (tile.Go == null) tile.Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
         else { UnityEngine.Debug.Log($"타일 ({tile.i}, {tile.j}) 에 이미 {tile.Go.name} 가 바인딩 되어 있습니다."); };

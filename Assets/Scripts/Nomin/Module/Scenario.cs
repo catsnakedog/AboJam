@@ -6,6 +6,7 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
@@ -24,6 +25,8 @@ public class Scenario : MonoBehaviour
     [SerializeField] GameObject btn_skill;
     [SerializeField] GameObject swap;
     [SerializeField] GameObject skip;
+    [SerializeField] GameObject buy;
+    [SerializeField] AnimationClick animationClick;
     private Date date => Date.instance;
     private Message message => Message.instance;
     private Mark mark => Mark.instance;
@@ -102,6 +105,9 @@ public class Scenario : MonoBehaviour
         //
         message.On("Shop 을 눌러보세요.", 999f, true);
         shop.SetActive(true);
+        UnityAction action = () => { animationClick.OnClick(); message.On("다른 버튼은 튜토리얼 이후 누를 수 있어요.", 2f, true); };
+        RemoveButtonEventRecursive(buy);
+        AddButtonEventRecursive(buy, action);
         mark.On(shop_onOff, 999f);
         while (!shop_change.activeInHierarchy) yield return waitForSeconds;
 
@@ -121,7 +127,7 @@ public class Scenario : MonoBehaviour
 
         //
         message.On("아보카도를 타워로 성장시키세요 !", 999f, true);
-        WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.5f);
+        WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.1f);
         while (ITower.instances.Count < 1)
         {
             foreach (Transform child in promotion.transform)
@@ -138,61 +144,6 @@ public class Scenario : MonoBehaviour
         StaticData.Abocado++;
         tempWaitForSeconds = new WaitForSeconds(1f);
 
-        bool CheckTowerCount()
-        {
-            int autoCount = 0;
-            int splashCount = 0;
-            int healCount = 0;
-            int guardCount = 0;
-            int productionCount = 0;
-
-            // 각 타워 개수 세기
-            foreach (ITower tower in ITower.instances)
-            {
-                if (tower is Tower<Table_Auto, Record_Auto>) { Tower<Table_Auto, Record_Auto> auto = tower as Tower<Table_Auto, Record_Auto>; if (auto.gameObject.activeSelf) autoCount++; }
-                if (tower is Tower<Table_Splash, Record_Splash>) { Tower<Table_Splash, Record_Splash> splash = tower as Tower<Table_Splash, Record_Splash>; if (splash.gameObject.activeSelf) splashCount++; }
-                if (tower is Tower<Table_Heal, Record_Heal>) { Tower<Table_Heal, Record_Heal> heal = tower as Tower<Table_Heal, Record_Heal>; if (heal.gameObject.activeSelf) healCount++; }
-                if (tower is Tower<Table_Guard, Record_Guard>) { Tower<Table_Guard, Record_Guard> gurad = tower as Tower<Table_Guard, Record_Guard>; if (gurad.gameObject.activeSelf) guardCount++; }
-                foreach (var item in abocados) if (item.Quality > 0) productionCount++;
-            }
-
-            // 건설된 타워는 Promotion 에서 해당 버튼 제거
-            if (autoCount > 0)
-                foreach (Transform child in promotion.transform)
-                    if (child.gameObject.GetComponent<Image>().sprite.name == "Auto") child.gameObject.SetActive(false);
-            if (splashCount > 0)
-                foreach (Transform child in promotion.transform)
-                    if (child.gameObject.GetComponent<Image>().sprite.name == "Splash") child.gameObject.SetActive(false);
-            if (healCount > 0)
-                foreach (Transform child in promotion.transform)
-                    if (child.gameObject.GetComponent<Image>().sprite.name == "Heal") child.gameObject.SetActive(false);
-            if (guardCount > 0)
-                foreach (Transform child in promotion.transform)
-                    if (child.gameObject.GetComponent<Image>().sprite.name == "Guard") child.gameObject.SetActive(false);
-            if (productionCount > 0)
-                foreach (Transform child in promotion.transform)
-                    if (child.gameObject.GetComponent<Image>().sprite.name == "Production") child.gameObject.SetActive(false);
-
-            // 모든 타워가 건설되었으면 true 반화
-            if (autoCount > 0 && splashCount > 0 && healCount > 0 && guardCount > 0 && productionCount > 0) return true;
-            else return false;
-        }
-        bool CheckPoor()
-        {
-            // 남은 아보카도가 있으면 false 리턴
-            if (StaticData.Abocado > 0) return false;
-
-            // 생산 가능한 아보카도가 있으면 false 리턴
-            foreach (Abocado abocado in Abocado.instances.Where(abocado => abocado.gameObject.activeSelf))
-                if (abocado.Level == EnumData.Abocado.Seed ||
-                    abocado.Level == EnumData.Abocado.Tree ||
-                    abocado.Level == EnumData.Abocado.Fruited ||
-                    abocado.Quality > 0)
-                    return false;
-
-            // 둘 다 없으면 true 리턴
-            return true;
-        }
         while (!CheckTowerCount())
         {
             if (CheckPoor())
@@ -244,5 +195,93 @@ public class Scenario : MonoBehaviour
         message.On("잠시후 메인 화면으로 이동합니다.", 1.5f, true);
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("Main");
+    }
+
+    /* Private Method */
+    /// <summary>
+    /// 특정 게임오브젝트 하위의 모든 버튼에서 이벤트를 제거합니다.
+    /// </summary>
+    private void RemoveButtonEventRecursive(GameObject parent)
+    {
+        if (parent == null) return;
+        UnityEngine.UI.Button button = parent.GetComponent<UnityEngine.UI.Button>();
+        if (button != null) button.onClick.RemoveAllListeners();
+
+        foreach (Transform child in parent.transform) RemoveButtonEventRecursive(child.gameObject);
+    }
+    /// <summary>
+    /// 특정 게임오브젝트 하위의 모든 버튼에 이벤트를 추가합니다.
+    /// </summary>
+    private void AddButtonEventRecursive(GameObject parent, UnityEngine.Events.UnityAction callback)
+    {
+        if (parent == null || callback == null) return;
+
+        UnityEngine.UI.Button button = parent.GetComponent<UnityEngine.UI.Button>();
+        if (button != null) button.onClick.AddListener(callback);
+
+        foreach (Transform child in parent.transform) AddButtonEventRecursive(child.gameObject, callback);
+    }
+    /// <summary>
+    /// 아보카도를 생산할 수 있는지 여부를 반환합니다.
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckPoor()
+    {
+        // 남은 아보카도가 있으면 false 리턴
+        if (StaticData.Abocado > 0) return false;
+
+        // 생산 가능한 아보카도가 있으면 false 리턴
+        foreach (Abocado abocado in Abocado.instances.Where(abocado => abocado.gameObject.activeSelf))
+            if (abocado.Level == EnumData.Abocado.Seed ||
+                abocado.Level == EnumData.Abocado.Tree ||
+                abocado.Level == EnumData.Abocado.Fruited ||
+                abocado.Quality > 0)
+                return false;
+
+        // 둘 다 없으면 true 리턴
+        return true;
+    }
+    /// <summary>
+    /// 모든 종류의 타워를 건설했는지 여부를 반환합니다.
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckTowerCount()
+    {
+        int autoCount = 0;
+        int splashCount = 0;
+        int healCount = 0;
+        int guardCount = 0;
+        int productionCount = 0;
+
+        // 각 타워 개수 세기
+        foreach (ITower tower in ITower.instances)
+        {
+            if (tower is Tower<Table_Auto, Record_Auto>) { Tower<Table_Auto, Record_Auto> auto = tower as Tower<Table_Auto, Record_Auto>; if (auto.gameObject.activeSelf) autoCount++; }
+            if (tower is Tower<Table_Splash, Record_Splash>) { Tower<Table_Splash, Record_Splash> splash = tower as Tower<Table_Splash, Record_Splash>; if (splash.gameObject.activeSelf) splashCount++; }
+            if (tower is Tower<Table_Heal, Record_Heal>) { Tower<Table_Heal, Record_Heal> heal = tower as Tower<Table_Heal, Record_Heal>; if (heal.gameObject.activeSelf) healCount++; }
+            if (tower is Tower<Table_Guard, Record_Guard>) { Tower<Table_Guard, Record_Guard> gurad = tower as Tower<Table_Guard, Record_Guard>; if (gurad.gameObject.activeSelf) guardCount++; }
+            foreach (var item in abocados) if (item.Quality > 0) productionCount++;
+        }
+
+        // 건설된 타워는 Promotion 에서 해당 버튼 제거
+        if (autoCount > 0)
+            foreach (Transform child in promotion.transform)
+                if (child.gameObject.GetComponent<Image>().sprite.name == "Auto") child.gameObject.SetActive(false);
+        if (splashCount > 0)
+            foreach (Transform child in promotion.transform)
+                if (child.gameObject.GetComponent<Image>().sprite.name == "Splash") child.gameObject.SetActive(false);
+        if (healCount > 0)
+            foreach (Transform child in promotion.transform)
+                if (child.gameObject.GetComponent<Image>().sprite.name == "Heal") child.gameObject.SetActive(false);
+        if (guardCount > 0)
+            foreach (Transform child in promotion.transform)
+                if (child.gameObject.GetComponent<Image>().sprite.name == "Guard") child.gameObject.SetActive(false);
+        if (productionCount > 0)
+            foreach (Transform child in promotion.transform)
+                if (child.gameObject.GetComponent<Image>().sprite.name == "Production") child.gameObject.SetActive(false);
+
+        // 모든 타워가 건설되었으면 true 반화
+        if (autoCount > 0 && splashCount > 0 && healCount > 0 && guardCount > 0 && productionCount > 0) return true;
+        else return false;
     }
 }
