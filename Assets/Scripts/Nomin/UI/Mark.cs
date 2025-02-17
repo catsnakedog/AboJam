@@ -73,7 +73,8 @@ public class Mark : MonoBehaviour
                 Vector3 worldPos = rectTarget.position;
                 Vector3 screenPos = camera.WorldToScreenPoint(worldPos);
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(rectCanvas, screenPos, camera, out Vector2 localPos);
-                rectMark.anchoredPosition = localPos;
+                Vector2 pivotOffset = (rectTarget.pivot - new Vector2(0.5f, 0.5f)) * rectTarget.rect.size;
+                rectMark.anchoredPosition = localPos - pivotOffset;
                 yield return waitForSeconds; continue;
             }
             // 타겟이 Transform 일 때
