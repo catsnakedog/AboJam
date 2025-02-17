@@ -83,6 +83,10 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
             // 발사기를 포함한 조상 오브젝트는 충돌 대상에서 제외
             if (launcher != null) if (GetParentList(launcher.transform).Contains(target)) return;
 
+            // 힐 모드 (damage < 0) 인데 최대 체력인 대상은 충돌 대상에서 제외
+            HP targetHP = HP.FindHP(target);
+            if (damage < 0 && targetHP.HP_ratio > 0.999f) return;
+
             // 폭발 (풀링 or 생성)
             if (explosion != null)
             {
@@ -92,8 +96,8 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
             }
 
             // 타겟 HP 에 데미지 / 회복 연산
-            if (damage >= 0) HP.FindHP(target).Damage(damage * multiplierDamage);
-            else HP.FindHP(target).Heal(-damage);
+            if (damage >= 0) targetHP.Damage(damage * multiplierDamage);
+            else targetHP.Heal(-damage);
 
             // 관통 게산
             penetrate_current--;

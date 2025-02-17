@@ -5,9 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    /* Dependency */
     [SerializeField] private GameObject panel;
-    private Date date => Date.instance;
 
+    /* Field & Property */
+    public static Menu instance;
+
+    /* Initializer & Finalizer & Updater */
+    private void Start()
+    {
+        instance = this;
+    }
+
+    /* Public Method */
     public void MenuOnOff()
     {
         panel.SetActive(!panel.activeSelf);

@@ -21,13 +21,15 @@ public class Scenario : MonoBehaviour
     [SerializeField] GameObject shop_close;
     [SerializeField] GameObject promotion;
     [SerializeField] GameObject shop;
-    [SerializeField] GameObject skill;
+    [SerializeField] GameObject btn_skill;
     [SerializeField] GameObject swap;
+    [SerializeField] GameObject skip;
     private Date date => Date.instance;
     private Message message => Message.instance;
     private Mark mark => Mark.instance;
     private GlobalLight globalLight => GlobalLight.instance;
     private LocalData localData => LocalData.instance;
+    private List<Abocado> abocados => Abocado.instances;
 
     /* Field & Property */
     public static Scenario instance;
@@ -56,22 +58,23 @@ public class Scenario : MonoBehaviour
 
         // UI 조정
         shop.SetActive(false);
-        skill.SetActive(false);
+        btn_skill.SetActive(false);
         swap.SetActive(false);
+        skip.SetActive(false);
 
         //
-        message.On($"반가워요 ! 아보카도 농장에 오신걸 환영해요.", 2f);
+        message.On($"반가워요 ! 아보카도 농장에 오신걸 환영해요.", 2f, true);
         yield return new WaitForSeconds(2f);
-        message.On($"F 를 꾸욱 누르고 땅을 클릭해 보세요 !", 999f);
+        message.On($"F 를 꾸욱 누르고 땅을 클릭해 보세요 !", 999f, true);
         while (Abocado.instances.Count < 1) yield return waitForSeconds;
 
         //
-        message.On("잘 했어요 ! 다시 F + 클릭으로 아보카도를 심어보세요.", 999f);
+        message.On("잘 했어요 ! 다시 F + 클릭으로 아보카도를 심어보세요.", 999f, true);
         mark.On(Abocado.instances[0].gameObject, 999f);
         while (Abocado.instances[0].Level != EnumData.Abocado.Seed) yield return waitForSeconds;
 
         //
-        message.On("하루가 지나면 아보카도가 성장합니다.", 999f);
+        message.On("하루가 지나면 아보카도가 성장합니다.", 999f, true);
         mark.Off();
         globalLight.Set(globalLight.night, 0.01f);
         yield return new WaitForSeconds(1.5f);
@@ -82,7 +85,7 @@ public class Scenario : MonoBehaviour
         Abocado.instances[0].GrowUp();
 
         //
-        message.On("이틀이 지나면 수확할 수 있습니다.", 999f);
+        message.On("이틀이 지나면 수확할 수 있습니다.", 999f, true);
         globalLight.Set(globalLight.night, 0.01f);
         yield return new WaitForSeconds(1.5f);
         globalLight.Set(globalLight.sunset, 0.01f);
@@ -92,18 +95,18 @@ public class Scenario : MonoBehaviour
         Abocado.instances[0].GrowUp();
 
         //
-        message.On("F + 클릭으로 아보카도를 수확하세요 !", 999f);
+        message.On("F + 클릭으로 아보카도를 수확하세요 !", 999f, true);
         mark.On(Abocado.instances[0].gameObject, 999f);
         while (StaticData.Abocado < 1) yield return waitForSeconds;
 
         //
-        message.On("Shop 을 눌러보세요.", 999f);
+        message.On("Shop 을 눌러보세요.", 999f, true);
         shop.SetActive(true);
         mark.On(shop_onOff, 999f);
         while (!shop_change.activeInHierarchy) yield return waitForSeconds;
 
         //
-        message.On("아보카도를 판매하세요.", 999f);
+        message.On("아보카도를 판매하세요.", 999f, true);
         mark.On(shop_change, 999f);
         while (StaticData.Garu < 1) yield return waitForSeconds;
 
@@ -112,12 +115,12 @@ public class Scenario : MonoBehaviour
         while (shop_close.activeInHierarchy) yield return waitForSeconds;
 
         //
-        message.On("F + 클릭으로 아보카도를 다시 눌러보세요 !", 999f);
+        message.On("F + 클릭으로 아보카도를 다시 눌러보세요 !", 999f, true);
         mark.On(Abocado.instances[0].gameObject, 999f);
         while (!promotion.activeInHierarchy) yield return waitForSeconds;
 
         //
-        message.On("아보카도를 타워로 성장시키세요 !", 999f);
+        message.On("아보카도를 타워로 성장시키세요 !", 999f, true);
         WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.5f);
         while (ITower.instances.Count < 1)
         {
@@ -130,7 +133,7 @@ public class Scenario : MonoBehaviour
             yield return waitForSeconds;
         }
 
-        message.On("모든 종류의 타워를 건설해보세요.", 999f);
+        message.On("모든 종류의 타워를 건설해보세요.", 999f, true);
         mark.Off();
         StaticData.Abocado++;
         tempWaitForSeconds = new WaitForSeconds(1f);
@@ -141,16 +144,37 @@ public class Scenario : MonoBehaviour
             int splashCount = 0;
             int healCount = 0;
             int guardCount = 0;
+            int productionCount = 0;
 
+            // 각 타워 개수 세기
             foreach (ITower tower in ITower.instances)
             {
                 if (tower is Tower<Table_Auto, Record_Auto>) { Tower<Table_Auto, Record_Auto> auto = tower as Tower<Table_Auto, Record_Auto>; if (auto.gameObject.activeSelf) autoCount++; }
                 if (tower is Tower<Table_Splash, Record_Splash>) { Tower<Table_Splash, Record_Splash> splash = tower as Tower<Table_Splash, Record_Splash>; if (splash.gameObject.activeSelf) splashCount++; }
                 if (tower is Tower<Table_Heal, Record_Heal>) { Tower<Table_Heal, Record_Heal> heal = tower as Tower<Table_Heal, Record_Heal>; if (heal.gameObject.activeSelf) healCount++; }
                 if (tower is Tower<Table_Guard, Record_Guard>) { Tower<Table_Guard, Record_Guard> gurad = tower as Tower<Table_Guard, Record_Guard>; if (gurad.gameObject.activeSelf) guardCount++; }
+                foreach (var item in abocados) if (item.Quality > 0) productionCount++;
             }
 
-            if (autoCount > 0 && splashCount > 0 && healCount > 0 && guardCount > 0) return true;
+            // 건설된 타워는 Promotion 에서 해당 버튼 제거
+            if (autoCount > 0)
+                foreach (Transform child in promotion.transform)
+                    if (child.gameObject.GetComponent<Image>().sprite.name == "Auto") child.gameObject.SetActive(false);
+            if (splashCount > 0)
+                foreach (Transform child in promotion.transform)
+                    if (child.gameObject.GetComponent<Image>().sprite.name == "Splash") child.gameObject.SetActive(false);
+            if (healCount > 0)
+                foreach (Transform child in promotion.transform)
+                    if (child.gameObject.GetComponent<Image>().sprite.name == "Heal") child.gameObject.SetActive(false);
+            if (guardCount > 0)
+                foreach (Transform child in promotion.transform)
+                    if (child.gameObject.GetComponent<Image>().sprite.name == "Guard") child.gameObject.SetActive(false);
+            if (productionCount > 0)
+                foreach (Transform child in promotion.transform)
+                    if (child.gameObject.GetComponent<Image>().sprite.name == "Production") child.gameObject.SetActive(false);
+
+            // 모든 타워가 건설되었으면 true 반화
+            if (autoCount > 0 && splashCount > 0 && healCount > 0 && guardCount > 0 && productionCount > 0) return true;
             else return false;
         }
         bool CheckPoor()
@@ -173,12 +197,12 @@ public class Scenario : MonoBehaviour
         {
             if (CheckPoor())
             {
-                message.On("이런.. 씨앗을 다 써버리셨군요 !", 999f);
+                message.On("이런.. 씨앗을 다 써버리셨군요 !", 999f, true);
                 yield return new WaitForSeconds(2f);
-                message.On("처음이니 하나만 더 드릴게요.", 999f);
+                message.On("처음이니 하나만 더 드릴게요.", 999f, true);
                 yield return new WaitForSeconds(2f);
                 StaticData.Abocado++;
-                message.On("모든 종류의 타워를 건설해보세요.", 999f);
+                message.On("모든 종류의 타워를 건설해보세요.", 999f, true);
             }
 
             globalLight.Set(globalLight.night, 0.01f);
@@ -193,7 +217,7 @@ public class Scenario : MonoBehaviour
         }
 
         //
-        message.On("타워를 이용해 몰려오는 갱단으로부터 살아남으세요.", 3f);
+        message.On("타워를 이용해 몰려오는 갱단으로부터 살아남으세요.", 3f, true);
         mark.Off();
         date.timeFlow = true;
         int origin = date.secondsPerDay;
@@ -203,21 +227,21 @@ public class Scenario : MonoBehaviour
 
         //
         swap.SetActive(true);
-        message.On("근접 무기로 교체할 수도 있습니다.", 2f);
+        message.On("근접 무기로 교체할 수도 있습니다.", 4f, true);
         mark.On(swap, 2f);
         yield return new WaitForSeconds(2f);
 
         //
-        skill.SetActive(true);
-        message.On("버거우면 마법진을 펼쳐보세요 !", 2f);
-        mark.On(skill, 2f);
+        btn_skill.SetActive(true);
+        message.On("버거우면 마법진을 펼쳐보세요 !", 4f, true);
+        mark.On(btn_skill, 2f);
 
         //
         while (date.dateTime.Day < 2) yield return waitForSeconds;
         localData.SaveScenario(1);
-        message.On("축하합니다 ! 튜토리얼을 클리어하셨습니다.", 1.5f);
+        message.On("축하합니다 ! 튜토리얼을 클리어하셨습니다.", 1.5f, true);
         yield return new WaitForSeconds(1.5f);
-        message.On("잠시후 메인 화면으로 이동합니다.", 1.5f);
+        message.On("잠시후 메인 화면으로 이동합니다.", 1.5f, true);
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("Main");
     }

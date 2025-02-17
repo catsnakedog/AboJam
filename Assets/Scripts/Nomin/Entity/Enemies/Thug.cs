@@ -24,9 +24,11 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
     [Header("[ Thug ]")]
     [SerializeField] private float delay = 0.8f; // 공격 딜레이
     [SerializeField] private float delay_anim = 0.3f; // 애니메이션 대기
+    [SerializeField] private float delay_attack = 1f; // 스폰 후 N 초 후 공격 시작
     public float detection = 1f; // 적 감지 범위
     private WaitForSeconds delay_waitForSeconds;
     private WaitForSeconds delay_waitForSecondsAnim;
+    private WaitForSeconds delay_waitForSecondsAttack;
     private bool isAttack = true;
     private Coroutine corAttack;
 
@@ -39,10 +41,6 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
         base.Start();
         Load();
         instances.Add(this);
-
-        // 인디케이터 스케일링
-        float scale = detection * 4;
-        indicator_circle.transform.localScale = new Vector2(scale, scale);
     }
     private void OnDestroy()
     {
@@ -60,6 +58,7 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
         move.isMove = true;
         delay_waitForSeconds = new WaitForSeconds(delay - delay_anim);
         delay_waitForSecondsAnim = new WaitForSeconds(delay_anim);
+        delay_waitForSecondsAttack = new WaitForSeconds(delay_attack);
 
         Attack(true);
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
@@ -104,6 +103,8 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
     /// </summary>
     private IEnumerator CorAttack()
     {
+        yield return delay_waitForSecondsAttack;
+
         while (isAttack == true)
         {
             GameObject target = melee.targeter.Targetting(Targeter.TargetType.Near, melee.ClashTags, detection);

@@ -1246,8 +1246,9 @@ MonoBehaviour:
   shop_close: {fileID: 1220471905}
   promotion: {fileID: 935217018}
   shop: {fileID: 725184806}
-  skill: {fileID: 3086219815537896123}
+  btn_skill: {fileID: 2092900449}
   swap: {fileID: 1367765722}
+  skip: {fileID: 1361107280}
 --- !u!1 &342094288
 GameObject:
   m_ObjectHideFlags: 0
@@ -7058,6 +7059,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1427187426}
+    - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
+      propertyPath: menuPanel
+      value: 
+      objectReference: {fileID: 1866214163}
+    - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
+      propertyPath: shopPanel
+      value: 
+      objectReference: {fileID: 4387568456285191142}
     - target: {fileID: 2875230927478983527, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: m_Name
       value: Receiver
@@ -8578,6 +8587,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5177667844686679597, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5302594391257666172, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.8888016
@@ -8717,6 +8730,10 @@ PrefabInstance:
     - target: {fileID: 6556891611342242873, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575749876626610969, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6667688344058974487, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_Name
@@ -8886,6 +8903,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 5.4999847
       objectReference: {fileID: 0}
+    - target: {fileID: 8250613010426436089, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8301839869253279425, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.22229004
@@ -9001,6 +9022,11 @@ PrefabInstance:
       addedObject: {fileID: 1520850379}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+--- !u!1 &4387568456285191142 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5398902909443519315, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+  m_PrefabInstance: {fileID: 4387568456285191141}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5392002327116870834
 PrefabInstance:
   m_ObjectHideFlags: 0

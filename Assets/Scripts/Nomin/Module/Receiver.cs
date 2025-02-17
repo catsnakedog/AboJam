@@ -11,16 +11,18 @@ public class Receiver : MonoBehaviour
 {
     /* Dependency */
     public static Receiver instance;
-    public InputActionAsset inputAction;
     private RayCaster2D rayCaster2D => RayCaster2D.instance;
     private Promotion promotion => Promotion.instance;
     private Reinforcement reinforcement => Reinforcement.instance;
     private Demolition demolition => Demolition.instance;
-    private List<Indicator_Circle> indicator_circle => Indicator_Circle.instances;
-    private List<Indicator_Arrow> indicator_arrow => Indicator_Arrow.instances;
+    private List<Indicator_Circle> indicator_circles => Indicator_Circle.instances;
+    private List<Indicator_Arrow> indicator_arrows => Indicator_Arrow.instances;
     private Grid grid => Grid.instance;
     private Farming farming => Farming.instance;
+    private Menu menu => Menu.instance;
+    [SerializeField] private InputActionAsset inputAction;
     [SerializeField] private Player player;
+    [SerializeField] private GameObject shopPanel;
 
     /* Field & Property */
     private Coroutine corKeepAttack;
@@ -55,6 +57,11 @@ public class Receiver : MonoBehaviour
         character.FindAction("Attack").performed += KeepAttack;
         character.FindAction("Attack").canceled -= OffAttack;
         character.FindAction("Attack").canceled += OffAttack;
+
+        InputActionMap ui = inputAction.FindActionMap("UI");
+        ui.Enable();
+        ui.FindAction("Close").performed -= OnClose;
+        ui.FindAction("Close").performed += OnClose;
     }
     private void OnDisable()
     {
@@ -69,6 +76,9 @@ public class Receiver : MonoBehaviour
         character.FindAction("Attack").started -= OnAttack;
         character.FindAction("Attack").performed -= KeepAttack;
         character.FindAction("Attack").canceled -= OffAttack;
+
+        InputActionMap ui = inputAction.FindActionMap("UI");
+        ui.FindAction("Close").performed -= OnClose;
 
         inputAction.Disable();
     }
@@ -202,6 +212,21 @@ public class Receiver : MonoBehaviour
         // 공격 종료
         if (player.Hand._CurrentWeapon != null)
             player.Hand._CurrentWeapon.AttackEnd();
+    }
+
+    /* UI Event Handler */
+    /// <summary>
+    /// KeyDown(ESC)
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnClose(InputAction.CallbackContext context)
+    {
+        shopPanel.SetActive(false);
+        reinforcement.Off();
+        promotion.Off();
+        while (Time.timeScale == 0) menu.MenuOnOff();
+        foreach (var a in indicator_circles) a.Off();
+        foreach(var b in indicator_arrows) b.Off();
     }
 
     /* Private Method */

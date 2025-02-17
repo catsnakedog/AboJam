@@ -48,8 +48,16 @@ public class Indicator_Circle : MonoBehaviour
     public void Swtich()
     {
         bool isActive = gameObject.activeSelf;
-        foreach (var item in instances) item.gameObject.SetActive(false);
+        foreach (Indicator_Circle item in instances) item.Off();
 
+        if (isActive == true) Off();
+        if (isActive == false) On();
+    }
+    /// <summary>
+    /// 인디케이터를 켭니다.
+    /// </summary>
+    public void On()
+    {
         gameObject.SetActive(true);
     }
     /// <summary>

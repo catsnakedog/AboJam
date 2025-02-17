@@ -126,21 +126,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+      - m_Target: {fileID: 5060544617370377028}
+        m_TargetAssemblyTypeName: Enemy`2[[Table_Leopard, Assembly-CSharp
         m_MethodName: OnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4939251836826472037}
-        m_TargetAssemblyTypeName: Indicator_Circle, Assembly-CSharp
-        m_MethodName: Swtich
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -377,17 +365,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2281526784710836163, guid: 0502fd7cf415604468a21f79dbe1508d, type: 3}
   m_PrefabInstance: {fileID: 2692234595142841467}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4939251836826472037 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7050106464441825822, guid: 0502fd7cf415604468a21f79dbe1508d, type: 3}
-  m_PrefabInstance: {fileID: 2692234595142841467}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4248338779200015288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01b093adde2637743aa7a1a3f99f0554, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6741465031632982722 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8706236138193561273, guid: 0502fd7cf415604468a21f79dbe1508d, type: 3}

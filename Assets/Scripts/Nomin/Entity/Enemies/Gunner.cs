@@ -25,6 +25,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     [SerializeField] private float delay = 0.8f; // 총 공격 딜레이
     [SerializeField] private float delay_fire = 0.05f; // 사격 간격
     [SerializeField] private float delay_anim = 0.3f; // 애니메이션 대기
+    [SerializeField] private float delay_attack = 1f; // 스폰 후 N 초 후 공격 시작
     public float detection = 5f; // 적 감지 범위
     public int subCount = 2;
     private bool isFire = true;
@@ -32,6 +33,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     private WaitForSeconds delay_waitForSeconds;
     private WaitForSeconds delay_waitForSecondsFire;
     private WaitForSeconds delay_waitForSecondsAnim;
+    private WaitForSeconds delay_waitForSecondsAttack;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -42,10 +44,6 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         base.Start();
         Load();
         instances.Add(this);
-
-        // 인디케이터 스케일링
-        float scale = launcher.range * 4;
-        indicator_circle.transform.localScale = new Vector2(scale, scale);
     }
     private void OnDestroy()
     {
@@ -64,6 +62,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         delay_waitForSeconds = new WaitForSeconds(delay - (delay_fire * subCount) - delay_anim);
         delay_waitForSecondsFire = new WaitForSeconds(delay_fire);
         delay_waitForSecondsAnim = new WaitForSeconds(delay_anim);
+        delay_waitForSecondsAttack = new WaitForSeconds(delay_attack);
 
         Fire(true);
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
@@ -108,6 +107,8 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     /// </summary>
     private IEnumerator CorFire()
     {
+        yield return delay_waitForSecondsAttack;
+
         while (isFire == true)
         {
             GameObject temp = pool.Get(launcher.projectile.name);
