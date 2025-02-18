@@ -178,17 +178,17 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
         Vector3 startPos = transform.position + (transform.rotation * offset);
         projectile.transform.position = startPos;
         AlignProjectile(projectile, destination);
-
+        float distancePerframe = speed * Time.deltaTime * 50;
         while (projectile != null && projectile.activeSelf == true)
         {
             // 발사체 위치 += 진행 방향 * speed
             Vector3 direction = (new Vector3(destination.x, destination.y, startPos.z) - startPos).normalized;
-            projectile.transform.position += direction * speed;
+            projectile.transform.position += direction * distancePerframe;
 
             // 사거리를 벗어나면 비활성화
             if (range < (projectile.transform.position - startPos).magnitude) pool.Return(projectile.GetComponent<Projectile>().gameObject);
 
-            yield return new WaitForSeconds(0.016f); // 대략 60 프레임 기준
+            yield return null;
         }
     }
     /// <summary>
@@ -201,17 +201,15 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
         Quaternion targetQuaternion = HandUtil.ForwardToObj(gameObject, target, angleOffset);
 
         float elapsedTime = 0f;
-
         while (elapsedTime < turnTime)
         {
-            elapsedTime += delay;
+            elapsedTime += Time.deltaTime;
             float ratio = elapsedTime / turnTime;
-            if (ratio > 1) ratio = 1;
-
             transform.rotation = Quaternion.Lerp(startQuaternion, targetQuaternion, ratio);
-            yield return waitForSeconds;
+            yield return null;
         }
 
+        transform.rotation = targetQuaternion;
         corLast = null;
     }
     /// <summary>

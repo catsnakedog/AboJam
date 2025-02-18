@@ -16,4 +16,4 @@ MonoBehaviour:
   reinforceCostID: ReinforceCost_Heal
   delay: 0.3
   detection: 5
-  ratio: 0.9999
+  ratio: 1

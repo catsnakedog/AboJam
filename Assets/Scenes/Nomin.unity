@@ -4967,7 +4967,6 @@ MonoBehaviour:
   player: {fileID: 1427187426}
   gauge: {fileID: 4355378936841061902, guid: ac0a040d3a3848e46b922c0234b01c96, type: 3}
   cultivateTime: 1
-  isMove: 1
 --- !u!1001 &1472193868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9400,6 +9399,10 @@ PrefabInstance:
     - target: {fileID: 4123316820753357294, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: weapon
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508049656936034889, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4607950511370990962, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_AnchoredPosition.x

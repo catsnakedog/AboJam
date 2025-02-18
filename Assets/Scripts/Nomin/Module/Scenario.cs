@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
@@ -105,15 +106,15 @@ public class Scenario : MonoBehaviour
         //
         message.On("Shop 을 눌러보세요.", 999f, true);
         shop.SetActive(true);
-        UnityAction action = () => { animationClick.OnClick(); message.On("다른 버튼은 튜토리얼 이후 누를 수 있어요.", 2f, true); };
-        RemoveButtonEventRecursive(buy);
-        AddButtonEventRecursive(buy, action);
         mark.On(shop_onOff, 999f);
         while (!shop_change.activeInHierarchy) yield return waitForSeconds;
 
         //
         message.On("아보카도를 판매하세요.", 999f, true);
         mark.On(shop_change, 999f);
+        RemoveButtonEventRecursive(buy);
+        UnityAction action = () => message.On("다른 버튼은 튜토리얼 이후 누를 수 있어요.", 2f, true);
+        AddButtonEventRecursive(buy, action);
         while (StaticData.Garu < 1) yield return waitForSeconds;
 
         //
@@ -127,7 +128,7 @@ public class Scenario : MonoBehaviour
 
         //
         message.On("아보카도를 타워로 성장시키세요 !", 999f, true);
-        WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.1f);
+        WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.3f);
         while (ITower.instances.Count < 1)
         {
             foreach (Transform child in promotion.transform)
@@ -142,8 +143,9 @@ public class Scenario : MonoBehaviour
         message.On("모든 종류의 타워를 건설해보세요.", 999f, true);
         mark.Off();
         StaticData.Abocado++;
-        tempWaitForSeconds = new WaitForSeconds(1f);
+        tempWaitForSeconds = new WaitForSeconds(0.1f);
 
+        Coroutine corDayNight = StartCoroutine(CorDayNight());
         while (!CheckTowerCount())
         {
             if (CheckPoor())
@@ -156,19 +158,13 @@ public class Scenario : MonoBehaviour
                 message.On("모든 종류의 타워를 건설해보세요.", 999f, true);
             }
 
-            globalLight.Set(globalLight.night, 0.01f);
-            yield return new WaitForSeconds(1.5f);
-            globalLight.Set(globalLight.sunset, 0.01f);
-            yield return new WaitForSeconds(1.5f);
-            globalLight.Set(globalLight.morning, 0.01f);
-            yield return new WaitForSeconds(1.5f);
-            foreach (Abocado abocado in Abocado.instances) abocado.GrowUp();
-
             yield return tempWaitForSeconds;
         }
 
         //
         message.On("타워를 이용해 몰려오는 갱단으로부터 살아남으세요.", 3f, true);
+        StopCoroutine(corDayNight);
+        globalLight.Set(globalLight.morning, 0.01f);
         mark.Off();
         date.timeFlow = true;
         int origin = date.secondsPerDay;
@@ -283,5 +279,21 @@ public class Scenario : MonoBehaviour
         // 모든 타워가 건설되었으면 true 반화
         if (autoCount > 0 && splashCount > 0 && healCount > 0 && guardCount > 0 && productionCount > 0) return true;
         else return false;
+    }
+    /// <summary>
+    /// 낮과 밤을 교차시키며 아보카도를 성장시킵니다.
+    /// </summary>
+    private IEnumerator CorDayNight()
+    {
+        while(true)
+        {
+            globalLight.Set(globalLight.night, 0.01f);
+            yield return new WaitForSeconds(1.5f);
+            globalLight.Set(globalLight.sunset, 0.01f);
+            yield return new WaitForSeconds(1.5f);
+            globalLight.Set(globalLight.morning, 0.01f);
+            yield return new WaitForSeconds(1.5f);
+            foreach (Abocado abocado in Abocado.instances) abocado.GrowUp();
+        }
     }
 }

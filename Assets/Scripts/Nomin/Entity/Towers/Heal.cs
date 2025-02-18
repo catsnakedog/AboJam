@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Heal : Tower<Table_Heal, Record_Heal>, IPoolee
 {
@@ -64,8 +65,12 @@ public class Heal : Tower<Table_Heal, Record_Heal>, IPoolee
     /// <param name="OnOff">치유 모드 On / Off</param>
     public void Healing(bool OnOff)
     {
-        if (OnOff == true) corHeal = StartCoroutine(CorHeal());
-        else StopCoroutine(corHeal);
+        if (OnOff == true)
+        {
+            if (corHeal != null) { StopCoroutine(corHeal); corHeal = null; }
+            corHeal = StartCoroutine(CorHeal());
+        }
+        else { StopCoroutine(corHeal); corHeal = null; }
     }
     /// <summary>
     /// 치유 딜레이를 재설정 합니다.

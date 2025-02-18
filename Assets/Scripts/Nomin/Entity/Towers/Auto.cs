@@ -66,8 +66,12 @@ public class Auto : Tower<Table_Auto, Record_Auto>, IPoolee
     /// <param name="OnOff">공격 모드 On / Off</param>
     public void Fire(bool OnOff)
     {
-        if (OnOff == true) corFire = StartCoroutine(CorFire());
-        else StopCoroutine(corFire);
+        if (OnOff == true)
+        {
+            if (corFire != null) { StopCoroutine(corFire); corFire = null; }
+            corFire = StartCoroutine(CorFire());
+        }
+        else { StopCoroutine(corFire); corFire = null; }
     }
     /// <summary>
     /// 공격 딜레이를 재설정 합니다.
