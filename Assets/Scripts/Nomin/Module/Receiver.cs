@@ -23,6 +23,7 @@ public class Receiver : MonoBehaviour
     [SerializeField] private InputActionAsset inputAction;
     [SerializeField] private Player player;
     [SerializeField] private GameObject shopPanel;
+    [SerializeField] private GameObject shortcut;
 
     /* Field & Property */
     private Coroutine corKeepAttack;
@@ -224,6 +225,7 @@ public class Receiver : MonoBehaviour
     private void OnClose(InputAction.CallbackContext context)
     {
         shopPanel.SetActive(false);
+        shortcut.SetActive(false);
         reinforcement.Off();
         promotion.Off();
         while (Time.timeScale == 0) menu.MenuOnOff();
