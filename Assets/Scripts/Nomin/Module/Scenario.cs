@@ -18,22 +18,26 @@ using Image = UnityEngine.UI.Image;
 public class Scenario : MonoBehaviour
 {
     /* Dependency */
-    [SerializeField] GameObject shop_onOff;
-    [SerializeField] GameObject shop_change;
-    [SerializeField] GameObject shop_close;
-    [SerializeField] GameObject promotion;
-    [SerializeField] GameObject shop;
-    [SerializeField] GameObject btn_skill;
-    [SerializeField] GameObject swap;
-    [SerializeField] GameObject skip;
-    [SerializeField] GameObject buy;
-    [SerializeField] AnimationClick animationClick;
+    [SerializeField] private GameObject shop_onOff;
+    [SerializeField] private GameObject shop_change;
+    [SerializeField] private GameObject shop_close;
+    [SerializeField] private GameObject promotion;
+    [SerializeField] private GameObject shop;
+    [SerializeField] private GameObject btn_skill;
+    [SerializeField] private GameObject swap;
+    [SerializeField] private GameObject skip;
+    [SerializeField] private GameObject buy;
+    [SerializeField] private AnimationClick animationClick;
+    [SerializeField] private Player player;
     private Date date => Date.instance;
     private Message message => Message.instance;
     private Mark mark => Mark.instance;
     private GlobalLight globalLight => GlobalLight.instance;
     private LocalData localData => LocalData.instance;
     private List<Abocado> abocados => Abocado.instances;
+    private List<BTN_Weapons> btn_weapons_range => BTN_Weapons.instances_range;
+    private List<BTN_Weapons> btn_weapons_melee => BTN_Weapons.instances_melee;
+    private List<BTN_Upgrade> btn_upgrades => BTN_Upgrade.instances;
 
     /* Field & Property */
     public static Scenario instance;
@@ -134,14 +138,24 @@ public class Scenario : MonoBehaviour
     private void Awake() { instance = this; waitForSeconds = new WaitForSeconds(checkTime); }
     private void Start()
     {
-        if (localData.LoadScenario() < 1) StartCoroutine(CorScenario());
-        else message.On(startMessage[UnityEngine.Random.Range(0, startMessage.Length)], 3f);
+        switch (localData.LoadScenario())
+        {
+            case 0:
+                StartCoroutine(CorScenario_0());
+                break;
+            case 1:
+                StartCoroutine(CorScenario_1());
+                break;
+            default: // 본 게임 시작
+                message.On(startMessage[UnityEngine.Random.Range(0, startMessage.Length)], 3f);
+                break;
+        }
     }
 
     /// <summary>
-    /// 시나리오 데몬입니다.
+    /// 시나리오 0 데몬입니다.
     /// </summary>
-    public IEnumerator CorScenario()
+    public IEnumerator CorScenario_0()
     {
         // 초기 자원
         StaticData.Abocado = 1;
@@ -160,18 +174,18 @@ public class Scenario : MonoBehaviour
         swap.SetActive(false);
         skip.SetActive(false);
 
-        //
+        // 경작
         message.On($"반가워요 ! 아보카도 농장에 오신걸 환영해요.", 2f, true);
         yield return new WaitForSeconds(2f);
         message.On($"F 를 꾸욱 누르고 땅을 클릭해 보세요 !", 999f, true);
         while (Abocado.instances.Count < 1) yield return waitForSeconds;
 
-        //
+        // 심기
         message.On("잘 했어요 ! 다시 F + 클릭으로 아보카도를 심어보세요.", 999f, true);
         mark.On(Abocado.instances[0].gameObject, 999f);
         while (Abocado.instances[0].Level != EnumData.Abocado.Seed) yield return waitForSeconds;
 
-        //
+        // 성장
         message.On("하루가 지나면 아보카도가 성장합니다.", 999f, true);
         mark.Off();
         globalLight.Set(globalLight.night, 0.01f);
@@ -181,8 +195,6 @@ public class Scenario : MonoBehaviour
         globalLight.Set(globalLight.morning, 0.01f);
         yield return new WaitForSeconds(1.5f);
         Abocado.instances[0].GrowUp();
-
-        //
         message.On("이틀이 지나면 수확할 수 있습니다.", 999f, true);
         globalLight.Set(globalLight.night, 0.01f);
         yield return new WaitForSeconds(1.5f);
@@ -192,35 +204,31 @@ public class Scenario : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         Abocado.instances[0].GrowUp();
 
-        //
+        // 수확
         message.On("F + 클릭으로 아보카도를 수확하세요 !", 999f, true);
         mark.On(Abocado.instances[0].gameObject, 999f);
         while (StaticData.Abocado < 1) yield return waitForSeconds;
 
-        //
+        // 상점
         message.On("Shop 을 눌러보세요.", 999f, true);
         shop.SetActive(true);
         mark.On(shop_onOff, 999f);
         while (!shop_change.activeInHierarchy) yield return waitForSeconds;
 
-        //
+        // 판매
         message.On("아보카도를 판매하세요.", 999f, true);
         mark.On(shop_change, 999f);
         RemoveButtonEventRecursive(buy);
         UnityAction action = () => message.On("다른 버튼은 튜토리얼 이후 누를 수 있어요.", 2f, true);
         AddButtonEventRecursive(buy, action);
         while (StaticData.Garu < 1) yield return waitForSeconds;
-
-        //
         mark.On(shop_close, 999f);
         while (shop_close.activeInHierarchy) yield return waitForSeconds;
 
-        //
+        // 타워
         message.On("F + 클릭으로 아보카도를 다시 눌러보세요 !", 999f, true);
         mark.On(Abocado.instances[0].gameObject, 999f);
         while (!promotion.activeInHierarchy) yield return waitForSeconds;
-
-        //
         message.On("아보카도를 타워로 성장시키세요 !", 999f, true);
         WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.3f);
         while (ITower.instances.Count < 1)
@@ -233,12 +241,10 @@ public class Scenario : MonoBehaviour
             }
             yield return waitForSeconds;
         }
-
         message.On("모든 종류의 타워를 건설해보세요.", 999f, true);
         mark.Off();
         StaticData.Abocado++;
         tempWaitForSeconds = new WaitForSeconds(0.1f);
-
         Coroutine corDayNight = StartCoroutine(CorDayNight());
         while (!CheckTowerCount())
         {
@@ -255,39 +261,137 @@ public class Scenario : MonoBehaviour
             yield return tempWaitForSeconds;
         }
 
-        //
+        // 교전
         message.On("타워를 이용해 몰려오는 갱단으로부터 살아남으세요.", 3f, true);
         StopCoroutine(corDayNight);
         globalLight.Set(globalLight.morning, 0.01f);
         mark.Off();
         date.timeFlow = true;
-        int origin = date.secondsPerDay;
         date.secondsPerDay = 10;
         while (date.gameTime != Date.GameTime.Night) yield return waitForSeconds;
         yield return new WaitForSeconds(10f);
 
-        //
-        swap.SetActive(true);
-        message.On("근접 무기로 교체할 수도 있습니다.", 3f, true);
-        mark.On(swap, 3f);
-        yield return new WaitForSeconds(10f);
+        // 클리어
+        while (date.dateTime.Day < 2) yield return waitForSeconds;
+        yield return StartCoroutine(Clear());
+    }
+    /// <summary>
+    /// 시나리오 1 데몬입니다.
+    /// </summary>
+    public IEnumerator CorScenario_1()
+    {
+        // 초기 자원
+        StaticData.Abocado = 0;
+        StaticData.Garu = 999;
+        StaticData.Water = 0;
 
-        //
+        // 시간 초기화
+        date.dateTime = DateTime.MinValue;
+        date.timeFlow = false;
+        date.text_day.text = $"DAY - 1";
+        date.text_time.text = $"0:0";
+
+        // UI 조정
+        shop.SetActive(false);
+        btn_skill.SetActive(false);
+        swap.SetActive(false);
+        skip.SetActive(false);
+
+        message.On($"오늘은 각종 무기 사용법을 알아봐요.", 2f, true);
+        yield return new WaitForSeconds(2f);
+
+        // 상점
+        message.On("Shop 을 눌러보세요.", 999f, true);
+        shop.SetActive(true);
+        mark.On(shop_onOff, 999f);
+        while (!shop_change.activeInHierarchy) yield return waitForSeconds;
+
+        // 구매
+        message.On("모든 무기를 구매하세요 !", 999f, true);
+        WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.3f);
+        List<BTN_Weapons> allWeapons = new();
+        allWeapons.AddRange(btn_weapons_melee);
+        allWeapons.AddRange(btn_weapons_range);
+        while (!CheckBuyAllWeapons())
+        {
+            if (!shop_change.activeInHierarchy)
+                foreach (BTN_Weapons weapon in allWeapons)
+                {
+                    yield return tempWaitForSeconds;
+                    if (CheckBuyAllWeapons()) break;
+                    mark.On(weapon.gameObject, 999f);
+                }
+            yield return waitForSeconds;
+        }
+
+        // 강화
+        message.On("모든 강화를 완료하세요 !", 999f, true);
+        while (!CheckBuyAllUpgrades())
+        {
+            if (!shop_change.activeInHierarchy)
+                foreach (BTN_Upgrade upgrade in btn_upgrades)
+                {
+                    yield return tempWaitForSeconds;
+                    if (CheckBuyAllWeapons()) break;
+                    mark.On(upgrade.gameObject, 999f);
+                }
+            yield return waitForSeconds;
+        }
+
+        // 교체
+        swap.SetActive(true);
+        message.On("근접 / 원거리 무기로 교체할 수 있어요.", 3f, true);
+        mark.On(swap, 999f);
+        while (player.Hand.CurrentSlotIndex == Hand.WeaponSlot.FirstRanged) yield return waitForSeconds;
+
+        // 교전
+        message.On($"3 킬 이상 성공하세요 !", 999f, true);
+        globalLight.Set(globalLight.morning, 0.01f);
+        mark.Off();
+        date.timeFlow = true;
+        date.secondsPerDay = 10;
+        while (StaticData.gameData.kill <= 2) yield return waitForSeconds;
+
+        // 스킬
+        message.On($"기도하면 비가 올지도 몰라요 !", 999f, true);
         btn_skill.SetActive(true);
-        message.On("버거우면 마법진을 펼쳐보세요 !", 3f, true);
         mark.On(btn_skill, 3f);
 
-        //
+        // 클리어
         while (date.dateTime.Day < 2) yield return waitForSeconds;
-        localData.SaveScenario(1);
+        yield return StartCoroutine(Clear());
+    }
+
+    /* Private Method */
+    /// <summary>
+    /// 현재 시나리오를 클리어합니다.
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator Clear()
+    {
+        localData.SaveScenario(localData.LoadScenario() + 1);
         message.On("축하합니다 ! 튜토리얼을 클리어하셨습니다.", 1.5f, true);
         yield return new WaitForSeconds(1.5f);
         message.On("잠시후 메인 화면으로 이동합니다.", 1.5f, true);
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene("Main");
     }
-
-    /* Private Method */
+    /// <summary>
+    /// 낮과 밤을 교차시키며 아보카도를 성장시킵니다.
+    /// </summary>
+    private IEnumerator CorDayNight()
+    {
+        while (true)
+        {
+            globalLight.Set(globalLight.night, 0.01f);
+            yield return new WaitForSeconds(1.5f);
+            globalLight.Set(globalLight.sunset, 0.01f);
+            yield return new WaitForSeconds(1.5f);
+            globalLight.Set(globalLight.morning, 0.01f);
+            yield return new WaitForSeconds(1.5f);
+            foreach (Abocado abocado in Abocado.instances) abocado.GrowUp();
+        }
+    }
     /// <summary>
     /// 특정 게임오브젝트 하위의 모든 버튼에서 이벤트를 제거합니다.
     /// </summary>
@@ -310,6 +414,31 @@ public class Scenario : MonoBehaviour
         if (button != null) button.onClick.AddListener(callback);
 
         foreach (Transform child in parent.transform) AddButtonEventRecursive(child.gameObject, callback);
+    }
+    /// <summary>
+    /// 모든 무기를 구매했는지 여부를 반환합니다.
+    /// </summary>
+    private bool CheckBuyAllWeapons()
+    {
+        bool flag = true;
+
+        List<BTN_Weapons> weapons = new();
+        weapons.AddRange(btn_weapons_melee);
+        weapons.AddRange(btn_weapons_range);
+        foreach (BTN_Weapons weapon in weapons) if (!weapon.Purchase) { flag = false; break; }
+
+        return flag;
+    }
+    /// <summary>
+    /// 모든 업그레이드를 완료했는지 여부를 반환합니다.
+    /// </summary>
+    private bool CheckBuyAllUpgrades()
+    {
+        bool flag = true;
+
+        foreach (BTN_Upgrade upgrade in btn_upgrades) if (upgrade.Level < upgrade.MaxLevel) { flag = false; break; }
+
+        return flag;
     }
     /// <summary>
     /// 아보카도를 생산할 수 있는지 여부를 반환합니다.
@@ -373,21 +502,5 @@ public class Scenario : MonoBehaviour
         // 모든 타워가 건설되었으면 true 반화
         if (autoCount > 0 && splashCount > 0 && healCount > 0 && guardCount > 0 && productionCount > 0) return true;
         else return false;
-    }
-    /// <summary>
-    /// 낮과 밤을 교차시키며 아보카도를 성장시킵니다.
-    /// </summary>
-    private IEnumerator CorDayNight()
-    {
-        while (true)
-        {
-            globalLight.Set(globalLight.night, 0.01f);
-            yield return new WaitForSeconds(1.5f);
-            globalLight.Set(globalLight.sunset, 0.01f);
-            yield return new WaitForSeconds(1.5f);
-            globalLight.Set(globalLight.morning, 0.01f);
-            yield return new WaitForSeconds(1.5f);
-            foreach (Abocado abocado in Abocado.instances) abocado.GrowUp();
-        }
     }
 }

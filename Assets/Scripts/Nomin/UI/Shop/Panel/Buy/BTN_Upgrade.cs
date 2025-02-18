@@ -23,7 +23,7 @@ public class BTN_Upgrade : RecordInstance<Table_Upgrade, Record_Upgrade>
 
     /* Field & Property */
     public static List<BTN_Upgrade> instances = new List<BTN_Upgrade>();
-    [SerializeField] private int maxLevel = 1;
+    [SerializeField] private int maxLevel = 1; public int MaxLevel { get => maxLevel; }
     private int price; public int Price
     {
         get => price;
