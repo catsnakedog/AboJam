@@ -12,6 +12,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static EnumData;
 using static UnityEditor.Progress;
 using Image = UnityEngine.UI.Image;
 
@@ -177,6 +178,8 @@ public class Scenario : MonoBehaviour
         // 경작
         message.On($"반가워요 ! 아보카도 농장에 오신걸 환영해요.", 2f, true);
         yield return new WaitForSeconds(2f);
+        message.On($"WASD 로 움직일 수 있어요.", 2f, true);
+        yield return new WaitForSeconds(2f);
         message.On($"F 를 꾸욱 누르고 땅을 클릭해 보세요 !", 999f, true);
         while (Abocado.instances.Count < 1) yield return waitForSeconds;
 
@@ -221,7 +224,20 @@ public class Scenario : MonoBehaviour
         RemoveButtonEventRecursive(buy);
         UnityAction action = () => message.On("다른 버튼은 튜토리얼 이후 누를 수 있어요.", 2f, true);
         AddButtonEventRecursive(buy, action);
-        while (StaticData.Garu < 1) yield return waitForSeconds;
+        while (StaticData.Garu < 1)
+        {
+            if (StaticData.Abocado < 1)
+            {
+                message.On("어? 아보카도 어쨌어요...", 999f, true);
+                yield return new WaitForSeconds(2f);
+                message.On("진짜 딱 하나만 더 줄게요 !", 999f, true);
+                yield return new WaitForSeconds(2f);
+                StaticData.Abocado++;
+                message.On("아보카도를 판매하세요.", 999f, true);
+            }
+
+            yield return waitForSeconds;
+        }
         mark.On(shop_close, 999f);
         while (shop_close.activeInHierarchy) yield return waitForSeconds;
 
@@ -233,12 +249,15 @@ public class Scenario : MonoBehaviour
         WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.3f);
         while (ITower.instances.Count < 1)
         {
-            foreach (Transform child in promotion.transform)
-            {
-                yield return tempWaitForSeconds;
-                if (ITower.instances.Count > 0) break;
-                mark.On(child.gameObject, 999f);
-            }
+            if (promotion.activeInHierarchy)
+                foreach (Transform child in promotion.transform)
+                {
+                    yield return tempWaitForSeconds;
+                    if (ITower.instances.Count > 0) break;
+                    mark.On(child.gameObject, 1f);
+                }
+            else mark.On(Abocado.instances[0].gameObject, 999f);
+
             yield return waitForSeconds;
         }
         message.On("모든 종류의 타워를 건설해보세요.", 999f, true);
@@ -309,18 +328,36 @@ public class Scenario : MonoBehaviour
         // 구매
         message.On("모든 무기를 구매하세요 !", 999f, true);
         WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.3f);
-        List<BTN_Weapons> allWeapons = new();
-        allWeapons.AddRange(btn_weapons_melee);
-        allWeapons.AddRange(btn_weapons_range);
+        List<BTN_Weapons> weapons = new();
+        weapons.AddRange(btn_weapons_range);
+        weapons.AddRange(btn_weapons_melee);
         while (!CheckBuyAllWeapons())
         {
-            if (!shop_change.activeInHierarchy)
-                foreach (BTN_Weapons weapon in allWeapons)
+            if (shop_change.activeInHierarchy)
+                foreach (BTN_Weapons weapon in weapons)
                 {
-                    yield return tempWaitForSeconds;
                     if (CheckBuyAllWeapons()) break;
+                    if (weapon.Purchase) continue;
+                    yield return tempWaitForSeconds;
                     mark.On(weapon.gameObject, 999f);
                 }
+
+            yield return waitForSeconds;
+        }
+
+        // 장착
+        message.On("근거리 / 원거리 무기를 각각 장착해보세요.", 999f, true);
+        swap.SetActive(true);
+        while (!CheckEquip())
+        {
+            if (shop_change.activeInHierarchy)
+                foreach (BTN_Weapons weapon in weapons)
+                {
+                    if (CheckEquip()) break;
+                    yield return tempWaitForSeconds;
+                    mark.On(weapon.gameObject, 999f);
+                }
+
             yield return waitForSeconds;
         }
 
@@ -328,11 +365,12 @@ public class Scenario : MonoBehaviour
         message.On("모든 강화를 완료하세요 !", 999f, true);
         while (!CheckBuyAllUpgrades())
         {
-            if (!shop_change.activeInHierarchy)
+            if (shop_change.activeInHierarchy)
                 foreach (BTN_Upgrade upgrade in btn_upgrades)
                 {
+                    if (CheckBuyAllUpgrades()) break;
+                    if (upgrade.Level < upgrade.MaxLevel == false) continue;
                     yield return tempWaitForSeconds;
-                    if (CheckBuyAllWeapons()) break;
                     mark.On(upgrade.gameObject, 999f);
                 }
             yield return waitForSeconds;
@@ -437,6 +475,19 @@ public class Scenario : MonoBehaviour
         bool flag = true;
 
         foreach (BTN_Upgrade upgrade in btn_upgrades) if (upgrade.Level < upgrade.MaxLevel) { flag = false; break; }
+
+        return flag;
+    }
+    /// <summary>
+    /// 기본 이외 무기를 장착했는지 여부를 반환합니다.
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckEquip()
+    {
+        bool flag = true;
+
+        if (player.Hand.FirstSlot == EnumData.Weapon.Gun) flag = false;
+        if (player.Hand.SecondSlot == EnumData.Weapon.Knife) flag = false;
 
         return flag;
     }

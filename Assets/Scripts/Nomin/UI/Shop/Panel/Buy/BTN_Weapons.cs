@@ -86,6 +86,7 @@ public class BTN_Weapons : MonoBehaviour
         // 이미 구매한 상품인지 체크
         if (purchase == true)
         {
+            if (swap == null) return false;
             Message.instance.On("무기를 장착했습니다.", 2f);
             swap.SetSlot(weapon);
 
