@@ -331,6 +331,10 @@ public class Scenario : MonoBehaviour
         List<BTN_Weapons> weapons = new();
         weapons.AddRange(btn_weapons_range);
         weapons.AddRange(btn_weapons_melee);
+        EnumData.Weapon[] weaponOrder = { EnumData.Weapon.Gun, EnumData.Weapon.ShotGun, EnumData.Weapon.Sniper,
+                                           EnumData.Weapon.Riple, EnumData.Weapon.Knife, EnumData.Weapon.Bat,
+                                           EnumData.Weapon.Spear, EnumData.Weapon.ChainSaw };
+        weapons = weapons.OrderBy(weapon => Array.IndexOf(weaponOrder, weapon.Weapon)).ToList();
         while (!CheckBuyAllWeapons())
         {
             if (shop_change.activeInHierarchy)
@@ -341,6 +345,7 @@ public class Scenario : MonoBehaviour
                     yield return tempWaitForSeconds;
                     mark.On(weapon.gameObject, 999f);
                 }
+            else mark.On(shop_onOff, 2f);
 
             yield return waitForSeconds;
         }
@@ -357,22 +362,27 @@ public class Scenario : MonoBehaviour
                     yield return tempWaitForSeconds;
                     mark.On(weapon.gameObject, 999f);
                 }
+            else mark.On(shop_onOff, 2f);
 
             yield return waitForSeconds;
         }
 
         // 강화
         message.On("모든 강화를 완료하세요 !", 999f, true);
+        string[] upgradeOrder = { "Upgrade_Damage", "Upgrade_Rate", "Upgrade_Range", "Upgrade_Knockback" };
+        List<BTN_Upgrade> upgrades = btn_upgrades.OrderBy(upgrade => Array.IndexOf(upgradeOrder, upgrade.ID)).ToList();
         while (!CheckBuyAllUpgrades())
         {
             if (shop_change.activeInHierarchy)
-                foreach (BTN_Upgrade upgrade in btn_upgrades)
+                foreach (BTN_Upgrade upgrade in upgrades)
                 {
                     if (CheckBuyAllUpgrades()) break;
-                    if (upgrade.Level < upgrade.MaxLevel == false) continue;
+                    if (upgrade.Level < Mathf.Min(upgrade.MaxLevel, 3) == false) continue;
                     yield return tempWaitForSeconds;
                     mark.On(upgrade.gameObject, 999f);
                 }
+            else mark.On(shop_onOff, 2f);
+
             yield return waitForSeconds;
         }
 
@@ -391,7 +401,7 @@ public class Scenario : MonoBehaviour
         while (StaticData.gameData.kill <= 2) yield return waitForSeconds;
 
         // 스킬
-        message.On($"기도하면 비가 올지도 몰라요 !", 999f, true);
+        message.On($"기도하면 비가 올지도 몰라요 !", 5f, true);
         btn_skill.SetActive(true);
         mark.On(btn_skill, 3f);
 

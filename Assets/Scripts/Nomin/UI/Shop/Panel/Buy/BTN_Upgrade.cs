@@ -45,7 +45,7 @@ public class BTN_Upgrade : RecordInstance<Table_Upgrade, Record_Upgrade>
         }
     }
 
-    [SerializeField] private string ID; // Primary Key
+    [SerializeField] public string ID; // Primary Key
     [SerializeField] public int[] reinforceCost; public int[] ReinforceCost { get => reinforceCost; set => reinforceCost = value; } // 레벨업 비용 (개수 = 최대 레벨 결정)
     [SerializeField] private float coefficient;
 

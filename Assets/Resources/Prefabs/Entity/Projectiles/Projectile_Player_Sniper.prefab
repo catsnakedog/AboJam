@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6225409795156279537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.8135805, w: 0.58145225}
-  m_LocalPosition: {x: 3.2383235, y: -2.6315947, z: 0.000000021068885}
+  m_LocalRotation: {x: 0, y: 0, z: -0.45537043, w: 0.89030206}
+  m_LocalPosition: {x: 7.706212, y: 3.8443906, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -55,7 +55,7 @@ MonoBehaviour:
   clashTags:
   - Enemies
   damage: 40
-  multiplierDamage: 1
+  multiplierDamage: 1.3000001
   penetrate: 5
 --- !u!212 &1193637438243774845
 SpriteRenderer:

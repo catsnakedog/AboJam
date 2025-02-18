@@ -10273,6 +10273,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8842748139511423489, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: Hand.SecondSlot
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8911146842598188145, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Layer
       value: 10

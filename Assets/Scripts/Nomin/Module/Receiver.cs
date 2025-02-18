@@ -173,6 +173,8 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void KeepAttack(InputAction.CallbackContext context)
     {
+        if (shopPanel.activeInHierarchy) return;
+
         if (corKeepAttack != null) StopCoroutine(corKeepAttack);
         corKeepAttack = StartCoroutine(CorKeepAttack());
     }

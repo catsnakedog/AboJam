@@ -42,7 +42,7 @@ public class BTN_Weapons : MonoBehaviour
     [SerializeField] private int price = 0; // 백킹 필드
     [SerializeField] private bool purchase = false; public bool Purchase { get => purchase; } // 구매 여부
     [SerializeField] private bool isMelee = false; // 근거리 or 원거리 설정
-    [SerializeField] private EnumData.Weapon weapon; // 버튼에 대응하는 무기
+    [SerializeField] private EnumData.Weapon weapon; public EnumData.Weapon Weapon { get => weapon; } // 버튼에 대응하는 무기
 
     /* Intializer & Finalizer & Updater */
     private void Start()
