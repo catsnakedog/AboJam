@@ -67,6 +67,16 @@ public class Spawner : MonoBehaviour
 
         waveEnd = true;
     }
+    /// <summary>
+    /// <br>지정한 Sector 내에 프리팹을 스폰시킵니다.</br>
+    /// <br>Pool 에 등록된 프리팹만 가능합니다.</br>
+    /// </summary>
+    public void Spawn(GameObject prefab, Vector3 position)
+    {
+        GameObject obj = pool.Get(prefab.name);
+        obj.transform.position = position;
+        SetSpriteOrder(obj.GetComponent<SpriteRenderer>());
+    }
 
     /* Private Method */
     /// <summary>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing.Text;
 using System.Linq;
 using TMPro;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,12 +14,14 @@ using UnityEngine.Timeline;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static EnumData;
+using static ObjectPool;
 using static UnityEditor.Progress;
 using Image = UnityEngine.UI.Image;
 
 public class Scenario : MonoBehaviour
 {
     /* Dependency */
+    [SerializeField] private GameObject[] enemies;
     [SerializeField] private GameObject shop_onOff;
     [SerializeField] private GameObject shop_change;
     [SerializeField] private GameObject shop_close;
@@ -35,6 +38,7 @@ public class Scenario : MonoBehaviour
     private Mark mark => Mark.instance;
     private GlobalLight globalLight => GlobalLight.instance;
     private LocalData localData => LocalData.instance;
+    private Spawner spawner => Spawner.instance;
     private List<Abocado> abocados => Abocado.instances;
     private List<BTN_Weapons> btn_weapons_range => BTN_Weapons.instances_range;
     private List<BTN_Weapons> btn_weapons_melee => BTN_Weapons.instances_melee;
@@ -288,7 +292,12 @@ public class Scenario : MonoBehaviour
         date.timeFlow = true;
         date.secondsPerDay = 10;
         while (date.gameTime != Date.GameTime.Night) yield return waitForSeconds;
-        yield return new WaitForSeconds(10f);
+        for (int i = 0; i < 5; i++)
+        {
+            int random = UnityEngine.Random.Range(0, enemies.Length);
+            spawner.Spawn(enemies[random], new Vector3 (i * 2, 13, 0));
+            spawner.Spawn(enemies[random], new Vector3 (-i * 2, -13, 0));
+        }
 
         // 클리어
         while (date.dateTime.Day < 2) yield return waitForSeconds;
@@ -398,6 +407,13 @@ public class Scenario : MonoBehaviour
         mark.Off();
         date.timeFlow = true;
         date.secondsPerDay = 10;
+        while (date.gameTime != Date.GameTime.Night) yield return waitForSeconds;
+        for (int i = 0; i < 5; i++)
+        {
+            int random = UnityEngine.Random.Range(0, enemies.Length);
+            spawner.Spawn(enemies[random], new Vector3(i * 2, 13, 0));
+            spawner.Spawn(enemies[random], new Vector3(-i * 2, -13, 0));
+        }
         while (StaticData.gameData.kill <= 2) yield return waitForSeconds;
 
         // 스킬

@@ -26,7 +26,7 @@ public class CoolTimer : MonoBehaviour
             remainTime -= Time.deltaTime;
             image.fillAmount = remainTime / seconds;
 
-            string[] tokens = TimeSpan.FromSeconds(remainTime).ToString("s\\:ff").Split(':');
+            string[] tokens = TimeSpan.FromSeconds(remainTime).ToString("m\\:ss").Split(':');
             tmp.text = string.Format("{0}:{1}", tokens[0], tokens[1]);
 
             yield return new WaitForFixedUpdate();
