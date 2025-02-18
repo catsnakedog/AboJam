@@ -36,7 +36,7 @@ public class Spawner : MonoBehaviour
 
         // 런타임 테이블에서 다음에 진행할 웨이브를 가져옵니다.
         Wave wave = new Wave();
-        database_abojam.ExportWave(database_abojam.Wave[waveIndex].ID, ref wave.delay, ref wave.spawn);
+        database_abojam.ExportWave(database_abojam.Wave[0].TableName + waveIndex, ref wave.delay, ref wave.spawn);
         waveIndex++;
 
         // 웨이브의 모든 스폰 순차 생성
