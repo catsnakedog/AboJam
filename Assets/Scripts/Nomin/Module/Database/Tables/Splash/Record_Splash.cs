@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Recorder;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Record_Splash", menuName = "Record/Record_Splash", order = int.MaxValue)]

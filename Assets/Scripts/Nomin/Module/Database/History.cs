@@ -2,18 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
-using System.Drawing.Text;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TMPro;
-using UnityEditor.MemoryProfiler;
-using UnityEditor.Rendering;
-using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,21 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.Linq;
-using TMPro;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.Timeline;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static EnumData;
-using static ObjectPool;
-using static UnityEditor.Progress;
 using Image = UnityEngine.UI.Image;
 
 public class Scenario : MonoBehaviour

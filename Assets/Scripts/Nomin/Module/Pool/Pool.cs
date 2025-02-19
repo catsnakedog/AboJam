@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Linq;
-using UnityEditor.Search;
 using UnityEngine;
-using static UnityEditor.Recorder.OutputPath;
 
 /// <summary>
 /// <br>풀링할 프리팹을 하이라키에서 연결합니다.</br>

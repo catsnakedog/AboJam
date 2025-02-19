@@ -1,8 +1,6 @@
-using SuperTiled2Unity.Editor.Geometry;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class Indicator_Circle : MonoBehaviour
 {

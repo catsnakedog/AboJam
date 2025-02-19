@@ -1,19 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
-using static UnityEditor.PlayerSettings;
-using static UnityEditor.ShaderData;
 
 public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
 {

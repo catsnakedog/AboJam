@@ -2,14 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static EnumData;
 
 public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
 {

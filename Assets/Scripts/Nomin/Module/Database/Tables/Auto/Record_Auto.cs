@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Recorder;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Record_Auto", menuName = "Record/Record_Auto", order = int.MaxValue)]

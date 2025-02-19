@@ -1,11 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.InputSystem;
-using UnityEngine;
-using UnityEditor.Timeline.Actions;
-using UnityEngine.EventSystems;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
-
 public class Sector : RecordInstance<Table_Sector, Record_Sector>
 {
     public float angleStart;

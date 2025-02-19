@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Tower<T1, T2> : RecordInstance<T1, T2>, ITower

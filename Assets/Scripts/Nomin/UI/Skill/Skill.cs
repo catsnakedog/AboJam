@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static ObjectPool;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class Skill : RecordInstance<Table_Skill, Record_Skill>
 {
