@@ -3,6 +3,7 @@ using System.Data;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Text;
 
 /// <summary>
 /// MSSQL 클라이언트
@@ -25,7 +26,8 @@ public class DBMS : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        try { Connection = new($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD};Connection Timeout=5"); }
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance); // UTF-8 강제 적용
+        try { Connection = new($"Data Source={IP},{PORT};Initial Catalog={DB};User ID={ID};Password={PASSWORD};TrustServerCertificate=True;Connection Timeout=5;"); }
         catch { Debug.Log("DB 연결 실패"); }
     }
 
@@ -37,7 +39,7 @@ public class DBMS : MonoBehaviour
     {
         lock (Lock)
         {
-            Connection.Open();
+            if (Connection.State != ConnectionState.Open) Connection.Open();
 
             DataSet dataSet = new();
 
@@ -64,7 +66,7 @@ public class DBMS : MonoBehaviour
     {
         try
         {
-            Connection.Open();
+            if (Connection.State != ConnectionState.Open) Connection.Open();
             Console.WriteLine("✅ MSSQL 서버 연결 성공!");
             Connection.Close();
             return true;
