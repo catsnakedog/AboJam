@@ -69,9 +69,13 @@ public class Hand : IObserver
     /// </summary>
     public WeaponSlot CurrentSlotIndex = WeaponSlot.FirstRanged;
 
-    public EnumData.Weapon CurrentSlotWeaponType { get { // 현재 무기가 무엇인지 알려주는 프로퍼티
+    public EnumData.Weapon CurrentSlotWeaponType
+    {
+        get
+        { // 현재 무기가 무엇인지 알려주는 프로퍼티
             return GetSlotWeaponType(CurrentSlotIndex);
-    } }
+        }
+    }
 
 
     /// <summary>
@@ -82,7 +86,7 @@ public class Hand : IObserver
     // 뒤집힌 여부를 판별하여 손 배치를 반대로 해야하는지
     private bool _changeHand;
     private Camera _mainCamera;
-    
+
     /// <summary>
     /// 무기들 저장 공간
     /// </summary>
@@ -118,7 +122,7 @@ public class Hand : IObserver
     /// 최종적으로 flip 되었는지
     /// </summary>
     private int _flip;
-    
+
     // 장전에 사용된다
     /// <summary>
     /// 무기 교체 중인지, 교체 중엔 다른 행동은 안한다
@@ -164,7 +168,7 @@ public class Hand : IObserver
     const float HandAngleCorrection = 90;
 
     public void OnNotify(string state)
-    { 
+    {
     }
 
     public void Init()
@@ -268,10 +272,10 @@ public class Hand : IObserver
 
     public void SetClothes()
     {
-        if(ShakeAmount > 0)
+        if (ShakeAmount > 0)
         {
             ShakeAmount -= HealShake * Time.deltaTime;
-            if(ShakeAmount < 0 )
+            if (ShakeAmount < 0)
                 ShakeAmount = 0;
         }
         else
@@ -280,7 +284,7 @@ public class Hand : IObserver
             if (ShakeAmount > 0)
                 ShakeAmount = 0;
         }
-           
+
         _clothes.transform.localRotation = Quaternion.Euler(0f, 0f, ShakeAmount);
     }
 
@@ -335,10 +339,10 @@ public class Hand : IObserver
         }
         _lastPlayerFlip = _playerFlip;
 
-        if(!_currentWeapon.MouseFlipPrio)
-        // 마우스가 플레이어 상대 방향 (1 : 왼쪽, -1 : 오른쪽)
+        if (!_currentWeapon.MouseFlipPrio)
+            // 마우스가 플레이어 상대 방향 (1 : 왼쪽, -1 : 오른쪽)
             _mouseFlip = _player.transform.position.x > ScreenToWorld2D(Input.mousePosition, _mainCamera).x ? 1 : -1;
-        
+
 
         // 3. 최종 방향 결정 (1: 기본, -1: 뒤집힘)
         _flip = _playerFlip * _mouseFlip;
@@ -358,11 +362,11 @@ public class Hand : IObserver
 
         // 360도로 회전시켜 방향을 나타내기에 우측으로 가는경우 (정방향 기준) y축 플립해줘야한다.
         // 하지만 이 또한 플레이어가 뒤집히면 반대로 바뀌기에 플레이어 방향을 기준으로 보정해준다.
-        if(!_currentWeapon.WeaponScalePrio)
+        if (!_currentWeapon.WeaponScalePrio)
         {
             if (_currentWeapon.HandState.StandardHand) // 오른손에 있을때만
             {
-                if(_currentWeapon.IsImageWidth)
+                if (_currentWeapon.IsImageWidth)
                     _currentWeapon.transform.localScale = new Vector3(1, -_mouseFlip, 1);
                 else
                     _currentWeapon.transform.localScale = new Vector3(-_mouseFlip, 1, 1);
@@ -405,17 +409,10 @@ public class Hand : IObserver
     {
         if (Input.GetKeyDown(SlotChangeKey))
         {
-            /*
-            if (_isSwitchWeapon)
-                return;
-            if (CurrentSlotIndex == WeaponSlot.FirstMelee)
-                CurrentSlotIndex = WeaponSlot.FirstRanged;
-            else
-                CurrentSlotIndex++;
+            if (_isSwitchWeapon) return;
+            if (CurrentSlotIndex == WeaponSlot.FirstRanged) CurrentSlotIndex = WeaponSlot.SecondRanged;
+            else if (CurrentSlotIndex == WeaponSlot.SecondRanged) CurrentSlotIndex = WeaponSlot.FirstRanged;
             SwitchWeapon();
-            */
-
-            swap.SwapSlot();
         }
         if (Input.GetKeyDown(SlotChangeTo1Key))
         {
@@ -459,7 +456,7 @@ public class Hand : IObserver
         HandAction -= CheckFlipData;
         HandAction -= CheckCurrentSlotWeaponParent;
         HandAction -= SetArmRot; // 교체 중엔 일단 스탑
-        
+
         _switchLeftTargetRot = ForwardToObj(_leftArm, _weaponHoldingLocation[(int)_currentWeapon.HoldingIndex].position, HandAngleCorrection);
         _switchRightTargetRot = ForwardToObj(_rightArm, _weaponHoldingLocation[(int)_currentWeapon.HoldingIndex].position, HandAngleCorrection);
         _firstLeftTargetRot = _leftArm.transform.rotation;
@@ -518,7 +515,7 @@ public class Hand : IObserver
         _leftArm.transform.rotation = Quaternion.Slerp(_switchLeftOriRot, _switchLeftTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
         _rightArm.transform.rotation = Quaternion.Slerp(_switchRightOriRot, _switchRightTargetRot, _switchProgressTime / (WeaponSwitchTime / 2f));
 
-        if (_switchProgressTime >= (WeaponSwitchTime-0.4f) /2f) // 이동 완료
+        if (_switchProgressTime >= (WeaponSwitchTime - 0.4f) / 2f) // 이동 완료
         {
             _leftArm.transform.rotation = _switchLeftTargetRot;
             _rightArm.transform.rotation = _switchRightTargetRot;
