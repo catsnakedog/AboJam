@@ -41,7 +41,8 @@ public class Verdict : MonoBehaviour
         {
             if (date.gameTime == Date.GameTime.Night && // 밤이며
                 spawner.waveEnd == true && // 웨이브가 종료되었고
-                CheckMob() == false) // 남은 몬스터가 없으면
+                CheckMob() == false && // 남은 몬스터가 없으며
+                playerHP.HP_current > 0) // 플레이어가 죽지 않았으면
             {
                 spawner.waveEnd = false;
                 date.Skip(); // 밤 종료

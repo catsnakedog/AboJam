@@ -103,7 +103,7 @@ public class History : MonoBehaviour
 
                 // 대기 시작
                 if (corWaitLast == null) corWaitLast = StartCoroutine(CorWait());
-                message.On($"서버 연결에 실패했습니다. {(int)Math.Round(waitTime, MidpointRounding.AwayFromZero)} 초 후에 다시 시도해주세요.\n학교 등 공공기관 와이파이는 연결이 실패할 수 있습니다.", 4f);
+                message.On($"서버 연결에 실패했습니다. {(int)Math.Round(waitTime, MidpointRounding.AwayFromZero)} 초 후에 다시 시도해주세요.\n공용 인터넷일 경우 LTE / 데이터로 연결해주세요.", 4f);
                 Destroy(loading);
                 corServerLast = null;
                 yield break;
@@ -112,7 +112,7 @@ public class History : MonoBehaviour
         // 대기 상태 시 안내 메시지 출력
         else
         {
-            message.On($"서버 연결에 실패했습니다. {(int)Math.Round(waitTime, MidpointRounding.AwayFromZero)} 초 후에 다시 시도해주세요.\n학교 등 공공기관 와이파이는 연결이 실패할 수 있습니다.", 4f);
+            message.On($"서버 연결에 실패했습니다. {(int)Math.Round(waitTime, MidpointRounding.AwayFromZero)} 초 후에 다시 시도해주세요.\n공용 인터넷일 경우 LTE / 데이터로 연결해주세요.", 4f);
             corServerLast = null;
             yield break;
         }

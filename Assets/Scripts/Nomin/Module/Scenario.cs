@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using static UnityEngine.EventSystems.EventTrigger;
 using Image = UnityEngine.UI.Image;
 
 public class Scenario : MonoBehaviour
@@ -22,6 +23,7 @@ public class Scenario : MonoBehaviour
     [SerializeField] private GameObject buy;
     [SerializeField] private AnimationClick animationClick;
     [SerializeField] private Player player;
+    [SerializeField] private HP playerHP;
     private Date date => Date.instance;
     private Message message => Message.instance;
     private Mark mark => Mark.instance;
@@ -281,12 +283,12 @@ public class Scenario : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             int random = UnityEngine.Random.Range(0, enemies.Length);
-            spawner.Spawn(enemies[random], new Vector3 (i * 2, 13, 0));
-            spawner.Spawn(enemies[random], new Vector3 (-i * 2, -13, 0));
+            spawner.Spawn(enemies[random], new Vector3(i * 2, 13, 0));
+            spawner.Spawn(enemies[random], new Vector3(-i * 2, -13, 0));
         }
 
         // 클리어
-        while (CheckEnemyAlive()) yield return waitForSeconds;
+        while (CheckEnemyAlive() && playerHP.HP_current > 0) yield return waitForSeconds;
         globalLight.Set(globalLight.morning, 0.01f);
         yield return StartCoroutine(Clear());
     }
@@ -406,7 +408,7 @@ public class Scenario : MonoBehaviour
         mark.On(btn_skill, 3f);
 
         // 클리어
-        while (CheckEnemyAlive()) yield return waitForSeconds;
+        while (CheckEnemyAlive() && playerHP.HP_current > 0) yield return waitForSeconds;
         globalLight.Set(globalLight.morning, 0.01f);
         yield return StartCoroutine(Clear());
     }
@@ -537,6 +539,7 @@ public class Scenario : MonoBehaviour
         // 각 타워 개수 세기
         foreach (ITower tower in ITower.instances)
         {
+            if (ReferenceEquals(tower, null)) continue;
             if (tower is Tower<Table_Auto, Record_Auto>) { Tower<Table_Auto, Record_Auto> auto = tower as Tower<Table_Auto, Record_Auto>; if (auto.gameObject.activeSelf) autoCount++; }
             if (tower is Tower<Table_Splash, Record_Splash>) { Tower<Table_Splash, Record_Splash> splash = tower as Tower<Table_Splash, Record_Splash>; if (splash.gameObject.activeSelf) splashCount++; }
             if (tower is Tower<Table_Heal, Record_Heal>) { Tower<Table_Heal, Record_Heal> heal = tower as Tower<Table_Heal, Record_Heal>; if (heal.gameObject.activeSelf) healCount++; }
@@ -577,6 +580,7 @@ public class Scenario : MonoBehaviour
         // 각 몬스터 개수 세기
         foreach (IEnemy enemy in IEnemy.instances)
         {
+            if (ReferenceEquals(enemy, null)) continue;
             if (enemy is Enemy<Table_Gunner, Record_Gunner>) { Enemy<Table_Gunner, Record_Gunner> gunner = enemy as Enemy<Table_Gunner, Record_Gunner>; if (gunner.gameObject.activeSelf) gunnerCount++; }
             if (enemy is Enemy<Table_Thug, Record_Thug>) { Enemy<Table_Thug, Record_Thug> thug = enemy as Enemy<Table_Thug, Record_Thug>; if (thug.gameObject.activeSelf) thugCount++; }
             if (enemy is Enemy<Table_Leopard, Record_Leopard>) { Enemy<Table_Leopard, Record_Leopard> leopard = enemy as Enemy<Table_Leopard, Record_Leopard>; if (leopard.gameObject.activeSelf) leopardCount++; }

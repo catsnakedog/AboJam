@@ -1393,6 +1393,7 @@ MonoBehaviour:
   buy: {fileID: 2140343214}
   animationClick: {fileID: 333931297}
   player: {fileID: 1427187426}
+  playerHP: {fileID: 5024084033308675405}
 --- !u!114 &333931297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6855,8 +6856,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - {fileID: 5675147326938054888}
-  camera: {fileID: 124358847}
-  orthographicSize: 5
   resolutionWidth: 1920
   resolutionHeight: 1080
 --- !u!1 &1776416191

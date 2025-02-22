@@ -6,7 +6,7 @@ public class Spawnee : RecordInstance<Table_Spawnee, Record_Spawnee>
     public int[] levels;
 
     /* Intializer & Finalizer & Updater */
-    public void Start()
+    public void Awake()
     {
         // Start 사용 시 필수 고정 구현
         if (startFlag == true) return;
