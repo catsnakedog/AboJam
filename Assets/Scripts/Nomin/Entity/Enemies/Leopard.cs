@@ -7,7 +7,7 @@ using UnityEngine.InputSystem.HID;
 using static Targeter;
 using static UnityEngine.GraphicsBuffer;
 
-public class Leopard : Enemy<Table_Leopard, Record_Leopar>, IPoolee
+public class Leopard : Enemy<Table_Leopard, Record_Leopard>, IPoolee
 {
     /* Dependency */
     [Header("[ Dependency ]")]

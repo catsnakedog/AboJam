@@ -276,11 +276,8 @@ public class Scenario : MonoBehaviour
         // 교전
         message.On("타워를 이용해 몰려오는 갱단으로부터 살아남으세요.", 3f, true);
         StopCoroutine(corDayNight);
-        globalLight.Set(globalLight.morning, 0.01f);
         mark.Off();
-        date.timeFlow = true;
-        date.secondsPerDay = 10;
-        while (date.gameTime != Date.GameTime.Night) yield return waitForSeconds;
+        globalLight.Set(globalLight.night, 0.01f);
         for (int i = 0; i < 5; i++)
         {
             int random = UnityEngine.Random.Range(0, enemies.Length);
@@ -289,7 +286,8 @@ public class Scenario : MonoBehaviour
         }
 
         // 클리어
-        while (date.dateTime.Day < 2) yield return waitForSeconds;
+        while (CheckEnemyAlive()) yield return waitForSeconds;
+        globalLight.Set(globalLight.morning, 0.01f);
         yield return StartCoroutine(Clear());
     }
     /// <summary>
@@ -392,11 +390,8 @@ public class Scenario : MonoBehaviour
 
         // 교전
         message.On($"3 킬 이상 성공하세요 !", 999f, true);
-        globalLight.Set(globalLight.morning, 0.01f);
         mark.Off();
-        date.timeFlow = true;
-        date.secondsPerDay = 10;
-        while (date.gameTime != Date.GameTime.Night) yield return waitForSeconds;
+        globalLight.Set(globalLight.night, 0.01f);
         for (int i = 0; i < 5; i++)
         {
             int random = UnityEngine.Random.Range(0, enemies.Length);
@@ -411,7 +406,8 @@ public class Scenario : MonoBehaviour
         mark.On(btn_skill, 3f);
 
         // 클리어
-        while (date.dateTime.Day < 2) yield return waitForSeconds;
+        while (CheckEnemyAlive()) yield return waitForSeconds;
+        globalLight.Set(globalLight.morning, 0.01f);
         yield return StartCoroutine(Clear());
     }
 
@@ -568,5 +564,26 @@ public class Scenario : MonoBehaviour
         // 모든 타워가 건설되었으면 true 반화
         if (autoCount > 0 && splashCount > 0 && healCount > 0 && guardCount > 0 && productionCount > 0) return true;
         else return false;
+    }
+    /// <summary>
+    /// 필드에 남은 적이 있는지 검사합니다.
+    /// </summary>
+    private bool CheckEnemyAlive()
+    {
+        int gunnerCount = 0;
+        int thugCount = 0;
+        int leopardCount = 0;
+
+        // 각 몬스터 개수 세기
+        foreach (IEnemy enemy in IEnemy.instances)
+        {
+            if (enemy is Enemy<Table_Gunner, Record_Gunner>) { Enemy<Table_Gunner, Record_Gunner> gunner = enemy as Enemy<Table_Gunner, Record_Gunner>; if (gunner.gameObject.activeSelf) gunnerCount++; }
+            if (enemy is Enemy<Table_Thug, Record_Thug>) { Enemy<Table_Thug, Record_Thug> thug = enemy as Enemy<Table_Thug, Record_Thug>; if (thug.gameObject.activeSelf) thugCount++; }
+            if (enemy is Enemy<Table_Leopard, Record_Leopard>) { Enemy<Table_Leopard, Record_Leopard> leopard = enemy as Enemy<Table_Leopard, Record_Leopard>; if (leopard.gameObject.activeSelf) leopardCount++; }
+        }
+
+        int enemyCount = gunnerCount + thugCount + leopardCount;
+        if (enemyCount == 0) return false;
+        else return true;
     }
 }
