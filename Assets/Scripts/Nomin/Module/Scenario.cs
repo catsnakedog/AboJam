@@ -134,6 +134,9 @@ public class Scenario : MonoBehaviour
     private void Awake() { instance = this; waitForSeconds = new WaitForSeconds(checkTime); }
     private void Start()
     {
+        ITower.instances.Clear();
+        IEnemy.instances.Clear();
+
         switch (localData.LoadScenario())
         {
             case 0:
