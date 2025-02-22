@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   id: Player
-  hp_max: 100
+  hp_max: 200
   hideFullHp: 0

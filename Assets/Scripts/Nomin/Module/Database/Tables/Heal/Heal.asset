@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Heal
   reinforceCostID: ReinforceCost_Heal
-  delay: 0.3
-  detection: 5
+  delay: 0.6
+  detection: 10
   ratio: 1

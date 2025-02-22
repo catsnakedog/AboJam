@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Splash
   m_EditorClassIdentifier: 
   id: Splash
-  hp_max: 100
+  hp_max: 150
   hideFullHp: 1

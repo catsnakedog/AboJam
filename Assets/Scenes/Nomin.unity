@@ -5946,9 +5946,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialRecords:
   - {fileID: 11400000, guid: 285a3a590763bbb4e8388a93482f29fd, type: 2}
-  - {fileID: 11400000, guid: 7dac5c2a24705be459a18082ff4899ee, type: 2}
-  - {fileID: 11400000, guid: d37eab4647a2b944b93ba95bfed07de4, type: 2}
   - {fileID: 11400000, guid: 766c06fa52d14b148a0e5f5feef45cc5, type: 2}
+  - {fileID: 11400000, guid: b4fed87daa3ed8143816393fa364443c, type: 2}
+  - {fileID: 11400000, guid: a3ea78f40bf942d44b5e8e8a8db91ff5, type: 2}
+  - {fileID: 11400000, guid: fa8c4a4e97dcb0c459e42ada8b9cd6eb, type: 2}
+  - {fileID: 11400000, guid: de9185d3fca941c44831ec2b476855a8, type: 2}
+  - {fileID: 11400000, guid: 955966344413f8149ac4ce8a4f7399db, type: 2}
+  - {fileID: 11400000, guid: bf62e745998379c449e1bff6a6294ceb, type: 2}
+  - {fileID: 11400000, guid: c0ac908dc727f9d4cb299a1bdbfd32d5, type: 2}
+  - {fileID: 11400000, guid: 8cca8368b2dba5a409f605b30194b3b7, type: 2}
   startFlag: 0
   delay: []
   spawn: []
@@ -5965,8 +5971,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialRecords:
-  - {fileID: 11400000, guid: 6db3c5534e962a34cb21d0d7453e6dcb, type: 2}
   - {fileID: 11400000, guid: 1a0bad821746f8f478d7e802b71f7dc4, type: 2}
+  - {fileID: 11400000, guid: 032d15c0287987d4ba6431d43f2d1f25, type: 2}
+  - {fileID: 11400000, guid: 0289e954361242447b0926f87c7c11e3, type: 2}
+  - {fileID: 11400000, guid: 7c4023de11e9fb04d8233c6b0e85ac35, type: 2}
+  - {fileID: 11400000, guid: f61214dd3fca9ac45a77b3c72be9589c, type: 2}
+  - {fileID: 11400000, guid: ca6129000843885428f733641a4c1ba5, type: 2}
+  - {fileID: 11400000, guid: 928a512a126ae04469b6221d42beeefc, type: 2}
+  - {fileID: 11400000, guid: a10c7f723e91c4d45a4259f88e096603, type: 2}
+  - {fileID: 11400000, guid: 4011b2f72e87aa544b9fb48753242ac1, type: 2}
+  - {fileID: 11400000, guid: 2cd7ce5b68bc0a44cb140485db77c034, type: 2}
+  - {fileID: 11400000, guid: 3b942fbe7f0621947b79c69dc5e7b7de, type: 2}
+  - {fileID: 11400000, guid: dcd08c56a576e2344b62fd344322aefd, type: 2}
+  - {fileID: 11400000, guid: a88b0dab46d64124a922408621316c06, type: 2}
+  - {fileID: 11400000, guid: 28077ff661ac8a74aa7e9cd7ab7fcac1, type: 2}
   startFlag: 0
   sector: {fileID: 0}
   spawnee: {fileID: 0}
@@ -5986,9 +6004,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialRecords:
   - {fileID: 11400000, guid: 9e71d31fe94562341aad32735a539235, type: 2}
-  - {fileID: 11400000, guid: e21844fa263370a41bcdb67e8e90f0b0, type: 2}
-  - {fileID: 11400000, guid: 909d3d50c4a060a488033236af07215d, type: 2}
-  - {fileID: 11400000, guid: dfba2251ce074e3428a65fe55d92447e, type: 2}
+  - {fileID: 11400000, guid: a5db00eef5452024aaf021ae37f09351, type: 2}
+  - {fileID: 11400000, guid: a10de52a825b8684aae46ea4f3035b2c, type: 2}
+  - {fileID: 11400000, guid: aa1bcd68eccc8424797d0cca41fcee5c, type: 2}
+  - {fileID: 11400000, guid: 59d272e98c3e7154185906a7637c413e, type: 2}
+  - {fileID: 11400000, guid: 38696e9dd0c16384c9333052b5a90ada, type: 2}
+  - {fileID: 11400000, guid: 65e0711943e31bb4c9a96c61217f006c, type: 2}
+  - {fileID: 11400000, guid: cdf91138e0e0c8d40ad071c7c00767f5, type: 2}
+  - {fileID: 11400000, guid: 75e9b6b07b1d4ef44a47bbcddfd2aa71, type: 2}
+  - {fileID: 11400000, guid: b721fc6ce51177546a76cdb388f951fa, type: 2}
+  - {fileID: 11400000, guid: 3349bb9830292944980b026ba610ae7f, type: 2}
+  - {fileID: 11400000, guid: 48e6ba6ac3e588a4b821d0436efd808b, type: 2}
+  - {fileID: 11400000, guid: 685b821125c5a614aa3a44ab9711e350, type: 2}
+  - {fileID: 11400000, guid: 6437c9d7ac076ea48a8b622c16b097eb, type: 2}
+  - {fileID: 11400000, guid: aa0ac6517e6be2b4db53b1e55ebe7567, type: 2}
+  - {fileID: 11400000, guid: 584285ad60fb51449a7645e8b75063a7, type: 2}
+  - {fileID: 11400000, guid: a0282e8f111e55f44adea2ed33da2732, type: 2}
+  - {fileID: 11400000, guid: 9c8e6fb320f0fb04da5e51a7b84ae634, type: 2}
+  - {fileID: 11400000, guid: 60fe873481c99604a868ed7c2e5c68bd, type: 2}
+  - {fileID: 11400000, guid: f3e8048fb54040942abadbea89e37b0c, type: 2}
+  - {fileID: 11400000, guid: 0895756719664b04084d2a8d7bc1f80d, type: 2}
+  - {fileID: 11400000, guid: fe1afea3794de7a49b84feb62dbb733d, type: 2}
+  - {fileID: 11400000, guid: cf401b81871317849a42899c95cfd3b7, type: 2}
+  - {fileID: 11400000, guid: 9ba010f39cb8a82488af2e1ecc907ddc, type: 2}
+  - {fileID: 11400000, guid: 48c871eaa31a0ac48a9b5e547ab7dffe, type: 2}
+  - {fileID: 11400000, guid: 2aed2de997d11bf42b3b81545ac73503, type: 2}
+  - {fileID: 11400000, guid: c209a72ec3328894b8cfff833ef021a9, type: 2}
+  - {fileID: 11400000, guid: 5077c09d34e820644a74a18885d0a01e, type: 2}
+  - {fileID: 11400000, guid: 201fe0abf9a08004e954d7ebae9a0660, type: 2}
+  - {fileID: 11400000, guid: dda0689f9c1265a4d8384f7a324749bf, type: 2}
+  - {fileID: 11400000, guid: f3b90c5c29bd797418434b99aff9e7a3, type: 2}
+  - {fileID: 11400000, guid: 604ece5a64fae8641b75219a96eaa074, type: 2}
   startFlag: 0
   angleStart: 0
   angleEnd: 0
@@ -6008,11 +6054,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialRecords:
   - {fileID: 11400000, guid: d79104c6f3cf79d42a1b5f5881581e9b, type: 2}
-  - {fileID: 11400000, guid: 65e33c9e88e06ed409e7e01618cbda04, type: 2}
-  - {fileID: 11400000, guid: 19e7358fd2f48f84d919d6704f4d6ed1, type: 2}
-  - {fileID: 11400000, guid: b28839522f3dc314a8a3e799fd5d033a, type: 2}
-  - {fileID: 11400000, guid: fb9056cb260fd6641be8cf6e9977e2d7, type: 2}
-  - {fileID: 11400000, guid: d098ee29850be96459b402cb8e99a4fc, type: 2}
+  - {fileID: 11400000, guid: 74759ced92e706848b72371229bdc49a, type: 2}
+  - {fileID: 11400000, guid: 581695f4af5e715469800288254d022e, type: 2}
+  - {fileID: 11400000, guid: 65977145f062aec48be07f4c22b08644, type: 2}
+  - {fileID: 11400000, guid: d0b5190cdb83242409d7582cc166483d, type: 2}
+  - {fileID: 11400000, guid: e6e5e84392d623041b5ef83df85b014c, type: 2}
+  - {fileID: 11400000, guid: deda536d96d21d24d8a2caf51b24f9b9, type: 2}
+  - {fileID: 11400000, guid: 45044bf01ff718040a1ce33812cfe5fb, type: 2}
+  - {fileID: 11400000, guid: c4da08c1f0690b64d90eaa77b6ac54bc, type: 2}
+  - {fileID: 11400000, guid: 4c644b2ae7397764f993b89a0733ec77, type: 2}
+  - {fileID: 11400000, guid: b7743224a3972a44382c1346d876dec9, type: 2}
+  - {fileID: 11400000, guid: 31b3059005670df4eb70cbb9a7591b77, type: 2}
+  - {fileID: 11400000, guid: dce21f7a0e8c0554d81a858eca430083, type: 2}
+  - {fileID: 11400000, guid: ab5c9dd8e728e41479a30e9b637eb403, type: 2}
+  - {fileID: 11400000, guid: 5825a40c70ad6d848bff199de3a80776, type: 2}
+  - {fileID: 11400000, guid: d10368ec679097c4bb9de4a300f94855, type: 2}
+  - {fileID: 11400000, guid: 8df53378afc2ffe4a850da56119fac22, type: 2}
+  - {fileID: 11400000, guid: 60cf2586cf89bd843a5c4ac2e134c910, type: 2}
+  - {fileID: 11400000, guid: eb99ff035f3bb4f46b61b8ec9cfef736, type: 2}
+  - {fileID: 11400000, guid: ed3f80243f54fd545ae16730c02fb376, type: 2}
+  - {fileID: 11400000, guid: 821270f667ffe234c8183db19228b484, type: 2}
+  - {fileID: 11400000, guid: c17ebf63e8e4da3468249a0a8372018e, type: 2}
+  - {fileID: 11400000, guid: 1ce07ac4d6b1e3342bb80551f58178c3, type: 2}
+  - {fileID: 11400000, guid: a1227ea5ce7499449ae27c5ccb77ef67, type: 2}
+  - {fileID: 11400000, guid: e3693720d9d84c947b989598fbc86a2d, type: 2}
+  - {fileID: 11400000, guid: 641c2e189ac0a664080f8320b9ebc5ca, type: 2}
+  - {fileID: 11400000, guid: 2a307b4e57630b34f9bddeb6548c3823, type: 2}
+  - {fileID: 11400000, guid: 7429b25f91fa4e34ea5f6482407d0926, type: 2}
+  - {fileID: 11400000, guid: b222dc6feffe98b469d8c00253a33e57, type: 2}
+  - {fileID: 11400000, guid: 618bdf7f89b6bdd4e93191a935e81eba, type: 2}
   startFlag: 0
   prefabs: []
   levels: 
@@ -10767,6 +10837,14 @@ PrefabInstance:
       propertyPath: launcher
       value: 
       objectReference: {fileID: 598452805}
+    - target: {fileID: 7146505868563196964, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: AttackSpeed
+      value: 2.265121
+      objectReference: {fileID: 0}
+    - target: {fileID: 7146505868563196964, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: WeaponDatas.Array.data[0].AttackSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7470561245194841023, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -10775,6 +10853,10 @@ PrefabInstance:
       propertyPath: launcher
       value: 
       objectReference: {fileID: 2065660607}
+    - target: {fileID: 7692764306428551761, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: WeaponDatas.Array.data[0].AttackSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7852546098132738278, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Layer
       value: 10

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Launcher_Player_Shotgun
   align: 0
-  turnTime: 0.1
-  angleOffset: -90
-  frame: 60
+  turnTime: 0
+  angleOffset: 0
+  frame: 0
   speed: 0.3
   range: 10

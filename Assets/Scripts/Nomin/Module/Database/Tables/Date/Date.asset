@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Date
   m_EditorClassIdentifier: 
   id: Date
-  secondsPerDay: 5
+  secondsPerDay: 90
   startTime: 06:00
   morningTime: 06:00
   sunsetTime: 17:30

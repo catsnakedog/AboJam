@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Guard
   m_EditorClassIdentifier: 
   id: Guard
-  hp_max: 100
+  hp_max: 300
   hideFullHp: 1

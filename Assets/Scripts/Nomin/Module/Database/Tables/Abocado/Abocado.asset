@@ -15,6 +15,6 @@ MonoBehaviour:
   id: Abocado
   level: 0
   quality: 0
-  quality_max: 2
+  quality_max: 1
   harvest: 1
   harvestPlus: 1

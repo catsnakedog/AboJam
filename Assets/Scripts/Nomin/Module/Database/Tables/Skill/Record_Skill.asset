@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Record_Skill
   m_EditorClassIdentifier: 
   id: Skill
-  cooldown: 10
+  cooldown: 120
   range: 8
   count: 100
   seconds: 10

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Heal
   m_EditorClassIdentifier: 
   id: Heal
-  hp_max: 100
+  hp_max: 150
   hideFullHp: 1

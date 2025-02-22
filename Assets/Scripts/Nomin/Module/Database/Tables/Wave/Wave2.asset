@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Wave2
   m_EditorClassIdentifier: 
   id: Wave2
-  delay: 3
-  spawnID: Spawn2
+  delay: 0
+  spawnID: FarWideS/MixLv1/0.1/1
