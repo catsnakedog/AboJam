@@ -21,6 +21,7 @@ public class Database_AboJam : MonoBehaviour
     public static Database_AboJam instance;
 
     /* Initializer */
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private void Awake() { instance = this; }
 
     /* Runtime Table : ImportTable 시 서버 데이터로 덮어씌워집니다. */
@@ -48,7 +49,6 @@ public class Database_AboJam : MonoBehaviour
     public List<Table_Date> Date = new() { new Table_Date("ID", secondsPerDay: 1, "startTime", "morningTime", "sunsetTime", "nightTime") };
     public List<Table_Upgrade> Upgrade = new() { new Table_Upgrade("ID", "reinforceCostID", coefficient: 0.1f) };
     public List<Table_Skill> Skill = new() { new Table_Skill("ID", cooldown: 1f, range: 1, count: 1, seconds: 1f, speed: 1) };
-
 
     /* Public Method */
     // Import : 서버 DB >> 런타임 DB

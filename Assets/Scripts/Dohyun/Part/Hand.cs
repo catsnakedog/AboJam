@@ -10,6 +10,7 @@ using static HandUtil;
 public class Hand : IObserver
 {
     private Swap swap => Swap.instance;
+    private List<Melee> melees => Melee.instances;
 
     public enum HandType
     {
@@ -452,6 +453,8 @@ public class Hand : IObserver
 
     public void SwitchWeapon()
     {
+        foreach (Melee melee in melees) melee.Load();
+
         _isSwitchWeapon = true;
         HandAction -= CheckFlipData;
         HandAction -= CheckCurrentSlotWeaponParent;

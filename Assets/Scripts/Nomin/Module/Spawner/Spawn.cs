@@ -6,7 +6,7 @@ public class Spawn : RecordInstance<Table_Spawn, Record_Spawn>
     public int count;
 
     /* Intializer & Finalizer & Updater */
-    public void Awake()
+    public void Start()
     {
         // Start 사용 시 필수 고정 구현
         if (startFlag == true) return;
