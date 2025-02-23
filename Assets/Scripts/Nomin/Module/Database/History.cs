@@ -55,6 +55,7 @@ public class History : MonoBehaviour
     private IEnumerator CorSetLocalHistory()
     {
         if (StaticData.gameData != null) gameDatas.Add(StaticData.gameData); // 이전 게임 데이터 추가
+        gameDatas.RemoveAll(gameData => string.IsNullOrEmpty(gameData.dateTime));// 덤프 값 제거
         gameDatas.Sort((a, b) => b.dateTime.CompareTo(a.dateTime)); // 기록 내림차순 정렬
         if (gameDatas.Count > 3) gameDatas.RemoveRange(3, gameDatas.Count - 3); // 3 개만 남기고 제거
         localData.SaveDatas(gameDatas); // 로컬에 게임 데이터 저장

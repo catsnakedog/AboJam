@@ -37,7 +37,7 @@ public class Scenario : MonoBehaviour
 
     /* Field & Property */
     public static Scenario instance;
-    private float checkTime = 0.5f;
+    private float checkTime = 0.03f;
     private WaitForSeconds waitForSeconds;
     private string[] startMessage =
     {
@@ -256,7 +256,7 @@ public class Scenario : MonoBehaviour
                 }
             else mark.On(Abocado.instances[0].gameObject, 999f);
 
-            yield return waitForSeconds;
+            yield return tempWaitForSeconds;
         }
         message.On("모든 종류의 타워를 건설해보세요.", 999f, true);
         mark.Off();

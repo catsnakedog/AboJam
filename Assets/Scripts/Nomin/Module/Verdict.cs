@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class Verdict : MonoBehaviour
 {
@@ -74,7 +76,10 @@ public class Verdict : MonoBehaviour
     private void CheckGameClear()
     {
         if (spawner == null || database_abojam == null) return;
-        if (spawner.waveIndex >= database_abojam.Wave.Count)
+
+        Match match = Regex.Match(database_abojam.Wave[database_abojam.Wave.Count - 1].ID, @"\d+");
+        int lastWaveIndex = match.Success ? int.Parse(match.Value) : 0;
+        if (spawner.waveIndex > lastWaveIndex)
         {
             message.On("축하합니다. 게임을 클리어하였습니다 !", 3f);
             date.timeFlow = false;

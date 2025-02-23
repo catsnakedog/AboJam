@@ -40,7 +40,7 @@ public class Sizer : MonoBehaviour
 #endif
 
             UpdateScreenRatio(16, 9);
-            UpdateCanvasScaler();
+            if (cameraRectCanvasScaler != null) UpdateCanvasScaler();
         }
     }
     /// <summary>
