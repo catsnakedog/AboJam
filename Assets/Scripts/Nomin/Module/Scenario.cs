@@ -245,7 +245,8 @@ public class Scenario : MonoBehaviour
         while (!promotion.activeInHierarchy) yield return waitForSeconds;
         message.On("아보카도를 타워로 성장시키세요 !", 999f, true);
         WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.3f);
-        while (ITower.instances.Count < 1)
+        CheckTowerCount(out int towerCount);
+        while (towerCount < 1)
         {
             if (promotion.activeInHierarchy)
                 foreach (Transform child in promotion.transform)
@@ -257,13 +258,14 @@ public class Scenario : MonoBehaviour
             else mark.On(Abocado.instances[0].gameObject, 999f);
 
             yield return tempWaitForSeconds;
+            CheckTowerCount(out towerCount);
         }
         message.On("모든 종류의 타워를 건설해보세요.", 999f, true);
         mark.Off();
         StaticData.Abocado++;
         tempWaitForSeconds = new WaitForSeconds(0.1f);
         Coroutine corDayNight = StartCoroutine(CorDayNight());
-        while (!CheckTowerCount())
+        while (!CheckTowerCount(out int notUse))
         {
             if (CheckPoor())
             {
@@ -531,7 +533,7 @@ public class Scenario : MonoBehaviour
     /// 모든 종류의 타워를 건설했는지 여부를 반환합니다.
     /// </summary>
     /// <returns></returns>
-    private bool CheckTowerCount()
+    private bool CheckTowerCount(out int towerCount)
     {
         int autoCount = 0;
         int splashCount = 0;
@@ -540,6 +542,7 @@ public class Scenario : MonoBehaviour
         int productionCount = 0;
 
         // 각 타워 개수 세기
+        foreach (var item in abocados) if (item.Quality > 0) productionCount++;
         foreach (ITower tower in ITower.instances)
         {
             if (ReferenceEquals(tower, null)) continue;
@@ -547,7 +550,6 @@ public class Scenario : MonoBehaviour
             if (tower is Tower<Table_Splash, Record_Splash>) { Tower<Table_Splash, Record_Splash> splash = tower as Tower<Table_Splash, Record_Splash>; if (splash.gameObject.activeSelf) splashCount++; }
             if (tower is Tower<Table_Heal, Record_Heal>) { Tower<Table_Heal, Record_Heal> heal = tower as Tower<Table_Heal, Record_Heal>; if (heal.gameObject.activeSelf) healCount++; }
             if (tower is Tower<Table_Guard, Record_Guard>) { Tower<Table_Guard, Record_Guard> gurad = tower as Tower<Table_Guard, Record_Guard>; if (gurad.gameObject.activeSelf) guardCount++; }
-            foreach (var item in abocados) if (item.Quality > 0) productionCount++;
         }
 
         // 건설된 타워는 Promotion 에서 해당 버튼 제거
@@ -568,6 +570,7 @@ public class Scenario : MonoBehaviour
                 if (child.gameObject.GetComponent<Image>().sprite.name == "Production") child.gameObject.SetActive(false);
 
         // 모든 타워가 건설되었으면 true 반화
+        towerCount = autoCount + splashCount + healCount + guardCount + productionCount;
         if (autoCount > 0 && splashCount > 0 && healCount > 0 && guardCount > 0 && productionCount > 0) return true;
         else return false;
     }
