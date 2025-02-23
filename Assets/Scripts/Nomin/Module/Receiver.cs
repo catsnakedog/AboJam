@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Receiver : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class Receiver : MonoBehaviour
     [SerializeField] private InputActionAsset inputAction;
     [SerializeField] private Player player;
     [SerializeField] private GameObject shopPanel;
+    [SerializeField] private Button shopOnOff;
     [SerializeField] private GameObject shortcut;
 
     /* Field & Property */
@@ -60,6 +62,8 @@ public class Receiver : MonoBehaviour
         ui.Enable();
         ui.FindAction("Close").performed -= OnClose;
         ui.FindAction("Close").performed += OnClose;
+        ui.FindAction("Shop").performed -= OnOffShop;
+        ui.FindAction("Shop").performed += OnOffShop;
     }
     private void OnDisable()
     {
@@ -77,6 +81,7 @@ public class Receiver : MonoBehaviour
 
         InputActionMap ui = inputAction.FindActionMap("UI");
         ui.FindAction("Close").performed -= OnClose;
+        ui.FindAction("Shop").performed -= OnOffShop;
 
         inputAction.Disable();
     }
@@ -228,6 +233,14 @@ public class Receiver : MonoBehaviour
         while (Time.timeScale == 0) menu.MenuOnOff();
         foreach (var a in indicator_circles) a.Off();
         foreach(var b in indicator_arrows) b.Off();
+    }
+    /// <summary>
+    /// KeyDown(Q)
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnOffShop(InputAction.CallbackContext context)
+    {
+        shopOnOff.onClick.Invoke();
     }
 
     /* Private Method */

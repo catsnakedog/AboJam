@@ -1021,7 +1021,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "[ PC ]\n\uC774\uB3D9 : WASD\n\uACF5\uACA9 : Click\n\uAC74\uC124 : F +
     Click\n\uCCA0\uAC70 : G + Click\n\uCC3D \uB2EB\uAE30 : ESC\n\uBB34\uAE30 \uAD50\uCCB4
-    : R \uB610\uB294 1, 2\n"
+    : R \uB610\uB294 1, 2\n\uC0C1\uC810 : Q\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
   m_sharedMaterial: {fileID: -6307645790068136302, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
@@ -2711,6 +2711,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8532310920121789474, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
   m_PrefabInstance: {fileID: 4387568456285191141}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &676683692 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 391641529743549465, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+  m_PrefabInstance: {fileID: 4387568456285191141}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676683690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &693337490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8546,6 +8557,10 @@ PrefabInstance:
       propertyPath: menuPanel
       value: 
       objectReference: {fileID: 1866214163}
+    - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
+      propertyPath: shopOnOff
+      value: 
+      objectReference: {fileID: 676683692}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: shopPanel
       value: 
