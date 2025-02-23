@@ -25,7 +25,7 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
         instances.Add(this);
         Load();
 
-        hp.death.AddListener(() => StartCoroutine(CorDeath(2)));
+        hp.death.AddListener(() => StartCoroutine(CorDeath(1)));
     }
     private void OnDestroy()
     {

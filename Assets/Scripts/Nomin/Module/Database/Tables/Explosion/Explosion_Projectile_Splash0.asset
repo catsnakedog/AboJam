@@ -15,5 +15,5 @@ MonoBehaviour:
   id: Explosion_Projectile_Splash0
   scale: 5
   radius: 1.5
-  damage: 20
+  damage: 10
   time: 0.5
