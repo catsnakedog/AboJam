@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 오브젝트의 크기와 위치를 클라이언트 화면과 동기화합니다.
@@ -10,6 +11,9 @@ using UnityEngine;
 public class Sizer : MonoBehaviour
 {
     /* Dependency */
+    [SerializeField] CanvasScaler cameraRectCanvasScaler;
+    [SerializeField] float resolutionWidth; // 에디터 기준 해상도
+    [SerializeField] float resolutionHeight; // 에디터 기준 해상도
 #if UNITY_STANDALONE_WIN
     // 플랫폼이 윈도우일 경우, 애플리케이션 창 크기를 조절 중 인지 검사합니다.
     [DllImport("user32.dll")]
@@ -23,9 +27,6 @@ public class Sizer : MonoBehaviour
 #endif
 
     /* Field & Property */
-    [SerializeField] GameObject[] objects; // 자동으로 화면에 맞게 조절 될 오브젝트 추가
-    [SerializeField] float resolutionWidth; // 에디터 기준 해상도
-    [SerializeField] float resolutionHeight; // 에디터 기준 해상도
     int lastWidth = 0;
     int lastHeight = 0;
 
@@ -38,24 +39,14 @@ public class Sizer : MonoBehaviour
             if (IsResizing()) return; // 윈도우 창 크기 조절이 끝나고 수행
 #endif
 
-            SetScreenRatio(16, 9);
-            foreach (GameObject obj in objects) Size(obj);
+            UpdateScreenRatio(16, 9);
+            UpdateCanvasScaler();
         }
-    }
-
-    /* Public Method */
-    /// <summary>
-    /// GameObject 의 크기와 위치를 화면 비율에 따라 조정합니다.
-    /// </summary>
-    public void Size(GameObject go)
-    {
-        ScaleWithScreenSize(go);
-        PositionWithScreenSize(go);
     }
     /// <summary>
     /// 화면 비율을 width : height 로 변경합니다.
     /// </summary>
-    public void SetScreenRatio(float width, float height)
+    private void UpdateScreenRatio(float width, float height)
     {
         // 가로 변동 시 비율에 맞춰 세로 조절
         if (lastWidth != Screen.width)
@@ -72,23 +63,14 @@ public class Sizer : MonoBehaviour
             Screen.SetResolution(lastWidth, lastHeight, false);
         }
     }
-
-    /* Private Method */
     /// <summary>
-    /// 게임 오브젝트의 스케일을 화면 비율에 따라 조정합니다.
+    /// CameraRect 의 캔버스 스케일러를 조정합니다.
     /// </summary>
-    private void ScaleWithScreenSize(GameObject go)
+    private void UpdateCanvasScaler()
     {
-        go.transform.localScale *= (Screen.width / resolutionWidth);
-    }
-    /// <summary>
-    /// 게임 오브젝트의 포지션을 화면 비율에 따라 조정합니다.
-    /// </summary>
-    private void PositionWithScreenSize(GameObject go)
-    {
-        float newPosX = go.transform.localPosition.x * (Screen.width / resolutionWidth);
-        float newPosY = go.transform.localPosition.y * (Screen.height / resolutionHeight);
-
-        go.transform.localPosition = new Vector3(newPosX, newPosY, go.transform.localPosition.z);
+        cameraRectCanvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        cameraRectCanvasScaler.referenceResolution = new Vector2(resolutionWidth, resolutionHeight);
+        cameraRectCanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        cameraRectCanvasScaler.matchWidthOrHeight = 0;
     }
 }
