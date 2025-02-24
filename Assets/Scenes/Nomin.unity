@@ -6687,7 +6687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4824882730664373335, guid: 6c00c703fd9aa5942a4dce550d012dd1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.467
+      value: -2.511
       objectReference: {fileID: 0}
     - target: {fileID: 4824882730664373335, guid: 6c00c703fd9aa5942a4dce550d012dd1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11491,6 +11491,14 @@ PrefabInstance:
       propertyPath: melee
       value: 
       objectReference: {fileID: 1594290805}
+    - target: {fileID: 1784873008328096042, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: SpearEffect.ShaftHeight.End
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1784873008328096042, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: SpearEffect.ShaftHeight.Start
+      value: 1.12
+      objectReference: {fileID: 0}
     - target: {fileID: 1831246882402945257, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -11606,6 +11614,10 @@ PrefabInstance:
     - target: {fileID: 4109377399183023705, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4211852728835552990, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.171
       objectReference: {fileID: 0}
     - target: {fileID: 4238972234569469557, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Layer
