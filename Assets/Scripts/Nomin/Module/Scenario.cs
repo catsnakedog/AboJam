@@ -158,7 +158,7 @@ public class Scenario : MonoBehaviour
     {
         // 초기 자원
         StaticData.Abocado = 1;
-        StaticData.Garu = 0;
+        StaticData.Garu = 5;
         StaticData.Water = 0;
 
         // 시간 초기화
