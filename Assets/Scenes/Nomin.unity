@@ -9904,6 +9904,26 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 124358847}
+    - target: {fileID: 3682509376479234229, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: price_auto
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682509376479234229, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: price_heal
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682509376479234229, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: price_guard
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682509376479234229, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: price_splash
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3682509376479234229, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: price_production
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3834335515415441170, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10286,11 +10306,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7165220517837185911, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: value
-      value: 6
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7165220517837185911, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: discount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7165220517837185911, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: minValue
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7165220517837185911, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: threshold
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7165220517837185911, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: maxQuantity
-      value: 50
+      value: 999
       objectReference: {fileID: 0}
     - target: {fileID: 7165220517837185911, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: text_quantity

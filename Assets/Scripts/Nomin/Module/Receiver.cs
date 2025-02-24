@@ -230,7 +230,7 @@ public class Receiver : MonoBehaviour
         shortcut.SetActive(false);
         reinforcement.Off();
         promotion.Off();
-        while (Time.timeScale == 0) menu.MenuOnOff();
+        menu.MenuOnOff();
         foreach (var a in indicator_circles) a.Off();
         foreach(var b in indicator_arrows) b.Off();
     }
@@ -252,6 +252,7 @@ public class Receiver : MonoBehaviour
         if (Keyboard.current.fKey.isPressed) return false;
         if (player.Hand.CurrentSlotWeaponType == EnumData.Weapon.None) return false;
         if (player.Hand.IsSwitchWeapon) return false;
+        if (Time.timeScale == 0) return false;
         return true;
     }
 }

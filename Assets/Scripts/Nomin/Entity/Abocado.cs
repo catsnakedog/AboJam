@@ -50,7 +50,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
         Load();
         instances.Add(this);
 
-        hp.death.AddListener(() => StartCoroutine(CorDeath(2)));
+        hp.death.AddListener(() => StartCoroutine(CorDeath(0.3f)));
         Date.instance.morningStart.AddListener(() => { this.GrowUp(); });
     } // 최초 생성 시 (최초 초기화 - 2)
     private void OnDestroy()
