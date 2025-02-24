@@ -43,7 +43,7 @@ public class Grow : MonoBehaviour
         if (currentAbocado.hp.HP_current <= 0) { message.On("그 친구는 무지개다리를 건넜어요..", 2f); Off(); return; }
         if (!currentAbocado.gameObject.activeSelf) { message.On("이미 성장했어요 !", 2f); Off(); return; }
         if (currentAbocado.Level > EnumData.Abocado.Seed) { message.On("이미 성장했어요 !", 2f); Off(); return; }
-        if (StaticData.Garu <= price) { message.On("보약이 부족해요.", 2f); Off(); return; }
+        if (StaticData.Garu < price) { message.On("보약이 부족해요.", 2f); Off(); return; }
 
         StaticData.Garu -= price;
         currentAbocado.GrowUp();

@@ -63,9 +63,10 @@ public class Zoom : MonoBehaviour
     {
         foreach (Transform child in parent)
         {
-            // 메뉴와 상점은 제외합니다.
+            // 메뉴 / 상점 / 스킬은 제외합니다.
             if (child.name == "Menu") continue;
             if (child.name == "Shop") continue;
+            if (child.name == "Skill") continue;
 
             Image img = child.GetComponent<Image>();
             if (img != null) img.enabled = visible;

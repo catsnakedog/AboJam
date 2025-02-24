@@ -52,7 +52,7 @@ public class BTN_Weapons : MonoBehaviour
         if(isMelee == false) instances_range.Add(this);
 
         // 이미지 초기화
-        if (purchase == true) { ChangeImage(); Price = price; }
+        if (purchase == true) { ChangeImage(); Price = price; image.sprite = sprite_select; }
         if (purchase == false) { image.sprite = sprite_lock; Price = price; }
 
         button.onClick.AddListener(() => animationClick.OnClick());

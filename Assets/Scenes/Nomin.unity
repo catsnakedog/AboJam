@@ -10494,6 +10494,10 @@ PrefabInstance:
       propertyPath: initialRecords.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 4f1c8131706085a4798445ca253ac3fa, type: 2}
+    - target: {fileID: 1661336365099562002, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1752873227849022421, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_Name
       value: UI
@@ -10542,6 +10546,22 @@ PrefabInstance:
       propertyPath: purchase
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2290641957375986105, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290641957375986105, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 2340586438096564976, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2340586438096564976, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 2744468918610077450, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_fontColor.b
       value: 0
@@ -10781,6 +10801,10 @@ PrefabInstance:
     - target: {fileID: 4123316820753357294, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: weapon
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4301835809366244863, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4508049656936034889, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: m_IsActive
@@ -11469,7 +11493,7 @@ PrefabInstance:
       objectReference: {fileID: 159169256}
     - target: {fileID: 1403625458435368283, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: ChargeMinTime
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1601624496251562079, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Layer
