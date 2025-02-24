@@ -3,10 +3,11 @@ using UnityEngine;
 public class Demolition : MonoBehaviour
 {
     /* Dependency */
-    private Promotion promotion => Promotion.instance; // 하드 링크
-    private Reinforcement reinforcement => Reinforcement.instance; // 하드 링크
-    private Pool pool => Pool.instance; // 하드 링크
-    private Tile currentTile => Tile.currentTile; // 하드 링크
+    private Promotion promotion => Promotion.instance;
+    private Reinforcement reinforcement => Reinforcement.instance;
+    private Grow grow => Grow.instance;
+    private Pool pool => Pool.instance;
+    private Tile currentTile => Tile.currentTile;
 
     /* Field & Property */
     public static Demolition instance; // 싱글턴
@@ -21,6 +22,7 @@ public class Demolition : MonoBehaviour
     public void On()
     {
         reinforcement.Off();
+        grow.Off();
         promotion.Off();
         gameObject.SetActive(true);
     }

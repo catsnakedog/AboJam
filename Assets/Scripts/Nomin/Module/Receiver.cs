@@ -13,6 +13,7 @@ public class Receiver : MonoBehaviour
     private Promotion promotion => Promotion.instance;
     private Reinforcement reinforcement => Reinforcement.instance;
     private Demolition demolition => Demolition.instance;
+    private Grow grow => Grow.instance;
     private List<Indicator_Circle> indicator_circles => Indicator_Circle.instances;
     private List<Indicator_Arrow> indicator_arrows => Indicator_Arrow.instances;
     private Grid grid => Grid.instance;
@@ -95,6 +96,7 @@ public class Receiver : MonoBehaviour
         promotion.Off();
         reinforcement.Off();
         demolition.Off();
+        grow.Off();
 
         // 인디케이터
         //foreach (var item in indicator_circle) item.Off();
