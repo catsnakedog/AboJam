@@ -5815,6 +5815,7 @@ MonoBehaviour:
   player: {fileID: 1427187426}
   gauge: {fileID: 4355378936841061902, guid: ac0a040d3a3848e46b922c0234b01c96, type: 3}
   cultivateTime: 1
+  price: 5
 --- !u!1001 &1496784063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9222,11 +9223,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2899971927067028971, guid: 6e9b3bb6fae3e4b489c3ae7ea5c90526, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 23.2
+      value: 341
       objectReference: {fileID: 0}
     - target: {fileID: 2899971927067028971, guid: 6e9b3bb6fae3e4b489c3ae7ea5c90526, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -110.9
+      value: 86
       objectReference: {fileID: 0}
     - target: {fileID: 2899971927067028971, guid: 6e9b3bb6fae3e4b489c3ae7ea5c90526, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9388,9 +9389,17 @@ PrefabInstance:
       value: "\uAE30\uC6B0\uC81C"
       objectReference: {fileID: 0}
     - target: {fileID: 3041645498493724195, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3041645498493724195, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
+    - target: {fileID: 3041645498493724195, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3041645498493724195, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
       propertyPath: m_sharedMaterial
       value: 
@@ -9528,12 +9537,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7342051553684821900, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 171.197
+      objectReference: {fileID: 0}
+    - target: {fileID: 7342051553684821900, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40.8766
+      objectReference: {fileID: 0}
+    - target: {fileID: 7342051553684821900, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 30
+      value: 311
       objectReference: {fileID: 0}
     - target: {fileID: 7342051553684821900, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -161
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 7725116292723914489, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
       propertyPath: m_AnchorMax.y
@@ -10671,7 +10688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3682509376479234229, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: price_heal
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3682509376479234229, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: price_guard
@@ -11450,6 +11467,10 @@ PrefabInstance:
       propertyPath: melee
       value: 
       objectReference: {fileID: 159169256}
+    - target: {fileID: 1403625458435368283, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: ChargeMinTime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1601624496251562079, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -11478,6 +11499,14 @@ PrefabInstance:
       propertyPath: launcher
       value: 
       objectReference: {fileID: 1104319617}
+    - target: {fileID: 2101431304899228848, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: AttackSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2101431304899228848, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: WeaponDatas.Array.data[0].AttackSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2101586876204114446, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -11664,11 +11693,11 @@ PrefabInstance:
       objectReference: {fileID: 598452805}
     - target: {fileID: 7146505868563196964, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: AttackSpeed
-      value: 2.265121
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7146505868563196964, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: WeaponDatas.Array.data[0].AttackSpeed
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7470561245194841023, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Layer
@@ -11678,6 +11707,10 @@ PrefabInstance:
       propertyPath: launcher
       value: 
       objectReference: {fileID: 2065660607}
+    - target: {fileID: 7692764306428551761, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: AttackSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7692764306428551761, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: WeaponDatas.Array.data[0].AttackSpeed
       value: 2

@@ -11,10 +11,12 @@ public class Farming : MonoBehaviour
     [SerializeField] private GameObject gauge;
     private Grid grid => Grid.instance;
     private Pool pool => Pool.instance;
+    private Message message => Message.instance;
 
     /* Field & Property */
     public static Farming instance;
     public float cultivateTime = 1f; // 경작 시간
+    public int price = 5; // 경작 비용
     private Coroutine corCultivate;
     private Coroutine corMove;
     private Coroutine corGauge;
@@ -39,7 +41,21 @@ public class Farming : MonoBehaviour
     public IEnumerator CorCultivate(Tile tile)
     {
         yield return corMove = StartCoroutine(CorMove(tile.pos, grid.CellWidth));
+        if (StaticData.Garu < price)
+        {
+            message.On($"개간하려면 보약 {price} 개를 먹고 힘을 내야 해요 !", 2f);
+            StopCultivate();
+            yield break;
+        }
         yield return corGauge = StartCoroutine(CorGauge(cultivateTime, 100f, 0.016f));
+        if (StaticData.Garu < price)
+        {
+            message.On($"개간하려면 보약 {price} 개를 먹고 힘을 내야 해요 !", 2f);
+            StopCultivate();
+            yield break;
+        }
+        else StaticData.Garu -= price;
+
 
         if (tile.Go == null) tile.Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
         else { UnityEngine.Debug.Log($"타일 ({tile.i}, {tile.j}) 에 이미 {tile.Go.name} 가 바인딩 되어 있습니다."); };
