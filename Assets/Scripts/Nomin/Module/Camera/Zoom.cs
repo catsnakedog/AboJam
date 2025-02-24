@@ -25,8 +25,8 @@ public class Zoom : MonoBehaviour
     private void FixedUpdate()
     {
         // 최소 줌 아니면 UI 숨기기
-        if (target_zoom > min_zoom && isOnUI) HidUI(UI.transform, false);
-        else if(target_zoom == min_zoom && !isOnUI) HidUI(UI.transform, true);
+        if (target_zoom > min_zoom && isOnUI) HideUI(UI.transform, false);
+        else if(target_zoom == min_zoom && !isOnUI) HideUI(UI.transform, true);
 
         // PC (마우스 휠)
         float scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -59,17 +59,20 @@ public class Zoom : MonoBehaviour
     /// <summary>
     /// UI 요소를 재귀적으로 숨깁니다. (이미지 / TMP)
     /// </summary>
-    void HidUI(Transform parent, bool visible)
+    void HideUI(Transform parent, bool visible)
     {
         foreach (Transform child in parent)
         {
+            // 메뉴는 제외합니다.
+            if (child.name == "Menu") continue;
+
             Image img = child.GetComponent<Image>();
             if (img != null) img.enabled = visible;
 
             TextMeshProUGUI tmp = child.GetComponent<TextMeshProUGUI>();
             if (tmp != null) tmp.enabled = visible;
 
-            HidUI(child, visible);
+            HideUI(child, visible);
         }
 
         isOnUI = visible;
