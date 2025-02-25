@@ -65,6 +65,7 @@ MonoBehaviour:
   delay: 0.8
   delay_fire: 0.1
   delay_anim: 0.3
+  delay_attack: 1
   detection: 5
   subCount: 2
 --- !u!114 &9013543737906462685

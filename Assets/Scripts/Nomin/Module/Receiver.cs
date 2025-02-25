@@ -19,11 +19,13 @@ public class Receiver : MonoBehaviour
     private Grid grid => Grid.instance;
     private Farming farming => Farming.instance;
     private Menu menu => Menu.instance;
+    private Highlight highlight => Highlight.instance;
     [SerializeField] private InputActionAsset inputAction;
     [SerializeField] private Player player;
     [SerializeField] private GameObject shopPanel;
     [SerializeField] private Button shopOnOff;
     [SerializeField] private GameObject shortcut;
+    [SerializeField] private Camera camera;
 
     /* Field & Property */
     private Coroutine corKeepAttack;
@@ -45,6 +47,10 @@ public class Receiver : MonoBehaviour
         map.FindAction("Interaction").performed += OnInteraction;
         map.FindAction("Demolition").performed -= OnDemolition;
         map.FindAction("Demolition").performed += OnDemolition;
+        map.FindAction("Highlight").performed -= OnHighlight;
+        map.FindAction("Highlight").performed += OnHighlight;
+        map.FindAction("Highlight").canceled -= OffHighlight;
+        map.FindAction("Highlight").canceled += OffHighlight;
 
         InputActionMap character = inputAction.FindActionMap("Character");
         character.Enable();
@@ -72,6 +78,8 @@ public class Receiver : MonoBehaviour
         map.FindAction("Click").performed -= OnClick;
         map.FindAction("Interaction").performed -= OnInteraction;
         map.FindAction("Demolition").performed -= OnDemolition;
+        map.FindAction("Highlight").performed -= OnHighlight;
+        map.FindAction("Highlight").canceled -= OffHighlight;
 
         InputActionMap character = inputAction.FindActionMap("Character");
         character.FindAction("Move").performed -= OnMove;
@@ -105,12 +113,26 @@ public class Receiver : MonoBehaviour
 
     /* Map Event Handler */
     /// <summary>
+    /// Highlight + KeyDown(F)
+    /// </summary>
+    private void OnHighlight(InputAction.CallbackContext context)
+    {
+        Tile tile = grid.GetNearestTile(camera.ScreenToWorldPoint(context.ReadValue<Vector2>()), true);
+        if (tile == null || highlight == null) highlight.Off();
+        else highlight.On(tile);
+    }
+    private void OffHighlight(InputAction.CallbackContext context)
+    {
+        highlight.Off();
+    }
+    /// <summary>
     /// Click
     /// </summary>
     private void OnClick(InputAction.CallbackContext context)
     {
         List<RaycastResult> ui = rayCaster2D.RayCastUI(Input.mousePosition);
         if (ui.Count == 0) OffUI();
+        highlight.Off();
 
         // 디버깅 용 코드입니다. 나중에 지울 예정
         Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
@@ -153,10 +175,6 @@ public class Receiver : MonoBehaviour
         farming.StopCultivate();
         player.PlayerMovement._movement = context.ReadValue<Vector2>();
     }
-    /// <summary>
-    /// KeyUp(W & A & S & D)
-    /// </summary>
-    /// <param name="context"></param>
     private void OffMove(InputAction.CallbackContext context)
     {
         player.PlayerMovement._movement = Vector2.zero;
@@ -203,10 +221,6 @@ public class Receiver : MonoBehaviour
             yield return null;
         }
     }
-    /// <summary>
-    /// KeyUp(Click)
-    /// </summary>
-    /// <param name="context"></param>
     private void OffAttack(InputAction.CallbackContext context)
     {
         if (corKeepAttack != null) StopCoroutine(corKeepAttack);

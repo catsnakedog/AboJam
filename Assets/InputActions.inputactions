@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Highlight",
+                    "type": "Value",
+                    "id": "ad863ce6-421f-4b7c-967d-9f25fe057663",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -108,6 +117,39 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "Demolition",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "fd2dd891-9bb7-464a-a2c2-a412ce4b1c17",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Highlight",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "86b34ab2-58b8-4580-9664-d93b4209beb4",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Highlight",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "251b5ea7-7a2a-4f41-ab28-0101565c6eb1",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Highlight",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

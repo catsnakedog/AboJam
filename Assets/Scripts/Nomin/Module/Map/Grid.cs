@@ -68,10 +68,27 @@ public class Grid : MonoBehaviour
     /// <summary>
     /// 좌표와 가장 가까운 타일을 반환합니다.
     /// </summary>
-    /// <returns></returns>
-    public Tile GetNearestTile(Vector2 worldPos)
+    /// <param name="innerCheck">타일 안쪽 위치인지 체크</param>
+    public Tile GetNearestTile(Vector2 worldPos, bool isInTile = false)
     {
-        return Tile.instances.OrderBy(tile => Vector2.Distance(tile.pos, worldPos)).FirstOrDefault();
+        Tile tile = Tile.instances.OrderBy(tile => Vector2.Distance(tile.pos, worldPos)).FirstOrDefault();
+
+        switch (isInTile)
+        {
+            case true:
+                if (IsInTile(worldPos, tile)) return tile;
+                else return null;
+            case false:
+                return tile;
+        }
+
+        /// <summary>
+        /// 지정한 위치가 특정 타일 내부인지 여부를 반환합니다.
+        /// </summary>
+        bool IsInTile(Vector2 pos, Tile tile)
+        {
+            return Mathf.Abs(pos.x - tile.pos.x) <= cellWidth / 2 && Mathf.Abs(pos.y - tile.pos.y) <= CellHeight / 2;
+        }
     }
 
     /* Private Method */
