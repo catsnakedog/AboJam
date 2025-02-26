@@ -248,6 +248,7 @@ public class Scenario : MonoBehaviour
         CheckTowerCount(out int towerCount);
         while (towerCount < 1)
         {
+            if (StaticData.Garu < 100) StaticData.Garu = 100;
             if (promotion.activeInHierarchy)
                 foreach (Transform child in promotion.transform)
                 {
@@ -263,6 +264,7 @@ public class Scenario : MonoBehaviour
         message.On("모든 종류의 타워를 건설해보세요.", 999f, true);
         mark.Off();
         StaticData.Abocado++;
+        StaticData.Garu = 999;
         tempWaitForSeconds = new WaitForSeconds(0.1f);
         Coroutine corDayNight = StartCoroutine(CorDayNight());
         while (!CheckTowerCount(out int notUse))
