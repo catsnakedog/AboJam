@@ -9450,6 +9450,14 @@ PrefabInstance:
       propertyPath: shopPanel
       value: 
       objectReference: {fileID: 4387568456285191142}
+    - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
+      propertyPath: btnGrowYes
+      value: 
+      objectReference: {fileID: 1690813895}
+    - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
+      propertyPath: btnDemolitionYes
+      value: 
+      objectReference: {fileID: 342094290}
     - target: {fileID: 2875230927478983527, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: m_Name
       value: Receiver

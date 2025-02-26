@@ -27,7 +27,7 @@ public class Highlight : MonoBehaviour
     /// <summary>
     /// 특정 타일을 하이라이팅 합니다.
     /// </summary>
-    public void On(Tile tile)
+    public void On(Tile tile, bool isReverse = false)
     {
         if (lastTile == tile) return;
 
@@ -40,7 +40,11 @@ public class Highlight : MonoBehaviour
         try { animationClick = tile.Go.GetComponent<AnimationClick>(); } catch { }
         if (animationClick != null) { animationClick.OnClick(); spriteRenderer.sprite = null; }
         else if (tile.Go != null) spriteRenderer.sprite = noSprite;
-        else if (tile.Go == null) spriteRenderer.sprite = yesSprite;
+        else if (tile.Go == null)
+        {
+            if(isReverse) spriteRenderer.sprite = noSprite;
+            if(!isReverse) spriteRenderer.sprite = yesSprite;
+        }
         if (spriteRenderer.sprite != null) SetSize(spriteRenderer, new Vector2(grid.CellWidth, grid.CellHeight));
 
         lastTile = tile;

@@ -26,6 +26,8 @@ public class Receiver : MonoBehaviour
     [SerializeField] private Button shopOnOff;
     [SerializeField] private GameObject shortcut;
     [SerializeField] private Camera camera;
+    [SerializeField] private Button btnGrowYes;
+    [SerializeField] private Button btnDemolitionYes;
 
     /* Field & Property */
     private Coroutine corKeepAttack;
@@ -47,10 +49,14 @@ public class Receiver : MonoBehaviour
         map.FindAction("Interaction").performed += OnInteraction;
         map.FindAction("Demolition").performed -= OnDemolition;
         map.FindAction("Demolition").performed += OnDemolition;
-        map.FindAction("Highlight").performed -= OnHighlight;
-        map.FindAction("Highlight").performed += OnHighlight;
-        map.FindAction("Highlight").canceled -= OffHighlight;
-        map.FindAction("Highlight").canceled += OffHighlight;
+        map.FindAction("HighlightCultivate").performed -= OnHighlightCultivate;
+        map.FindAction("HighlightCultivate").performed += OnHighlightCultivate;
+        map.FindAction("HighlightCultivate").canceled -= OffHighlight;
+        map.FindAction("HighlightCultivate").canceled += OffHighlight;
+        map.FindAction("HighlightDemolition").performed -= OnHighlightDemolition;
+        map.FindAction("HighlightDemolition").performed += OnHighlightDemolition;
+        map.FindAction("HighlightDemolition").canceled -= OffHighlight;
+        map.FindAction("HighlightDemolition").canceled += OffHighlight;
 
         InputActionMap character = inputAction.FindActionMap("Character");
         character.Enable();
@@ -69,6 +75,8 @@ public class Receiver : MonoBehaviour
         ui.Enable();
         ui.FindAction("Close").performed -= OnClose;
         ui.FindAction("Close").performed += OnClose;
+        ui.FindAction("Enter").performed -= OnEnter;
+        ui.FindAction("Enter").performed += OnEnter;
         ui.FindAction("Shop").performed -= OnOffShop;
         ui.FindAction("Shop").performed += OnOffShop;
     }
@@ -78,8 +86,10 @@ public class Receiver : MonoBehaviour
         map.FindAction("Click").performed -= OnClick;
         map.FindAction("Interaction").performed -= OnInteraction;
         map.FindAction("Demolition").performed -= OnDemolition;
-        map.FindAction("Highlight").performed -= OnHighlight;
-        map.FindAction("Highlight").canceled -= OffHighlight;
+        map.FindAction("HighlightCultivate").performed -= OnHighlightCultivate;
+        map.FindAction("HighlightCultivate").canceled -= OffHighlight;
+        map.FindAction("HighlightDemolition").performed -= OnHighlightDemolition;
+        map.FindAction("HighlightDemolition").canceled -= OffHighlight;
 
         InputActionMap character = inputAction.FindActionMap("Character");
         character.FindAction("Move").performed -= OnMove;
@@ -90,6 +100,7 @@ public class Receiver : MonoBehaviour
 
         InputActionMap ui = inputAction.FindActionMap("UI");
         ui.FindAction("Close").performed -= OnClose;
+        ui.FindAction("Enter").performed -= OnEnter;
         ui.FindAction("Shop").performed -= OnOffShop;
 
         inputAction.Disable();
@@ -106,20 +117,29 @@ public class Receiver : MonoBehaviour
         demolition.Off();
         grow.Off();
 
-        // 인디케이터
-        //foreach (var item in indicator_circle) item.Off();
-        //foreach (var item in indicator_arrow) item.Off();
+        // 인디케이터 종료
+        foreach (var a in indicator_circles) a.Off();
+        foreach (var b in indicator_arrows) b.Off();
     }
 
     /* Map Event Handler */
     /// <summary>
-    /// Highlight + KeyDown(F)
+    /// HighlightCultivate + KeyDown(F)
     /// </summary>
-    private void OnHighlight(InputAction.CallbackContext context)
+    private void OnHighlightCultivate(InputAction.CallbackContext context)
     {
         Tile tile = grid.GetNearestTile(camera.ScreenToWorldPoint(context.ReadValue<Vector2>()), true);
         if (tile == null || highlight == null) highlight.Off();
-        else highlight.On(tile);
+        else highlight.On(tile, false);
+    }
+    /// <summary>
+    /// HighlightCultivate + KeyDown(G)
+    /// </summary>
+    private void OnHighlightDemolition(InputAction.CallbackContext context)
+    {
+        Tile tile = grid.GetNearestTile(camera.ScreenToWorldPoint(context.ReadValue<Vector2>()), true);
+        if (tile == null || highlight == null) highlight.Off();
+        else highlight.On(tile, true);
     }
     private void OffHighlight(InputAction.CallbackContext context)
     {
@@ -160,6 +180,7 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnDemolition(InputAction.CallbackContext context)
     {
+        if (demolition.gameObject.activeSelf) return;
         Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         Tile.currentTile = tile;
         if (tile.Go != null) demolition.On();
@@ -244,11 +265,17 @@ public class Receiver : MonoBehaviour
     {
         shopPanel.SetActive(false);
         shortcut.SetActive(false);
-        reinforcement.Off();
-        promotion.Off();
+        OffUI();
         menu.MenuOnOff();
-        foreach (var a in indicator_circles) a.Off();
-        foreach(var b in indicator_arrows) b.Off();
+    }
+    /// <summary>
+    /// KeyDown(Enter)
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnEnter(InputAction.CallbackContext context)
+    {
+        if (demolition.gameObject.activeSelf) btnDemolitionYes.onClick.Invoke();
+        if (grow.gameObject.activeSelf) btnGrowYes.onClick.Invoke();
     }
     /// <summary>
     /// KeyDown(Q)

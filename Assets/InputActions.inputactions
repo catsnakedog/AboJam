@@ -33,9 +33,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Highlight",
+                    "name": "HighlightCultivate",
                     "type": "Value",
                     "id": "ad863ce6-421f-4b7c-967d-9f25fe057663",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "HighlightDemolition",
+                    "type": "Value",
+                    "id": "5c82f330-cd08-4e58-81fa-f777d26a2e1a",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -127,7 +136,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Highlight",
+                    "action": "HighlightCultivate",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -138,7 +147,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Highlight",
+                    "action": "HighlightCultivate",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -149,7 +158,40 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Highlight",
+                    "action": "HighlightCultivate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "00f74012-7871-4d07-a996-880e34573476",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HighlightDemolition",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "51945d22-eead-4bf8-a693-41d7e6119db2",
+                    "path": "<Keyboard>/#(G)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "HighlightDemolition",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "e866819a-70cf-4543-b2c3-08f7b73b7d52",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "HighlightDemolition",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
@@ -268,6 +310,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Enter",
+                    "type": "Button",
+                    "id": "ea22642e-3733-413b-9964-a03657658778",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -290,6 +341,28 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "Shop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "45cfafa8-4ffa-4881-8d43-65fab063990a",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Enter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4fa0195a-9ce0-4e01-a032-3e40713a74ce",
+                    "path": "<Keyboard>/numpadEnter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
