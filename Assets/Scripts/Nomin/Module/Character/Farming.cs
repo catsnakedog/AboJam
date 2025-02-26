@@ -17,7 +17,9 @@ public class Farming : MonoBehaviour
     public static Farming instance;
     public float cultivateTime = 1f; // 경작 시간
     public int price = 5; // 경작 비용
+    public float waitForCultivateGaugeRatio; // 이전 경작이 일정 비율 이상 진행 중일 시 대기
     private Coroutine corCultivate;
+    private Coroutine corWaitCultivate;
     private Coroutine corMove;
     private Coroutine corGauge;
     private GameObject gaugeObj;
@@ -35,9 +37,39 @@ public class Farming : MonoBehaviour
     /// </summary>
     public void Cultivate(Tile tile)
     {
+        // 이전 경작이 일정 비율 이상 진행 중이면 기다린 후 경작 시작
+        if (corGauge != null)
+            if (gaugeObj.GetComponent<Gauge>().ratio >= waitForCultivateGaugeRatio)
+            {
+                if (corWaitCultivate != null) StopCoroutine(CorWaitCultivate(tile));
+                corWaitCultivate = StartCoroutine(CorWaitCultivate(tile));
+                return;
+            }
+
+        // 즉시 경작 시작
         if (corCultivate != null) StopCultivate();
         corCultivate = StartCoroutine(CorCultivate(tile));
     }
+    /// <summary>
+    /// 이전 경작이 종료된 이후에 다음 경작을 시도합니다.
+    /// </summary>
+    public IEnumerator CorWaitCultivate(Tile tile)
+    {
+        while (true)
+        {
+            if (corGauge == null)
+            {
+                if (corCultivate != null) StopCultivate();
+                corCultivate = StartCoroutine(CorCultivate(tile));
+                corWaitCultivate = null;
+                yield break;
+            }
+            else yield return new WaitForFixedUpdate();
+        }
+    }
+    /// <summary>
+    /// 즉시 경작을 시작합니다.
+    /// </summary>
     public IEnumerator CorCultivate(Tile tile)
     {
         yield return corMove = StartCoroutine(CorMove(tile.pos, grid.CellWidth));
@@ -60,6 +92,9 @@ public class Farming : MonoBehaviour
         if (tile.Go == null) tile.Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
         else { UnityEngine.Debug.Log($"타일 ({tile.i}, {tile.j}) 에 이미 {tile.Go.name} 가 바인딩 되어 있습니다."); };
     }
+    /// <summary>
+    /// 경작을 중단합니다.
+    /// </summary>
     public void StopCultivate()
     {
         if (gaugeObj != null) { Destroy(gaugeObj); gaugeObj = null; }
@@ -119,5 +154,6 @@ public class Farming : MonoBehaviour
         }
 
         if(gaugeObj != null) Destroy(gaugeObj);
+        corGauge = null;
     }
 }

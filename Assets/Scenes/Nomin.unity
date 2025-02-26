@@ -5917,6 +5917,7 @@ MonoBehaviour:
   gauge: {fileID: 4355378936841061902, guid: ac0a040d3a3848e46b922c0234b01c96, type: 3}
   cultivateTime: 1
   price: 5
+  waitForCultivateGaugeRatio: 0.9
 --- !u!1001 &1496784063
 PrefabInstance:
   m_ObjectHideFlags: 0
