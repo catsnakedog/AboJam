@@ -24,6 +24,7 @@ namespace Synty.Interface.FantasyWarriorHUD.Samples
 
         [Header("Parameters")]
         public List<SampleAnimatorActionData> animatorActions;
+        public CoolTimer coolTimer => CoolTimer.instance;
         public float activeTime = 1f;
         public bool runOnEnable;
         public bool applyRandomRotationToActivateObject;
@@ -87,7 +88,8 @@ namespace Synty.Interface.FantasyWarriorHUD.Samples
                 }
             }
 
-            yield return new WaitForSeconds(activeTime);
+            yield return new WaitForSeconds(0.5f);
+            while (coolTimer.RemainTime > 0) yield return new WaitForSeconds(0.1f);
 
             if (button != null)
             {

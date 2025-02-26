@@ -3018,7 +3018,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8971,6 +8971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tmp: {fileID: 0}
   image: {fileID: 0}
+  sampleButtonAction: {fileID: 0}
 --- !u!1 &2101627058
 GameObject:
   m_ObjectHideFlags: 0
@@ -9378,6 +9379,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7306517633842956406, guid: 6e9b3bb6fae3e4b489c3ae7ea5c90526, type: 3}
+      propertyPath: sampleButtonAction
+      value: 
+      objectReference: {fileID: 2068774218}
     - target: {fileID: 7334667573668742266, guid: 6e9b3bb6fae3e4b489c3ae7ea5c90526, type: 3}
       propertyPath: m_SizeDelta.x
       value: 150

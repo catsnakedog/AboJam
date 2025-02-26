@@ -16,17 +16,18 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     public Sprite sprite_night;
     public TextMeshProUGUI text_day;
     public TextMeshProUGUI text_time;
-    private Image image;
-    private AnimationClick animationClick;
-    private GlobalLight globalLight => GlobalLight.instance;
-    private Database_AboJam database_abojam => Database_AboJam.instance;
-    private Message message => Message.instance;
     public enum GameTime : byte
     {
         Morning,
         Sunset,
         Night
     }
+    Image image;
+    AnimationClick animationClick;
+    GlobalLight globalLight => GlobalLight.instance;
+    Database_AboJam database_abojam => Database_AboJam.instance;
+    Message message => Message.instance;
+    CoolTimer cooltimer => CoolTimer.instance;
 
     /* Field & Property */
     public static Date instance; // 싱글턴
@@ -97,7 +98,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     /// <br>시간 흐름을 계산하여 더합니다.</br>
     /// <br>게임시간 += (경과시간 * 시간비율)</br>
     /// <br>1) 경과시간 : 현재 SetTime 시각 - 이전 SetTime 시각</br>
-    /// <br>2) 시간비율 : 현실 하루 (초) / 게임 하루 (초)</br>
+    /// <br>2) 시간비율 : 현실 하루 (초) / 게임 낮 (초)</br>
     /// </summary>
     private void UpdateTime()
     {
@@ -105,7 +106,8 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         TimeSpan elapsed = now - last; // 1)
         if (elapsed.TotalSeconds > refreshTime * 5) { elapsed = TimeSpan.FromSeconds(refreshTime); }
         last = now;
-        double ratio = 86400d / (double)secondsPerDay; // 2)
+
+        double ratio = (StringToTime(nightTime) - StringToTime(morningTime)).TotalSeconds / (double)secondsPerDay; // 2)
         dateTime += elapsed * ratio;
     }
     /// <summary>
@@ -157,15 +159,18 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     /// <summary>
     /// 아침을 스킵하고 해질녘이 시작됩니다.
     /// </summary>
+    /// <param name="skipedSeconds">스킵된 초</param>
     public void SkipMorning()
     {
         // 빛 & 이벤트 호출
-        if (gameTime != GameTime.Morning) return;
+        if (gameTime != GameTime.Morning) return; 
         sunsetStart?.Invoke();
         globalLight.Set(globalLight.sunset, 0.01f);
 
         // 시간 설정
+        DateTime beforeTime = dateTime;
         dateTime = dateTime.Date + StringToTime(sunsetTime);
+        cooltimer.AddTime(-(float)GameTimeToRealTime((dateTime - beforeTime).TotalSeconds));
 
         // GameTime 및 Image 넘김
         gameTime++;
@@ -175,17 +180,20 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     /// <summary>
     /// 해질녘을 스킵하고 밤이 시작됩니다.
     /// </summary>
+    /// <param name="skipedSeconds">스킵된 초</param>
     public void SkipSunset()
     {
         // 빛 & 이벤트 호출
-        if (gameTime != GameTime.Sunset) return;
+        if (gameTime != GameTime.Sunset) return; 
         nightStart?.Invoke();
         globalLight.Set(globalLight.night, 0.01f);
 
         // 시간 설정 (정지)
         text_time.enabled = false;
         timeFlow = false;
+        DateTime beforeTime = dateTime;
         dateTime = dateTime.Date + StringToTime(nightTime);
+        cooltimer.AddTime(-(float)GameTimeToRealTime((dateTime - beforeTime).TotalSeconds));
 
         // GameTime 및 Image 넘김
         gameTime++;
@@ -239,5 +247,13 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     {
         if (gameTime == GameTime.Morning) { image.sprite = sprite_morning; animationClick.OnClick(); }
         if (gameTime == GameTime.Night) { image.sprite = sprite_night; animationClick.OnClick(); }
+    }
+    /// <summary>
+    /// 게임 시간을 현실 시간으로 변환합니다.
+    /// </summary>
+    private double GameTimeToRealTime(double seconds)
+    {
+        double dayDiff = (StringToTime(nightTime) - StringToTime(morningTime)).TotalSeconds;
+        return (seconds * secondsPerDay) / dayDiff;
     }
 }
