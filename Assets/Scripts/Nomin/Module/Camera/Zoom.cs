@@ -72,7 +72,12 @@ public class Zoom : MonoBehaviour
             if (img != null) img.enabled = visible;
 
             TextMeshProUGUI tmp = child.GetComponent<TextMeshProUGUI>();
-            if (tmp != null) tmp.enabled = visible;
+            if (tmp != null)
+            {
+                UnityEngine.Color color = tmp.color;
+                color.a = visible ? 1f : 0f;
+                tmp.color = color;
+            }
 
             HideUI(child, visible);
         }
