@@ -124,12 +124,15 @@ public class Bat : ChargeMeleeWeapon
         property.SetFloat("_AttackFlag", attackFlag);
         property.SetFloat("_LineAngle", lineAngle);
         _batAttackEffectRenderer.SetPropertyBlock(property);
-        yield return new WaitForSeconds(AttackRemainTime);
-        batEffectObj.transform.localScale = new Vector3(4, 4, 1);
-        ObjectPool.Instance.Return(_batObjType, batEffectObj);
-        batEffectObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        property.SetFloat("_RadiusScale", 0.0f);
-        property.SetFloat("_AttackFlag", 0.0f);
+        yield return new WaitForSecondsRealtime(AttackRemainTime);
+        if (batEffectObj != null)
+        {
+            batEffectObj.transform.localScale = new Vector3(4, 4, 1);
+            ObjectPool.Instance.Return(_batObjType, batEffectObj);
+            batEffectObj.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            property.SetFloat("_RadiusScale", 0.0f);
+            property.SetFloat("_AttackFlag", 0.0f);
+        }
     }
 
     public override void ChargeAttackStart()

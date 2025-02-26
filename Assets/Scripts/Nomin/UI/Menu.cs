@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     /* Dependency */
-    [SerializeField] private GameObject panel;
+    [SerializeField] GameObject panel;
+    [SerializeField] Bat bat;
 
     /* Field & Property */
     public static Menu instance;
@@ -22,6 +23,9 @@ public class Menu : MonoBehaviour
     {
         panel.SetActive(!panel.activeSelf);
         TimeOnOff();
+
+        // 배트 이펙트를 제거하기 위함
+        bat.ChargeAttack(0);
     }
     public void TimeOnOff()
     {
