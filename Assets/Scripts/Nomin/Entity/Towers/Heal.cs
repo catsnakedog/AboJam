@@ -34,9 +34,8 @@ public class Heal : Tower<Table_Heal, Record_Heal>, IPoolee
         instances.Add(this);
 
         // 인디케이터 스케일링
-        float scale = launcher.range * 4;
+        float scale = launcher.range * 2;
         indicator_circle.transform.localScale = new Vector2(scale, scale);
-
     }
     private void OnDestroy()
     {

@@ -35,7 +35,7 @@ public class Auto : Tower<Table_Auto, Record_Auto>, IPoolee
         Load();
         instances.Add(this);
             
-        float scale = launcher.range * 4;
+        float scale = launcher.range * 2;
         indicator_circle.transform.localScale = new Vector2(scale, scale);
     }
     private void OnDestroy()
