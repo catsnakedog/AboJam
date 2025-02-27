@@ -21,9 +21,7 @@ public class Change : MonoBehaviour
     public int minValue; // 최소 아보카도 가격
     public int maxQuantity; // 거래 최대 개수
     private int quantity; // 거래할 아보카도 수
-    private int tradeCount; // 총 거래 횟수
-    private int price; // 현재 거래 가격
-    private int nextPrice; // 다음 거래 가격
+    private int tradeCount; // 총 판매 대금
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -43,8 +41,7 @@ public class Change : MonoBehaviour
         try { quantity = int.Parse(text_quantity.text); } catch { }
         if (quantity > maxQuantity) { message.On($"{maxQuantity} 개 까지만 팔 수 있어요 !", 2f); quantity = maxQuantity; }
 
-        price = quantity * GetCalculatedValue();
-        text_price.text = price.ToString();
+        text_price.text = GetPrice(quantity).ToString();
     }
     /// <summary>
     /// 아보카도를 판매합니다.
@@ -54,10 +51,10 @@ public class Change : MonoBehaviour
     {
         if (StaticData.Abocado >= quantity)
         {
-            Message.instance.On($"아보카도 {quantity} 개를 가루 {price} 개에 판매했습니다.", 2f);
+            Message.instance.On($"아보카도 {quantity} 개를 가루 {GetPrice(quantity)} 개에 판매했습니다.", 2f);
             StaticData.Abocado -= quantity;
-            StaticData.Garu += quantity * GetCalculatedValue();
-            tradeCount++;
+            StaticData.Garu += GetPrice(quantity);
+            tradeCount += quantity;
             OnValueChange();
         }
         else Message.instance.On($"{quantity} 개 이상부터 판매할 수 있습니다.", 2f);
@@ -65,18 +62,38 @@ public class Change : MonoBehaviour
     
     /* Private Method */
     /// <summary>
-    /// 거래 횟수에 따라 차감된 금액을 반환합니다.
+    /// 아보카도 수량에 따른 가치를 반환합니다.
     /// </summary>
-    private int GetCalculatedValue()
+    private int GetPrice(int quantity)
     {
-        int calculatedValue = value;
-        int tempTradeCount = tradeCount;
-        while (tempTradeCount >= threshold && calculatedValue > minValue)
+        int price = 0; // 모든 아보카도의 가치
+        int currentValue = value; // 현재 아보카도의 가치
+        int thresholdTemp = 0; // threshold 에 도달할 때 마다 currentValue -= discount
+
+        // 이전 까지의 총 거래 대금으로 currentValue 를 계산합니다.
+        for (int i = 0; i < tradeCount; i++)
         {
-            calculatedValue -= discount;
-            tempTradeCount -= threshold;
+            thresholdTemp++;
+            if (thresholdTemp == threshold)
+            {
+                currentValue = Mathf.Max(minValue, currentValue - discount);
+                thresholdTemp = 0;
+            }
         }
 
-        return calculatedValue;
+        // currentValue 를 계산하며 각 아보카도의 가치를 price 에 더합니다.
+        for (int i = 0; i < quantity; i++)
+        {
+            price += currentValue;
+
+            thresholdTemp++;
+            if (thresholdTemp == threshold)
+            {
+                currentValue = Mathf.Max(minValue, currentValue - discount);
+                thresholdTemp = 0;
+            }
+        }
+
+        return price;
     }
 }
