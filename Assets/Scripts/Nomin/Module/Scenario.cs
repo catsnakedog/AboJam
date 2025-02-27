@@ -167,6 +167,8 @@ public class Scenario : MonoBehaviour
     /// </summary>
     public IEnumerator CorScenario_0()
     {
+        yield return new WaitForSeconds(checkTime);
+
         // 초기 자원
         StaticData.Abocado = 1;
         StaticData.Garu = 5;
@@ -315,6 +317,8 @@ public class Scenario : MonoBehaviour
     /// </summary>
     public IEnumerator CorScenario_1()
     {
+        yield return new WaitForSeconds(checkTime);
+
         // 초기 자원
         StaticData.Abocado = 0;
         StaticData.Garu = 999;
@@ -435,6 +439,8 @@ public class Scenario : MonoBehaviour
     /// </summary>
     public IEnumerator CorScenario_2()
     {
+        yield return new WaitForSeconds(checkTime);
+
         // 초기 자원
         StaticData.Abocado = 0;
         StaticData.Garu = 0;
@@ -494,6 +500,7 @@ public class Scenario : MonoBehaviour
                 HP tempHP = HP.FindHP(grid.GetTile((15, 19)).Go);
                 tempHP.Damage(hpAuto.Hp_max * 0.5f);
 
+                message.On($"F + 클릭으로 타워를 눌러보세요.", 999f, true);
                 mark.On(grid.GetTile((15, 19)).Go, 999f);
             }
             yield return waitForSeconds;
@@ -521,6 +528,7 @@ public class Scenario : MonoBehaviour
                 HP tempHP = HP.FindHP(grid.GetTile((15, 19)).Go);
                 tempHP.Damage(hpAuto.Hp_max * 0.5f);
 
+                message.On($"타워를 2 번 이상 업그레이드 하세요.", 999f, true);
                 mark.On(grid.GetTile((15, 19)).Go, 999f);
             }
 
