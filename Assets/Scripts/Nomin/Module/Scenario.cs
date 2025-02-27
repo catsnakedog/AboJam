@@ -475,6 +475,7 @@ public class Scenario : MonoBehaviour
         message.On($"곧 적들이 몰려올 것 같은데..", 2f, true);
         yield return new WaitForSeconds(2f);
         message.On("타워를 하나 드릴게요. 고치면 쓸 만 할거에요.", 2f, true);
+        if (grid.GetTile((15, 19)).Go != null) pool.Return(grid.GetTile((15, 19)).Go);
         grid.GetTile((15, 19)).Bind(pool.Get("Auto"), EnumData.TileIndex.Auto);
         HP hpAuto = HP.FindHP(grid.GetTile((15, 19)).Go);
         hpAuto.Damage(hpAuto.Hp_max * 0.5f);
@@ -496,6 +497,7 @@ public class Scenario : MonoBehaviour
                 animationCameraShake.StartShake();
                 playerHP.Damage(playerHP.HP_current * 0.5f);
                 yield return new WaitForSeconds(1.5f);
+                if (grid.GetTile((15, 19)).Go != null) pool.Return(grid.GetTile((15, 19)).Go);
                 grid.GetTile((15, 19)).Bind(pool.Get("Auto"), EnumData.TileIndex.Auto);
                 HP tempHP = HP.FindHP(grid.GetTile((15, 19)).Go);
                 tempHP.Damage(hpAuto.Hp_max * 0.5f);
@@ -524,6 +526,7 @@ public class Scenario : MonoBehaviour
                 animationCameraShake.StartShake();
                 playerHP.Damage(playerHP.HP_current * 0.5f);
                 yield return new WaitForSeconds(1.5f);
+                if (grid.GetTile((15, 19)).Go != null) pool.Return(grid.GetTile((15, 19)).Go);
                 grid.GetTile((15, 19)).Bind(pool.Get("Auto"), EnumData.TileIndex.Auto);
                 HP tempHP = HP.FindHP(grid.GetTile((15, 19)).Go);
                 tempHP.Damage(hpAuto.Hp_max * 0.5f);
@@ -539,7 +542,8 @@ public class Scenario : MonoBehaviour
             else mark.On(grid.GetTile((15, 19)).Go, 999f);
 
             // 업그레이드 했는지 검사
-            if (grid.GetTile((15, 19)).Go.GetComponent<Auto>().Level < 2) checkTowerUpgrade = false;
+            if (grid.GetTile((15, 19)).Go == null) continue;
+            else if (grid.GetTile((15, 19)).Go.GetComponent<Auto>().Level < 2) checkTowerUpgrade = false;
             if (checkTowerUpgrade) break;
 
             yield return tempWaitForSeconds;
@@ -548,13 +552,13 @@ public class Scenario : MonoBehaviour
         // 카메라 줌
         mark.Off();
         globalLight.Set(globalLight.night, 0.01f);
-        message.On("곧 적들이 몰려옵니다...", 1.5f);
-        yield return new WaitForSeconds(1.5f);
-        message.On("마우스 휠을 스크롤 해 시야를 넓혀두세요 !", 999f);
-        while (zoom.Target_zoom > zoom.min_zoom) yield return waitForSeconds;
+        message.On("곧 적들이 몰려옵니다...", 2f, true);
+        yield return new WaitForSeconds(2f);
+        message.On("마우스 휠을 스크롤 해 적을 확인하세요 !", 999f, true);
+        while (zoom.Target_zoom <= zoom.min_zoom) yield return waitForSeconds;
 
         // 교전
-        message.On($"모든 적을 무찌르세요.", 2f, true);
+        message.On($"모든 적을 무찌르세요.", 999f, true);
         globalLight.Set(globalLight.night, 0.01f);
         for (int i = 0; i < 5; i++)
         {
@@ -566,7 +570,7 @@ public class Scenario : MonoBehaviour
 
         // 클리어
         globalLight.Set(globalLight.morning, 0.01f);
-        message.On("해냈군요 ! 다음부턴 진짜 실전이에요 !", 2f);
+        message.On("해냈군요 ! 다음부턴 진짜 실전이에요 !", 2f, true);
         yield return new WaitForSeconds(2f);
         yield return StartCoroutine(Clear());
     }
