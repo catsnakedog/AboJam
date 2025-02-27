@@ -5,6 +5,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using static EnumData;
+using static ObjectPool;
 using static UnityEngine.EventSystems.EventTrigger;
 using Image = UnityEngine.UI.Image;
 
@@ -30,6 +32,12 @@ public class Scenario : MonoBehaviour
     private GlobalLight globalLight => GlobalLight.instance;
     private LocalData localData => LocalData.instance;
     private Spawner spawner => Spawner.instance;
+    private Grid grid => Grid.instance;
+    private Pool pool => Pool.instance;
+    private Reinforcement reinforcement => Reinforcement.instance;
+    private Zoom zoom => Zoom.instance;
+    private Verdict verdict => Verdict.instance;
+    private AnimationCameraShake animationCameraShake => AnimationCameraShake.instance;
     private List<Abocado> abocados => Abocado.instances;
     private List<BTN_Weapons> btn_weapons_range => BTN_Weapons.instances_range;
     private List<BTN_Weapons> btn_weapons_melee => BTN_Weapons.instances_melee;
@@ -144,6 +152,9 @@ public class Scenario : MonoBehaviour
                 break;
             case 1:
                 StartCoroutine(CorScenario_1());
+                break;
+            case 2:
+                StartCoroutine(CorScenario_2());
                 break;
             default: // 본 게임 시작
                 message.On(startMessage[UnityEngine.Random.Range(0, startMessage.Length)], 3f);
@@ -417,6 +428,138 @@ public class Scenario : MonoBehaviour
         // 클리어
         while (CheckEnemyAlive() && playerHP.HP_current > 0) yield return waitForSeconds;
         globalLight.Set(globalLight.morning, 0.01f);
+        yield return StartCoroutine(Clear());
+    }
+    /// <summary>
+    /// 시나리오 2 데몬입니다.
+    /// </summary>
+    public IEnumerator CorScenario_2()
+    {
+        // 초기 자원
+        StaticData.Abocado = 0;
+        StaticData.Garu = 0;
+        StaticData.Water = 0;
+
+        // 시간 초기화
+        date.dateTime = DateTime.MinValue;
+        date.timeFlow = false;
+        date.text_day.text = $"DAY - 1";
+        date.text_time.text = $"0:0";
+
+        // UI 조정
+        shop.SetActive(false);
+        btn_skill.SetActive(false);
+        swap.SetActive(false);
+        skip.SetActive(false);
+
+        // 타워 설치
+        grid.GetTile((15, 17)).Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
+        grid.GetTile((15, 19)).Bind(pool.Get("Auto"), EnumData.TileIndex.Auto);
+
+        // 철거
+        message.On($"마지막 튜토리얼입니다 !", 2f, true);
+        yield return new WaitForSeconds(2f);
+        message.On($"G + 클릭으로 타워와 아보카도를 철거해보세요.", 999f, true);
+        while (grid.GetTile((15, 17)).Go != null | grid.GetTile((15, 19)).Go != null) yield return waitForSeconds;
+        message.On($"잘했어요 !", 1f, true);
+        yield return new WaitForSeconds(1f);
+
+        // 타워 업그레이드
+        globalLight.Set(globalLight.sunset, 0.01f);
+        message.On($"곧 적들이 몰려올 것 같은데..", 2f, true);
+        yield return new WaitForSeconds(2f);
+        message.On("타워를 하나 드릴게요. 고치면 쓸 만 할거에요.", 2f, true);
+        grid.GetTile((15, 19)).Bind(pool.Get("Auto"), EnumData.TileIndex.Auto);
+        HP hpAuto = HP.FindHP(grid.GetTile((15, 19)).Go);
+        hpAuto.Damage(hpAuto.Hp_max * 0.5f);
+        yield return new WaitForSeconds(2f);
+        message.On($"F + 클릭으로 타워를 눌러보세요.", 999f, true);
+        if(grid.GetTile((15, 19)).Go != null) mark.On(grid.GetTile((15, 19)).Go, 999f);
+        while (!reinforcement.gameObject.activeSelf)
+        {
+            if(grid.GetTile((15, 19)).Go == null)
+            {
+                mark.Off();
+
+                message.On("그.. 그걸... 철거해버리면...", 2f, true);
+                yield return new WaitForSeconds(2f);
+                message.On("큰 맘 먹고 사준건데.........", 2f, true);
+                yield return new WaitForSeconds(2f);
+                message.On("딱밤 한 대만 때릴게요....", 2f, true);
+                yield return new WaitForSeconds(0.5f);
+                animationCameraShake.StartShake();
+                playerHP.Damage(playerHP.HP_current * 0.5f);
+                yield return new WaitForSeconds(1.5f);
+                grid.GetTile((15, 19)).Bind(pool.Get("Auto"), EnumData.TileIndex.Auto);
+                HP tempHP = HP.FindHP(grid.GetTile((15, 19)).Go);
+                tempHP.Damage(hpAuto.Hp_max * 0.5f);
+
+                mark.On(grid.GetTile((15, 19)).Go, 999f);
+            }
+            yield return waitForSeconds;
+        }
+
+        message.On($"타워를 2 번 이상 업그레이드 하세요.", 999f, true);
+        StaticData.Garu = 999;
+        WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.3f);
+        while (true)
+        {
+            if (grid.GetTile((15, 19)).Go == null)
+            {
+                mark.Off();
+
+                message.On("그.. 그걸... 철거해버리면...", 2f, true);
+                yield return new WaitForSeconds(2f);
+                message.On("큰 맘 먹고 사준건데.........", 2f, true);
+                yield return new WaitForSeconds(2f);
+                message.On("딱밤 한 대만 때릴게요....", 2f, true);
+                yield return new WaitForSeconds(0.5f);
+                animationCameraShake.StartShake();
+                playerHP.Damage(playerHP.HP_current * 0.5f);
+                yield return new WaitForSeconds(1.5f);
+                grid.GetTile((15, 19)).Bind(pool.Get("Auto"), EnumData.TileIndex.Auto);
+                HP tempHP = HP.FindHP(grid.GetTile((15, 19)).Go);
+                tempHP.Damage(hpAuto.Hp_max * 0.5f);
+
+                mark.On(grid.GetTile((15, 19)).Go, 999f);
+            }
+
+            bool checkTowerUpgrade = true;
+
+            // 타워 or 업그레이드 버튼 마킹
+            if (reinforcement.gameObject.activeSelf) mark.On(reinforcement.BTN_reinforce.gameObject, 999f);
+            else mark.On(grid.GetTile((15, 19)).Go, 999f);
+
+            // 업그레이드 했는지 검사
+            if (grid.GetTile((15, 19)).Go.GetComponent<Auto>().Level < 2) checkTowerUpgrade = false;
+            if (checkTowerUpgrade) break;
+
+            yield return tempWaitForSeconds;
+        }
+
+        // 카메라 줌
+        mark.Off();
+        globalLight.Set(globalLight.night, 0.01f);
+        message.On("곧 적들이 몰려옵니다...", 1.5f);
+        yield return new WaitForSeconds(1.5f);
+        message.On("마우스 휠을 스크롤 해 시야를 넓혀두세요 !", 999f);
+        while (zoom.Target_zoom > zoom.min_zoom) yield return waitForSeconds;
+
+        // 교전
+        message.On($"모든 적을 무찌르세요.", 2f, true);
+        globalLight.Set(globalLight.night, 0.01f);
+        for (int i = 0; i < 5; i++)
+        {
+            int random = UnityEngine.Random.Range(0, enemies.Length);
+            spawner.Spawn(enemies[random], new Vector3(i * 2, 13, 0));
+            spawner.Spawn(enemies[random], new Vector3(-i * 2, -13, 0));
+        }
+        while (verdict.CheckMob()) yield return waitForSeconds;
+
+        // 클리어
+        globalLight.Set(globalLight.morning, 0.01f);
+        message.On("해냈군요 ! 다음부턴 진짜 실전이에요 !", 2f);
+        yield return new WaitForSeconds(2f);
         yield return StartCoroutine(Clear());
     }
 

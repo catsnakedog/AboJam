@@ -9,17 +9,19 @@ public class Zoom : MonoBehaviour
     public GameObject UI;
 
     /* Field & Property */
+    public static Zoom instance;
     public float speed_zoom ;
     public float min_zoom;
     public float max_zoom;
     public float time_smooth;
-    private float target_zoom;
+    private float target_zoom; public float Target_zoom { get => target_zoom; }
     private float speed_zoom_before;
     private bool isOnUI = true;
 
     /* Initalizer & Finalizer & Updater */
     private void Start()
     {
+        instance = this;
         target_zoom = cam.orthographicSize;
     }
     private void FixedUpdate()

@@ -779,6 +779,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4114368738701403615, guid: ffc089c0ed285c94ea4823eaff4f8b3c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 825439681}
+    - targetCorrespondingSourceObject: {fileID: 4114368738701403615, guid: ffc089c0ed285c94ea4823eaff4f8b3c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 825439685}
   m_SourcePrefab: {fileID: 100100000, guid: ffc089c0ed285c94ea4823eaff4f8b3c, type: 3}
 --- !u!20 &124358847 stripped
 Camera:
@@ -3455,6 +3458,20 @@ MonoBehaviour:
   min_zoom: 5
   max_zoom: 9
   time_smooth: 0.2
+--- !u!114 &825439685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389465488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd09ff828512e441bdc83d388df8905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  magnitude: 1
 --- !u!1 &848164957
 GameObject:
   m_ObjectHideFlags: 0

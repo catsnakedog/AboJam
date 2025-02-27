@@ -52,12 +52,6 @@ public class Verdict : MonoBehaviour
 
             yield return waitForSeconds;
         }
-
-        bool CheckMob()
-        {
-            foreach (Transform child in enemyPool.transform) if (child.gameObject.activeSelf) return true;
-            return false;
-        }
     }
 
     /* Public Method */
@@ -67,6 +61,14 @@ public class Verdict : MonoBehaviour
     public void SaveHistory()
     {
         StaticData.gameData.dateTime = Date.instance.dateTime.ToString("o"); ;
+    }
+    /// <summary>
+    /// 남은 몬스터가 있는지 여부를 반환합니다.
+    /// </summary>
+    public bool CheckMob()
+    {
+        foreach (Transform child in enemyPool.transform) if (child.gameObject.activeSelf) return true;
+        return false;
     }
 
     /* Private Method */
