@@ -17,13 +17,14 @@ public class Spawner : MonoBehaviour
     public static Spawner instance;
     public int waveIndex = 1;
     public bool waveEnd { get; set; } = false;
+    public Coroutine lastCor;
     private int spriteOrderIndex = 0;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
         instance = this;
-        date.nightStart.AddListener(() => StartCoroutine(CorWave()));
+        date.nightStart.AddListener(() => { lastCor = StartCoroutine(CorWave()); });
     }
 
     /* Public Method */

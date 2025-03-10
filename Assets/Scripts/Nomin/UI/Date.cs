@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
 using TMPro;
 using Unity.VisualScripting;
@@ -28,6 +29,8 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     Database_AboJam database_abojam => Database_AboJam.instance;
     Message message => Message.instance;
     CoolTimer cooltimer => CoolTimer.instance;
+    List<IEnemy> iEnemies => IEnemy.instances;
+    Spawner spawner => Spawner.instance;
 
     /* Field & Property */
     public static Date instance; // 싱글턴
@@ -220,7 +223,30 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         gameTime++;
         if (!Enum.IsDefined(typeof(GameTime), gameTime)) gameTime = 0;
         ChangeImage();
+
+        // 스포너 중지
+        if(spawner != null)
+        {
+            spawner.StopCoroutine(spawner.lastCor);
+            spawner.waveEnd = true;
+        }
     }
+    /// <summary>
+    /// 모든 몬스터를 죽입니다.
+    /// </summary>
+    public void KillMob()
+    {
+        foreach (IEnemy iEnemy in iEnemies)
+        {
+            dynamic enemy = iEnemy;
+            if (enemy.hp.HP_current > 0)
+            {
+                enemy.hp.Damage(enemy.hp.Hp_max);
+                //enemy.StartCoroutine(enemy.CorDeath(0.3f));
+            }
+        }
+    }
+
     /// <summary>
     /// 밤에 낮잠을 자려하면 메시지를 출력합니다.
     /// </summary>
