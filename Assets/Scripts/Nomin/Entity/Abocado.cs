@@ -70,6 +70,21 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
     public void Save()
     {
         grid.GetNearestTile(gameObject.transform.position).UnBind();
+
+        // 그래픽 리소스 리셋
+        if (Quality > 0)
+        {
+            int length_level = Enum.GetValues(typeof(EnumData.Abocado)).Length;
+            spr_level = new Sprite[length_level];
+
+            // 레벨에 맞는 이미지를 spr_level 에 바인딩합니다.
+            for (int i = 0; i < length_level; i++)
+            {
+                Sprite temp = Resources.Load<Sprite>(path + (EnumData.Abocado)i);
+                if (temp != null) spr_level[i] = temp;
+                else spr_level[i] = Resources.Load<Sprite>(path + "Default");
+            }
+        }
     } // 풀에 집어 넣을 때 자동 실행
 
     /* Public Method */
@@ -106,6 +121,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
 
         Quality++;
         harvest += harvestPlus;
+        hp.Heal(hp.Hp_max);
 
         spr_level[(int)EnumData.Abocado.Tree] = Resources.Load<Sprite>($"{path}{EnumData.Abocado.Tree}{string.Concat(Enumerable.Repeat("+", Quality))}");
         spr_level[(int)EnumData.Abocado.Fruited] = Resources.Load<Sprite>($"{path}{EnumData.Abocado.Fruited}{string.Concat(Enumerable.Repeat("+", Quality))}");
