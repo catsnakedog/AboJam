@@ -111,6 +111,7 @@ MonoBehaviour:
   quality_max: 1
   harvest: 1
   harvestPlus: 1
+  HP_cultivated: 30
 --- !u!114 &6412532579159748648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +282,10 @@ PrefabInstance:
       propertyPath: initialRecords.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: fa5c5f0254ca656429a9a607ccaa4af7, type: 2}
+    - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: initialRecords.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: a6d78f665864c7046ab439ecbf111f03, type: 2}
     - target: {fileID: 5675147325519521188, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: m_Name
       value: HP

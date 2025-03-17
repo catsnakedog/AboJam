@@ -24,6 +24,8 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
     public int quality_max = 1; // 아보카도 최고 품질 (Promotion)
     public int harvest = 1; // 수확량
     public int harvestPlus = 1; // 수확 증가량
+    public float HP_cultivated; // 경작지 체력
+    private float HP_origin;
     private string path = "Images/Abocado/"; // 아보카도 이미지 Resources 경로
     private Sprite[] spr_level; // 레벨에 대응하는 스프라이트
     private (int, int) coord;
@@ -65,6 +67,8 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
 
         database_abojam.ExportAbocado(initialRecords[0].ID, ref level, ref quality, ref quality_max, ref harvest, ref harvestPlus);
         hp.Load();
+        HP_origin = hp.Hp_max;
+        hp.SetMaxHP(HP_cultivated);
         spriteRenderer.sprite = spr_level[0];
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()
@@ -233,6 +237,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
 
         Level++;
         spriteRenderer.sprite = spr_level[(int)Level];
+        hp.SetMaxHP(HP_origin);
         hp.Heal(hp.Hp_max);
     }
     private void LevelDown()
