@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Text;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -19,6 +20,7 @@ public class Spawner : MonoBehaviour
     public bool waveEnd { get; set; } = false;
     public Coroutine lastCor;
     private int spriteOrderIndex = 0;
+    private int corSpawnEndCount = 0;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -41,31 +43,13 @@ public class Spawner : MonoBehaviour
         waveIndex++;
 
         // 웨이브의 모든 스폰 순차 생성
-        for (int i = 0; i < wave.delay.Length; i++)
-        {
-            if (i == wave.delay.Length - 1) { message.On("곧 아침이 옵니다. 조금만 더 버티세요 !", 2f); }
-            yield return new WaitForSeconds(wave.delay[i]);
+        int corSpawnLength = wave.delay.Length;
+        corSpawnEndCount = 0;
+        for (int i = 0; i < corSpawnLength; i++) StartCoroutine(CorSpawn(wave.spawn[i], wave.delay[i]));
 
-            // 각 스폰 마다 몬스터 생성
-            for (int j = 0; j < wave.spawn[i].count; j++)
-            {
-                WaitForSeconds waitForSeconds = new(wave.spawn[i].interval);
-
-                // 생성
-                int random = Random.Range(0, wave.spawn[i].spawnee.prefabs.Length);
-                GameObject obj = pool.Get(wave.spawn[i].spawnee.prefabs[random].name);
-                obj.transform.position = transform.position + GetRandomPoint(wave.spawn[i].sector);
-                SetSpriteOrder(obj.GetComponent<SpriteRenderer>());
-
-                // 지정된 레벨까지 업그레이드
-                IEnemy enemy = obj.GetComponent<IEnemy>();
-                enemy.Level = wave.spawn[i].spawnee.levels[random];
-                for (int k = 0; k < enemy.Level; k++) enemy.Reinforce();
-
-                yield return waitForSeconds;
-            }
-        }
-
+        // 모든 스폰 완료될 때 까지 대기
+        WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
+        while (corSpawnEndCount < corSpawnLength) yield return waitForSeconds;
         waveEnd = true;
     }
     /// <summary>
@@ -100,5 +84,33 @@ public class Spawner : MonoBehaviour
         spriteRenderer.sortingOrder = spriteOrderIndex;
         spriteOrderIndex++;
         if (spriteOrderIndex == 32768) spriteOrderIndex = 0;
+    }
+    /// <summary>
+    /// delay 동안 대기 후 Spawn 을 시작합니다.
+    /// </summary>
+    private IEnumerator CorSpawn(Spawn spawn, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        // 각 스폰 마다 몬스터 생성
+        for (int j = 0; j < spawn.count; j++)
+        {
+            WaitForSeconds waitForSeconds = new(spawn.interval);
+
+            // 생성
+            int random = Random.Range(0, spawn.spawnee.prefabs.Length);
+            GameObject obj = pool.Get(spawn.spawnee.prefabs[random].name);
+            obj.transform.position = transform.position + GetRandomPoint(spawn.sector);
+            SetSpriteOrder(obj.GetComponent<SpriteRenderer>());
+
+            // 지정된 레벨까지 업그레이드
+            IEnemy enemy = obj.GetComponent<IEnemy>();
+            enemy.Level = spawn.spawnee.levels[random];
+            for (int k = 0; k < enemy.Level; k++) enemy.Reinforce();
+
+            yield return waitForSeconds;
+        }
+
+        corSpawnEndCount++;
     }
 }
