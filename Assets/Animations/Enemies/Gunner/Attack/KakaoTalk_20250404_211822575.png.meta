@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6e25144f0d05002438ad1265886b2979
+guid: 8f558cca2e03e334da8f55ee10831be5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ezgif-1-f0c8a6226a_0
+      name: KakaoTalk_20250404_211822575_0
       rect:
         serializedVersion: 2
-        x: 56
-        y: 4
-        width: 72
-        height: 124
+        x: 316
+        y: 0
+        width: 100
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 52d97695ebae39247943570f5d0ac782
-      internalID: -1036899679
+      spriteID: 63b0f16933fdb7043aaf6282bcac86d0
+      internalID: 113036873
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ezgif-1-f0c8a6226a_1
+      name: KakaoTalk_20250404_211822575_1
       rect:
         serializedVersion: 2
-        x: 188
-        y: 4
-        width: 68
-        height: 124
+        x: 0
+        y: 0
+        width: 104
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a888899e13da56b42b4da11acabaf184
-      internalID: 565068365
+      spriteID: 634b4fe9f8fd0f848a51b86958be2cab
+      internalID: -1079412140
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ezgif-1-f0c8a6226a_2
+      name: KakaoTalk_20250404_211822575_2
       rect:
         serializedVersion: 2
-        x: 308
-        y: 4
-        width: 76
-        height: 124
+        x: 108
+        y: 0
+        width: 100
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,20 +179,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f628ceb422e07a74ab3a1c89b5ba9cde
-      internalID: 1354857488
+      spriteID: cadb62e5d5229674ea34f1ae9886fbef
+      internalID: -968662674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ezgif-1-f0c8a6226a_3
+      name: KakaoTalk_20250404_211822575_3
       rect:
         serializedVersion: 2
-        x: 444
-        y: 4
-        width: 68
-        height: 124
+        x: 212
+        y: 0
+        width: 100
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 36e024bc9bba46a44844f10b03423253
-      internalID: -1335832822
+      spriteID: 3481c629d77ddf0409c44543d212ef71
+      internalID: -1090233993
       vertices: []
       indices: 
       edges: []
@@ -217,10 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ezgif-1-f0c8a6226a_0: -1036899679
-      ezgif-1-f0c8a6226a_1: 565068365
-      ezgif-1-f0c8a6226a_2: 1354857488
-      ezgif-1-f0c8a6226a_3: -1335832822
+      KakaoTalk_20250404_211822575_0: 113036873
+      KakaoTalk_20250404_211822575_1: -1079412140
+      KakaoTalk_20250404_211822575_2: -968662674
+      KakaoTalk_20250404_211822575_3: -1090233993
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
