@@ -32,7 +32,7 @@ public class Splash : Tower<Table_Splash, Record_Splash>, IPoolee
         instances.Add(this);
 
         // 인디케이터 스케일링
-        float scale = launcher.range * 2;
+        float scale = launcher.Range * 2;
         indicator_circle.transform.localScale = new Vector2(scale, scale);
     }
     private void OnDestroy()

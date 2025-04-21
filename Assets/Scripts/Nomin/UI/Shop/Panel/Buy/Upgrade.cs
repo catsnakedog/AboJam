@@ -12,6 +12,7 @@ public class Upgrade : MonoBehaviour
     public Projectile[] projectiles;
     public Weapon[] weapons;
     public Melee[] melees;
+    public Launcher[] launchers;
 
     /* Field & Property */
     public static Upgrade instance;
@@ -34,7 +35,7 @@ public class Upgrade : MonoBehaviour
         ApplyRange();
         ApplyKnockback();
     }
-    public void ApplyRange(Projectile projectile)
+    public void ApplyRanged(Projectile projectile)
     {
         if (projectile.gameObject.name.Contains("Player")) projectile.multiplierDamage = multiplierDamage;
     }
@@ -48,8 +49,7 @@ public class Upgrade : MonoBehaviour
     }
     public void ApplyRange()
     {
-        foreach (Weapon weapon in weapons)
-            if (weapon is RangedWeapon) ((RangedWeapon)weapon).WeaponDatas[0].Range *= multiplierRange;
+        foreach (Launcher launcher in launchers) launcher.MultiplierRange = multiplierRange;
     }
     public void ApplyKnockback()
     {

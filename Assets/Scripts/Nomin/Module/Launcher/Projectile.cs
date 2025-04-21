@@ -67,7 +67,7 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
         database_abojam.ExportProjectile(initialRecords[0].ID, ref clashTags, ref damage, ref penetrate);
 
         penetrate_current = penetrate;
-        if(upgrade != null) upgrade.ApplyRange(this);
+        if(upgrade != null) upgrade.ApplyRanged(this);
     } // 풀에서 꺼낼 때 / Import 시 자동 실행
     public void Save()
     {

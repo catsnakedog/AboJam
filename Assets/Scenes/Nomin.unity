@@ -10839,6 +10839,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 172540508672176096, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: launchers.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 172540508672176096, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: weapons.Array.data[0]
       value: 
       objectReference: {fileID: 2680334951237664318, guid: 984c1c45350e92843bd5582e97b5a1dd, type: 3}
@@ -10874,6 +10878,22 @@ PrefabInstance:
       propertyPath: projectiles.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 172540508672176096, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: launchers.Array.data[0]
+      value: 
+      objectReference: {fileID: 2065660607}
+    - target: {fileID: 172540508672176096, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: launchers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1104319617}
+    - target: {fileID: 172540508672176096, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: launchers.Array.data[2]
+      value: 
+      objectReference: {fileID: 598452805}
+    - target: {fileID: 172540508672176096, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: launchers.Array.data[3]
+      value: 
+      objectReference: {fileID: 693337492}
     - target: {fileID: 172540508672176096, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: projectiles.Array.data[0]
       value: 
