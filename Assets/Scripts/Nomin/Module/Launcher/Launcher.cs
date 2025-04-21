@@ -167,11 +167,11 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
         Vector3 startPos = transform.position + (transform.rotation * offset);
         projectile.transform.position = startPos;
         AlignProjectile(projectile, destination);
-        float distancePerframe = speed * Time.deltaTime * 50;
         while (projectile != null && projectile.activeSelf == true)
         {
             // 발사체 위치 += 진행 방향 * speed
             Vector3 direction = (new Vector3(destination.x, destination.y, startPos.z) - startPos).normalized;
+            float distancePerframe = speed * Time.deltaTime * 50;
             projectile.transform.position += direction * distancePerframe;
 
             // 사거리를 벗어나면 비활성화

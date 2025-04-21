@@ -46,13 +46,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4c0c43b5173ad4885e0326efe2b3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialRecords: []
+  startFlag: 0
   spr_empty: {fileID: 8586651774648220857}
   spr_max: {fileID: 2471433501790297299}
   entity: {fileID: 0}
-  HP_MAX: 100
   speed: 0.02
-  HideFullHP: 0
+  hideFullHp: 1
+  hp_max: 100
   death:
+    m_PersistentCalls:
+      m_Calls: []
+  damaged:
+    m_PersistentCalls:
+      m_Calls: []
+  healed:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &7192309951316103606
@@ -127,7 +135,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1511687805
   m_SortingLayer: 4
-  m_SortingOrder: 998
+  m_SortingOrder: 996
   m_Sprite: {fileID: 21300000, guid: ddf09b6a80c06b9458c7bbdb03460a2e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -211,7 +219,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1511687805
   m_SortingLayer: 4
-  m_SortingOrder: 999
+  m_SortingOrder: 997
   m_Sprite: {fileID: 21300000, guid: c233779cf816d3f4cb31c6a90d0c7d30, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
