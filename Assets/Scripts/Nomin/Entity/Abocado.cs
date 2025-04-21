@@ -237,7 +237,9 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
 
         Level++;
         spriteRenderer.sprite = spr_level[(int)Level];
-        hp.SetMaxHP(HP_origin);
+
+        // 씨앗은 땅 체력과 동일화
+        if (Level != EnumData.Abocado.Seed) hp.SetMaxHP(HP_origin);
         hp.Heal(hp.Hp_max);
     }
     private void LevelDown()

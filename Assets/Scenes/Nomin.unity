@@ -654,6 +654,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1588335892}
+        m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
+        m_MethodName: StopWave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &63265570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7048,6 +7060,17 @@ MonoBehaviour:
   startFlag: 0
   prefabs: []
   levels: 
+--- !u!114 &1588335892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2587369121414753785, guid: 838d8d7066aa44b42bb43cefa276b102, type: 3}
+  m_PrefabInstance: {fileID: 3811987817545360359}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312de9f6c38134439a7f845fcd8a027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1594290803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4824882730664373335, guid: 6c00c703fd9aa5942a4dce550d012dd1, type: 3}

@@ -19,6 +19,8 @@ public class Spawner : MonoBehaviour
     public int waveIndex = 1;
     public bool waveEnd { get; set; } = false;
     public Coroutine lastCor;
+    public Coroutine lastWaveCor;
+    public List<Coroutine> lastSpawnCors = new List<Coroutine>();
     private int spriteOrderIndex = 0;
     private int corSpawnEndCount = 0;
 
@@ -45,12 +47,22 @@ public class Spawner : MonoBehaviour
         // 웨이브의 모든 스폰 순차 생성
         int corSpawnLength = wave.delay.Length;
         corSpawnEndCount = 0;
-        for (int i = 0; i < corSpawnLength; i++) StartCoroutine(CorSpawn(wave.spawn[i], wave.delay[i]));
+        lastSpawnCors.Clear();
+        for (int i = 0; i < corSpawnLength; i++) lastSpawnCors.Add(StartCoroutine(CorSpawn(wave.spawn[i], wave.delay[i])));
 
         // 모든 스폰 완료될 때 까지 대기
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
         while (corSpawnEndCount < corSpawnLength) yield return waitForSeconds;
         waveEnd = true;
+    }
+    /// <summary>
+    /// 현재 웨이브를 강제 종료합니다.
+    /// </summary>
+    public void StopWave()
+    {
+        if(lastSpawnCors != null) foreach (Coroutine corSpawn in lastSpawnCors) StopCoroutine(corSpawn);
+        waveEnd = true;
+        if(lastCor != null) StopCoroutine(lastCor);
     }
     /// <summary>
     /// <br>지정한 Sector 내에 프리팹을 스폰시킵니다.</br>
