@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static EnumData;
 
 public class Reinforcement : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class Reinforcement : MonoBehaviour
 
     /* Field & Property */
     public static Reinforcement instance; // 싱글턴
+    public event Action<EnumData.TowerType, int> eventReinforce;
     private string path_images = "Images/UI/Reinforcement/"; // 타워 이미지 Resources 경로
 
     /* Intializer & Finalizer & Updater */
@@ -68,6 +71,18 @@ public class Reinforcement : MonoBehaviour
         // 결제
         if (StaticData.Garu < currentTower.ReinforceCost[currentTower.Level]) { message.On("증강 비용이 부족합니다.", 2f); return; }
         StaticData.Garu -= currentTower.ReinforceCost[currentTower.Level];
+
+        // 로그 기록 (ITower currentTower 로 부터 실제 타입 추출)
+        Dictionary<Type, EnumData.TowerType> typeToEnumMap = new Dictionary<Type, EnumData.TowerType>
+        {
+            { typeof(Guard), EnumData.TowerType.Guard },
+            { typeof(Auto), EnumData.TowerType.Auto },
+            { typeof(Heal), EnumData.TowerType.Heal },
+            { typeof(Splash), EnumData.TowerType.Splash },
+        };
+
+        if (typeToEnumMap.TryGetValue(currentTower.GetType(), out EnumData.TowerType towerEnum))
+            eventReinforce?.Invoke(towerEnum, currentTower.ReinforceCost[currentTower.Level]);
 
         currentTower.Reinforce();
         Off();

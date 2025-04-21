@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
 public class Farming : MonoBehaviour
@@ -18,6 +18,7 @@ public class Farming : MonoBehaviour
     public float cultivateTime = 1f; // 경작 시간
     public int price = 5; // 경작 비용
     public float waitForCultivateGaugeRatio; // 이전 경작이 일정 비율 이상 진행 중일 시 대기
+    public event Action<int> eventCultivated;
     private Coroutine corCultivate;
     private Coroutine corWaitCultivate;
     private Coroutine corMove;
@@ -87,7 +88,7 @@ public class Farming : MonoBehaviour
             yield break;
         }
         else StaticData.Garu -= price;
-
+        eventCultivated?.Invoke(price);
 
         if (tile.Go == null) tile.Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
         else { UnityEngine.Debug.Log($"타일 ({tile.i}, {tile.j}) 에 이미 {tile.Go.name} 가 바인딩 되어 있습니다."); };

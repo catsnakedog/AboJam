@@ -9,6 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
+using System;
 
 public class BTN_Weapons : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class BTN_Weapons : MonoBehaviour
     /* Field & Property */
     public static List<BTN_Weapons> instances_melee = new List<BTN_Weapons>();
     public static List<BTN_Weapons> instances_range = new List<BTN_Weapons>();
+    public event Action<int> eventWeapon;
     public int Price
     {
         get
@@ -121,6 +123,8 @@ public class BTN_Weapons : MonoBehaviour
     {
         Message.instance.On("상품 구매가 완료되었습니다.", 2f);
         StaticData.Garu -= price;
+        if (eventWeapon == null) eventWeapon += Log.addWeaponLog;
+        eventWeapon?.Invoke(price);
     }
     /// <summary>
     /// <br>구매 시 이미지를 변경합니다.</br>

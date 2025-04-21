@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Grow : MonoBehaviour
@@ -14,6 +15,7 @@ public class Grow : MonoBehaviour
     /* Field & Property */
     public static Grow instance; // 싱글턴
     public int price;
+    public event Action<int> eventGrow;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -46,6 +48,7 @@ public class Grow : MonoBehaviour
         if (StaticData.Garu < price) { message.On("보약이 부족해요.", 2f); Off(); return; }
 
         StaticData.Garu -= price;
+        eventGrow?.Invoke(price);
         currentAbocado.GrowUp();
         message.On("아보카도의 기분이 좋아졌어요 !", 2f);
         Off();

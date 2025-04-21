@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class BTN_Upgrade : RecordInstance<Table_Upgrade, Record_Upgrade>
 
     /* Field & Property */
     public static List<BTN_Upgrade> instances = new List<BTN_Upgrade>();
+    public event Action<int> eventUpgrade;
     [SerializeField] private int maxLevel = 1; public int MaxLevel { get => maxLevel; }
     private int price; public int Price
     {
@@ -125,6 +127,8 @@ public class BTN_Upgrade : RecordInstance<Table_Upgrade, Record_Upgrade>
     {
         Message.instance.On("상품 구매가 완료되었습니다.", 2f);
         StaticData.Garu -= price;
+        if (eventUpgrade == null) eventUpgrade += Log.addCharacterLog;
+        eventUpgrade?.Invoke(price);
     }
     /// <summary>
     /// 업그레이드 레벨을 증가시킵니다.
