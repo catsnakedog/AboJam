@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6225409795156279537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.8997829, w: 0.43633792}
-  m_LocalPosition: {x: 3.3710225, y: -3.6342368, z: 0.000000021068885}
+  m_LocalRotation: {x: 0, y: 0, z: -0.9056008, w: -0.42413116}
+  m_LocalPosition: {x: -13.748337, y: -6.2825217, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -54,7 +54,7 @@ MonoBehaviour:
   launcher: {fileID: 0}
   clashTags:
   - Enemies
-  damage: 5
+  damage: 7
   multiplierDamage: 1
   penetrate: 1
 --- !u!212 &1193637438243774845
