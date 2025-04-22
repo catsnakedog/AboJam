@@ -12,10 +12,10 @@ using static ObjectPool;
 using static UnityEngine.GraphicsBuffer;
 
 [Serializable] internal struct AbocadoData { public EnumData.Abocado level; public int quality; public Vector3 pos; }
-[Serializable] internal struct AutoData { public int subcount; public Vector3 pos; }
-[Serializable] internal struct GuardData { public float hp_max; public Vector3 pos; }
-[Serializable] internal struct SplashData { public string projectileName; public Vector3 pos; }
-[Serializable] internal struct HealData { public string projectileName; public Vector3 pos; }
+[Serializable] internal struct AutoData { public int level; public Vector3 pos; }
+[Serializable] internal struct GuardData { public int level; public Vector3 pos; }
+[Serializable] internal struct SplashData { public int level; public Vector3 pos; }
+[Serializable] internal struct HealData { public int level; public Vector3 pos; }
 [Serializable] internal class AbocadoWrapper { public List<AbocadoData> list; }
 [Serializable] internal class AutoWrapper { public List<AutoData> list; }
 [Serializable] internal class GuardWrapper { public List<GuardData> list; }
@@ -235,7 +235,7 @@ internal class BuildPreset : MonoBehaviour
             {
                 count++;
                 AutoData data = new AutoData();
-                data.subcount = auto.subCount;
+                data.level = auto.Level;
                 data.pos = auto.transform.position;
                 datas.Add(data);
             }
@@ -258,7 +258,7 @@ internal class BuildPreset : MonoBehaviour
             {
                 count++;
                 GuardData data = new GuardData();
-                data.hp_max = guard.hp.Hp_max;
+                data.level = guard.Level;
                 data.pos = guard.transform.position;
                 datas.Add(data);
             }
@@ -281,7 +281,7 @@ internal class BuildPreset : MonoBehaviour
             {
                 count++;
                 SplashData data = new SplashData();
-                data.projectileName = splash.launcher.projectile.name;
+                data.level = splash.Level;
                 data.pos = splash.transform.position;
                 datas.Add(data);
             }
@@ -304,7 +304,7 @@ internal class BuildPreset : MonoBehaviour
             {
                 count++;
                 HealData data = new HealData();
-                data.projectileName = heal.launcher.projectile.name;
+                data.level = heal.Level;
                 data.pos = heal.transform.position;
                 datas.Add(data);
             }
@@ -390,38 +390,102 @@ internal class BuildPreset : MonoBehaviour
     /// </summary>
     private void OverrideAbocado(Abocado abocado, AbocadoData abocadoData)
     {
-        while (abocado.Level < abocadoData.level) abocado.GrowUp(true);
-        while (abocado.Quality < abocadoData.quality) abocado.Promote();
+        int repeatCount = 0;
+
+        while (abocado.Level < abocadoData.level)
+        {
+            abocado.GrowUp(true);
+            repeatCount++;
+            if (repeatCount > 100)
+            {
+                Debug.Log($"무한 재귀 버그 : {nameof(OverrideAbocado)}");
+                break;
+            }
+        }
+
+        while (abocado.Quality < abocadoData.quality)
+        {
+            abocado.Promote();
+            repeatCount++;
+            if (repeatCount > 100)
+            {
+                Debug.Log($"무한 재귀 버그 : {nameof(OverrideAbocado)}");
+                break;
+            }
+        }
     }
     /// <summary>
     /// Auto 타워에 데이터를 덮어씁니다.
     /// </summary>
-    private void OverrideAuto(Auto guard, AutoData autoData)
+    private void OverrideAuto(Auto auto, AutoData autoData)
     {
-        while (guard.subCount < autoData.subcount) guard.Reinforce();
+        int repeatCount = 0;
+
+        while (auto.Level < autoData.level)
+        {
+            auto.Reinforce();
+            repeatCount++;
+            if (repeatCount > 100)
+            {
+                Debug.Log($"무한 재귀 버그 : {nameof(OverrideAuto)}");
+                break;
+            }
+        }
     }
     /// <summary>
     /// Guard 타워에 데이터를 덮어씁니다.
     /// </summary>
     private void OverrideGuard(Guard guard, GuardData guardData)
     {
-        while (guard.hp.Hp_max < guardData.hp_max) guard.Reinforce();
+        int repeatCount = 0;
+
+        while (guard.Level < guardData.level)
+        {
+            guard.Reinforce();
+            repeatCount++;
+            if (repeatCount > 100)
+            {
+                Debug.Log($"무한 재귀 버그 : {nameof(OverrideGuard)}");
+                break;
+            }
+        }
     }
     /// <summary>
     /// Splash 타워에 데이터를 덮어씁니다.
     /// </summary>
     private void OverrideSplash(Splash splash, SplashData splashData)
     {
-        while (splash.launcher.projectile.name != splashData.projectileName) splash.Reinforce();
+        int repeatCount = 0;
+
+        while (splash.Level < splashData.level)
+        {
+            splash.Reinforce();
+            repeatCount++;
+            if (repeatCount > 100)
+            {
+                Debug.Log($"무한 재귀 버그 : {nameof(OverrideSplash)}");
+                break;
+            }
+        }
     }
     /// <summary>
     /// Heal 타워에 데이터를 덮어씁니다.
     /// </summary>
     private void OverrideHeal(Heal heal, HealData healData)
     {
-        while (heal.launcher.projectile.name != healData.projectileName) heal.Reinforce();
-    }
+        int repeatCount = 0;
 
+        while (heal.Level < healData.level)
+        {
+            repeatCount++;
+            if (repeatCount > 100)
+            {
+                Debug.Log($"무한 재귀 버그 : {nameof(OverrideHeal)}");
+                break;
+            }
+            heal.Reinforce();
+        }
+    }
 
     /// <summary>
     /// 로컬에 프리셋의 건물 숫자를 저장합니다.
