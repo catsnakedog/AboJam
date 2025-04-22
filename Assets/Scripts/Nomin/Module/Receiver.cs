@@ -263,10 +263,19 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnClose(InputAction.CallbackContext context)
     {
+        bool flag = false;
+        if (shopPanel.activeSelf) flag = true;
+        if (shortcut.activeSelf) flag = true;
+        if (promotion.gameObject.activeSelf) flag = true;
+        if (reinforcement.gameObject.activeSelf) flag = true;
+        if (demolition.gameObject.activeSelf) flag = true;
+        if (grow.gameObject.activeSelf) flag = true;
+
         shopPanel.SetActive(false);
         shortcut.SetActive(false);
         OffUI();
-        menu.MenuOnOff();
+
+        if(!flag || menu.panel.activeSelf) menu.MenuOnOff();
     }
     /// <summary>
     /// KeyDown(Enter)

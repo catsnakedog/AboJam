@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     /* Dependency */
-    [SerializeField] GameObject panel;
+    [SerializeField] public GameObject panel;
     [SerializeField] Bat bat;
 
     /* Field & Property */
