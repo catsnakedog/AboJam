@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,4 +15,6 @@ public interface ITower
     public int[] ReinforceCost { get; set; } // 레벨업 비용 (개수 = 최대 레벨 결정)
 
     public void Reinforce();
+
+    public IEnumerator CorDeath(float time);
 }

@@ -28,7 +28,6 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
     private float HP_origin;
     private string path = "Images/Abocado/"; // 아보카도 이미지 Resources 경로
     private Sprite[] spr_level; // 레벨에 대응하는 스프라이트
-    private (int, int) coord;
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
@@ -228,7 +227,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
             }
         }
     }
-
+    
     /* Private Method */
     private void LevelUp(bool forced = false)
     {
