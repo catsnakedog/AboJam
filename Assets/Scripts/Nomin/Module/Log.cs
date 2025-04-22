@@ -134,7 +134,7 @@ internal class Log : MonoBehaviour
     /// </summary>
     private void AddDayLog()
     {
-        currentLog.day = Date.instance.dateTime.Day;
+        currentLog.day = (int)(Date.instance.dateTime - DateTime.MinValue).TotalDays + 1;
         currentLog.treeCount = GetTreeCount();
         currentLog.productionCount = GetProductionCount();
         currentLog.remainAbocado = StaticData.Abocado;

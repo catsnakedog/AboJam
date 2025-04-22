@@ -160,6 +160,24 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         while (this.gameTime != gameTime) Skip();
     }
     /// <summary>
+    /// 특정 날짜의 아침까지 강제 스킵합니다.
+    /// </summary>
+    public void Skip(int day)
+    {
+        // 빛 & 이벤트 호출
+        morningStart?.Invoke();
+        globalLight.Set(globalLight.morning, 0.01f);
+
+        // 시간 설정 (흐름)
+        dateTime = DateTime.MinValue.AddDays(day);
+        gameTime = GameTime.Morning;
+        text_time.enabled = true;
+        timeFlow = true;
+        dateTime = dateTime.Date + StringToTime(morningTime);
+        last = DateTime.Now;
+        ChangeImage();
+    }
+    /// <summary>
     /// 아침을 스킵하고 해질녘이 시작됩니다.
     /// </summary>
     /// <param name="skipedSeconds">스킵된 초</param>
