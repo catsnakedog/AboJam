@@ -38,6 +38,7 @@ public class Spawner : MonoBehaviour
     public IEnumerator CorWave()
     {
         if (waveIndex >= database_abojam.Wave.Count) { message.On("다음 웨이브가 없습니다.", 2f); yield break; }
+        waveEnd = false;
 
         // 런타임 테이블에서 다음에 진행할 웨이브를 가져옵니다.
         Wave wave = new Wave();
