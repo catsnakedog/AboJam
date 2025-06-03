@@ -21,7 +21,7 @@ public class Change : MonoBehaviour
     public int minValue; // 최소 아보카도 가격
     public int maxQuantity; // 거래 최대 개수
     private int quantity; // 거래할 아보카도 수
-    private int tradeCount; // 총 판매 대금
+    private int tradeCount; public int TradeCount { set => tradeCount = value; } // 총 판매 개수
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -59,7 +59,7 @@ public class Change : MonoBehaviour
         }
         else Message.instance.On($"{quantity} 개 이상부터 판매할 수 있습니다.", 2f);
     }
-    
+
     /* Private Method */
     /// <summary>
     /// 아보카도 수량에 따른 가치를 반환합니다.
@@ -70,7 +70,7 @@ public class Change : MonoBehaviour
         int currentValue = value; // 현재 아보카도의 가치
         int thresholdTemp = 0; // threshold 에 도달할 때 마다 currentValue -= discount
 
-        // 이전 까지의 총 거래 대금으로 currentValue 를 계산합니다.
+        // 이전 까지의 아보카도 총 거래 개수로 currentValue 를 계산합니다.
         for (int i = 0; i < tradeCount; i++)
         {
             thresholdTemp++;

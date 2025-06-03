@@ -68,7 +68,7 @@ public class Move : MonoBehaviour
         if (spriteRenderer != null) spriteRenderer.flipX = direction.x > 0;
 
         /* 임시 이동 & 애니메이션 */
-        if (distance > detection * 0.9f && isMove == true)
+        if (distance > detection * 0.8f && isMove == true)
         {
             transform.position += direction * moveSpeed * Time.deltaTime;
 
