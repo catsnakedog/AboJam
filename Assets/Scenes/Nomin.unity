@@ -16922,6 +16922,10 @@ PrefabInstance:
       value: Upgrade_Damage
       objectReference: {fileID: 0}
     - target: {fileID: 1444022329381863584, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
+      propertyPath: maxLevel
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1444022329381863584, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: initialRecords.Array.size
       value: 1
       objectReference: {fileID: 0}
