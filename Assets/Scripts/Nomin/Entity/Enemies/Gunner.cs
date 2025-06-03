@@ -96,7 +96,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     /// </summary>
     public override void Reinforce()
     {
-        hp.SetMaxHP(hp.Hp_max * 1.5f);
+        hp.SetMaxHP(hp.Hp_max * 1.25f);
         subCount++;
         base.Reinforce();
     }

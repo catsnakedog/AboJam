@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class Upgrade : MonoBehaviour
 {
     /* Dependency */
+    public Button BTN_HP;
     public Button BTN_Damage;
     public Button BTN_Speed;
     public Button BTN_Range;

@@ -115,7 +115,7 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
 
                 break;
             }
-                yield return waitForSeconds;
+            yield return waitForSeconds;
         }
     }
     /// <summary>

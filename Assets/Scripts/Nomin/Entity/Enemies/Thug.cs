@@ -92,8 +92,7 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
     /// </summary>
     public override void Reinforce()
     {
-        hp.SetMaxHP(hp.Hp_max * 1.5f);
-        melee.damage *= 1.5f;
+        hp.SetMaxHP(hp.Hp_max * 1.75f);
         base.Reinforce();
     }
 

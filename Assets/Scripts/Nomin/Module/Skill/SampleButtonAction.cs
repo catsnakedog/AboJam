@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,7 @@ namespace Synty.Interface.FantasyWarriorHUD.Samples
         public float activeTime = 1f;
         public bool runOnEnable;
         public bool applyRandomRotationToActivateObject;
+        public int price;
 
         private void Awake()
         {
@@ -59,6 +61,10 @@ namespace Synty.Interface.FantasyWarriorHUD.Samples
 
         private void OnClick()
         {
+            if (StaticData.Garu < price) { Message.instance.On("가루가 부족해요...", 2f); return; }
+            else StaticData.Garu -= price;
+            Skill.instance.Meteor();
+
             StartCoroutine(C_ActivateObject());
 
             foreach (GameObject toggleObject in toggleObjects)
