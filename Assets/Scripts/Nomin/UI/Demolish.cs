@@ -1,3 +1,4 @@
+using UnityEditor.Recorder.AOV.Input;
 using UnityEngine;
 
 public class Demolition : MonoBehaviour
@@ -37,7 +38,19 @@ public class Demolition : MonoBehaviour
     /// </summary>
     public void Demolish()
     {
+        Refund();
         pool.Return(currentTile.Go);
         Off();
+
+        // 경작지를 제외하고 30 가루를 환급합니다.
+        void Refund()
+        {
+            // 경작지는 환급 X
+            Abocado abocado = currentTile.Go.GetComponent<Abocado>();
+            if (abocado != null)
+                if (abocado.Level == EnumData.Abocado.Cultivated) return;
+
+            StaticData.Garu += 30;
+        }
     }
 }
