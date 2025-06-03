@@ -45,7 +45,7 @@ public class Upgrade : MonoBehaviour
     }
     public void ApplyRate()
     {
-        foreach (Weapon weapon in weapons) weapon.AttackSpeed *= multiplierRate;
+        foreach (Weapon weapon in weapons) { weapon.AttackSpeed *= multiplierRate; }
     }
     public void ApplyRange()
     {

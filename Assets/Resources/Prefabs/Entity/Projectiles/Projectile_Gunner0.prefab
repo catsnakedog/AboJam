@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6225409795156279537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.6771615, w: 0.7358344}
-  m_LocalPosition: {x: 3.5437512, y: -1.5868306, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.9432632, w: -0.33204612}
+  m_LocalPosition: {x: 0.043774903, y: 0.9322866, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -53,10 +53,10 @@ MonoBehaviour:
   colider2D: {fileID: 1469443515481340077}
   launcher: {fileID: 0}
   clashTags:
+  - Abocados
   - Player
   - Towers
-  - Abocados
-  damage: 1.5
+  damage: 4
   multiplierDamage: 1
   penetrate: 1
 --- !u!212 &1193637438243774845

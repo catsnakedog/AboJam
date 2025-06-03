@@ -162,9 +162,9 @@ public class BTN_Upgrade : RecordInstance<Table_Upgrade, Record_Upgrade>
     private void Upgrade()
     {
         if (ID == "Upgrade_Damage") upgrade.multiplierDamage += coefficient;
-        if (ID == "Upgrade_Knockback") upgrade.multiplierRate += coefficient;
+        if (ID == "Upgrade_Knockback") upgrade.multiplierKnockback += coefficient;
         if (ID == "Upgrade_Range") upgrade.multiplierRange += coefficient;
-        if (ID == "Upgrade_Rate") upgrade.multiplierKnockback += coefficient;
+        if (ID == "Upgrade_Rate") upgrade.multiplierRate += coefficient;
         upgrade.Apply();
     }
 }
