@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2279252769181004249
 Transform:
   m_ObjectHideFlags: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6225409795156279537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.44852704, w: 0.8937693}
+  m_LocalPosition: {x: -8.8925, y: 7.1361723, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49,13 +49,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialRecords:
   - {fileID: 11400000, guid: 07e8f6f491f427441a04ea00766aa2e8, type: 2}
-  startFlag: 0
+  startFlag: 1
   explosion: {fileID: 3100893671775424701, guid: 0d82fe44e7aea9645b061ff57238f3e9, type: 3}
   colider2D: {fileID: 1469443515481340077}
   launcher: {fileID: 0}
   clashTags:
   - Enemies
-  damage: 15
+  damage: 20
+  multiplierDamage: 1
   penetrate: 1
 --- !u!212 &1193637438243774845
 SpriteRenderer:

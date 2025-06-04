@@ -136,7 +136,7 @@ public class Receiver : MonoBehaviour
         else highlight.On(tile, false);
     }
     /// <summary>
-    /// HighlightCultivate + KeyDown(F)
+    /// HighlightDemolition + KeyDown(Right Click)
     /// </summary>
     private void OnHighlightDemolition(InputAction.CallbackContext context)
     {

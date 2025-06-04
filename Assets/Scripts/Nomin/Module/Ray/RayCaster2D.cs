@@ -44,6 +44,8 @@ public class RayCaster2D : MonoBehaviour
         List<RaycastResult> UI = RayCastUI(mousePos);
         if (UI.Count > 0) return null;
 
-        return Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePos), Vector2.zero);
+        // Player 레이어 무시
+        int excludePlayer = ~(1 << LayerMask.NameToLayer("Player"));
+        return Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePos), Vector2.zero, 0, excludePlayer);
     }
 }
