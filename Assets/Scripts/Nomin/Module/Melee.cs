@@ -140,6 +140,10 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     /// </summary>
     private void Knockback(Collider2D collider, float knockback)
     {
+        // 보스 몬스터면 넉백을 무시합니다.
+        try { if (Enum.IsDefined(typeof(EnumData.SpecialLevel), collider.GetComponent<IEnemy>().Level)) return; }
+        catch (Exception) { }
+
         StartCoroutine(CorKnockback(collider, knockback));
     }
     private IEnumerator CorKnockback(Collider2D collider, float knockback)
