@@ -56,4 +56,14 @@ public class EnumData
         Splash = 4,
         Heal = 5,
     }
+
+    /// <summary>
+    /// 특수 능력이 적용될 몬스터의 특수 레벨
+    /// </summary>
+    public enum SpecialLevel
+    {
+        FirstBoss = 999,
+        SecondsBoss = 9999,
+        ThirdBoss = 99999,
+    }
 }

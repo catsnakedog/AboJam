@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -94,6 +95,29 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
     {
         hp.SetMaxHP(hp.Hp_max * 1.75f);
         base.Reinforce();
+    }
+    /// <summary>
+    /// 보스 몬스터로 승격됩니다.
+    /// </summary>
+    public override void Promotion(EnumData.SpecialLevel level)
+    {
+        switch (level)
+        {
+            case EnumData.SpecialLevel.FirstBoss:
+                hp.SetMaxHP(4500);
+                melee.damage = 199;
+                break;
+            case EnumData.SpecialLevel.SecondsBoss:
+                hp.SetMaxHP(9999);
+                melee.damage = 9999;
+                break;
+            case EnumData.SpecialLevel.ThirdBoss:
+                hp.SetMaxHP(99999);
+                melee.damage = 99999;
+                break;
+        }
+
+        base.Promotion(level);
     }
 
     /* Private Method */

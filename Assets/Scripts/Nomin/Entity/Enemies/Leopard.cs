@@ -96,6 +96,29 @@ public class Leopard : Enemy<Table_Leopard, Record_Leopard>, IPoolee
         melee.damage *= 1.5f;
         base.Reinforce();
     }
+    /// <summary>
+    /// 보스 몬스터로 승격됩니다.
+    /// </summary>
+    public override void Promotion(EnumData.SpecialLevel level)
+    {
+        switch (level)
+        {
+            case EnumData.SpecialLevel.FirstBoss:
+                hp.SetMaxHP(4500);
+                melee.damage = 199;
+                break;
+            case EnumData.SpecialLevel.SecondsBoss:
+                hp.SetMaxHP(9999);
+                melee.damage = 9999;
+                break;
+            case EnumData.SpecialLevel.ThirdBoss:
+                hp.SetMaxHP(99999);
+                melee.damage = 99999;
+                break;
+        }
+
+        base.Promotion(level);
+    }
 
     /* Private Method */
     /// <summary>

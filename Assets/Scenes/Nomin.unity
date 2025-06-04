@@ -18397,7 +18397,7 @@ PrefabInstance:
       objectReference: {fileID: 1104319617}
     - target: {fileID: 2101431304899228848, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: AttackSpeed
-      value: 1.5
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 2101431304899228848, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: WeaponDatas.Array.data[0].AttackSpeed

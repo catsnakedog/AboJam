@@ -100,6 +100,30 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
         subCount++;
         base.Reinforce();
     }
+    /// <summary>
+    /// 보스 몬스터로 승격됩니다.
+    /// </summary>
+    public override void Promotion(EnumData.SpecialLevel level)
+    {
+        switch (level)
+        {
+            case EnumData.SpecialLevel.FirstBoss:
+                hp.SetMaxHP(3000);
+                subCount += 30;
+                SetDelay(0.01f);
+                break;
+            case EnumData.SpecialLevel.SecondsBoss:
+                hp.SetMaxHP(9999);
+                SetDelay(0.01f);
+                break;
+            case EnumData.SpecialLevel.ThirdBoss:
+                hp.SetMaxHP(99999);
+                SetDelay(0.01f);
+                break;
+        }
+
+        base.Promotion(level);
+    }
 
     /* Private Method */
     /// <summary>

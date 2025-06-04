@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI.Extensions.Tweens;
 
 public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy 
     where T1 : ITable
@@ -17,6 +18,7 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
     public static IEnemy currentEnemy => IEnemy.currentEnemy;
     public int Level { get; set; } = 0; // 현재 레벨
     public int MaxLevel { get; private set; } // 최대 레벨
+    private Vector3 originScale;
 
     /* Intializer & Finalizer & Updater */
     public virtual void Start()
@@ -34,6 +36,7 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
     public virtual void Load()
     {
         Level = 0;
+        if (originScale != default(Vector3)) gameObject.transform.localScale = originScale;
         hp.Load();
     } // 풀에서 꺼낼 때 또는 Database 에서 로드 시 자동 실행
     public void Save()
@@ -99,6 +102,17 @@ public class Enemy<T1, T2> : RecordInstance<T1, T2>, IEnemy
     /// </summary>
     public virtual void Reinforce()
     {
+        hp.Heal(hp.Hp_max);
+    }
+    /// <summary>
+    /// <br>적을 보스로 승격시킵니다.</br>
+    /// <br>공통 승격만 정의되어 있으며, 개별 승격은 자식 스크립트에서 구현됩니다.</br>
+    /// </summary>
+    public virtual void Promotion(EnumData.SpecialLevel level)
+    {
+        originScale = gameObject.transform.localScale;
+        gameObject.transform.localScale *= 2;
+
         hp.Heal(hp.Hp_max);
     }
 }

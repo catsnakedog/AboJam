@@ -77,7 +77,7 @@
                 {
                     "name": "modifier",
                     "id": "2ea1e28e-2916-475b-8311-26c1221ee3d8",
-                    "path": "<Keyboard>/f",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
@@ -110,7 +110,7 @@
                 {
                     "name": "modifier",
                     "id": "332b844b-8198-46b4-951b-d7fa838097e3",
-                    "path": "<Keyboard>/g",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
@@ -143,7 +143,7 @@
                 {
                     "name": "modifier",
                     "id": "86b34ab2-58b8-4580-9664-d93b4209beb4",
-                    "path": "<Keyboard>/f",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",

@@ -53,6 +53,8 @@ public class Receiver : MonoBehaviour
         map.FindAction("HighlightCultivate").performed += OnHighlightCultivate;
         map.FindAction("HighlightCultivate").canceled -= OffHighlight;
         map.FindAction("HighlightCultivate").canceled += OffHighlight;
+        map.FindAction("HighlightCultivate").canceled -= OnInteraction;
+        map.FindAction("HighlightCultivate").canceled += OnInteraction;
         map.FindAction("HighlightDemolition").performed -= OnHighlightDemolition;
         map.FindAction("HighlightDemolition").performed += OnHighlightDemolition;
         map.FindAction("HighlightDemolition").canceled -= OffHighlight;
@@ -88,6 +90,7 @@ public class Receiver : MonoBehaviour
         map.FindAction("Demolition").performed -= OnDemolition;
         map.FindAction("HighlightCultivate").performed -= OnHighlightCultivate;
         map.FindAction("HighlightCultivate").canceled -= OffHighlight;
+        map.FindAction("HighlightCultivate").canceled -= OnInteraction;
         map.FindAction("HighlightDemolition").performed -= OnHighlightDemolition;
         map.FindAction("HighlightDemolition").canceled -= OffHighlight;
 
@@ -124,7 +127,7 @@ public class Receiver : MonoBehaviour
 
     /* Map Event Handler */
     /// <summary>
-    /// HighlightCultivate + KeyDown(F)
+    /// HighlightCultivate + KeyDown(Right Click)
     /// </summary>
     private void OnHighlightCultivate(InputAction.CallbackContext context)
     {
@@ -133,7 +136,7 @@ public class Receiver : MonoBehaviour
         else highlight.On(tile, false);
     }
     /// <summary>
-    /// HighlightCultivate + KeyDown(G)
+    /// HighlightCultivate + KeyDown(F)
     /// </summary>
     private void OnHighlightDemolition(InputAction.CallbackContext context)
     {
@@ -162,7 +165,7 @@ public class Receiver : MonoBehaviour
         Debug.Log($"타일 정보\n좌표 : [{tile.i}][{tile.j}] | pos : {tile.pos} | 설치 : {name} | GridIndexMap : {grid.GridIndexMap[tile.i, tile.j]}");
     }
     /// <summary>
-    /// Click + KeyDown(F)
+    /// Click + KeyDown(Right Click)
     /// </summary>
     /// <param name="context"></param>
     private void OnInteraction(InputAction.CallbackContext context)
@@ -175,7 +178,7 @@ public class Receiver : MonoBehaviour
         try { hit.Value.collider.GetComponent<RayCastee2D>().OnClick(); } catch { return; }
     }
     /// <summary>
-    /// Click + KeyDown(G)
+    /// Click + KeyDown(F)
     /// </summary>
     /// <param name="context"></param>
     private void OnDemolition(InputAction.CallbackContext context)

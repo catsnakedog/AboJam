@@ -116,10 +116,19 @@ public class Spawner : MonoBehaviour
             obj.transform.position = transform.position + GetRandomPoint(spawn.sector);
             SetSpriteOrder(obj.GetComponent<SpriteRenderer>());
 
-            // 지정된 레벨까지 업그레이드
             IEnemy enemy = obj.GetComponent<IEnemy>();
             enemy.Level = spawn.spawnee.levels[random];
-            for (int k = 0; k < enemy.Level; k++) enemy.Reinforce();
+
+            // 스페셜 레벨이면, 보스 몬스터 설정 적용
+            if (System.Enum.IsDefined(typeof(EnumData.SpecialLevel), enemy.Level))
+            {
+                enemy.Promotion((EnumData.SpecialLevel)enemy.Level);
+            }
+            // 일반 레벨이면, 지정된 레벨까지 업그레이드
+            else
+            {
+                for (int k = 0; k < enemy.Level; k++) enemy.Reinforce();
+            }
 
             yield return waitForSeconds;
         }
