@@ -7,7 +7,7 @@ public class Guard : Tower<Table_Guard, Record_Guard>, IPoolee
 {
     /* Field & Property */
     public static List<Guard> instances = new List<Guard>(); // 모든 방어 타워 인스턴스
-    public float hpMultiply = 1.5f;
+    public float hpMultiply = 1.3f;
     private Database_AboJam database_abojam => Database_AboJam.instance; // 런타임 데이터베이스
     [SerializeField] private string ID; // Primary Key
 

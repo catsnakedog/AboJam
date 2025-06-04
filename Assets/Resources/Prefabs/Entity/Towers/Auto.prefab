@@ -61,7 +61,7 @@ MonoBehaviour:
   launcher: {fileID: 5557456795515503153}
   indicator_circle: {fileID: 2130840028591414169}
   ID: Auto
-  delay: 0.3
+  delay: 0.35
   detection: 5
   angle: 60
   subCount: 0

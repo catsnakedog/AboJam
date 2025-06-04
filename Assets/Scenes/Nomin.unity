@@ -17233,7 +17233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 950484695181790926, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: price
-      value: 150
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 950484695181790926, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: weapon
@@ -17761,7 +17761,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5327392307747875404, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: price
-      value: 550
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 5327392307747875404, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: weapon
@@ -17993,7 +17993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7702306004422919594, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: price
-      value: 1850
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 7702306004422919594, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       propertyPath: weapon
@@ -18650,6 +18650,10 @@ PrefabInstance:
     - target: {fileID: 8842748139511423489, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: Hand.SecondSlot
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842748139511423489, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
+      propertyPath: Hand.WeaponSwitchTime
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8911146842598188145, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
       propertyPath: m_Layer

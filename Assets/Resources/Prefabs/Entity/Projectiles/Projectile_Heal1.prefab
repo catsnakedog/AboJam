@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2279252769181004249
 Transform:
   m_ObjectHideFlags: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6225409795156279537}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.92387956, w: -0.3826834}
+  m_LocalPosition: {x: -1.0190779, y: -3.0190778, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49,13 +49,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialRecords:
   - {fileID: 11400000, guid: 0c983ebf2fe4e0b43bfedff042122a00, type: 2}
-  startFlag: 0
+  startFlag: 1
   explosion: {fileID: 3100893671775424701, guid: 371a1661e3196fe42b6b10db19678911, type: 3}
   colider2D: {fileID: 1469443515481340077}
   launcher: {fileID: 0}
   clashTags:
+  - Abocados
+  - Player
   - Towers
   damage: -11
+  multiplierDamage: 1
   penetrate: 2
 --- !u!212 &1193637438243774845
 SpriteRenderer:
