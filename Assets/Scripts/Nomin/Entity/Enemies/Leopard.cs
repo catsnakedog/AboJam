@@ -101,6 +101,8 @@ public class Leopard : Enemy<Table_Leopard, Record_Leopard>, IPoolee
     /// </summary>
     public override void Promotion(EnumData.SpecialLevel level)
     {
+        detection *= 2;
+
         switch (level)
         {
             case EnumData.SpecialLevel.FirstBoss:

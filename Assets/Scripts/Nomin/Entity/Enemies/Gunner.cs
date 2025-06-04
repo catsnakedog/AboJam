@@ -105,11 +105,14 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     /// </summary>
     public override void Promotion(EnumData.SpecialLevel level)
     {
+        detection *= 1.1f;
+        launcher.range *= 1.3f;
+
         switch (level)
         {
             case EnumData.SpecialLevel.FirstBoss:
-                hp.SetMaxHP(3000);
-                subCount += 30;
+                hp.SetMaxHP(2000);
+                subCount += 45;
                 SetDelay(0.01f);
                 break;
             case EnumData.SpecialLevel.SecondsBoss:

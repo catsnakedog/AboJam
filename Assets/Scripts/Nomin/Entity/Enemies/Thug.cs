@@ -101,6 +101,8 @@ public class Thug : Enemy<Table_Thug, Record_Thug>, IPoolee
     /// </summary>
     public override void Promotion(EnumData.SpecialLevel level)
     {
+        detection *= 1.3f;
+
         switch (level)
         {
             case EnumData.SpecialLevel.FirstBoss:

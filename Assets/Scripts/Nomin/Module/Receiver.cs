@@ -162,7 +162,7 @@ public class Receiver : MonoBehaviour
         string name;
         if (tile.Go == null) name = "오브젝트가 없습니다.";
         else name = tile.Go.name;
-        Debug.Log($"타일 정보\n좌표 : [{tile.i}][{tile.j}] | pos : {tile.pos} | 설치 : {name} | GridIndexMap : {grid.GridIndexMap[tile.i, tile.j]}");
+        // Debug.Log($"타일 정보\n좌표 : [{tile.i}][{tile.j}] | pos : {tile.pos} | 설치 : {name} | GridIndexMap : {grid.GridIndexMap[tile.i, tile.j]}");
     }
     /// <summary>
     /// Click + KeyDown(Right Click)

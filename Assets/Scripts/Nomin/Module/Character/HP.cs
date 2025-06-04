@@ -79,6 +79,7 @@ public class HP : RecordInstance<Table_HP, Record_HP>
     /// <param name="value">피해량</param>
     public void Damage(float value)
     {
+        Debug.Log("피해량 : " + value);
         if (HP_current == 0) return;
         HP_current = Mathf.Max(HP_current - value, 0);
         if (HP_current == 0) { death?.Invoke(); }
