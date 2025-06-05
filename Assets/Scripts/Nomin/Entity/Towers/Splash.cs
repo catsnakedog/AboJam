@@ -98,6 +98,8 @@ public class Splash : Tower<Table_Splash, Record_Splash>, IPoolee
     /// </summary>
     private IEnumerator CorFire()
     {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 0.3f));
+
         while (true)
         {
             GameObject temp = pool.Get(launcher.projectile.name);

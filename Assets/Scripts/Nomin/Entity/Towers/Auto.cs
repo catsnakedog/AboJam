@@ -101,6 +101,8 @@ public class Auto : Tower<Table_Auto, Record_Auto>, IPoolee
     /// </summary>
     private IEnumerator CorFire()
     {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 0.3f));
+
         while (true)
         {
             GameObject temp = pool.Get(launcher.projectile.name);
