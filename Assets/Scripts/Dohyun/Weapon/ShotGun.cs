@@ -1,11 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ShotGun : RangedWeapon
 {
+    public static Action eventAttack;
+
     public override void AttackLogic()
     {
+        eventAttack.Invoke();
+
         Vector3 direction = launcher.transform.position + launcher.transform.right;
         launcher.Launch(direction, -10);
         launcher.Launch(direction, -5);

@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Gun : RangedWeapon
 {
+    public static Action eventAttack;
+
     public override void AttackLogic()
     {
+        eventAttack.Invoke();
         launcher.Launch(launcher.transform.position + launcher.transform.right);
 
         /*

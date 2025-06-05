@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
 
 public class Receiver : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class Receiver : MonoBehaviour
     [SerializeField] private Camera camera;
     [SerializeField] private Button btnGrowYes;
     [SerializeField] private Button btnDemolitionYes;
+    public static Action<bool> eventMove;
 
     /* Field & Property */
     private Coroutine corKeepAttack;
@@ -196,11 +198,13 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnMove(InputAction.CallbackContext context)
     {
+        eventMove.Invoke(true);
         farming.StopCultivate();
         player.PlayerMovement._movement = context.ReadValue<Vector2>();
     }
     private void OffMove(InputAction.CallbackContext context)
     {
+        eventMove.Invoke(false);
         player.PlayerMovement._movement = Vector2.zero;
     }
     /// <summary>

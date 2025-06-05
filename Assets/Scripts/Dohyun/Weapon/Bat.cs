@@ -11,6 +11,7 @@ public class Bat : ChargeMeleeWeapon
     public float AttackRemainTime;
     public float SwingAngle;
     public float SwingTime;
+    public static Action eventAttack;
 
     private MaterialPropertyBlock _attackProperty;
     private readonly Type _batObjType = typeof(BatObj);
@@ -81,6 +82,7 @@ public class Bat : ChargeMeleeWeapon
         StartCoroutine(SetChargeAttackRemain(_batAttackEffectObj, _attackProperty.GetFloat("_RadiusScale"), _attackProperty.GetFloat("_AttackFlag"), _attackProperty.GetFloat("_LineAngle")));
 
         // 차징에 따른 공격 적용
+        eventAttack.Invoke();
         Vector3 worldPos = _batAttackEffectObj.transform.position;
         float radius = melee.radius * _attackProperty.GetFloat("_RadiusScale");
         float damage = melee.damage * _attackProperty.GetFloat("_RadiusScale");

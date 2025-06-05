@@ -105,8 +105,7 @@ public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
     /// </summary>
     public override void Promotion(EnumData.SpecialLevel level)
     {
-        detection *= 1.1f;
-        launcher.range *= 1.3f;
+        launcher.range *= 1.15f;
 
         switch (level)
         {

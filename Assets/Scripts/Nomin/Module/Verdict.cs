@@ -77,16 +77,6 @@ public class Verdict : MonoBehaviour
     /// </summary>
     private void CheckGameClear()
     {
-        //if (spawner == null || database_abojam == null) return;
-
-        //Match match = Regex.Match(database_abojam.Wave[database_abojam.Wave.Count - 1].ID, @"\d+");
-        //int lastWaveIndex = match.Success ? int.Parse(match.Value) : 0;
-        //if (spawner.waveIndex > lastWaveIndex)
-        //{
-        //    message.On("축하합니다. 게임을 클리어하였습니다 !", 3f);
-        //    date.timeFlow = false;
-        //}
-
         if (spawner == null || database_abojam == null) return;
 
         int maxWaveNumber = 0;

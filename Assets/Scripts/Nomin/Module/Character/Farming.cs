@@ -24,6 +24,7 @@ public class Farming : MonoBehaviour
     private Coroutine corMove;
     private Coroutine corGauge;
     private GameObject gaugeObj;
+    public static Action<bool> eventMove;
 
     /* Initializer & Finalizer & Updater */
     private void Start()
@@ -110,6 +111,7 @@ public class Farming : MonoBehaviour
     /// </summary>
     private IEnumerator CorMove(Vector3 worldPos, float distance)
     {
+        eventMove.Invoke(true);
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.016f);
 
         while (Vector2.Distance(transform.position, worldPos) > distance)
@@ -134,6 +136,7 @@ public class Farming : MonoBehaviour
             yield return waitForSeconds;
         }
 
+        eventMove.Invoke(false);
         player.PlayerMovement._movement = Vector2.zero;
     }
     /// <summary>

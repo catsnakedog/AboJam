@@ -45,6 +45,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     public UnityEvent morningStart; // 아침이 시작할 때 작동할 메서드
     public UnityEvent sunsetStart; // 해질녘이 시작할 때 작동할 메서드
     public UnityEvent nightStart; // 밤이 시작할 때 작동할 메서드
+    public static Action eventMorning;
     private TimeSpan start;
     private TimeSpan end;
     private DateTime last = DateTime.Now;
@@ -73,6 +74,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         nightStart.AddListener(() => { Debug.Log("밤이 시작되었습니다."); });
         StartCoroutine(CorTime());
         morningStart?.Invoke();
+        eventMorning?.Invoke();
         waitForSeconds = new WaitForSeconds(refreshTime);
     }
     public void Load()
@@ -166,6 +168,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     {
         // 빛 & 이벤트 호출
         morningStart?.Invoke();
+        eventMorning?.Invoke();
         globalLight.Set(globalLight.morning, 0.01f);
 
         // 시간 설정 (흐름)
@@ -229,6 +232,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         // 빛 & 이벤트 호출
         if (gameTime != GameTime.Night) return;
         morningStart?.Invoke();
+        eventMorning?.Invoke();
         globalLight.Set(globalLight.morning, 0.01f);
 
         // 시간 설정 (흐름)

@@ -71,6 +71,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
                 if (effect != null) StartCoroutine(CorEffect(collider.transform.position));
                 HP.FindHP(collider.gameObject).Damage(damage * multiplierDamage); currentPenetrate--;
                 if (new string[] {"Player", "Enemies"}.Contains(collider.tag)) Knockback(collider, knockback * multiplierKnockback);
+                Debug.Log("피해 : " + damage * multiplierDamage);
             }
         }
 
