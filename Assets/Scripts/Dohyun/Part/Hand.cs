@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using static Weapon;
 using static HandUtil;
+using UnityEngine.EventSystems;
 
 [System.Serializable]
 public class Hand : IObserver
@@ -408,6 +409,8 @@ public class Hand : IObserver
     /// </summary>
     public void CheckSlotSwitch() // _crruentWeapon만 결국 변경되면 됨
     {
+        if (IsTypingInInputField()) return;
+
         if (Input.GetKeyDown(SlotChangeKey))
         {
             if (_isSwitchWeapon) return;
@@ -669,5 +672,13 @@ public class Hand : IObserver
             WeaponSlot.FirstMelee => ThirdSlot,
             _ => throw new NotImplementedException()
         };
+    }
+
+    private bool IsTypingInInputField()
+    {
+        var go = EventSystem.current?.currentSelectedGameObject;
+        return go != null && (
+            go.GetComponent<UnityEngine.UI.InputField>() ||
+            go.GetComponent<TMPro.TMP_InputField>());
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System;
 using UnityEngine;
+using OfficeOpenXml.FormulaParsing.ExpressionGraph.FunctionCompilers;
 
 public class Farming : MonoBehaviour
 {
@@ -39,6 +40,9 @@ public class Farming : MonoBehaviour
     /// </summary>
     public void Cultivate(Tile tile)
     {
+        // 이미 타일에 설치된 오브젝트가 있으면 리턴합니다.
+        if (tile.Go != null) return;
+
         // 이전 경작이 일정 비율 이상 진행 중이면 기다린 후 경작 시작
         if (corGauge != null)
             if (gaugeObj.GetComponent<Gauge>().ratio >= waitForCultivateGaugeRatio)

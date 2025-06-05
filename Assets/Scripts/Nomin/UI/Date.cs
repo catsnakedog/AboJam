@@ -1,11 +1,7 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -74,7 +70,6 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         nightStart.AddListener(() => { Debug.Log("밤이 시작되었습니다."); });
         StartCoroutine(CorTime());
         morningStart?.Invoke();
-        eventMorning?.Invoke();
         waitForSeconds = new WaitForSeconds(refreshTime);
     }
     public void Load()

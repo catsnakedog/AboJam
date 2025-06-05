@@ -29,10 +29,13 @@ public class Receiver : MonoBehaviour
     [SerializeField] private Camera camera;
     [SerializeField] private Button btnGrowYes;
     [SerializeField] private Button btnDemolitionYes;
+    [SerializeField] private GraphicRaycaster uiRaycaster;
+    [SerializeField] private EventSystem eventSystem;
     public static Action<bool> eventMove;
 
     /* Field & Property */
     private Coroutine corKeepAttack;
+    private PointerEventData pointerEventData;
 
     /* Initializer & Finalizer &  Updater */
     private void Start()
@@ -213,6 +216,7 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnAttack(InputAction.CallbackContext context)
     {
+        if (IsPointerOverUI()) return;
         if (CheckAttack() == false) return;
 
         // 공격 개시
@@ -224,6 +228,7 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void KeepAttack(InputAction.CallbackContext context)
     {
+        if (IsPointerOverUI()) return;
         if (shopPanel.activeInHierarchy) return;
 
         if (corKeepAttack != null) StopCoroutine(corKeepAttack);
@@ -313,5 +318,18 @@ public class Receiver : MonoBehaviour
         if (player.Hand.IsSwitchWeapon) return false;
         if (Time.timeScale == 0) return false;
         return true;
+    }
+    /// <summary>
+    /// UI 상호작용 여부 검사
+    /// </summary>
+    private bool IsPointerOverUI()
+    {
+        pointerEventData = new PointerEventData(eventSystem);
+        pointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        uiRaycaster.Raycast(pointerEventData, results);
+
+        return results.Count > 0;
     }
 }
