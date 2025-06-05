@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System;
 
 public class BTN_HP : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class BTN_HP : MonoBehaviour
     private int upgradeCount = 0;
     public TextMeshProUGUI priceText;
     public TextMeshProUGUI levelText;
+    public static Action eventUpgradeSuccess;
+    public static Action eventUpgradeFail;
 
     public void Upgrade()
     {
@@ -18,6 +21,7 @@ public class BTN_HP : MonoBehaviour
         if (upgradeCount >= price.Length)
         {
             Message.instance.On("이미 최대 업그레이드에요 !", 2f);
+            eventUpgradeFail.Invoke();
             return;
         }
 
@@ -25,12 +29,14 @@ public class BTN_HP : MonoBehaviour
         if (StaticData.Garu < price[upgradeCount])
         {
             Message.instance.On("비용이 충분하지 않아요 !", 2f);
+            eventUpgradeFail.Invoke();
             return;
         }
 
         UpgradeHP();
         StaticData.Garu -= price[upgradeCount];
         Message.instance.On("더욱 튼튼해졌습니다 !", 2f);
+        eventUpgradeSuccess.Invoke();
         upgradeCount++;
 
         levelText.text = upgradeCount.ToString();

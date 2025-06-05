@@ -42,6 +42,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     public UnityEvent sunsetStart; // 해질녘이 시작할 때 작동할 메서드
     public UnityEvent nightStart; // 밤이 시작할 때 작동할 메서드
     public static Action eventMorning;
+    public static Action eventDay11;
     private TimeSpan start;
     private TimeSpan end;
     private DateTime last = DateTime.Now;
@@ -174,6 +175,9 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         dateTime = dateTime.Date + StringToTime(morningTime);
         last = DateTime.Now;
         ChangeImage();
+
+        TimeSpan total = dateTime - DateTime.MinValue;
+        if (((int)(total.TotalDays + 1)) == 11) eventDay11.Invoke();
     }
     /// <summary>
     /// 아침을 스킵하고 해질녘이 시작됩니다.
@@ -235,6 +239,9 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         timeFlow = true;
         dateTime = dateTime.Date + TimeSpan.FromDays(1) + StringToTime(morningTime);
         last = DateTime.Now;
+
+        TimeSpan total = dateTime - DateTime.MinValue;
+        if (((int)(total.TotalDays + 1)) == 11) eventDay11.Invoke();
 
         // GameTime 및 Image 넘김
         gameTime++;

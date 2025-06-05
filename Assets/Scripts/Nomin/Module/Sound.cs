@@ -12,23 +12,34 @@ public class Sound : MonoBehaviour
     /// </summary>
     private void Bound()
     {
+
+
+        // BGM
+        Date.eventDay11 = null;
+        Date.eventDay11 += () => SetSourcePlay("bgm_day1", false);
+        Date.eventDay11 += () => SetSourcePlay("bgm_day11", true);
+
         // Player
         ShotGun.eventAttack = null;
-        ShotGun.eventAttack += (pos) => PlayClip("shotgun", pos);
+        ShotGun.eventAttack += (pos) => PlayClip("shotgun", pos, true);
         Knife.eventAttack = null;
-        Knife.eventAttack += (pos) => PlayClip("knife", pos);
+        Knife.eventAttack += (pos) => PlayClip("knife", pos, true);
         Bat.eventAttack = null;
-        Bat.eventAttack += (pos) => PlayClip("bat", pos);
+        Bat.eventAttack += (pos) => PlayClip("bat", pos, true);
         Gun.eventAttack = null;
-        Gun.eventAttack += (pos) => PlayClip("gun", pos);
+        Gun.eventAttack += (pos) => PlayClip("gun", pos, true);
         Sniper.eventAttack = null;
-        Sniper.eventAttack += (pos) => PlayClip("sniper", pos);
+        Sniper.eventAttack += (pos) => PlayClip("sniper", pos, true);
         Spear.eventAttack = null;
-        Spear.eventAttack += (pos) => PlayClip("spear", pos);
+        Spear.eventAttack += (pos) => PlayClip("spear", pos, true);
         Receiver.eventMove = null;
         Receiver.eventMove += (isPlay) => SetSourcePlay("walk", isPlay);
         Farming.eventMove = null;
         Farming.eventMove += (isPlay) => SetSourcePlay("walk", isPlay);
+        Skill.eventSkillStart = null;
+        Skill.eventSkillStart += () => PlayClip("magic_circle", Vector3.zero, true);
+        Skill.eventSkillExplosion = null;
+        Skill.eventSkillExplosion += (pos) => PlayClip("magic_explosion", pos, true);
 
         // Building
         Auto.eventFire = null;
@@ -47,6 +58,18 @@ public class Sound : MonoBehaviour
         Farming.eventFarming += (pos) => PlayClip("abocado_seed", pos);
         Abocado.eventFarming = null;
         Abocado.eventFarming += (pos) => PlayClip("abocado_seed", pos);
+        BTN_Upgrade.eventUpgradeSuccess = null;
+        BTN_Upgrade.eventUpgradeSuccess += () => PlayClip("upgrade", Vector3.zero, true);
+        BTN_Upgrade.eventUpgradeFail = null;
+        BTN_Upgrade.eventUpgradeFail += () => PlayClip("disallow", Vector3.zero, true);
+        BTN_HP.eventUpgradeSuccess = null;
+        BTN_HP.eventUpgradeSuccess += () => PlayClip("upgrade", Vector3.zero, true);
+        BTN_HP.eventUpgradeFail = null;
+        BTN_HP.eventUpgradeFail += () => PlayClip("disallow", Vector3.zero, true);
+        BTN_Weapons.eventBuySuccess = null;
+        BTN_Weapons.eventBuySuccess += () => PlayClip("upgrade", Vector3.zero, true);
+        BTN_Weapons.eventBuyFail = null;
+        BTN_Weapons.eventBuyFail += () => PlayClip("purchase_weapon", Vector3.zero, true);
     }
 
     /* Initialize */
@@ -98,6 +121,7 @@ public class Sound : MonoBehaviour
             }
         }
     }
+
     /// <summary>
     /// 오디오 소스를 재생하거나 중단합니다.
     /// </summary>
@@ -113,5 +137,4 @@ public class Sound : MonoBehaviour
             }
         }
     }
-
 }

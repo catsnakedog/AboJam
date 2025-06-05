@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 
 public class Skill : RecordInstance<Table_Skill, Record_Skill>
 {
@@ -24,6 +25,8 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
     public int count;
     public float seconds;
     public float speed;
+    public static Action eventSkillStart;
+    public static Action<Vector3> eventSkillExplosion;
 
     /* Intializer & Finalizer */
     private void Start()
@@ -53,6 +56,7 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
     /// <param name="seconds">총 공격 시간</param>
     public void Meteor()
     {
+        eventSkillStart.Invoke();
         StartCoroutine(CorMeteor(range, count, seconds, speed));
 
         coolTimer.SetActive(true);
@@ -72,7 +76,7 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
         // 좌표를 타일로 변환 후 랜덤 순으로 섞기
         List<Tile> tiles = new List<Tile>();
         foreach ((int, int) coord in coords) tiles.Add(grid.GetTile(coord));
-        tiles = tiles.OrderBy(x => Random.value).ToList();
+        tiles = tiles.OrderBy(x => UnityEngine.Random.value).ToList();
 
         // 각 타일 폭격
         float delay = seconds / count;
@@ -107,6 +111,7 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
             if (Vector3.Distance(meteorite.transform.position, endPos) < grid.CellWidth * 0.1f)
             {
                 // 폭발 생성
+                eventSkillExplosion.Invoke(meteorite.transform.position);
                 GameObject explosion = pool.Get(this.explosion.name);
                 explosion.transform.position = endPos;
                 explosion.GetComponent<Explosion>().Explode(clashTags);
@@ -143,7 +148,7 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
 
         for (int count = 0; count < n && validList.Count > 0; count++)
         {
-            int randomIndex = Random.Range(0, validList.Count);
+            int randomIndex = UnityEngine.Random.Range(0, validList.Count);
             result.Add(validList[randomIndex]);
             validList.RemoveAt(randomIndex); // 중복 방지
         }

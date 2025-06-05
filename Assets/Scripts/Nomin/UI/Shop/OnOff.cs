@@ -8,7 +8,6 @@ public class OnOff : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     /* Dependency */
     public static OnOff instance;
     public Button button;
-    public AnimationClick animationClick;
     public Sprite on;
     public Sprite off;
     public GameObject panel;
@@ -27,7 +26,6 @@ public class OnOff : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void Switch()
     {
         eventClick.Invoke();
-        animationClick.OnClick();
         panel.SetActive(!panel.activeSelf);
     }
 

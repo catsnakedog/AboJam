@@ -25,6 +25,8 @@ public class BTN_Upgrade : RecordInstance<Table_Upgrade, Record_Upgrade>
     /* Field & Property */
     public static List<BTN_Upgrade> instances = new List<BTN_Upgrade>();
     public event Action<int> eventUpgrade;
+    public static Action eventUpgradeSuccess;
+    public static Action eventUpgradeFail;
     [SerializeField] private int maxLevel = 1; public int MaxLevel { get => maxLevel; }
     private int price; public int Price
     {
@@ -89,8 +91,12 @@ public class BTN_Upgrade : RecordInstance<Table_Upgrade, Record_Upgrade>
     /// </summary>
     public void Buy()
     {
-        if (Check() == false) return;
-
+        if (Check() == false)
+        {
+            eventUpgradeFail.Invoke();
+            return;
+        }
+        eventUpgradeSuccess.Invoke();
         Checkout();
         LevelUp();
         ChangePrice();

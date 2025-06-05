@@ -45,6 +45,8 @@ public class BTN_Weapons : MonoBehaviour
     [SerializeField] private bool purchase = false; public bool Purchase { get => purchase; } // 구매 여부
     [SerializeField] private bool isMelee = false; // 근거리 or 원거리 설정
     [SerializeField] private EnumData.Weapon weapon; public EnumData.Weapon Weapon { get => weapon; } // 버튼에 대응하는 무기
+    public static Action eventBuySuccess;
+    public static Action eventBuyFail;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -72,8 +74,13 @@ public class BTN_Weapons : MonoBehaviour
     /// </summary>
     public void Buy()
     {
-        if (Check() == false) return;
+        if (Check() == false)
+        {
+            eventBuyFail.Invoke();
+            return;
+        }
 
+        eventBuySuccess.Invoke();
         Checkout();
         ChangeImage();
         purchase = true;
