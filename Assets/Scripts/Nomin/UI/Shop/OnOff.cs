@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class OnOff : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -12,6 +13,7 @@ public class OnOff : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Sprite off;
     public GameObject panel;
     private Image img;
+    public static Action eventClick;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -24,6 +26,7 @@ public class OnOff : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     /* Public Method */
     public void Switch()
     {
+        eventClick.Invoke();
         animationClick.OnClick();
         panel.SetActive(!panel.activeSelf);
     }

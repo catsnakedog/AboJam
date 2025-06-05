@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using static ObjectPool;
+using static Unity.VisualScripting.FlowStateWidget;
 
 public class Auto : Tower<Table_Auto, Record_Auto>, IPoolee
 {
@@ -15,6 +17,7 @@ public class Auto : Tower<Table_Auto, Record_Auto>, IPoolee
 
     /* Field & Property */
     public static List<Auto> instances = new List<Auto>(); // 모든 연사 타워 인스턴스
+    public static Action<Vector3> eventFire;
 
     [Header("[ Auto ]")]
     [SerializeField] private float delay = 0.1f; // 공격 딜레이
@@ -108,6 +111,7 @@ public class Auto : Tower<Table_Auto, Record_Auto>, IPoolee
             {
                 // 메인 탄환
                 launcher.align = true;
+                eventFire.Invoke(gameObject.transform.position);
                 launcher.Launch(Targeter.TargetType.Near, detection);
                 launcher.align = false;
 

@@ -10,7 +10,7 @@ public class Knife : MeleeWeapon
     public float AttackEffectSpeed = 1f;
     public GameObject SlashEffectObj;
     public Transform FireLocation;
-    public static Action eventAttack;
+    public static Action<Vector3> eventAttack;
 
     private Coroutine _attackMotionCoroutine;
     private Type _knifeObjType = typeof(KnifeObj);
@@ -89,7 +89,7 @@ public class Knife : MeleeWeapon
 
     public override void AttackLogic()
     {
-        eventAttack.Invoke();
+        eventAttack.Invoke(gameObject.transform.position);
         StartCoroutine(AttackMotion());
     }
 }

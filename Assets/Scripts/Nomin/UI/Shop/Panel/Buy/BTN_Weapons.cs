@@ -77,6 +77,10 @@ public class BTN_Weapons : MonoBehaviour
         Checkout();
         ChangeImage();
         purchase = true;
+
+        Check();
+        if (weapon == EnumData.Weapon.Knife || weapon == EnumData.Weapon.Bat || weapon == EnumData.Weapon.Spear || weapon == EnumData.Weapon.ChainSaw) swap.ToSwapSlot(Hand.WeaponSlot.FirstMelee);
+        else swap.ToSwapSlot(Hand.WeaponSlot.FirstRanged);
     }
 
     /* Private Method */

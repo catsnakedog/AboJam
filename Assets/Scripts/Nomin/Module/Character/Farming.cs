@@ -26,6 +26,7 @@ public class Farming : MonoBehaviour
     private Coroutine corGauge;
     private GameObject gaugeObj;
     public static Action<bool> eventMove;
+    public static Action<Vector3> eventFarming;
 
     /* Initializer & Finalizer & Updater */
     private void Start()
@@ -95,7 +96,11 @@ public class Farming : MonoBehaviour
         else StaticData.Garu -= price;
         eventCultivated?.Invoke(price);
 
-        if (tile.Go == null) tile.Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
+        if (tile.Go == null)
+        {
+            tile.Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
+            eventFarming.Invoke(gameObject.transform.position);
+        }
         else { UnityEngine.Debug.Log($"타일 ({tile.i}, {tile.j}) 에 이미 {tile.Go.name} 가 바인딩 되어 있습니다."); };
     }
     /// <summary>

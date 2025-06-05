@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static Unity.VisualScripting.FlowStateWidget;
 
 public class Heal : Tower<Table_Heal, Record_Heal>, IPoolee
 {
@@ -15,6 +17,7 @@ public class Heal : Tower<Table_Heal, Record_Heal>, IPoolee
 
     /* Field & Property */
     public static List<Heal> instances = new List<Heal>(); // 모든 회복 타워 인스턴스
+    public static Action<Vector3> eventFire;
 
     [Header("[ Heal ]")]
     [SerializeField] private float delay = 0.1f; // 공격 딜레이
@@ -105,7 +108,11 @@ public class Heal : Tower<Table_Heal, Record_Heal>, IPoolee
             GameObject temp = pool.Get(launcher.projectile.name);
             GameObject target = launcher.targeter.Targetting(Targeter.TargetType.LowHP, temp.GetComponent<Projectile>().ClashTags, detection, ratio);
             pool.Return(temp);
-            if (target != null) launcher.Launch(Targeter.TargetType.LowHP, detection, ratio);
+            if (target != null)
+            {
+                eventFire.Invoke(gameObject.transform.position);
+                launcher.Launch(Targeter.TargetType.LowHP, detection, ratio);
+            }
 
             yield return delay_waitForSeconds;
         }

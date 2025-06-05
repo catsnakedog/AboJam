@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Menu : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Menu : MonoBehaviour
 
     /* Field & Property */
     public static Menu instance;
+    public static Action eventClick;
 
     /* Initializer & Finalizer & Updater */
     private void Start()
@@ -21,6 +23,7 @@ public class Menu : MonoBehaviour
     /* Public Method */
     public void MenuOnOff()
     {
+        eventClick.Invoke();
         panel.SetActive(!panel.activeSelf);
         TimeOnOff();
 

@@ -48,4 +48,12 @@ public class Swap : MonoBehaviour
 
         player.Hand.SwitchWeapon();
     }
+    /// <summary>
+    /// 지정한 슬롯으로 스왑합니다.
+    /// </summary>
+    public void ToSwapSlot(Hand.WeaponSlot slot)
+    {
+        if (player.Hand.CurrentSlotIndex == slot) return;
+        else SwapSlot();
+    }
 }

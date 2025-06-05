@@ -28,6 +28,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
     private float HP_origin;
     private string path = "Images/Abocado/"; // 아보카도 이미지 Resources 경로
     private Sprite[] spr_level; // 레벨에 대응하는 스프라이트
+    public static Action<Vector3> eventFarming;
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
@@ -147,6 +148,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
             case EnumData.Abocado.Cultivated:
                 if (StaticData.Abocado > 0)
                 {
+                    eventFarming.Invoke(gameObject.transform.position);
                     StaticData.Abocado--;
                     StaticData.gameData.abocado++;
                     GrowUp(true);
