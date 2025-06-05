@@ -70,6 +70,16 @@ public class Zoom : MonoBehaviour
             if (child.name == "Shop") continue;
             if (child.name == "Skill") continue;
 
+            // CanvasGroup 처리
+            CanvasGroup cg = child.GetComponent<CanvasGroup>();
+            if (cg == null)
+                cg = child.gameObject.AddComponent<CanvasGroup>();
+
+            cg.alpha = visible ? 1f : 0f;
+            cg.interactable = visible;
+            cg.blocksRaycasts = visible;
+
+
             Image img = child.GetComponent<Image>();
             if (img != null) img.enabled = visible;
 
