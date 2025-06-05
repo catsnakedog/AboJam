@@ -128,7 +128,7 @@ public class HP : RecordInstance<Table_HP, Record_HP>
     private void CheckVisible()
     {
         // 최대 체력이면 체력바 숨김 On / Off
-        if (hideFullHp == true && HP_current == Hp_max)
+        if (hideFullHp == true && HP_current >= Hp_max * 0.99f)
         {
             spr_empty.enabled = false;
             spr_max.enabled = false;
