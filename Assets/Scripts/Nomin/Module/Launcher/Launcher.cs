@@ -64,7 +64,7 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
         }
     }
     public float speed = 0.02f; // 발사체 속도
-    public float range = 5f; public float Range { get => range * MultiplierRange; set => range = value; }// 발사체 유효 사거리 (!= 타겟 감지 거리)
+    public float range = 5f; public float Range { get => range * MultiplierRange; set => range = value; } // 발사체 유효 사거리 (!= 타겟 감지 거리)
     private float _multiplierRange = 1; public float MultiplierRange { get => _multiplierRange; set => _multiplierRange = value; }
     private float width;
     private float height;

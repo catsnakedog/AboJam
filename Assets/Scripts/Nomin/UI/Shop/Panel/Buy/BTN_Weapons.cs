@@ -75,19 +75,20 @@ public class BTN_Weapons : MonoBehaviour
     /// </summary>
     public void Buy()
     {
-        if (Check() == false)
+        if (Hand.instance._CurrentWeapon.IsReload)
         {
+            Message.instance.On("장착 / 장전 중이에요. 조금만 기다리세요 !", 2f);
+            eventBuyFail.Invoke();
             return;
         }
+        if (Check() == false) return;
 
         eventBuySuccess.Invoke();
         Checkout();
         ChangeImage();
         purchase = true;
 
-        //Check();
-        //if (weapon == EnumData.Weapon.Knife || weapon == EnumData.Weapon.Bat || weapon == EnumData.Weapon.Spear || weapon == EnumData.Weapon.ChainSaw) swap.ToSwapSlot(Hand.WeaponSlot.FirstMelee);
-        //else swap.ToSwapSlot(Hand.WeaponSlot.FirstRanged);
+        Buy();
     }
 
     /* Private Method */
@@ -102,7 +103,7 @@ public class BTN_Weapons : MonoBehaviour
             if (swap == null) return false;
             Message.instance.On("무기를 장착했습니다.", 2f);
             eventEquip.Invoke(weapon);
-            swap.SetSlot(weapon);
+            swap.Equip(weapon);
 
             // 근접 무기 Select 해제
             if (isMelee == true)

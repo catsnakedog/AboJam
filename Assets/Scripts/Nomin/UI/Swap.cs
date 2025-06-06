@@ -32,28 +32,36 @@ public class Swap : MonoBehaviour
     /// </summary>
     public void SetSlot(EnumData.Weapon weapon)
     {
-        if (ranges.Contains(weapon)) player.Hand.FirstSlot = weapon;
-        if (melees.Contains(weapon)) player.Hand.SecondSlot = weapon;
-
-        player.Hand.SetSlotWeapons();
+        if (ranges.Contains(weapon) && player.Hand.FirstSlot != weapon)
+        {
+            player.Hand.FirstSlot = weapon;
+            player.Hand.SetSlotWeapons();
+        }
+        if (melees.Contains(weapon) && player.Hand.SecondSlot != weapon)
+        {
+            player.Hand.SecondSlot = weapon;
+            player.Hand.SetSlotWeapons();
+        }
     }
     /// <summary>
     /// 근거리 / 원거리 무기를 교체합니다.
     /// </summary>
-    public void SwapSlot()
+    public void SwapSlot(bool force = false)
     {
-        if (player.Hand.IsSwitchWeapon) return; // 교체 중에는 리턴
+        if(force == false) if (player.Hand.IsSwitchWeapon) return; // 교체 중에는 리턴
         if (player.Hand.CurrentSlotIndex == Hand.WeaponSlot.FirstRanged) player.Hand.CurrentSlotIndex = Hand.WeaponSlot.SecondRanged;
         else if (player.Hand.CurrentSlotIndex == Hand.WeaponSlot.SecondRanged) player.Hand.CurrentSlotIndex = Hand.WeaponSlot.FirstRanged;
 
         player.Hand.SwitchWeapon();
     }
     /// <summary>
-    /// 지정한 슬롯으로 스왑합니다.
+    /// 지정한 무기로 스왑 후 장착합니다.
     /// </summary>
-    public void ToSwapSlot(Hand.WeaponSlot slot)
+    public void Equip(EnumData.Weapon weapon)
     {
-        if (player.Hand.CurrentSlotIndex == slot) return;
-        else SwapSlot();
+        SetSlot(weapon);
+
+        if (ranges.Contains(weapon)) { if (player.Hand.CurrentSlotIndex != Hand.WeaponSlot.FirstRanged) SwapSlot(true); }
+        else { if (player.Hand.CurrentSlotIndex != Hand.WeaponSlot.SecondRanged) SwapSlot(true); }
     }
 }

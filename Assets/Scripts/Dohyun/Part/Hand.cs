@@ -12,6 +12,7 @@ public class Hand : IObserver
 {
     private Swap swap => Swap.instance;
     private List<Melee> melees => Melee.instances;
+    public static Hand instance;
 
     public enum HandType
     {
@@ -175,6 +176,7 @@ public class Hand : IObserver
 
     public void Init()
     {
+        instance = this;
         InitObj();
 
         CurrentSlotIndex = WeaponSlot.FirstRanged;
