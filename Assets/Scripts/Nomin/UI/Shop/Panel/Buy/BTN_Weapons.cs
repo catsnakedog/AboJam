@@ -47,6 +47,7 @@ public class BTN_Weapons : MonoBehaviour
     [SerializeField] private EnumData.Weapon weapon; public EnumData.Weapon Weapon { get => weapon; } // 버튼에 대응하는 무기
     public static Action eventBuySuccess;
     public static Action eventBuyFail;
+    public static Action<EnumData.Weapon> eventEquip;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -76,7 +77,6 @@ public class BTN_Weapons : MonoBehaviour
     {
         if (Check() == false)
         {
-            eventBuyFail.Invoke();
             return;
         }
 
@@ -85,9 +85,9 @@ public class BTN_Weapons : MonoBehaviour
         ChangeImage();
         purchase = true;
 
-        Check();
-        if (weapon == EnumData.Weapon.Knife || weapon == EnumData.Weapon.Bat || weapon == EnumData.Weapon.Spear || weapon == EnumData.Weapon.ChainSaw) swap.ToSwapSlot(Hand.WeaponSlot.FirstMelee);
-        else swap.ToSwapSlot(Hand.WeaponSlot.FirstRanged);
+        //Check();
+        //if (weapon == EnumData.Weapon.Knife || weapon == EnumData.Weapon.Bat || weapon == EnumData.Weapon.Spear || weapon == EnumData.Weapon.ChainSaw) swap.ToSwapSlot(Hand.WeaponSlot.FirstMelee);
+        //else swap.ToSwapSlot(Hand.WeaponSlot.FirstRanged);
     }
 
     /* Private Method */
@@ -101,6 +101,7 @@ public class BTN_Weapons : MonoBehaviour
         {
             if (swap == null) return false;
             Message.instance.On("무기를 장착했습니다.", 2f);
+            eventEquip.Invoke(weapon);
             swap.SetSlot(weapon);
 
             // 근접 무기 Select 해제
@@ -122,6 +123,7 @@ public class BTN_Weapons : MonoBehaviour
         if (StaticData.Garu < Price)
         {
             Message.instance.On("상품을 구매하기 위한 가루가 부족합니다.", 2f);
+            eventBuyFail.Invoke();
             return false;
         }
 

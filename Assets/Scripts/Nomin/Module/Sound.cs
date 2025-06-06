@@ -12,8 +12,6 @@ public class Sound : MonoBehaviour
     /// </summary>
     private void Bound()
     {
-
-
         // BGM
         Date.eventDay11 = null;
         Date.eventDay11 += () => SetSourcePlay("bgm_day1", false);
@@ -67,9 +65,11 @@ public class Sound : MonoBehaviour
         BTN_HP.eventUpgradeFail = null;
         BTN_HP.eventUpgradeFail += () => PlayClip("disallow", Vector3.zero, true);
         BTN_Weapons.eventBuySuccess = null;
-        BTN_Weapons.eventBuySuccess += () => PlayClip("upgrade", Vector3.zero, true);
+        BTN_Weapons.eventBuySuccess += () => PlayClip("purchase_weapon", Vector3.zero, true);
         BTN_Weapons.eventBuyFail = null;
-        BTN_Weapons.eventBuyFail += () => PlayClip("purchase_weapon", Vector3.zero, true);
+        BTN_Weapons.eventBuyFail += () => PlayClip("disallow", Vector3.zero, true);
+        BTN_Weapons.eventEquip = null;
+        BTN_Weapons.eventEquip += (weapon) => PlayClip("Equip_" + weapon.ToString(), Vector3.zero, true);
     }
 
     /* Initialize */
