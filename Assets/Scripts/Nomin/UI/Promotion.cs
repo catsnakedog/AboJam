@@ -31,6 +31,8 @@ public class Promotion : MonoBehaviour
     public int price_heal = 4;
     public int price_splash = 5;
     public event Action<EnumData.TowerType, int> eventPromote;
+    public static Action eventPromotionSuccess;
+    public static Action eventPromotionFail;
 
     /* Intializer & Finalizer & Updater */
     private void Init()
@@ -81,18 +83,29 @@ public class Promotion : MonoBehaviour
     /// <param name="towerName">(EnumData.Tower)towerName</param>
     private void Promote(EnumData.TowerType towerType)
     {
-        if (currentAbocado.hp.HP_current <= 0) { message.On("아보카도가 파괴되어 타워를 건설할 수 없습니다.", 2f); return; }
+        if (currentAbocado.hp.HP_current <= 0)
+        {
+            message.On("아보카도가 파괴되어 타워를 건설할 수 없습니다.", 2f);
+            eventPromotionFail.Invoke();
+            return;
+        }
 
         // 결제
         int price = GetPrice(towerType);
         if (StaticData.Garu >= price)
         {
             message.On("타워가 건설되었습니다.", 2f);
+            eventPromotionSuccess.Invoke();
             StaticData.Garu -= price;
             StaticData.gameData.tower++;
             eventPromote?.Invoke(towerType, price);
         }
-        else { message.On("가루가 부족합니다.", 2f); return; };
+        else
+        {
+            message.On("가루가 부족합니다.", 2f);
+            eventPromotionFail.Invoke();
+            return;
+        };
 
         // 아보카도 품질 증강
         if (towerType == EnumData.TowerType.Production)

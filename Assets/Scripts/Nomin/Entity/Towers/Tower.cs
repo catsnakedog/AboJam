@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,6 +113,7 @@ public class Tower<T1, T2> : RecordInstance<T1, T2>, ITower
     /// </summary>
     public void OnClick()
     {
+        ITower.eventOnClick.Invoke();
         ITower.currentTower = this;
         reinforcement.On();
     }

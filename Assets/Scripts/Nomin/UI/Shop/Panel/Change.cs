@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class Change : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class Change : MonoBehaviour
     public int maxQuantity; // 거래 최대 개수
     private int quantity; // 거래할 아보카도 수
     private int tradeCount; public int TradeCount { set => tradeCount = value; } // 총 판매 개수
+    public static Action eventTradeSuccess;
+    public static Action eventTradeFail;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -52,12 +55,17 @@ public class Change : MonoBehaviour
         if (StaticData.Abocado >= quantity)
         {
             Message.instance.On($"아보카도 {quantity} 개를 가루 {GetPrice(quantity)} 개에 판매했습니다.", 2f);
+            eventTradeSuccess.Invoke();
             StaticData.Abocado -= quantity;
             StaticData.Garu += GetPrice(quantity);
             tradeCount += quantity;
             OnValueChange();
         }
-        else Message.instance.On($"{quantity} 개 이상부터 판매할 수 있습니다.", 2f);
+        else
+        {
+            Message.instance.On($"{quantity} 개 이상부터 판매할 수 있습니다.", 2f);
+            eventTradeFail.Invoke();
+        }
     }
 
     /* Private Method */

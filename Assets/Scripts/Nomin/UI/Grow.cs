@@ -16,6 +16,7 @@ public class Grow : MonoBehaviour
     public static Grow instance; // 싱글턴
     public int price;
     public event Action<int> eventGrow;
+    public static Action eventPromotion;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -49,6 +50,7 @@ public class Grow : MonoBehaviour
 
         StaticData.Garu -= price;
         eventGrow?.Invoke(price);
+        eventPromotion.Invoke();
         currentAbocado.GrowUp();
         message.On("아보카도의 기분이 좋아졌어요 !", 2f);
         Off();

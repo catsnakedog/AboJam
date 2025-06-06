@@ -39,7 +39,7 @@ public class BTN_HP : MonoBehaviour
         eventUpgradeSuccess.Invoke();
         upgradeCount++;
 
-        levelText.text = upgradeCount.ToString();
+        levelText.text = "Lv. "+ upgradeCount.ToString();
         if (upgradeCount >= price.Length) priceText.text = "Max";
         else priceText.text = price[upgradeCount].ToString();
     }

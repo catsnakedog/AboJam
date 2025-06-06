@@ -25,7 +25,7 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
     public int count;
     public float seconds;
     public float speed;
-    public static Action eventSkillStart;
+    public static Action eventSkillSuccess;
     public static Action<Vector3> eventSkillExplosion;
 
     /* Intializer & Finalizer */
@@ -56,7 +56,7 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
     /// <param name="seconds">총 공격 시간</param>
     public void Meteor()
     {
-        eventSkillStart.Invoke();
+        eventSkillSuccess.Invoke();
         StartCoroutine(CorMeteor(range, count, seconds, speed));
 
         coolTimer.SetActive(true);
@@ -80,11 +80,13 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
 
         // 각 타일 폭격
         float delay = seconds / count;
-        WaitForSeconds waitForSeconds = new WaitForSeconds(delay);
+        float variation = delay * 5f;
         foreach (Tile tile in tiles)
         {
             StartCoroutine(Airstrike(tile.pos + new Vector2(10, 10), tile.pos, speed));
-            yield return waitForSeconds;
+
+            float randomDelay = delay + UnityEngine.Random.Range(-variation, variation);
+            yield return new WaitForSeconds(randomDelay);
         }
     }
 

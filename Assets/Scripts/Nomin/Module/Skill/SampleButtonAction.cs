@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace Synty.Interface.FantasyWarriorHUD.Samples
 {
@@ -30,6 +31,7 @@ namespace Synty.Interface.FantasyWarriorHUD.Samples
         public bool runOnEnable;
         public bool applyRandomRotationToActivateObject;
         public int price;
+        public static Action eventSkillFail;
 
         private void Awake()
         {
@@ -61,7 +63,12 @@ namespace Synty.Interface.FantasyWarriorHUD.Samples
 
         private void OnClick()
         {
-            if (StaticData.Garu < price) { Message.instance.On("가루가 부족해요...", 2f); return; }
+            if (StaticData.Garu < price)
+            {
+                Message.instance.On("가루가 부족해요...", 2f);
+                eventSkillFail.Invoke();
+                return;
+            }
             else StaticData.Garu -= price;
             Skill.instance.Meteor();
 
@@ -90,7 +97,7 @@ namespace Synty.Interface.FantasyWarriorHUD.Samples
                 activateObject.SetActive(true);
                 if (applyRandomRotationToActivateObject)
                 {
-                    activateObject.transform.localRotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+                    activateObject.transform.localRotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360));
                 }
             }
 

@@ -1,3 +1,4 @@
+using Synty.Interface.FantasyWarriorHUD.Samples;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,10 +35,10 @@ public class Sound : MonoBehaviour
         Receiver.eventMove += (isPlay) => SetSourcePlay("walk", isPlay);
         Farming.eventMove = null;
         Farming.eventMove += (isPlay) => SetSourcePlay("walk", isPlay);
-        Skill.eventSkillStart = null;
-        Skill.eventSkillStart += () => PlayClip("magic_circle", Vector3.zero, true);
         Skill.eventSkillExplosion = null;
         Skill.eventSkillExplosion += (pos) => PlayClip("magic_explosion", pos, true);
+        Skill.eventSkillSuccess = null;
+        Skill.eventSkillSuccess += () => PlayClip("magic_circle", Vector3.zero, true);
 
         // Building
         Auto.eventFire = null;
@@ -48,6 +49,10 @@ public class Sound : MonoBehaviour
         // UI
         Date.eventMorning = null;
         Date.eventMorning += () => PlayClip("morning_change", Vector3.zero, true);
+        Date.eventSkipSuccess = null;
+        Date.eventSkipSuccess += () => PlayClip("skip", Vector3.zero, true);
+        Date.eventSkipFail = null;
+        Date.eventSkipFail += () => PlayClip("disallow", Vector3.zero, true);
         OnOff.eventClick = null;
         OnOff.eventClick += () => PlayClip("button", Vector3.zero, true);
         Menu.eventClick = null;
@@ -56,6 +61,22 @@ public class Sound : MonoBehaviour
         Farming.eventFarming += (pos) => PlayClip("abocado_seed", pos);
         Abocado.eventFarming = null;
         Abocado.eventFarming += (pos) => PlayClip("abocado_seed", pos);
+        Abocado.eventHarvest = null;
+        Abocado.eventHarvest += () => PlayClip("harvest", Vector3.zero, true);
+        Abocado.eventOnClick = null;
+        Abocado.eventOnClick += () => PlayClip("abocado_onclick", Vector3.zero, true);
+        ITower.eventOnClick = null;
+        ITower.eventOnClick += () => PlayClip("tower_onclick", Vector3.zero, true);
+        Grow.eventPromotion = null;
+        Grow.eventPromotion += () => PlayClip("promotion_tree", Vector3.zero, true);
+        Promotion.eventPromotionSuccess = null;
+        Promotion.eventPromotionSuccess += () => PlayClip("promotion_tower", Vector3.zero, true);
+        Promotion.eventPromotionFail = null;
+        Promotion.eventPromotionFail += () => PlayClip("disallow", Vector3.zero, true);
+        Reinforcement.eventReinforceSuccess = null;
+        Reinforcement.eventReinforceSuccess += () => PlayClip("reinforcement", Vector3.zero, true);
+        Reinforcement.eventReinforceFail = null;
+        Reinforcement.eventReinforceFail += () => PlayClip("disallow", Vector3.zero, true);
         BTN_Upgrade.eventUpgradeSuccess = null;
         BTN_Upgrade.eventUpgradeSuccess += () => PlayClip("upgrade", Vector3.zero, true);
         BTN_Upgrade.eventUpgradeFail = null;
@@ -70,6 +91,12 @@ public class Sound : MonoBehaviour
         BTN_Weapons.eventBuyFail += () => PlayClip("disallow", Vector3.zero, true);
         BTN_Weapons.eventEquip = null;
         BTN_Weapons.eventEquip += (weapon) => PlayClip("Equip_" + weapon.ToString(), Vector3.zero, true);
+        Change.eventTradeSuccess = null;
+        Change.eventTradeSuccess += () => PlayClip("exchange", Vector3.zero, true);
+        Change.eventTradeFail = null;
+        Change.eventTradeFail += () => PlayClip("disallow", Vector3.zero, true);
+        SampleButtonAction.eventSkillFail = null;
+        SampleButtonAction.eventSkillFail += () => PlayClip("disallow", Vector3.zero, true);
     }
 
     /* Initialize */

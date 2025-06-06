@@ -22,6 +22,8 @@ public class Reinforcement : MonoBehaviour
     public static Reinforcement instance; // 싱글턴
     public event Action<EnumData.TowerType, int> eventReinforce;
     private string path_images = "Images/UI/Reinforcement/"; // 타워 이미지 Resources 경로
+    public static Action eventReinforceSuccess;
+    public static Action eventReinforceFail;
 
     /* Intializer & Finalizer & Updater */
     private void Init()
@@ -66,10 +68,20 @@ public class Reinforcement : MonoBehaviour
     public void Reinforce()
     {
         // 이미 만랩 => 리턴
-        if (currentTower.Level == currentTower.MaxLevel) { message.On("타워가 이미 최대 레벨입니다.", 2f); return; }
+        if (currentTower.Level == currentTower.MaxLevel)
+        {
+            message.On("타워가 이미 최대 레벨입니다.", 2f);
+            eventReinforceFail.Invoke();
+            return;
+        }
 
         // 결제
-        if (StaticData.Garu < currentTower.ReinforceCost[currentTower.Level]) { message.On("증강 비용이 부족합니다.", 2f); return; }
+        if (StaticData.Garu < currentTower.ReinforceCost[currentTower.Level])
+        {
+            message.On("증강 비용이 부족합니다.", 2f);
+            eventReinforceFail.Invoke();
+            return;
+        }
         StaticData.Garu -= currentTower.ReinforceCost[currentTower.Level];
 
         // 로그 기록 (ITower currentTower 로 부터 실제 타입 추출)
@@ -85,6 +97,7 @@ public class Reinforcement : MonoBehaviour
             eventReinforce?.Invoke(towerEnum, currentTower.ReinforceCost[currentTower.Level]);
 
         currentTower.Reinforce();
+        eventReinforceSuccess.Invoke();
         Off();
     }
 }

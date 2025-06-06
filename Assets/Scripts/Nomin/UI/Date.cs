@@ -43,6 +43,8 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     public UnityEvent nightStart; // 밤이 시작할 때 작동할 메서드
     public static Action eventMorning;
     public static Action eventDay11;
+    public static Action eventSkipSuccess;
+    public static Action eventSkipFail;
     private TimeSpan start;
     private TimeSpan end;
     private DateTime last = DateTime.Now;
@@ -189,6 +191,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         if (gameTime != GameTime.Morning) return; 
         sunsetStart?.Invoke();
         globalLight.Set(globalLight.sunset, 0.01f);
+        eventSkipSuccess.Invoke();
 
         // 시간 설정
         DateTime beforeTime = dateTime;
@@ -210,6 +213,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         if (gameTime != GameTime.Sunset) return; 
         nightStart?.Invoke();
         globalLight.Set(globalLight.night, 0.01f);
+        eventSkipSuccess.Invoke();
 
         // 시간 설정 (정지)
         text_time.enabled = false;
@@ -276,7 +280,11 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     /// </summary>
     public void ViewCheck()
     {
-        if (gameTime == GameTime.Night) message.On("지금은 낮이 아니에요 !", 2f);
+        if (gameTime == GameTime.Night)
+        {
+            message.On("지금은 낮이 아니에요 !", 2f);
+            eventSkipFail.Invoke();
+        }
     }
 
     /* Private Method */

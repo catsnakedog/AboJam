@@ -29,6 +29,8 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
     private string path = "Images/Abocado/"; // 아보카도 이미지 Resources 경로
     private Sprite[] spr_level; // 레벨에 대응하는 스프라이트
     public static Action<Vector3> eventFarming;
+    public static Action eventHarvest;
+    public static Action eventOnClick;
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
@@ -109,6 +111,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
         {
             StaticData.Abocado += harvest;
             LevelDown();
+            eventHarvest.Invoke();
         }
     }
     /// <summary>
@@ -138,6 +141,7 @@ public class Abocado : RecordInstance<Table_Abocado, Record_Abocado>, IPoolee
     /// </summary>
     public void OnClick()
     {
+        eventOnClick.Invoke();
         currentAbocado = this;
         Reinforcement.instance.Off();
         Promotion.instance.Off();
