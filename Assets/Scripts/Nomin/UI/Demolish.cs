@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class Demolition : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Demolition : MonoBehaviour
 
     /* Field & Property */
     public static Demolition instance; // 싱글턴
+    public static Action eventDemolish;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -37,6 +39,7 @@ public class Demolition : MonoBehaviour
     /// </summary>
     public void Demolish()
     {
+        eventDemolish.Invoke();
         Refund();
         pool.Return(currentTile.Go);
         Off();

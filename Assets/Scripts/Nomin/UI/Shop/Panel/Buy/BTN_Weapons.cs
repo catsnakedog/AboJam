@@ -41,6 +41,8 @@ public class BTN_Weapons : MonoBehaviour
             tmp_price.text = price.ToString();
         }
     } // 가격
+    public Dictionary<EnumData.Weapon, Weapon> dicWeapons = new Dictionary<EnumData.Weapon, Weapon>();
+    public Weapon[] weapons;
     [SerializeField] private int price = 0; // 백킹 필드
     [SerializeField] private bool purchase = false; public bool Purchase { get => purchase; } // 구매 여부
     [SerializeField] private bool isMelee = false; // 근거리 or 원거리 설정
@@ -52,6 +54,15 @@ public class BTN_Weapons : MonoBehaviour
     /* Intializer & Finalizer & Updater */
     private void Start()
     {
+        dicWeapons.Add(EnumData.Weapon.Gun, weapons[0]);
+        dicWeapons.Add(EnumData.Weapon.ShotGun, weapons[1]);
+        dicWeapons.Add(EnumData.Weapon.Sniper, weapons[2]);
+        dicWeapons.Add(EnumData.Weapon.Riple, weapons[3]);
+        dicWeapons.Add(EnumData.Weapon.Bat, weapons[4]);
+        dicWeapons.Add(EnumData.Weapon.ChainSaw, weapons[5]);
+        dicWeapons.Add(EnumData.Weapon.Spear, weapons[6]);
+        dicWeapons.Add(EnumData.Weapon.Knife, weapons[7]);
+
         // 근거리 / 원거리 인스턴스 리스트 등록
         if(isMelee == true) instances_melee.Add(this);
         if(isMelee == false) instances_range.Add(this);
@@ -75,7 +86,7 @@ public class BTN_Weapons : MonoBehaviour
     /// </summary>
     public void Buy()
     {
-        if (Hand.instance._CurrentWeapon.IsReload)
+        if (Hand.instance._CurrentWeapon.IsReload || Hand.instance.IsSwitchWeapon)
         {
             Message.instance.On("장착 / 장전 중이에요. 조금만 기다리세요 !", 2f);
             eventBuyFail.Invoke();
@@ -101,6 +112,11 @@ public class BTN_Weapons : MonoBehaviour
         if (purchase == true)
         {
             if (swap == null) return false;
+
+            // 전기톱 이펙트 관리
+            if (weapon == EnumData.Weapon.ChainSaw) ((GageMeleeWeapon)dicWeapons[EnumData.Weapon.ChainSaw]).ViewGauge();
+            else ((GageMeleeWeapon)dicWeapons[EnumData.Weapon.ChainSaw]).HideGauge();
+
             Message.instance.On("무기를 장착했습니다.", 2f);
             eventEquip.Invoke(weapon);
             swap.Equip(weapon);

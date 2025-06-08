@@ -51,6 +51,7 @@ public class Tower<T1, T2> : RecordInstance<T1, T2>, ITower
     /// <returns></returns>
     public IEnumerator CorDeath(float time)
     {
+        ITower.eventDestroy.Invoke(gameObject.transform.position);
         string originTag = gameObject.tag;
         gameObject.tag = "Untagged";
 

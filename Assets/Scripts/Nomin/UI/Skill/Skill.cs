@@ -26,7 +26,7 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
     public float seconds;
     public float speed;
     public static Action eventSkillSuccess;
-    public static Action<Vector3> eventSkillExplosion;
+    public static Action<Vector2> eventSkillExplosion;
 
     /* Intializer & Finalizer */
     private void Start()

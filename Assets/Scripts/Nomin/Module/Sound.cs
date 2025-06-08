@@ -45,6 +45,8 @@ public class Sound : MonoBehaviour
         Auto.eventFire += (pos) => PlayClip("auto_fire", pos);
         Heal.eventFire = null;
         Heal.eventFire += (pos) => PlayClip("heal_fire", pos);
+        ITower.eventDestroy = null;
+        ITower.eventDestroy += (pos) => PlayClip("demolish", pos, true);
 
         // UI
         Date.eventMorning = null;
@@ -97,6 +99,10 @@ public class Sound : MonoBehaviour
         Change.eventTradeFail += () => PlayClip("disallow", Vector3.zero, true);
         SampleButtonAction.eventSkillFail = null;
         SampleButtonAction.eventSkillFail += () => PlayClip("disallow", Vector3.zero, true);
+        Demolition.eventDemolish = null;
+        Demolition.eventDemolish += () => PlayClip("demolish", Vector3.zero, true);
+        Farming.eventDig = null;
+        Farming.eventDig += (isPlay) => SetSourcePlay("dig", isPlay);
     }
 
     /* Initialize */

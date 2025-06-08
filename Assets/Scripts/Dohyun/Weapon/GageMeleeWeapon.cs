@@ -166,4 +166,16 @@ public class GageMeleeWeapon : MeleeWeapon
     {
         _gageAction?.Invoke();
     }
+
+    public void HideGauge()
+    {
+        if (_gageBar == null) return;
+        _gageBar.gameObject.SetActive(false);
+    }
+
+    public void ViewGauge()
+    {
+        if (_gageBar == null) return;
+        _gageBar.gameObject.SetActive(true);
+    }
 }

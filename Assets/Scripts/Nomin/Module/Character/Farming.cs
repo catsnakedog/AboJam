@@ -27,6 +27,7 @@ public class Farming : MonoBehaviour
     private GameObject gaugeObj;
     public static Action<bool> eventMove;
     public static Action<Vector3> eventFarming;
+    public static Action<bool> eventDig;
 
     /* Initializer & Finalizer & Updater */
     private void Start()
@@ -108,6 +109,7 @@ public class Farming : MonoBehaviour
     /// </summary>
     public void StopCultivate()
     {
+        eventDig.Invoke(false);
         if (gaugeObj != null) { Destroy(gaugeObj); gaugeObj = null; }
         if (corGauge != null) { StopCoroutine(corGauge); corGauge = null; }
         if (corMove != null) { StopCoroutine(corMove); player.PlayerMovement._movement = Vector2.zero; corMove = null; }
@@ -154,6 +156,7 @@ public class Farming : MonoBehaviour
     /// <param name="delay">회복 틱 사이 간격</param>
     private IEnumerator CorGauge(float seconds, float percent, float delay)
     {
+        eventDig.Invoke(true);
         Vector3 pos = transform.position + new Vector3(0, 1, 0);
         gaugeObj = Instantiate(this.gauge, pos, Quaternion.identity);
         Gauge gauge = gaugeObj.GetComponent<Gauge>();
@@ -166,7 +169,8 @@ public class Farming : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
 
-        if(gaugeObj != null) Destroy(gaugeObj);
+        eventDig.Invoke(false);
+        if (gaugeObj != null) Destroy(gaugeObj);
         corGauge = null;
     }
 }

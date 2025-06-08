@@ -14,6 +14,7 @@ public interface ITower
     public int MaxLevel { get; set; } // 최대 레벨
     public int[] ReinforceCost { get; set; } // 레벨업 비용 (개수 = 최대 레벨 결정)
     public static Action eventOnClick;
+    public static Action<Vector2> eventDestroy;
 
     public void Reinforce();
 
