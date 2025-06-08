@@ -8,9 +8,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class History : MonoBehaviour
+public class History : MonoBehaviour, IPointerEnterHandler
 {
     /* Dependency */
     public GameObject gameDataLocal;
@@ -34,6 +35,8 @@ public class History : MonoBehaviour
     private int retryIndex = 0; // 연결 재시도 횟수
     private float waitTime; // 현재 남은 대기 시간
     private bool isWait = false;
+    public static Action eventHover;
+    public static Action eventNetwork;
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
@@ -81,6 +84,7 @@ public class History : MonoBehaviour
     /// </summary>
     public void SetServerHistory()
     {
+        eventNetwork.Invoke();
         if (corServerLast == null) corServerLast = StartCoroutine(CorSetServerHistory());
     }
     private IEnumerator CorSetServerHistory()
@@ -264,6 +268,13 @@ public class History : MonoBehaviour
             int spaceToAdd = totalWidth - currentWidth; // 필요한 공백 개수 계산
             return spaceToAdd > 0 ? input + new string(' ', spaceToAdd) : input; // 부족한 만큼 공백 추가
         }
+    }
+    /// <summary>
+    /// 마우스 호버링 이벤트입니다.
+    /// </summary>
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        eventHover.Invoke();
     }
 
     /* Private Method */
