@@ -57,5 +57,4 @@ public class Upgrade : MonoBehaviour
     {
         foreach (Melee melee in melees) melee.multiplierKnockback = multiplierKnockback;
     }
-
 }
