@@ -84,11 +84,13 @@ public class Zoom : MonoBehaviour
     {
         foreach (Transform child in parent)
         {
-            // 메뉴 / 상점 / 스킬은 제외합니다.
+            // 제외할 UI 를 설정합니다.
             if (child.name == "Menu") continue;
             if (child.name == "Shop") continue;
             if (child.name == "Skill") continue;
             if (child.name == "Inventory") continue;
+            if (child.name == "Skip") continue;
+            if (child.name == "Date") continue;
 
             // CanvasGroup 처리
             CanvasGroup cg = child.GetComponent<CanvasGroup>();
