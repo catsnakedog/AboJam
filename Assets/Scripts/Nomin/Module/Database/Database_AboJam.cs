@@ -19,10 +19,28 @@ public class Database_AboJam : MonoBehaviour
 
     /* Field & Property */
     public static Database_AboJam instance;
+    public bool isStart = true;
 
     /* Initializer */
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private void Awake() { instance = this; }
+    private void Update()
+    {
+        if (isStart)
+        {
+            try
+            {
+                ImportDatabase();
+                ExportDatabase();
+            }
+            catch (Exception)
+            {
+                Message.instance.On("네트워크가 연결되지않아 기본값만 로드됩니다.", 2f);
+            }
+
+            isStart = false;
+        }
+    }
 
     /* Runtime Table : ImportTable 시 서버 데이터로 덮어씌워집니다. */
     public List<Table_HP> HP = new() { new Table_HP("ID", Hp_max: 1f, HideFullHP: true) };
