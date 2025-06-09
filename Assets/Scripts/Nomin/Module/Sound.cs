@@ -2,10 +2,6 @@ using Synty.Interface.FantasyWarriorHUD.Samples;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
-using UnityEngine.UI.Extensions;
-using UnityEngine.UIElements;
-using static Unity.VisualScripting.FlowStateWidget;
 
 public class Sound : MonoBehaviour
 {

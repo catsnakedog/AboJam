@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using static Unity.VisualScripting.FlowStateWidget;
 
 public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
 {

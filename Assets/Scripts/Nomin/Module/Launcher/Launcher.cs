@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static Unity.VisualScripting.FlowStateWidget;
 
 public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
 {
