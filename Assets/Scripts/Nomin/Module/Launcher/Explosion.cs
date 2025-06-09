@@ -1,12 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.Rendering.Universal;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class Explosion : RecordInstance<Table_Explosion, Record_Explosion>, IPoolee
 {
@@ -22,6 +17,7 @@ public class Explosion : RecordInstance<Table_Explosion, Record_Explosion>, IPoo
     public float damage = 3f; // 폭발 데미지
     public float time = 2f; // 폭발 시간
     private Coroutine lastCor;
+    public static Action<string, Vector2> eventExplode;
 
     /* Initializer & Finalizer & Updater */
     private void Start()
@@ -55,6 +51,7 @@ public class Explosion : RecordInstance<Table_Explosion, Record_Explosion>, IPoo
     /// <param name="seconds">이펙트 재생 시간</param>
     public void Explode(string[] tags)
     {
+        eventExplode.Invoke(initialRecords[0].ID, gameObject.transform.position);
         SplashDamage(tags, radius);
         if (lastCor != null) StopCoroutine(lastCor);
         lastCor = StartCoroutine(CorOn());

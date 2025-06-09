@@ -13,6 +13,8 @@ public class Demolition : MonoBehaviour
     /* Field & Property */
     public static Demolition instance; // 싱글턴
     public static Action eventDemolish;
+    public static Action eventPopUp;
+    public static Action eventPopDown;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -27,10 +29,15 @@ public class Demolition : MonoBehaviour
         grow.Off();
         promotion.Off();
         gameObject.SetActive(true);
+        eventPopUp.Invoke();
     }
     public void Off()
     {
-        gameObject.SetActive(false);
+        if (gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
+            eventPopDown.Invoke();
+        }
     }
 
     /* Public Method */

@@ -3750,7 +3750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ip: 14.39.174.1
-  port: 1433
+  port: 1435
   database: AboJam
   id: Admin
   password: exp

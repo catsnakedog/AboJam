@@ -5,11 +5,8 @@ using System;
 
 public class Gun : RangedWeapon
 {
-    public static Action<Vector3> eventAttack;
-
     public override void AttackLogic()
     {
-        eventAttack.Invoke(gameObject.transform.position);
         launcher.Launch(launcher.transform.position + launcher.transform.right);
 
         /*

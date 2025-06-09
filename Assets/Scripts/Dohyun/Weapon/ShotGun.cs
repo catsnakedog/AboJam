@@ -5,12 +5,8 @@ using UnityEngine;
 
 public class ShotGun : RangedWeapon
 {
-    public static Action<Vector3> eventAttack;
-
     public override void AttackLogic()
     {
-        eventAttack.Invoke(gameObject.transform.position);
-
         Vector3 direction = launcher.transform.position + launcher.transform.right;
         launcher.Launch(direction, -10);
         launcher.Launch(direction, -5);

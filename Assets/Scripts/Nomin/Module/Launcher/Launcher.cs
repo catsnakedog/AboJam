@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static Unity.VisualScripting.FlowStateWidget;
 
 public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
 {
@@ -41,6 +42,7 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
     /* Field & Property */
     public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
     private List<GameObject> projectiles = new(); // 모든 Projectile 인스턴스
+    public static Action<string, Vector2> eventFire;
 
     [Header("[ Launcher ]")]
     public bool align = false;
@@ -116,6 +118,8 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
     /// <param name="angle">발사각 변경</param>
     public void Launch(Vector3 destination, float angle = 0f)
     {
+        eventFire.Invoke(initialRecords[0].ID, gameObject.transform.position);
+
         // 발사체 장전 (풀링 or 생성)
         GameObject projectile = pool.Get(this.projectile.gameObject.name);
         projectile.GetComponent<Projectile>().launcher = gameObject;

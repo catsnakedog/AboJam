@@ -14,7 +14,6 @@ public class Heal : Tower<Table_Heal, Record_Heal>, IPoolee
 
     /* Field & Property */
     public static List<Heal> instances = new List<Heal>(); // 모든 회복 타워 인스턴스
-    public static Action<Vector3> eventFire;
 
     [Header("[ Heal ]")]
     [SerializeField] private float delay = 0.1f; // 공격 딜레이
@@ -109,7 +108,6 @@ public class Heal : Tower<Table_Heal, Record_Heal>, IPoolee
             pool.Return(temp);
             if (target != null)
             {
-                eventFire.Invoke(gameObject.transform.position);
                 launcher.Launch(Targeter.TargetType.LowHP, detection, ratio);
             }
 

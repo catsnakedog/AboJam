@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -106,7 +107,10 @@ public class Splash : Tower<Table_Splash, Record_Splash>, IPoolee
             GameObject target = launcher.targeter.Targetting(Targeter.TargetType.Near, temp.GetComponent<Projectile>().ClashTags, detection);
             pool.Return(temp);
 
-            if (target != null) launcher.Launch(Targeter.TargetType.Near, detection);
+            if (target != null)
+            {
+                launcher.Launch(Targeter.TargetType.Near, detection);
+            }
 
             yield return delay_waitForSeconds;
         }

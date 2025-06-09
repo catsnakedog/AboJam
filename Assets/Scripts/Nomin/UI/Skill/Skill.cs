@@ -25,8 +25,7 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
     public int count;
     public float seconds;
     public float speed;
-    public static Action eventSkillSuccess;
-    public static Action<Vector2> eventSkillExplosion;
+    public static Action eventSkill;
 
     /* Intializer & Finalizer */
     private void Start()
@@ -56,7 +55,7 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
     /// <param name="seconds">총 공격 시간</param>
     public void Meteor()
     {
-        eventSkillSuccess.Invoke();
+        eventSkill.Invoke();
         StartCoroutine(CorMeteor(range, count, seconds, speed));
 
         coolTimer.SetActive(true);
@@ -113,7 +112,6 @@ public class Skill : RecordInstance<Table_Skill, Record_Skill>
             if (Vector3.Distance(meteorite.transform.position, endPos) < grid.CellWidth * 0.1f)
             {
                 // 폭발 생성
-                eventSkillExplosion.Invoke(meteorite.transform.position);
                 GameObject explosion = pool.Get(this.explosion.name);
                 explosion.transform.position = endPos;
                 explosion.GetComponent<Explosion>().Explode(clashTags);

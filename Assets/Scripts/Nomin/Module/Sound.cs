@@ -1,6 +1,7 @@
 using Synty.Interface.FantasyWarriorHUD.Samples;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.VisualScripting.FlowStateWidget;
 
 public class Sound : MonoBehaviour
 {
@@ -19,34 +20,30 @@ public class Sound : MonoBehaviour
         Date.eventDay11 += () => SetSourcePlay("bgm_day11", true);
 
         // Player
-        ShotGun.eventAttack = null;
-        ShotGun.eventAttack += (pos) => PlayClip("shotgun", pos, true);
         Knife.eventAttack = null;
         Knife.eventAttack += (pos) => PlayClip("knife", pos, true);
         Bat.eventAttack = null;
         Bat.eventAttack += (pos) => PlayClip("bat", pos, true);
-        Gun.eventAttack = null;
-        Gun.eventAttack += (pos) => PlayClip("gun", pos, true);
-        Sniper.eventAttack = null;
-        Sniper.eventAttack += (pos) => PlayClip("sniper", pos, true);
         Spear.eventAttack = null;
         Spear.eventAttack += (pos) => PlayClip("spear", pos, true);
         Receiver.eventMove = null;
         Receiver.eventMove += (isPlay) => SetSourcePlay("walk", isPlay);
         Farming.eventMove = null;
         Farming.eventMove += (isPlay) => SetSourcePlay("walk", isPlay);
-        Skill.eventSkillExplosion = null;
-        Skill.eventSkillExplosion += (pos) => PlayClip("magic_explosion", pos, true);
-        Skill.eventSkillSuccess = null;
-        Skill.eventSkillSuccess += () => PlayClip("magic_circle", Vector3.zero, true);
+        Skill.eventSkill = null;
+        Skill.eventSkill += () => PlayClip("magic_circle", Vector3.zero, true);
 
         // Building
-        Auto.eventFire = null;
-        Auto.eventFire += (pos) => PlayClip("auto_fire", pos);
-        Heal.eventFire = null;
-        Heal.eventFire += (pos) => PlayClip("heal_fire", pos);
         ITower.eventDestroy = null;
         ITower.eventDestroy += (pos) => PlayClip("demolish", pos, true);
+
+        // Weapon
+        Launcher.eventFire = null;
+        Launcher.eventFire += (ID, pos) => PlayClip(ID, pos);
+
+        // Explosion
+        Explosion.eventExplode = null;
+        Explosion.eventExplode += (explosionID, pos) => PlayClip(explosionID, pos);
 
         // UI
         Date.eventMorning = null;
@@ -101,6 +98,10 @@ public class Sound : MonoBehaviour
         SampleButtonAction.eventSkillFail += () => PlayClip("disallow", Vector3.zero, true);
         Demolition.eventDemolish = null;
         Demolition.eventDemolish += () => PlayClip("demolish", Vector3.zero, true);
+        Demolition.eventPopUp = null;
+        Demolition.eventPopUp += () => PlayClip("pop_up", Vector3.zero, true);
+        Demolition.eventPopDown = null;
+        Demolition.eventPopDown += () => PlayClip("button", Vector3.zero, true);
         Farming.eventDig = null;
         Farming.eventDig += (isPlay) => SetSourcePlay("dig", isPlay);
     }
@@ -140,17 +141,40 @@ public class Sound : MonoBehaviour
         {
             if (source.clip != null && source.clip.name == clipName)
             {
+                // 거리에 따른 볼륨 조절 ON
                 if (!global)
                 {
-                    AudioSource.PlayClipAtPoint(source.clip, pos);
-                    break;
+                    GameObject go = new GameObject("OneShot3DAudio");
+                    go.transform.position = pos;
+                    AudioSource newSource = go.AddComponent<AudioSource>();
+
+                    newSource.clip = source.clip;
+                    newSource.spatialBlend = 1f; // 3D
+                    newSource.outputAudioMixerGroup = source.outputAudioMixerGroup;
+                    newSource.volume = source.volume;
+                    newSource.pitch = source.pitch;
+                    newSource.Play();
+
+                    Destroy(go, newSource.clip.length);
                 }
+                // 거리에 따른 볼륨 조절 OFF
                 else
                 {
-                    source.spatialBlend = 0f;
-                    source.Play();
-                    break;
+                    GameObject go = new GameObject("OneShot2DAudio");
+                    go.transform.position = pos;
+                    AudioSource newSource = go.AddComponent<AudioSource>();
+
+                    newSource.clip = source.clip;
+                    newSource.spatialBlend = 0f; // 2D
+                    newSource.outputAudioMixerGroup = source.outputAudioMixerGroup;
+                    newSource.volume = source.volume;
+                    newSource.pitch = source.pitch;
+                    newSource.Play();
+
+                    Destroy(go, newSource.clip.length);
                 }
+
+                break;
             }
         }
     }

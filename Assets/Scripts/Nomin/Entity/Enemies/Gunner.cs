@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
-using UnityEngine.InputSystem.HID;
-using UnityEngine.UIElements;
-using static Targeter;
-using static UnityEngine.GraphicsBuffer;
+using System;
+using static Unity.VisualScripting.FlowStateWidget;
 
 public class Gunner : Enemy<Table_Gunner, Record_Gunner>, IPoolee
 {
