@@ -36,6 +36,8 @@ public class Sound : MonoBehaviour
         Launcher.eventFire += (ID, pos) => PlayClip(ID, pos);
         Melee.eventAttack = null;
         Melee.eventAttack += (ID, pos) => PlayClip(ID, pos);
+        Melee.eventHit = null;
+        Melee.eventHit += (ID, pos) => PlayClip(ID + "_Hit", pos);
 
         // Explosion
         Explosion.eventExplode = null;

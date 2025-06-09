@@ -29,6 +29,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     private WaitForSeconds waitForSeconds;
     private WaitForSeconds waitForSecondsUpdateKnockback;
     public static Action<string, Vector2> eventAttack;
+    public static Action<string, Vector2> eventHit;
 
     /* Intializer & Finalizer */
     private void Start()
@@ -72,6 +73,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
             if (currentPenetrate < 1) break;
             if (clashTags.Contains(collider.tag))
             {
+                eventHit.Invoke(initialRecords[0].ID, gameObject.transform.position);
                 if (effect != null) StartCoroutine(CorEffect(collider.transform.position));
                 HP.FindHP(collider.gameObject).Damage(damage * multiplierDamage); currentPenetrate--;
                 if (new string[] {"Player", "Enemies"}.Contains(collider.tag)) Knockback(collider, knockback * multiplierKnockback);
@@ -86,6 +88,8 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     /// </summary>
     public void Attack(Vector3 worldPos, float radius, float damage,  float knockback)
     {
+        eventAttack.Invoke(initialRecords[0].ID, gameObject.transform.position);
+
         // 범위 내의 모든 타겟 탐색
         Collider2D[] colliders = Physics2D.OverlapCircleAll(worldPos, radius);
         int currentPenetrate = penetrate; // 현재 남은 관통 수
@@ -96,6 +100,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
             if (currentPenetrate < 1) break;
             if (clashTags.Contains(collider.tag))
             {
+                eventHit.Invoke(initialRecords[0].ID, gameObject.transform.position);
                 if (effect != null) StartCoroutine(CorEffect(collider.transform.position));
                 HP.FindHP(collider.gameObject).Damage(damage * multiplierDamage); currentPenetrate--;
                 if (new string[] { "Player", "Enemies" }.Contains(collider.tag)) Knockback(collider, knockback * multiplierKnockback);
