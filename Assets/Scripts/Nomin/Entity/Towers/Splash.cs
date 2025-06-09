@@ -31,10 +31,7 @@ public class Splash : Tower<Table_Splash, Record_Splash>, IPoolee
         startFlag = true;
         base.Start();
         instances.Add(this);
-
-        // 인디케이터 스케일링
-        float scale = launcher.Range * 2;
-        indicator_circle.transform.localScale = new Vector2(scale, scale);
+        launcher.eventAfterLoad += SetIndicatorSize;
     }
     private void OnDestroy()
     {
@@ -114,6 +111,11 @@ public class Splash : Tower<Table_Splash, Record_Splash>, IPoolee
 
             yield return delay_waitForSeconds;
         }
+    }
+    private void SetIndicatorSize()
+    {
+        float scale = launcher.range * 2;
+        indicator_circle.transform.localScale = new Vector2(scale, scale);
     }
 
     /* Test Method */

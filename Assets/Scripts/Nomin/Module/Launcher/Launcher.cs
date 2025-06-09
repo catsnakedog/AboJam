@@ -43,6 +43,7 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
     public static List<Launcher> instances = new List<Launcher>(); // 모든 Launcher 인스턴스
     private List<GameObject> projectiles = new(); // 모든 Projectile 인스턴스
     public static Action<string, Vector2> eventFire;
+    public event Action eventAfterLoad;
 
     [Header("[ Launcher ]")]
     public bool align = false;
@@ -108,6 +109,7 @@ public class Launcher : RecordInstance<Table_Launcher, Record_Launcher>
         width = spriteRenderer.bounds.size.x;
         height = spriteRenderer.bounds.size.y;
         AlignLauncher();
+        eventAfterLoad?.Invoke();
     } // Import 시 자동 실행
 
     /* Public Method */
