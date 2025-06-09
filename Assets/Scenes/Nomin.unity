@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 49613197}
   - component: {fileID: 49613198}
   m_Layer: 5
-  m_Name: BGM
+  m_Name: SFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -680,13 +680,37 @@ MonoBehaviour:
   m_FillRect: {fileID: 621420940}
   m_HandleRect: {fileID: 101122048}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1732227531}
+        m_TargetAssemblyTypeName: Sound, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1732227531}
+        m_TargetAssemblyTypeName: Sound, Assembly-CSharp
+        m_MethodName: SaveVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &53318958 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3558582512522133214, guid: d4dbe4734e4a2f941830e9bcb6d74c3b, type: 3}
@@ -17878,7 +17902,7 @@ GameObject:
   - component: {fileID: 1613537865}
   - component: {fileID: 1613537866}
   m_Layer: 5
-  m_Name: SFX
+  m_Name: BGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17950,13 +17974,37 @@ MonoBehaviour:
   m_FillRect: {fileID: 1776416192}
   m_HandleRect: {fileID: 34373308}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.0001
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1732227531}
+        m_TargetAssemblyTypeName: Sound, Assembly-CSharp
+        m_MethodName: SetVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1732227531}
+        m_TargetAssemblyTypeName: Sound, Assembly-CSharp
+        m_MethodName: SaveVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1639050217
 GameObject:
   m_ObjectHideFlags: 0
@@ -18762,6 +18810,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1335e620fe04cf5408d2efab18666c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 9af81b24e920da04dbc18273dd4e3248, type: 2}
+  bgmSlider: {fileID: 1613537866}
+  sfxSlider: {fileID: 49613198}
   audioSources:
   - {fileID: 2118635928}
   - {fileID: 1234044616}

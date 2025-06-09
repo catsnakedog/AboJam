@@ -1,11 +1,18 @@
 using Synty.Interface.FantasyWarriorHUD.Samples;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
+using UnityEngine.UIElements;
 using static Unity.VisualScripting.FlowStateWidget;
 
 public class Sound : MonoBehaviour
 {
     public static Sound instance;
+    public AudioMixer mixer;
+    public UnityEngine.UI.Slider bgmSlider;
+    public UnityEngine.UI.Slider sfxSlider;
     public List<GameObject> audioSources;                           // 각 엔터티의 오디오 소스 집합 게임 오브젝트
     private List<AudioSource> sources = new List<AudioSource>();    // 모든 오디오 소스를 평탄화 한 리스트
 
@@ -120,6 +127,7 @@ public class Sound : MonoBehaviour
             }
         }
     }
+
     /// <summary>
     /// 초기화
     /// </summary>
@@ -127,6 +135,34 @@ public class Sound : MonoBehaviour
     {
         Init();
         Bound();
+        LoadVolume();
+    }
+
+    /* Public Mehtod */
+    public void LoadVolume()
+    {
+        float bgmValue = PlayerPrefs.GetFloat("BGM", 0.5f);
+        float sfxValue = PlayerPrefs.GetFloat("SFX", 0.5f);
+
+        bgmSlider.value = bgmValue;
+        sfxSlider.value = sfxValue;
+
+        SetVolume();
+    }
+
+    public void SetVolume()
+    {
+        float bgmValue = Mathf.Log10(Mathf.Clamp(bgmSlider.value, 0.0001f, 1f)) * 20;
+        float sfxValue = Mathf.Log10(Mathf.Clamp(sfxSlider.value, 0.0001f, 1f)) * 20;
+
+        mixer.SetFloat("BGM", bgmValue);
+        mixer.SetFloat("SFX", sfxValue);
+    }
+
+    public void SaveVolume()
+    {
+        PlayerPrefs.SetFloat("BGM", bgmSlider.value);
+        PlayerPrefs.SetFloat("SFX", sfxSlider.value);
     }
 
     /* Private Method */
