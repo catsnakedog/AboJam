@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Spear : MeleeWeapon
 {
-    public static Action<Vector3> eventAttack;
-
     [System.Serializable]
     public class SpearEffectData
     {
@@ -99,7 +97,6 @@ public class Spear : MeleeWeapon
 
     public override void AttackLogic()
     {
-        eventAttack.Invoke(gameObject.transform.position);
         IsHandFixed = true;
         MouseFlipPrio = true;
         FixedRot = transform.parent.parent.rotation;

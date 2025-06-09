@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.VisualScripting.FlowStateWidget;
 
 public class Melee : RecordInstance<Table_Melee, Record_Melee>
 {
@@ -27,6 +28,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     [SerializeField] float updateKnockback = 0.016f; // 넉백 업데이트 시간
     private WaitForSeconds waitForSeconds;
     private WaitForSeconds waitForSecondsUpdateKnockback;
+    public static Action<string, Vector2> eventAttack;
 
     /* Intializer & Finalizer */
     private void Start()
@@ -58,6 +60,8 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     /// </summary>
     public void Attack(Vector3 worldPos)
     {
+        eventAttack.Invoke(initialRecords[0].ID, gameObject.transform.position);
+
         // 범위 내의 모든 타겟 탐색
         Collider2D[] colliders = Physics2D.OverlapCircleAll(worldPos, radius);
         int currentPenetrate = penetrate; // 현재 남은 관통 수

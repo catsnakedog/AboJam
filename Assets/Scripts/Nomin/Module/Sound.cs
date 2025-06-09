@@ -20,12 +20,6 @@ public class Sound : MonoBehaviour
         Date.eventDay11 += () => SetSourcePlay("bgm_day11", true);
 
         // Player
-        Knife.eventAttack = null;
-        Knife.eventAttack += (pos) => PlayClip("knife", pos, true);
-        Bat.eventAttack = null;
-        Bat.eventAttack += (pos) => PlayClip("bat", pos, true);
-        Spear.eventAttack = null;
-        Spear.eventAttack += (pos) => PlayClip("spear", pos, true);
         Receiver.eventMove = null;
         Receiver.eventMove += (isPlay) => SetSourcePlay("walk", isPlay);
         Farming.eventMove = null;
@@ -40,6 +34,8 @@ public class Sound : MonoBehaviour
         // Weapon
         Launcher.eventFire = null;
         Launcher.eventFire += (ID, pos) => PlayClip(ID, pos);
+        Melee.eventAttack = null;
+        Melee.eventAttack += (ID, pos) => PlayClip(ID, pos);
 
         // Explosion
         Explosion.eventExplode = null;
