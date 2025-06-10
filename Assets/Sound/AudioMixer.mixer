@@ -61,6 +61,20 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-4935032333356130160
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 5ab86e9459ce78942ab8d4358c1bd1a8
+  m_EffectName: Attenuation
+  m_MixLevel: 4890d2de8b53c0c40b504f64eb6adc30
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &-4436060045787634825
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -94,6 +108,25 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &-2524998339147584814
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Equip
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 101bc757a90c90945b3ee33fad896a73
+  m_Children: []
+  m_Volume: 2270072b43dab3f459006521ad0aa864
+  m_Pitch: 8bf0b7912f67fd44f9b6d2c0d0904c7f
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -4935032333356130160}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &-1840538053610026651
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -183,6 +216,7 @@ AudioMixerGroupController:
   - {fileID: -1780531505167137745}
   - {fileID: -1935142397391597}
   - {fileID: 1050188941324631979}
+  - {fileID: -2524998339147584814}
   m_Volume: baad84a60dbbe74408ecc6d2b4b4ed5a
   m_Pitch: 1bd07a0517b6a2b48a9ed8ce19957733
   m_Send: 00000000000000000000000000000000
@@ -244,6 +278,7 @@ AudioMixerController:
     - 95f1a9133f26f18479d8d29f82dd7af2
     - 3ca82ccc1e748cd43b1df69a7ecc4374
     - f163dfa84869f2943aed32062e7ea59c
+    - 101bc757a90c90945b3ee33fad896a73
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -298,6 +333,7 @@ AudioMixerSnapshotController:
     43b52eb6dc28fef44b59e88f2c3d85c1: -0.0024418756
     d8c06b08c388faf468c8878c10cbc139: 14.901688
     b5a0740acf477214487ac1c706d9e51f: 14.9016905
+    2270072b43dab3f459006521ad0aa864: 6.648677
     a889794c364dc7c4584f9bbb6548f32a: 14.9016905
     3605da7f8a7dd5b478e3cc812544e0cb: 10.437404
   m_TransitionOverrides: {}
