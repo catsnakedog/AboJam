@@ -41,8 +41,8 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     public UnityEvent morningStart; // 아침이 시작할 때 작동할 메서드
     public UnityEvent sunsetStart; // 해질녘이 시작할 때 작동할 메서드
     public UnityEvent nightStart; // 밤이 시작할 때 작동할 메서드
-    public static Action eventMorning;
-    public static Action eventDay11;
+    public static Action<int> eventMorning;
+    public static Action eventNight;
     public static Action eventSkipSuccess;
     public static Action eventSkipFail;
     private TimeSpan start;
@@ -166,7 +166,6 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     {
         // 빛 & 이벤트 호출
         morningStart?.Invoke();
-        eventMorning?.Invoke();
         globalLight.Set(globalLight.morning, 0.01f);
 
         // 시간 설정 (흐름)
@@ -179,7 +178,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         ChangeImage();
 
         TimeSpan total = dateTime - DateTime.MinValue;
-        if (((int)(total.TotalDays + 1)) == 11) eventDay11.Invoke();
+        eventMorning?.Invoke((int)(total.TotalDays + 1));
     }
     /// <summary>
     /// 아침을 스킵하고 해질녘이 시작됩니다.
@@ -226,6 +225,8 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         gameTime++;
         if (!Enum.IsDefined(typeof(GameTime), gameTime)) gameTime = 0;
         ChangeImage();
+
+        eventNight?.Invoke();
     }
     /// <summary>
     /// 밤을 스킵하고 아침이 시작됩니다.
@@ -235,7 +236,6 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         // 빛 & 이벤트 호출
         if (gameTime != GameTime.Night) return;
         morningStart?.Invoke();
-        eventMorning?.Invoke();
         globalLight.Set(globalLight.morning, 0.01f);
 
         // 시간 설정 (흐름)
@@ -243,9 +243,6 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         timeFlow = true;
         dateTime = dateTime.Date + TimeSpan.FromDays(1) + StringToTime(morningTime);
         last = DateTime.Now;
-
-        TimeSpan total = dateTime - DateTime.MinValue;
-        if (((int)(total.TotalDays + 1)) == 11) eventDay11.Invoke();
 
         // GameTime 및 Image 넘김
         gameTime++;
@@ -258,6 +255,9 @@ public class Date : RecordInstance<Table_Date, Record_Date>
             spawner.StopCoroutine(spawner.lastCor);
             spawner.waveEnd = true;
         }
+
+        TimeSpan total = dateTime - DateTime.MinValue;
+        eventMorning?.Invoke((int)(total.TotalDays + 1));
     }
     /// <summary>
     /// 모든 몬스터를 죽입니다.

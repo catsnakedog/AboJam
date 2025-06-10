@@ -60,7 +60,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     /// </summary>
     public void Attack(Vector3 worldPos)
     {
-        eventAttack.Invoke(initialRecords[0].ID, gameObject.transform.position);
+        eventAttack?.Invoke(initialRecords[0].ID, gameObject.transform.position);
 
         // 범위 내의 모든 타겟 탐색
         Collider2D[] colliders = Physics2D.OverlapCircleAll(worldPos, radius);
@@ -87,7 +87,7 @@ public class Melee : RecordInstance<Table_Melee, Record_Melee>
     /// </summary>
     public void Attack(Vector3 worldPos, float radius, float damage,  float knockback)
     {
-        eventAttack.Invoke(initialRecords[0].ID, gameObject.transform.position);
+        eventAttack?.Invoke(initialRecords[0].ID, gameObject.transform.position);
 
         // 범위 내의 모든 타겟 탐색
         Collider2D[] colliders = Physics2D.OverlapCircleAll(worldPos, radius);

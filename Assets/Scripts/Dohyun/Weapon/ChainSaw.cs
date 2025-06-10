@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Text;
@@ -15,6 +16,8 @@ public class ChainSaw : GageMeleeWeapon
     private MaterialPropertyBlock _attackProperty;
     private float _angle = 0;
     private Coroutine corLast;
+    public static Action eventStart;
+    public static Action eventEnd;
 
     public override void WeaponSetting()
     {
@@ -50,6 +53,8 @@ public class ChainSaw : GageMeleeWeapon
 
     public override void Trigger()
     {
+        Debug.Log("전기톱 스타트");
+        eventStart.Invoke();
         base.Trigger();
         _angle = 0;
 
@@ -81,6 +86,8 @@ public class ChainSaw : GageMeleeWeapon
 
     public override void TriggerEnd()
     {
+        Debug.Log("전기톱 끝");
+        eventEnd.Invoke();
         base.TriggerEnd();
         _angle = 0;
         AngleCorrection = DefaultAngleCorrection;

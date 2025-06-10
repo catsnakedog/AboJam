@@ -1,7 +1,10 @@
 using Synty.Interface.FantasyWarriorHUD.Samples;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using static Unity.VisualScripting.Member;
+using static UnityEngine.UI.Image;
 
 public class Sound : MonoBehaviour
 {
@@ -11,6 +14,8 @@ public class Sound : MonoBehaviour
     public UnityEngine.UI.Slider sfxSlider;
     public List<GameObject> audioSources;                           // 각 엔터티의 오디오 소스 집합 게임 오브젝트
     private List<AudioSource> sources = new List<AudioSource>();    // 모든 오디오 소스를 평탄화 한 리스트
+    private Coroutine corLastLoop;
+    public List<AudioSource> loopAudioSource;
 
     /// <summary>
     /// 각 유닛의 이벤트에 사운드 재생을 바운드합니다.
@@ -18,9 +23,34 @@ public class Sound : MonoBehaviour
     private void Bound()
     {
         // BGM
-        Date.eventDay11 = null;
-        Date.eventDay11 += () => SetSourcePlay("bgm_day1", false);
-        Date.eventDay11 += () => SetSourcePlay("bgm_day11", true);
+        Date.eventMorning = null;
+        Date.eventMorning += (day) =>
+        {
+            PlayClip("morning_change", Vector3.zero, true);
+            SetSourcePlay("bgm_night", false);
+
+            if (1 <= day && day <= 10)
+            {
+                SetSourcePlay("bgm_day1", true);
+            }
+            else if (11 <= day && day <= 20)
+            {
+                SetSourcePlay("bgm_day1", false);
+                SetSourcePlay("bgm_day11", true);
+            }
+            else
+            {
+
+            }
+        };
+
+        Date.eventNight = null;
+        Date.eventNight += () =>
+        {
+            SetSourcePlay("bgm_day1", false);
+            SetSourcePlay("bgm_day11", false);
+            SetSourcePlay("bgm_night", true);
+        };
 
         // Player
         Receiver.eventMove = null;
@@ -30,25 +60,37 @@ public class Sound : MonoBehaviour
         Skill.eventSkill = null;
         Skill.eventSkill += () => PlayClip("magic_circle", Vector3.zero, true);
 
-        // Building
-        ITower.eventDestroy = null;
-        ITower.eventDestroy += (pos) => PlayClip("demolish", pos, true);
-
-        // Weapon
+        // Launcher
         Launcher.eventFire = null;
         Launcher.eventFire += (ID, pos) => PlayClip(ID, pos);
-        Melee.eventAttack = null;
-        Melee.eventAttack += (ID, pos) => PlayClip(ID, pos);
-        Melee.eventHit = null;
-        Melee.eventHit += (ID, pos) => PlayClip(ID + "_Hit", pos);
+        Projectile.eventClash = null;
+        Projectile.eventClash = (pos) => PlayClip("projectile_clash", pos);
 
         // Explosion
         Explosion.eventExplode = null;
         Explosion.eventExplode += (explosionID, pos) => PlayClip(explosionID, pos);
 
+        // Melee
+        Melee.eventAttack = null;
+        Melee.eventAttack += (ID, pos) => { if (!ID.Contains("Chainsaw")) PlayClip(ID, pos); };
+        Melee.eventHit = null;
+        Melee.eventHit += (ID, pos) => PlayClip(ID + "_Hit", pos);
+
+        // ChainSaw
+        ChainSaw.eventStart = null;
+        ChainSaw.eventStart += () =>
+        {
+            if (corLastLoop != null) StopCoroutine(corLastLoop);
+            corLastLoop = StartCoroutine(SetSourceLoop(loopAudioSource[0], "Melee_Player_Chainsaw_start", "Melee_Player_Chainsaw_loop", "Melee_Player_Chainsaw_end", true));
+        };
+        ChainSaw.eventEnd = null;
+        ChainSaw.eventEnd += () =>
+        {
+            if (corLastLoop != null) StopCoroutine(corLastLoop);
+            corLastLoop = StartCoroutine(SetSourceLoop(loopAudioSource[0], "Melee_Player_Chainsaw_start", "Melee_Player_Chainsaw_loop", "Melee_Player_Chainsaw_end", false));
+        };
+
         // UI
-        Date.eventMorning = null;
-        Date.eventMorning += () => PlayClip("morning_change", Vector3.zero, true);
         Date.eventSkipSuccess = null;
         Date.eventSkipSuccess += () => PlayClip("skip", Vector3.zero, true);
         Date.eventSkipFail = null;
@@ -105,6 +147,8 @@ public class Sound : MonoBehaviour
         Demolition.eventPopDown += () => PlayClip("button", Vector3.zero, true);
         Farming.eventDig = null;
         Farming.eventDig += (isPlay) => SetSourcePlay("dig", isPlay);
+        ITower.eventDestroy = null;
+        ITower.eventDestroy += (pos) => PlayClip("demolish", pos, true);
     }
 
     /* Initialize */
@@ -222,6 +266,44 @@ public class Sound : MonoBehaviour
                 else source.Stop();
                 break;
             }
+        }
+    }
+
+    /// <summary>
+    /// 시동 - 반복 - 종료음을 자연스럽게 전환합니다.
+    /// </summary>
+    private IEnumerator SetSourceLoop(AudioSource audioSource, string startClipName, string loopClipName, string endClipName, bool on)
+    {
+        AudioClip startClip = null;
+        AudioClip loopClip = null;
+        AudioClip endClip = null;
+
+        // 초기화
+        foreach (AudioSource source in sources)
+        {
+            if (source.clip != null && source.clip.name == startClipName) startClip = source.clip;
+            if (source.clip != null && source.clip.name == loopClipName) loopClip = source.clip;
+            if (source.clip != null && source.clip.name == endClipName) endClip = source.clip;
+            if (audioSource != null && startClip != null && loopClip != null && endClip != null) break;
+        }
+
+        if (on)
+        {
+            audioSource.clip = startClip;
+            audioSource.loop = false;
+            audioSource.Play();
+
+            yield return new WaitForSeconds(startClip.length);
+
+            audioSource.clip = loopClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.clip = endClip;
+            audioSource.loop = false;
+            audioSource.Play();
         }
     }
 }

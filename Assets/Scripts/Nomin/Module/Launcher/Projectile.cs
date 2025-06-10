@@ -28,6 +28,7 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
     public float multiplierDamage = 1.0f; // 데미지 계수
     public int penetrate = 1; // 총 관통 수
     private int penetrate_current; // 남은 관통 수
+    public static Action<Vector2> eventClash;
 
     /* Intializer & Finalizer & Updater */
     private void Awake()
@@ -100,7 +101,11 @@ public class Projectile : RecordInstance<Table_Projectile, Record_Projectile>, I
             }
 
             // 타겟 HP 에 데미지 / 회복 연산
-            if (damage >= 0) targetHP.Damage(damage * multiplierDamage);
+            if (damage >= 0)
+            {
+                if (initialRecords[0].ID.Contains("Player")) eventClash.Invoke(gameObject.transform.position);
+                targetHP.Damage(damage * multiplierDamage);
+            }
             else targetHP.Heal(-damage);
 
             // 관통 게산

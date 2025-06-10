@@ -51,7 +51,7 @@ public class Explosion : RecordInstance<Table_Explosion, Record_Explosion>, IPoo
     /// <param name="seconds">이펙트 재생 시간</param>
     public void Explode(string[] tags)
     {
-        eventExplode.Invoke(initialRecords[0].ID, gameObject.transform.position);
+        if(initialRecords[0].ID == "Explosion_Meteor") eventExplode.Invoke(initialRecords[0].ID, gameObject.transform.position);
         SplashDamage(tags, radius);
         if (lastCor != null) StopCoroutine(lastCor);
         lastCor = StartCoroutine(CorOn());
