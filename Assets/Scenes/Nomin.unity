@@ -3721,9 +3721,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[ PC ]\n\uC774\uB3D9 : WASD\n\uACF5\uACA9 : Click\n\uAC74\uC124 : F +
-    Click\n\uCCA0\uAC70 : G + Click\n\uCC3D \uB2EB\uAE30 : ESC\n\uBB34\uAE30 \uAD50\uCCB4
-    : R \uB610\uB294 1, 2\n\uC0C1\uC810 : Q\n"
+  m_text: "[ PC ]\n\uC774\uB3D9 : WASD\n\uACF5\uACA9 : Left Click\n\uAC74\uC124 :
+    Right Click\n\uCCA0\uAC70 : F + Click\n\uCC3D \uB2EB\uAE30 : ESC\n\uBB34\uAE30
+    \uAD50\uCCB4 : R \uB610\uB294 1, 2\n\uC0C1\uC810 : Q\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
   m_sharedMaterial: {fileID: -6307645790068136302, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
@@ -8089,7 +8089,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -1935142397391597, guid: 9af81b24e920da04dbc18273dd4e3248, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 00bace929ffa96b45bc26351a1c4fea4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 08453cc336a94ee42b8bc4fead0a613e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -8185,7 +8185,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -1935142397391597, guid: 9af81b24e920da04dbc18273dd4e3248, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 055779c5a0cea5249a2143de30e4dc30, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2b3cc722d92421e44a4dcbcb1a62ec5b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -8281,7 +8281,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -1935142397391597, guid: 9af81b24e920da04dbc18273dd4e3248, type: 2}
-  m_audioClip: {fileID: 8300000, guid: c45ff77ca015f3845aa5ac3051e78af4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f3b80937e7257f549a61aa85f6a1d481, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -8379,7 +8379,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -1935142397391597, guid: 9af81b24e920da04dbc18273dd4e3248, type: 2}
   m_audioClip: {fileID: 8300000, guid: a7fef024446b40049a024e605c1fd7e5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -16229,6 +16229,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 297640565754838340, guid: 17fb204a5474d3f46bc691464fe2dbd7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1496784067}
+    - targetCorrespondingSourceObject: {fileID: 297640565754838340, guid: 17fb204a5474d3f46bc691464fe2dbd7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1496784070}
   m_SourcePrefab: {fileID: 100100000, guid: 17fb204a5474d3f46bc691464fe2dbd7, type: 3}
 --- !u!224 &1496784064 stripped
 RectTransform:
@@ -16251,6 +16254,29 @@ MonoBehaviour:
   camera: {fileID: 124358847}
   rectCanvas: {fileID: 926769260}
   rectMark: {fileID: 1496784064}
+--- !u!223 &1496784070
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918008951}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 999
+  m_TargetDisplay: 0
 --- !u!1 &1507803501 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6277214346934582178, guid: 6e9b3bb6fae3e4b489c3ae7ea5c90526, type: 3}

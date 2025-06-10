@@ -15,6 +15,7 @@ public class Demolition : MonoBehaviour
     public static Action eventDemolish;
     public static Action eventPopUp;
     public static Action eventPopDown;
+    public bool Active { get; set; } = true;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -25,6 +26,7 @@ public class Demolition : MonoBehaviour
     }
     public void On()
     {
+        if (Active == false) return;
         reinforcement.Off();
         grow.Off();
         promotion.Off();

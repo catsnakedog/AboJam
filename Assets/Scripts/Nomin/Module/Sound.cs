@@ -301,6 +301,7 @@ public class Sound : MonoBehaviour
         }
         else
         {
+            while (audioSource.isPlaying) yield return null;
             audioSource.clip = endClip;
             audioSource.loop = false;
             audioSource.Play();
