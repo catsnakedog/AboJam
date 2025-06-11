@@ -177,7 +177,7 @@ public class Scenario : MonoBehaviour
         yield return new WaitForSeconds(checkTime);
 
         // 초기 자원
-        StaticData.Abocado = 1;
+        StaticData.Abocado = 2;
         StaticData.Garu = 5;
         StaticData.Water = 0;
 
@@ -277,7 +277,11 @@ public class Scenario : MonoBehaviour
                     if (ITower.instances.Count > 0) break;
                     mark.On(child.gameObject, 1f);
                 }
-            else mark.On(Abocado.instances[0].gameObject, 999f);
+            else
+            {
+                yield return new WaitForSeconds(markTime * 3f);
+                mark.On(Abocado.instances[0].gameObject, 999f);
+            }
 
             yield return tempWaitForSeconds;
             CheckTowerCount(out towerCount);
@@ -308,7 +312,7 @@ public class Scenario : MonoBehaviour
         StopCoroutine(corDayNight);
         mark.Off();
         globalLight.Set(globalLight.night, 0.01f);
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             int random = UnityEngine.Random.Range(0, enemies.Length);
             spawner.Spawn(enemies[random], new Vector3(i * 2, 13, 0));
@@ -372,7 +376,11 @@ public class Scenario : MonoBehaviour
                     yield return waitForSecondsMark;
                     mark.On(weapon.gameObject, 999f);
                 }
-            else mark.On(shop_onOff, 2f);
+            else
+            {
+                yield return new WaitForSeconds(0.6f);
+                mark.On(shop_onOff, 2f);
+            }
 
             yield return waitForSecondsMark;
         }
@@ -391,7 +399,11 @@ public class Scenario : MonoBehaviour
                     yield return waitForSecondsMark;
                     mark.On(upgrade.gameObject, 999f);
                 }
-            else mark.On(shop_onOff, 2f);
+            else
+            {
+                yield return new WaitForSeconds(0.6f);
+                mark.On(shop_onOff, 2f);
+            }
 
             yield return waitForSeconds;
         }
@@ -455,7 +467,7 @@ public class Scenario : MonoBehaviour
         // 철거
         message.On($"마지막 튜토리얼입니다 !", 2f, true);
         yield return new WaitForSeconds(2f);
-        message.On($"F + 클릭으로 타워와 아보카도를 철거해보세요.", 999f, true);
+        message.On($"F + 클릭으로 타워와 경작지를 철거해보세요.", 999f, true);
         while (grid.GetTile((15, 17)).Go != null | grid.GetTile((15, 19)).Go != null) yield return waitForSeconds;
         message.On($"잘했어요 !", 1f, true);
         yield return new WaitForSeconds(1f);
@@ -495,12 +507,12 @@ public class Scenario : MonoBehaviour
                 message.On($"우클릭으로 타워를 눌러보세요.", 999f, true);
                 mark.On(grid.GetTile((15, 19)).Go, 999f);
             }
-            yield return waitForSeconds;
+            yield return new WaitForSeconds(0.6f);
         }
 
         message.On($"타워를 2 번 이상 업그레이드 하세요.", 999f, true);
         StaticData.Garu = 999;
-        WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.3f);
+        WaitForSeconds tempWaitForSeconds = new WaitForSeconds(0.6f);
         while (true)
         {
             if (grid.GetTile((15, 19)).Go == null)
@@ -550,7 +562,7 @@ public class Scenario : MonoBehaviour
         // 교전
         message.On($"모든 적을 무찌르세요.", 999f, true);
         globalLight.Set(globalLight.night, 0.01f);
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 3; i++)
         {
             int random = UnityEngine.Random.Range(0, enemies.Length);
             spawner.Spawn(enemies[random], new Vector3(i * 2, 13, 0));

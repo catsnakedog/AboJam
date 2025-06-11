@@ -109,8 +109,10 @@ public class Sound : MonoBehaviour
         Abocado.eventOnClick += () => PlayClip("abocado_onclick", Vector3.zero, true);
         ITower.eventOnClick = null;
         ITower.eventOnClick += () => PlayClip("tower_onclick", Vector3.zero, true);
-        Grow.eventPromotion = null;
-        Grow.eventPromotion += () => PlayClip("promotion_tree", Vector3.zero, true);
+        Grow.eventPromotionSuccess = null;
+        Grow.eventPromotionSuccess += () => PlayClip("promotion_tree", Vector3.zero, true);
+        Grow.eventPromotionFail = null;
+        Grow.eventPromotionFail += () => PlayClip("disallow", Vector3.zero, true);
         Promotion.eventPromotionSuccess = null;
         Promotion.eventPromotionSuccess += () => PlayClip("promotion_tower", Vector3.zero, true);
         Promotion.eventPromotionFail = null;
@@ -293,7 +295,7 @@ public class Sound : MonoBehaviour
             audioSource.loop = false;
             audioSource.Play();
 
-            yield return new WaitForSeconds(startClip.length);
+            yield return new WaitForSeconds(startClip.length * 0.9f);
 
             audioSource.clip = loopClip;
             audioSource.loop = true;
@@ -301,7 +303,12 @@ public class Sound : MonoBehaviour
         }
         else
         {
-            while (audioSource.isPlaying) yield return null;
+            while (audioSource.isPlaying)
+            {
+                audioSource.loop = false;
+                yield return null;
+            }
+
             audioSource.clip = endClip;
             audioSource.loop = false;
             audioSource.Play();

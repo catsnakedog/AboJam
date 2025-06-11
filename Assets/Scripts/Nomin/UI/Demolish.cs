@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using TMPro;
+using Unity.VisualScripting;
 
 public class Demolition : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class Demolition : MonoBehaviour
     public static Action eventDemolish;
     public static Action eventPopUp;
     public static Action eventPopDown;
+    public TextMeshProUGUI tmp;
     public bool Active { get; set; } = true;
 
     /* Intializer & Finalizer & Updater */
@@ -32,6 +35,31 @@ public class Demolition : MonoBehaviour
         promotion.Off();
         gameObject.SetActive(true);
         eventPopUp.Invoke();
+        string cultivateText = "정말 철거하시겠습니까?\n\n아무것도 돌려받을 수 없습니다.";
+        string defaultText = "정말 철거하시겠습니까?\n\n(30 가루 환급)";
+        SetText(cultivateText, defaultText);
+
+        void SetText(string cultivateText, string defaultText)
+        {
+            switch (isCultivate())
+            {
+                case true:
+                    tmp.text = cultivateText;
+                    break;
+                default:
+                    tmp.text = defaultText;
+                    break;
+            }
+
+            bool isCultivate()
+            {
+                Abocado abocado = currentTile.Go.GetComponent<Abocado>();
+                if (abocado != null)
+                    if (abocado.Level == EnumData.Abocado.Cultivated) return true;
+
+                return false;
+            }
+        }
     }
     public void Off()
     {

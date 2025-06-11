@@ -3891,6 +3891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f404aadaa9876764798b56f7f992c656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tmp: {fileID: 599789127}
 --- !u!1 &263550297
 GameObject:
   m_ObjectHideFlags: 0
@@ -8379,7 +8380,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -1935142397391597, guid: 9af81b24e920da04dbc18273dd4e3248, type: 2}
   m_audioClip: {fileID: 8300000, guid: a7fef024446b40049a024e605c1fd7e5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -16229,9 +16230,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 297640565754838340, guid: 17fb204a5474d3f46bc691464fe2dbd7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1496784067}
-    - targetCorrespondingSourceObject: {fileID: 297640565754838340, guid: 17fb204a5474d3f46bc691464fe2dbd7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1496784070}
   m_SourcePrefab: {fileID: 100100000, guid: 17fb204a5474d3f46bc691464fe2dbd7, type: 3}
 --- !u!224 &1496784064 stripped
 RectTransform:
@@ -16254,29 +16252,6 @@ MonoBehaviour:
   camera: {fileID: 124358847}
   rectCanvas: {fileID: 926769260}
   rectMark: {fileID: 1496784064}
---- !u!223 &1496784070
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 918008951}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 999
-  m_TargetDisplay: 0
 --- !u!1 &1507803501 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6277214346934582178, guid: 6e9b3bb6fae3e4b489c3ae7ea5c90526, type: 3}
@@ -25422,11 +25397,11 @@ PrefabInstance:
       insertIndex: 8
       addedObject: {fileID: 1361107281}
     - targetCorrespondingSourceObject: {fileID: 4632136999991687856, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 899843}
+      insertIndex: 10
+      addedObject: {fileID: 1496784064}
     - targetCorrespondingSourceObject: {fileID: 4632136999991687856, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1496784064}
+      addedObject: {fileID: 899843}
     - targetCorrespondingSourceObject: {fileID: 2808089325890099438, guid: fb286efd8e85b5548b1e79b3834a98df, type: 3}
       insertIndex: 0
       addedObject: {fileID: 801306998}

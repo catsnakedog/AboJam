@@ -16,7 +16,8 @@ public class Grow : MonoBehaviour
     public static Grow instance; // 싱글턴
     public int price;
     public event Action<int> eventGrow;
-    public static Action eventPromotion;
+    public static Action eventPromotionSuccess;
+    public static Action eventPromotionFail;
 
     /* Intializer & Finalizer & Updater */
     private void Start()
@@ -43,14 +44,14 @@ public class Grow : MonoBehaviour
     /// </summary>
     public void Feed()
     {
-        if (currentAbocado.hp.HP_current <= 0) { message.On("그 친구는 무지개다리를 건넜어요..", 2f); Off(); return; }
-        if (!currentAbocado.gameObject.activeSelf) { message.On("이미 성장했어요 !", 2f); Off(); return; }
-        if (currentAbocado.Level > EnumData.Abocado.Seed) { message.On("이미 성장했어요 !", 2f); Off(); return; }
-        if (StaticData.Garu < price) { message.On("보약이 부족해요.", 2f); Off(); return; }
+        if (currentAbocado.hp.HP_current <= 0) { message.On("그 친구는 무지개다리를 건넜어요..", 2f); Off(); eventPromotionFail.Invoke(); return; }
+        if (!currentAbocado.gameObject.activeSelf) { message.On("이미 성장했어요 !", 2f); Off(); eventPromotionFail.Invoke(); return; }
+        if (currentAbocado.Level > EnumData.Abocado.Seed) { message.On("이미 성장했어요 !", 2f); Off(); eventPromotionFail.Invoke(); return; }
+        if (StaticData.Garu < price) { message.On("보약이 부족해요.", 2f); Off(); eventPromotionFail.Invoke(); return; }
 
         StaticData.Garu -= price;
         eventGrow?.Invoke(price);
-        eventPromotion.Invoke();
+        eventPromotionSuccess.Invoke();
         currentAbocado.GrowUp();
         message.On("아보카도의 기분이 좋아졌어요 !", 2f);
         Off();
