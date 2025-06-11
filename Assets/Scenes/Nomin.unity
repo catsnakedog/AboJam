@@ -175,6 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 1866214163}
   bat: {fileID: 1066364002}
+  chainsaw: {fileID: 1578912534}
 --- !u!4 &16969322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4211852728835552990, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}

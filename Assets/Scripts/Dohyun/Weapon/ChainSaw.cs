@@ -18,6 +18,7 @@ public class ChainSaw : GageMeleeWeapon
     private Coroutine corLast;
     public static Action eventStart;
     public static Action eventEnd;
+    public bool GetTrigger { get => _trigger; }
 
     public override void WeaponSetting()
     {

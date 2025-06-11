@@ -17,7 +17,7 @@ public class GageMeleeWeapon : MeleeWeapon
     public float ShakeValue = 0.5f;
 
     private Action _gageAction = null;
-    private bool _trigger = false;
+    protected bool _trigger = false;
     private WeaponGageBar _gageBar;
     private Vector3 _parentOriPos;
     private GameObject _shakeTarget;

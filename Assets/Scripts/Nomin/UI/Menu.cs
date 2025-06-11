@@ -9,6 +9,7 @@ public class Menu : MonoBehaviour
     /* Dependency */
     [SerializeField] public GameObject panel;
     [SerializeField] Bat bat;
+    [SerializeField] ChainSaw chainsaw;
 
     /* Field & Property */
     public static Menu instance;
@@ -29,6 +30,8 @@ public class Menu : MonoBehaviour
 
         // 배트 이펙트를 제거하기 위함
         bat.ChargeAttack(0);
+        // 전기톱 버그 악용 제거
+        if(chainsaw.GetTrigger) chainsaw.TriggerEnd();
     }
     public void TimeOnOff()
     {
