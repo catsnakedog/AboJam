@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using static Unity.VisualScripting.Member;
-using static UnityEngine.UI.Image;
 
 public class Sound : MonoBehaviour
 {
@@ -12,10 +10,10 @@ public class Sound : MonoBehaviour
     public AudioMixer mixer;
     public UnityEngine.UI.Slider bgmSlider;
     public UnityEngine.UI.Slider sfxSlider;
-    public List<GameObject> audioSources;                           // 각 엔터티의 오디오 소스 집합 게임 오브젝트
-    private List<AudioSource> sources = new List<AudioSource>();    // 모든 오디오 소스를 평탄화 한 리스트
-    private Coroutine corLastLoop;
-    public List<AudioSource> loopAudioSource;
+    public List<GameObject> audioSourcesGroup;
+    public List<GameObject> loopAudioSourcesGroup;
+    private List<AudioSource> sources = new List<AudioSource>();
+    private List<LoopAudioSource> loopSources = new List<LoopAudioSource>();
 
     /// <summary>
     /// 각 유닛의 이벤트에 사운드 재생을 바운드합니다.
@@ -78,17 +76,9 @@ public class Sound : MonoBehaviour
 
         // ChainSaw
         ChainSaw.eventStart = null;
-        ChainSaw.eventStart += () =>
-        {
-            if (corLastLoop != null) StopCoroutine(corLastLoop);
-            corLastLoop = StartCoroutine(SetSourceLoop(loopAudioSource[0], "Melee_Player_Chainsaw_start", "Melee_Player_Chainsaw_loop", "Melee_Player_Chainsaw_end", true));
-        };
+        ChainSaw.eventStart += () => SetLoopSource("Melee_Player_Chainsaw", true);
         ChainSaw.eventEnd = null;
-        ChainSaw.eventEnd += () =>
-        {
-            if (corLastLoop != null) StopCoroutine(corLastLoop);
-            corLastLoop = StartCoroutine(SetSourceLoop(loopAudioSource[0], "Melee_Player_Chainsaw_start", "Melee_Player_Chainsaw_loop", "Melee_Player_Chainsaw_end", false));
-        };
+        ChainSaw.eventEnd += () => SetLoopSource("Melee_Player_Chainsaw", false);
 
         // UI
         Date.eventSkipSuccess = null;
@@ -160,12 +150,21 @@ public class Sound : MonoBehaviour
     private void Init()
     {
         sources.Clear();
+        loopSources.Clear();
 
-        foreach (var item in audioSources)
+        foreach (var item in audioSourcesGroup)
         {
             foreach (var source in item.GetComponents<AudioSource>())
             {
                 sources.Add(source);
+            }
+        }
+
+        foreach (var item in loopAudioSourcesGroup)
+        {
+            foreach (var source in item.GetComponents<LoopAudioSource>())
+            {
+                loopSources.Add(source);
             }
         }
     }
@@ -254,7 +253,6 @@ public class Sound : MonoBehaviour
             }
         }
     }
-
     /// <summary>
     /// 오디오 소스를 재생하거나 중단합니다.
     /// </summary>
@@ -270,48 +268,27 @@ public class Sound : MonoBehaviour
             }
         }
     }
-
     /// <summary>
-    /// 시동 - 반복 - 종료음을 자연스럽게 전환합니다.
+    /// 루프 오디오 소스의 시동을 걸거나 종료합니다.
     /// </summary>
-    private IEnumerator SetSourceLoop(AudioSource audioSource, string startClipName, string loopClipName, string endClipName, bool on)
+    private void SetLoopSource(string clipName, bool isActive)
     {
-        AudioClip startClip = null;
-        AudioClip loopClip = null;
-        AudioClip endClip = null;
-
-        // 초기화
-        foreach (AudioSource source in sources)
+        foreach (LoopAudioSource loopSource in loopSources)
         {
-            if (source.clip != null && source.clip.name == startClipName) startClip = source.clip;
-            if (source.clip != null && source.clip.name == loopClipName) loopClip = source.clip;
-            if (source.clip != null && source.clip.name == endClipName) endClip = source.clip;
-            if (audioSource != null && startClip != null && loopClip != null && endClip != null) break;
-        }
-
-        if (on)
-        {
-            audioSource.clip = startClip;
-            audioSource.loop = false;
-            audioSource.Play();
-
-            yield return new WaitForSeconds(startClip.length * 0.9f);
-
-            audioSource.clip = loopClip;
-            audioSource.loop = true;
-            audioSource.Play();
-        }
-        else
-        {
-            while (audioSource.isPlaying)
+            if (loopSource.audioSource.clip != null && loopSource.audioSource.clip.name == clipName)
             {
-                audioSource.loop = false;
-                yield return null;
+                switch (isActive)
+                {
+                    case true:
+                        loopSource.audioSource.time = 0;
+                        loopSource.isOn = true;
+                        loopSource.audioSource.Play();
+                        break;
+                    case false:
+                        loopSource.isOn = false;
+                        break;
+                }
             }
-
-            audioSource.clip = endClip;
-            audioSource.loop = false;
-            audioSource.Play();
         }
     }
 }
