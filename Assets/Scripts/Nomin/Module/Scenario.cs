@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static EnumData;
 using static ObjectPool;
 using static UnityEngine.EventSystems.EventTrigger;
@@ -414,6 +415,16 @@ public class Scenario : MonoBehaviour
         Hand.WeaponSlot slot = player.Hand.CurrentSlotIndex;
         while (player.Hand.CurrentSlotIndex == slot) yield return waitForSeconds;
 
+        // 스킵
+        skip.SetActive(true);
+        mark.On(skip, 999f);
+        bool isSkipClicked = false;
+        Button btnSkip = skip.GetComponent<Button>();
+        btnSkip.onClick.RemoveAllListeners();
+        btnSkip.onClick.AddListener(() => isSkipClicked = true);
+        message.On("낮잠을 자면 바로 밤이 찾아와요 !", 999f, true);
+        while (!isSkipClicked) yield return waitForSeconds;
+
         // 교전
         message.On($"모든 적을 처치하세요 !", 999f, true);
         mark.Off();
@@ -483,10 +494,10 @@ public class Scenario : MonoBehaviour
         hpAuto.Damage(hpAuto.Hp_max * 0.5f);
         yield return new WaitForSeconds(2f);
         message.On($"우클릭으로 타워를 눌러보세요.", 999f, true);
-        if(grid.GetTile((15, 19)).Go != null) mark.On(grid.GetTile((15, 19)).Go, 999f);
+        if (grid.GetTile((15, 19)).Go != null) mark.On(grid.GetTile((15, 19)).Go, 999f);
         while (!reinforcement.gameObject.activeSelf)
         {
-            if(grid.GetTile((15, 19)).Go == null)
+            if (grid.GetTile((15, 19)).Go == null)
             {
                 mark.Off();
 
