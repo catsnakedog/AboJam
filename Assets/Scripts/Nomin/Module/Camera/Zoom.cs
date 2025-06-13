@@ -91,6 +91,7 @@ public class Zoom : MonoBehaviour
             if (child.name == "Inventory") continue;
             if (child.name == "Skip") continue;
             if (child.name == "Date") continue;
+            if (child.name == "Message") continue;
 
             // CanvasGroup 처리
             CanvasGroup cg = child.GetComponent<CanvasGroup>();
