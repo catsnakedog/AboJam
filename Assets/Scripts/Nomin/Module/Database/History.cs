@@ -224,9 +224,24 @@ public class History : MonoBehaviour, IPointerEnterHandler
                         cmd.Parameters.AddWithValue("@abocado", gameData.abocado);
                         cmd.Parameters.AddWithValue("@tower", gameData.tower);
                         cmd.Parameters.AddWithValue("@garu", gameData.garu);
-                        int rowsAffected = cmd.ExecuteNonQuery();
 
-                        Console.WriteLine(rowsAffected > 0 ? "History 추가 성공!" : "History 추가 실패!");
+                        try
+                        {
+                            int rowsAffected = cmd.ExecuteNonQuery();
+                        }
+                        catch (SqlException ex)
+                        {
+                            Debug.Log("ID : " + ID);
+                            Debug.Log("SQL 오류 발생:");
+                            Debug.Log(ex.Message);               // 오류 메시지
+                            Debug.Log($"오류 코드: {ex.Number}"); // SQL 오류 코드
+                            Debug.Log($"라인 번호: {ex.LineNumber}"); // 오류 발생 위치
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.Log("기타 오류 발생:");
+                            Debug.Log(ex.Message);
+                        }
                     }
 
                     dbms.Connection.Close();
@@ -322,7 +337,24 @@ public class History : MonoBehaviour, IPointerEnterHandler
                 using (SqlCommand cmd = new SqlCommand(query, dbms.Connection))
                 {
                     cmd.Parameters.AddWithValue("@id", ID);
-                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    try
+                    {
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                    }
+                    catch (SqlException ex)
+                    {
+                        Debug.Log("ID : " + ID);
+                        Debug.Log("SQL 오류 발생:");
+                        Debug.Log(ex.Message);               // 오류 메시지
+                        Debug.Log($"오류 코드: {ex.Number}"); // SQL 오류 코드
+                        Debug.Log($"라인 번호: {ex.LineNumber}"); // 오류 발생 위치
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Log("기타 오류 발생:");
+                        Debug.Log(ex.Message);
+                    }
                 }
 
                 dbms.Connection.Close();
