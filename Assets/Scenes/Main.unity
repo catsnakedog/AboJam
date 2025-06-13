@@ -4655,7 +4655,7 @@ MonoBehaviour:
   ip: 14.39.174.1
   port: 1435
   database: AboJam
-  id: Admin
+  id: l1
   password: exp
 --- !u!1 &2106212716
 GameObject:

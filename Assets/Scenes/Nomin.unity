@@ -23362,6 +23362,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7124227823459505897, guid: 0e5317dbd428ebb478fa0f03b44757fb, type: 3}
+      propertyPath: id
+      value: l1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124227823459505897, guid: 0e5317dbd428ebb478fa0f03b44757fb, type: 3}
       propertyPath: port
       value: 1435
       objectReference: {fileID: 0}
