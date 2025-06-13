@@ -69,7 +69,7 @@ public class History : MonoBehaviour, IPointerEnterHandler
         {
             DateTime dateTime = gameDatas[i].GetDateTime();
             gameDataLocal.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text =
-                $"[{i + 1}] 나이 : {dateTime:y살 d일}";
+                $"[{i + 1}] 나이 : {dateTime:d일}";
             gameDataLocal.transform.GetChild(i).GetComponentInChildren<Record>().WriteLog(gameDatas[i]);
         }
 
@@ -161,7 +161,7 @@ public class History : MonoBehaviour, IPointerEnterHandler
             foreach (Image img in obj.GetComponentsInChildren<Image>()) if (img.color.a != 0) img.color = UnityEngine.Color.red;
             DateTime myDateTime = myData.GetDateTime();
             string myID = AdjustWidth($"[{histories.FindIndex(game => game.ID == ID) + 1} 등] " + myData.ID, 15);
-            string myDate = AdjustWidth($"나이 : {myDateTime: y살 d일}", 20);
+            string myDate = AdjustWidth($"나이 : {myDateTime: d일}", 20);
             gameDataMy.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = $"{myID} {myDate}";
             gameDataMy.transform.GetChild(0).GetComponentInChildren<Record>().WriteLog(myData);
         }
@@ -176,7 +176,7 @@ public class History : MonoBehaviour, IPointerEnterHandler
         {
             DateTime dateTime = histories[i].GetDateTime();
             string id = AdjustWidth($"[{i + 1} 등] " + histories[i].ID, 15);
-            string date = AdjustWidth($"나이 : {dateTime: y살 d일}", 20);
+            string date = AdjustWidth($"나이 : {dateTime: d일}", 20);
             gameDataServer.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = $"{id} {date}";
             gameDataServer.transform.GetChild(i).GetComponentInChildren<Record>().WriteLog(histories[i]);
         }
