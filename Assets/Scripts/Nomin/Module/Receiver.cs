@@ -137,7 +137,7 @@ public class Receiver : MonoBehaviour
     private void OnHighlightCultivate(InputAction.CallbackContext context)
     {
         Tile tile = grid.GetNearestTile(camera.ScreenToWorldPoint(context.ReadValue<Vector2>()), true);
-        if (tile == null || highlight == null) highlight.Off();
+        if (tile == null || Tile.IsNearMapBoundary(tile, Tile.boundaryRestriction) || highlight == null) highlight.Off();
         else highlight.On(tile, false);
     }
     /// <summary>
@@ -146,7 +146,7 @@ public class Receiver : MonoBehaviour
     private void OnHighlightDemolition(InputAction.CallbackContext context)
     {
         Tile tile = grid.GetNearestTile(camera.ScreenToWorldPoint(context.ReadValue<Vector2>()), true);
-        if (tile == null || highlight == null) highlight.Off();
+        if (tile == null || Tile.IsNearMapBoundary(tile, Tile.boundaryRestriction) || highlight == null) highlight.Off();
         else highlight.On(tile, true);
     }
     private void OffHighlight(InputAction.CallbackContext context)

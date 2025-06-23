@@ -22,6 +22,7 @@ public class Tile
     /* Field & Property */
     public static List<Tile> instances = new List<Tile>(); // 모든 타일 인스턴스
     public static Tile currentTile; // 최근 선택된 타일
+    public static int boundaryRestriction = 3; // 외곽 건설 금지
     public GameObject Go { get; private set; } = null; // 타일에 배치된 프리팹
     public readonly int i;
     public readonly int j;
@@ -44,6 +45,8 @@ public class Tile
     /// </summary>
     public void OnClick()
     {
+        if (IsNearMapBoundary(this, boundaryRestriction)) return;
+
         promotion.Off();
         reinforcement.Off();
         currentTile = this;
@@ -67,5 +70,20 @@ public class Tile
     {
         Go = null;
         grid.GridIndexMap[i, j] = (int)EnumData.TileIndex.Empty;
+    }
+
+    /// <summary>
+    /// 타일이 맵 외곽 n 타일 이내인지 검사합니다. (체비셰프 거리)
+    /// </summary>
+    public static bool IsNearMapBoundary(Tile tile, int n)
+    {
+        int distLeft = tile.i;
+        int distRight = Grid.instance.Column - 1 - tile.i;
+        int distTop = tile.j;
+        int distBottom = Grid.instance.Row - 1 - tile.j;
+
+        int distToEdge = Math.Min(Math.Min(distLeft, distRight), Math.Min(distTop, distBottom));
+
+        return distToEdge < n;
     }
 }
