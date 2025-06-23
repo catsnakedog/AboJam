@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 899843}
   - component: {fileID: 899844}
+  - component: {fileID: 899845}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -176,6 +177,21 @@ MonoBehaviour:
   panel: {fileID: 1866214163}
   bat: {fileID: 1066364002}
   chainsaw: {fileID: 1578912534}
+--- !u!114 &899845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a43205f34d2026244b750c17c4dfb5a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menus:
+  - {fileID: 1353215533}
+  - {fileID: 1366435889}
 --- !u!4 &16969322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4211852728835552990, guid: 2dadceb8282bd4a40a22b90a53d5f200, type: 3}
