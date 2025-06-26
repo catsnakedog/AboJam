@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -31.7, y: -21.3}
+  m_AnchoredPosition: {x: -39.8, y: -21.3}
   m_SizeDelta: {x: 25, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4945033841985074517
@@ -162,8 +162,11 @@ MonoBehaviour:
   sprite_unlock: {fileID: 0}
   sprite_lock: {fileID: 0}
   sprite_select: {fileID: 0}
-  purchase: 0
+  weapons: []
   price: 0
+  purchase: 0
+  isMelee: 0
+  weapon: 0
 --- !u!114 &6184045550999567468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,8 +298,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.284495, y: -23.399982}
-  m_SizeDelta: {x: 50.816, y: 16.5583}
+  m_AnchoredPosition: {x: 5.946, y: -23.399982}
+  m_SizeDelta: {x: 58.108, y: 16.5583}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5324835244159579370
 CanvasRenderer:
