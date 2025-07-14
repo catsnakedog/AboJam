@@ -11,6 +11,8 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     /* Dependency */
     public Sprite sprite_morning;
     public Sprite sprite_night;
+    public Sprite sprite_skipMorning;
+    public Sprite sprite_skipNight;
     public TextMeshProUGUI text_day;
     public TextMeshProUGUI text_time;
     public enum GameTime : byte
@@ -19,6 +21,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
         Sunset,
         Night
     }
+    public Image skipImage;
     Image image;
     AnimationClick animationClick;
     GlobalLight globalLight => GlobalLight.instance;
@@ -303,8 +306,16 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     /// </summary>
     private void ChangeImage()
     {
-        if (gameTime == GameTime.Morning) { image.sprite = sprite_morning; animationClick.OnClick(); }
-        if (gameTime == GameTime.Night) { image.sprite = sprite_night; animationClick.OnClick(); }
+        if (gameTime == GameTime.Morning)
+        {
+            image.sprite = sprite_morning; animationClick.OnClick();
+            skipImage.sprite = sprite_skipMorning;
+        }
+        if (gameTime == GameTime.Night)
+        {
+            image.sprite = sprite_night; animationClick.OnClick();
+            skipImage.sprite = sprite_skipNight;
+        }
     }
     /// <summary>
     /// 게임 시간을 현실 시간으로 변환합니다.
