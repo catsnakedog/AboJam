@@ -254,7 +254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: dc9aec09be02f054bb0a3873597e47c9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -516,8 +516,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39, y: 21}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: 31.2, y: 17.6}
+  m_SizeDelta: {x: 145.9, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &49613198
 MonoBehaviour:
@@ -1149,7 +1149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: dc9aec09be02f054bb0a3873597e47c9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3899,7 +3899,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "[ PC ]\n\uC774\uB3D9 : WASD\n\uACF5\uACA9 : Left Click\n\uAC74\uC124 :
-    Right Click\n\uCCA0\uAC70 : F + Click\n\uCC3D \uB2EB\uAE30 : ESC\n\uBB34\uAE30
+    Right Click\n\uCCA0\uAC70 : F + Left Click\n\uCC3D \uB2EB\uAE30 : ESC\n\uBB34\uAE30
     \uAD50\uCCB4 : R \uB610\uB294 1, 2\n\uC0C1\uC810 : Q\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
@@ -3935,7 +3935,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -5358,8 +5358,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 3f93ceb6f8fc72345811d701bbe48169, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -9559,8 +9559,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 3f93ceb6f8fc72345811d701bbe48169, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -10525,9 +10525,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "[ \uBAA8\uBC14\uC77C ]\n\uC774\uB3D9 : \uC870\uC774\uC2A4\uD2F1\n\uACF5\uACA9
-    : Touch\n\uAC74\uC124 : Tap\n\uCCA0\uAC70 : Double Tap\n\uB098\uBA38\uC9C0 :
-    \uAC01 \uBC84\uD2BC \uD074\uB9AD"
+  m_text: "[ \uBAA8\uBC14\uC77C ]\n\n\uAC1C\uBC1C \uC608\uC815"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
   m_sharedMaterial: {fileID: -6307645790068136302, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
@@ -10562,7 +10560,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -17554,8 +17552,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 43, y: -40}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: 31.2, y: -36.5}
+  m_SizeDelta: {x: 145.9, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1613537866
 MonoBehaviour:
@@ -18075,8 +18073,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -71, y: -36}
-  m_SizeDelta: {x: 53.2916, y: 18.404205}
+  m_AnchoredPosition: {x: -74.9, y: -36}
+  m_SizeDelta: {x: 44.8919, y: 18.4042}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1694968886
 MonoBehaviour:
@@ -22524,7 +22522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 208.52356, y: 156.14027}
+  m_AnchoredPosition: {x: 53, y: 113}
   m_SizeDelta: {x: 648.5406, y: 346.2655}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2126456679
