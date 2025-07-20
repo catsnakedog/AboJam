@@ -1,3 +1,4 @@
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ public class History : MonoBehaviour, IPointerEnterHandler
     private DBMS dbms => DBMS.instance;
     private Message message => Message.instance;
     [SerializeField] private GameObject loading;
+    [SerializeField] private Sprite myLog;
+    [SerializeField] private GameObject trophy;
     private Coroutine corLocalLast;
     private Coroutine corServerLast;
     private Coroutine corWaitLast;
@@ -29,6 +32,7 @@ public class History : MonoBehaviour, IPointerEnterHandler
 
     /* Field & Property */
     public static History instance;
+    public float trophyOffset;
     private string ID; // 클라이언트 고유 ID
     private List<GameData> gameDatas = new();
     private float[] retryDelay = { 10, 15, 25, 45 }; // 연결 재시도 대기 시간
@@ -158,11 +162,10 @@ public class History : MonoBehaviour, IPointerEnterHandler
         if (myData != null)
         {
             GameObject obj = Instantiate(record, gameDataMy.transform);
-            foreach (Image img in obj.GetComponentsInChildren<Image>()) if (img.color.a != 0) img.color = UnityEngine.Color.red;
+            foreach (Image img in obj.GetComponentsInChildren<Image>()) if (img.color.a != 0) img.sprite = myLog;
             DateTime myDateTime = myData.GetDateTime();
             string myID = AdjustWidth($"[{histories.FindIndex(game => game.ID == ID) + 1} 등] " + myData.ID, 15);
-            string myDate = AdjustWidth($"나이 : {myDateTime: d일}", 20);
-            gameDataMy.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = $"{myID} {myDate}";
+            gameDataMy.transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = $"{myID}({myDateTime:d일})";
             gameDataMy.transform.GetChild(0).GetComponentInChildren<Record>().WriteLog(myData);
         }
 
@@ -176,9 +179,21 @@ public class History : MonoBehaviour, IPointerEnterHandler
         {
             DateTime dateTime = histories[i].GetDateTime();
             string id = AdjustWidth($"[{i + 1} 등] " + histories[i].ID, 15);
-            string date = AdjustWidth($"나이 : {dateTime: d일}", 20);
-            gameDataServer.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = $"{id} {date}";
+            gameDataServer.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = $"{id}({dateTime:d일})";
             gameDataServer.transform.GetChild(i).GetComponentInChildren<Record>().WriteLog(histories[i]);
+
+            // 트로피를 인스턴스화 후 위치시킵니다.
+            if(i == 0)
+            {
+                RectTransform parentRectTransform = gameDataServer.transform.GetChild(i).GetComponent<RectTransform>();
+                GameObject instance = Instantiate(trophy, parentRectTransform);
+                RectTransform childRectTransform = instance.GetComponent<RectTransform>();
+                Vector2 parentSize = parentRectTransform.rect.size;
+                Vector2 localPos = new Vector2(parentSize.x * 0.5f, 0);
+                localPos += new Vector2(trophyOffset, 0);
+                childRectTransform.anchoredPosition = localPos;
+                childRectTransform.localScale = Vector3.one;
+            }
         }
 
         if (loading != null) Destroy(loading);
