@@ -17002,6 +17002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialRecords:
+  - {fileID: 11400000, guid: dd5351db5cb95e94fb8babddd2b6b031, type: 2}
   - {fileID: 11400000, guid: 9e71d31fe94562341aad32735a539235, type: 2}
   - {fileID: 11400000, guid: a5db00eef5452024aaf021ae37f09351, type: 2}
   - {fileID: 11400000, guid: a10de52a825b8684aae46ea4f3035b2c, type: 2}
