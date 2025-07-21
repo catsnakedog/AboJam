@@ -534,6 +534,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4452280365464044394}
     m_Modifications:
+    - target: {fileID: 2471433501790297299, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 75abaeee9011e6f4882158cd69e44f79, type: 3}
+    - target: {fileID: 2471433501790297299, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_DrawMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3154331299952804953, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3154331299952804953, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5024084034006591489, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: ID
       value: Splash
@@ -666,6 +682,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 8586651774648220857, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d704b92a4f5283e468a85c5dc2491363, type: 3}
     - target: {fileID: 8606690004106154134, guid: 907c456d55e842a44920f7a5cb708d59, type: 3}
       propertyPath: m_Layer
       value: 9
