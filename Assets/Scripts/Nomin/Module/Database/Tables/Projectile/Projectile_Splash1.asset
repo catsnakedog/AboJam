@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Projectile_Splash1
   clashTagsID: SplashTargetTags
-  damage: 15
+  damage: 20
   penetrate: 1

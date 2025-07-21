@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ReinforceCost_Splash
   m_EditorClassIdentifier: 
   id: ReinforceCost_Splash
-  reinforceCost: 5
+  reinforceCost: 70

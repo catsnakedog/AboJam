@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Melee_Player_Knife
   clashTagsID: PlayerTargetTags
-  penetrate: 999
+  penetrate: 1
   radius: 0.5
-  damage: 10
+  damage: 20
   effectTime: 0.25
   knockback: 0.05

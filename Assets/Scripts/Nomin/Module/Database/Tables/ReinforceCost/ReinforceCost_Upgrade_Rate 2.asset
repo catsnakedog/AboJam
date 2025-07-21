@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ReinforceCost_Upgrade_Rate 2
   m_EditorClassIdentifier: 
   id: ReinforceCost_Upgrade_Rate
-  reinforceCost: 15
+  reinforceCost: 800

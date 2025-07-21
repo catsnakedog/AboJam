@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ReinforceCost_Upgrade_Damage
   m_EditorClassIdentifier: 
   id: ReinforceCost_Upgrade_Damage
-  reinforceCost: 5
+  reinforceCost: 150

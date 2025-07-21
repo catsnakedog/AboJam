@@ -18,4 +18,4 @@ MonoBehaviour:
   angleOffset: -90
   frame: 60
   speed: 0.1
-  range: 5
+  range: 7

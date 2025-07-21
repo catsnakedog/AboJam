@@ -16,5 +16,5 @@ MonoBehaviour:
   secondsPerDay: 90
   startTime: 06:00
   morningTime: 06:00
-  sunsetTime: 17:30
+  sunsetTime: 18:30
   nightTime: 20:00

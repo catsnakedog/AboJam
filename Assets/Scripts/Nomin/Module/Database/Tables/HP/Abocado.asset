@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Abocado
   m_EditorClassIdentifier: 
   id: Abocado
-  hp_max: 30
+  hp_max: 50
   hideFullHp: 1

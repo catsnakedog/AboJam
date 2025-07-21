@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Projectile_Player_Riple
   clashTagsID: PlayerTargetTags
-  damage: 5
+  damage: 15
   penetrate: 1

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ReinforceCost_Upgrade_Knockback
   m_EditorClassIdentifier: 
   id: ReinforceCost_Upgrade_Knockback
-  reinforceCost: 5
+  reinforceCost: 150

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Leopard
   m_EditorClassIdentifier: 
   id: Leopard
-  delay: 0.5
-  detection: 2
+  delay: 1.3
+  detection: 1.5

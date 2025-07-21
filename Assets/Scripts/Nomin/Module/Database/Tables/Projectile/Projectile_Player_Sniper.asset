@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Projectile_Player_Sniper
   clashTagsID: PlayerTargetTags
-  damage: 40
+  damage: 160
   penetrate: 5

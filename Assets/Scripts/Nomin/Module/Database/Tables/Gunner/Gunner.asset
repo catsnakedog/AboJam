@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gunner
   m_EditorClassIdentifier: 
   id: Gunner
-  delay: 0.8
+  delay: 1
   delay_fire: 0.05
   detection: 5
   subCount: 2

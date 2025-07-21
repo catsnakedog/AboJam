@@ -16,6 +16,6 @@ MonoBehaviour:
   clashTagsID: PlayerTargetTags
   penetrate: 999
   radius: 1.2
-  damage: 30
+  damage: 75
   effectTime: 0.25
-  knockback: 0.3
+  knockback: 0.75

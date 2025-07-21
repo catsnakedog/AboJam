@@ -15,7 +15,7 @@ MonoBehaviour:
   id: Melee_Player_Chainsaw
   clashTagsID: PlayerTargetTags
   penetrate: 999
-  radius: 0.5
-  damage: 10
+  radius: 1
+  damage: 40
   effectTime: 0.25
   knockback: 0.05

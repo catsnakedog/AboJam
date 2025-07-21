@@ -17,5 +17,5 @@ MonoBehaviour:
   turnTime: 0.1
   angleOffset: -90
   frame: 60
-  speed: 0.3
+  speed: 0.6
   range: 5

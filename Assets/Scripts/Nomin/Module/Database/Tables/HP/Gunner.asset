@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Gunner
   m_EditorClassIdentifier: 
   id: Gunner
-  hp_max: 100
+  hp_max: 50
   hideFullHp: 1

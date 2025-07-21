@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Auto
   m_EditorClassIdentifier: 
   id: Auto
-  hp_max: 200
+  hp_max: 100
   hideFullHp: 1

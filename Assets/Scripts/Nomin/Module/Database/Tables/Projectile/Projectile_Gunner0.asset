@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Projectile_Gunner0
   clashTagsID: EnemyTargetTags
-  damage: 1.5
+  damage: 5
   penetrate: 1

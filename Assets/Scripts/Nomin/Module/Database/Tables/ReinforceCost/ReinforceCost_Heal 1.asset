@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ReinforceCost_Heal 1
   m_EditorClassIdentifier: 
   id: ReinforceCost_Heal
-  reinforceCost: 6
+  reinforceCost: 120

@@ -30,8 +30,8 @@ public class Database_AboJam : MonoBehaviour
         {
             try
             {
-                ImportDatabase();
-                ExportDatabase();
+                //ImportDatabase();
+                //ExportDatabase();
             }
             catch (Exception)
             {
