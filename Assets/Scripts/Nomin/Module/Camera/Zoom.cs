@@ -96,6 +96,7 @@ public class Zoom : MonoBehaviour
             if (child.name == "Demolish") continue;
             if (child.name == "Reinforcement") continue;
             if (child.name == "Promotion") continue;
+            if (child.name == "Lose(Clone)") continue;
 
             // CanvasGroup 처리
             CanvasGroup cg = child.GetComponent<CanvasGroup>();

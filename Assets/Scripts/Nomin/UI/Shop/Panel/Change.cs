@@ -41,8 +41,9 @@ public class Change : MonoBehaviour
     /// </summary>
     public void OnValueChange()
     {
-        try { quantity = int.Parse(text_quantity.text); } catch { }
-        if (quantity > maxQuantity) { message.On($"{maxQuantity} 개 까지만 팔 수 있어요 !", 2f); quantity = maxQuantity; }
+        if (CheckUserInputQuantity(text_quantity.text)) quantity = int.Parse(text_quantity.text);
+        else if (text_quantity.text == string.Empty) { quantity = 0; }
+        else { text_quantity.text = 1.ToString(); quantity = int.Parse(text_quantity.text); }
 
         text_price.text = GetPrice(quantity).ToString();
     }
@@ -52,7 +53,7 @@ public class Change : MonoBehaviour
     /// <param name="quantity">판매 개수</param>
     public void Trade()
     {
-        if (StaticData.Abocado >= quantity)
+        if (StaticData.Abocado >= quantity && CheckUserInputQuantity(text_quantity.text))
         {
             Message.instance.On($"아보카도 {quantity} 개를 가루 {GetPrice(quantity)} 개에 판매했습니다.", 2f);
             eventTradeSuccess.Invoke();
@@ -63,7 +64,6 @@ public class Change : MonoBehaviour
         }
         else
         {
-            Message.instance.On($"{quantity} 개 이상부터 판매할 수 있습니다.", 2f);
             eventTradeFail.Invoke();
         }
     }
@@ -103,5 +103,19 @@ public class Change : MonoBehaviour
         }
 
         return price;
+    }
+
+    /// <summary>
+    /// 사용자가 입력한 판매 개수를 검사합니다.
+    /// </summary>
+    private bool CheckUserInputQuantity(string input)
+    {
+        int value = 0;
+
+        try { value = int.Parse(text_quantity.text); } catch { message.On($"정수를 입력해주세요 !", 2f); return false; }
+        if (value <= 0) { message.On($"1 개 이상부터 거래할 수 있어요 !", 2f); return false; }
+        if (value > maxQuantity) { message.On($"{maxQuantity} 개 까지만 팔 수 있어요 !", 2f); return false; }
+
+        return true;
     }
 }

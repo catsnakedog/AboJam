@@ -141,7 +141,7 @@ public class Date : RecordInstance<Table_Date, Record_Date>
     private void UpdateText()
     {
         TimeSpan total = dateTime - DateTime.MinValue;
-        text_day.text = $"DAY - {((int)(total.TotalDays + 1))}";
+        text_day.text = $"DAY {((int)(total.TotalDays + 1))}";
         text_time.text = $"{dateTime.Hour}:{dateTime.Minute}";
     }
 
