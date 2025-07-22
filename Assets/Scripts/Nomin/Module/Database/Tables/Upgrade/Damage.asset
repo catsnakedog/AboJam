@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Upgrade_Damage
   reinforceCostID: ReinforceCost_Upgrade_Damage
-  coefficient: 0.1
+  coefficient: 0.2

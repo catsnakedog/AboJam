@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Thug
   m_EditorClassIdentifier: 
   id: Thug
-  delay: 0.5
+  delay: 1
   detection: 2

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Splash
   reinforceCostID: ReinforceCost_Splash
-  delay: 2
-  detection: 5
+  delay: 2.5
+  detection: 7

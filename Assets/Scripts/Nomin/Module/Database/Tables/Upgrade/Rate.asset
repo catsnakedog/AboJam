@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Upgrade_Rate
   reinforceCostID: ReinforceCost_Upgrade_Rate
-  coefficient: 0.1
+  coefficient: 0.07
