@@ -10,6 +10,7 @@ public class Menu : MonoBehaviour
     [SerializeField] public GameObject panel;
     [SerializeField] Bat bat;
     [SerializeField] ChainSaw chainsaw;
+    [SerializeField] private Player player;
 
     /* Field & Property */
     public static Menu instance;
@@ -24,6 +25,9 @@ public class Menu : MonoBehaviour
     /* Public Method */
     public void MenuOnOff()
     {
+        // 사망 시 Menu 작동 금지
+        if (player.enabled == false) return;
+
         eventClick.Invoke();
         panel.SetActive(!panel.activeSelf);
         TimeOnOff();

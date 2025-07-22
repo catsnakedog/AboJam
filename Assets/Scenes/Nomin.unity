@@ -177,6 +177,7 @@ MonoBehaviour:
   panel: {fileID: 1866214163}
   bat: {fileID: 1066364002}
   chainsaw: {fileID: 1578912534}
+  player: {fileID: 1427187426}
 --- !u!114 &899845
 MonoBehaviour:
   m_ObjectHideFlags: 0
