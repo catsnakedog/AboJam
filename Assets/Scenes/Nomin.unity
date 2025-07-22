@@ -19312,6 +19312,7 @@ MonoBehaviour:
   enemyPool: {fileID: 1104335684}
   lose: {fileID: 7055938448387375305, guid: aa052df1b07af2b43800ee674b895e47, type: 3}
   ui: {fileID: 218261327}
+  skip: {fileID: 1361107280}
   player: {fileID: 1427187426}
 --- !u!1 &1762024874
 GameObject:

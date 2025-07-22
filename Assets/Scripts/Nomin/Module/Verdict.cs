@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
 
 public class Verdict : MonoBehaviour
@@ -14,6 +15,7 @@ public class Verdict : MonoBehaviour
     [SerializeField] private GameObject enemyPool;
     [SerializeField] private GameObject lose;
     [SerializeField] private GameObject ui;
+    [SerializeField] private GameObject skip;
     [SerializeField] private Player player;
     private Date date => Date.instance;
     private Spawner spawner => Spawner.instance;
@@ -63,6 +65,13 @@ public class Verdict : MonoBehaviour
         StaticData.gameData.dateTime = Date.instance.dateTime.ToString("o"); ;
     }
     /// <summary>
+    /// History 를 갱신합니다.
+    /// </summary>
+    public void SaveHistoryOnClear()
+    {
+        StaticData.gameData.dateTime = Date.instance.dateTime.AddDays(1).ToString("o"); ;
+    }
+    /// <summary>
     /// 남은 몬스터가 있는지 여부를 반환합니다.
     /// </summary>
     public bool CheckMob()
@@ -93,9 +102,24 @@ public class Verdict : MonoBehaviour
 
         if (spawner.waveIndex > maxWaveNumber)
         {
-            message.On("축하합니다. 게임을 클리어하였습니다 !", 3f);
+            skip.SetActive(false);
+            SaveHistoryOnClear();
             date.timeFlow = false;
+            StartCoroutine(CorClearMessage());
         }
+    }
+    /// <summary>
+    /// 클리어 메시지를 출력하고, 씬을 이동하니다.
+    /// </summary>
+    private IEnumerator CorClearMessage()
+    {
+        message.On("적들이 약탈을 포기한 것 같군요 !", 2f);
+        yield return new WaitForSeconds(2f);
+        message.On("축하해요 ! 당신은 끝까지 살아남았습니다.", 2f);
+        yield return new WaitForSeconds(2f);
+        message.On("잠시 후 메인 화면으로 돌아갑니다.", 2f);
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("Main");
     }
     /// <summary>
     /// 플레이어 HP 가 0 에 도달하면 작동합니다.
