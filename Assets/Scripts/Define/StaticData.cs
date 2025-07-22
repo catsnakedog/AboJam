@@ -14,22 +14,22 @@ public static class StaticData
     /// </summary>
     public static Dictionary<TowerType, string> text_promotion = new Dictionary<TowerType, string>(0)
     {
-        { TowerType.Guard, "체력이 많은 아보카도, 생산능력 x 공격능력 x" },
-        { TowerType.Auto, "적에게 준수한 연사속도로 한발씩 공격" },
-        { TowerType.Splash, "적에게 느린 연사속도로 광역공격" },
-        { TowerType.Production, "생산능력이 강화" },
-        { TowerType.Heal, "체력이 가장 낮은 아보카도 나무의 체력을 회복" },
+        { TowerType.Guard, "든든한\n바리케이드" },
+        { TowerType.Auto, "가까운 적을\n한 명씩\n공격합니다." },
+        { TowerType.Splash, "뭉친 적들을\n날려버릴\n폭탄을\n발사합니다." },
+        { TowerType.Production, "아보카도를 두 개씩\n수확할 수\n있습니다 !" },
+        { TowerType.Heal, "주변 아군을\n치유합니다." },
     };
     /// <summary>
     /// <br>Reinforcement 에 표기되는 설명 입니다.</br>
     /// </summary>
     public static Dictionary<TowerType, string> text_reinforcement = new Dictionary<TowerType, string>(0)
     {
-        { TowerType.Guard, "더 많은 체력" },
-        { TowerType.Auto, "세 발씩 공격" },
-        { TowerType.Splash, "넓은 범위 광역공격" },
+        { TowerType.Guard, "조금 더\n튼튼해집니다." },
+        { TowerType.Auto, "한 번에 더\n많은 포탄을\n발사합니다." },
+        { TowerType.Splash, "더 강력한\n폭탄을\n발사합니다." },
         { TowerType.Production, "생산 능력 강화" },
-        { TowerType.Heal, "체력 회복량 증가" },
+        { TowerType.Heal, "치유량이\n증가합니다." },
     };
     public static GameData gameData = new ();
     private static int garu; public static int Garu
