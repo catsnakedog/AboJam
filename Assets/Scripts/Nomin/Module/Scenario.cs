@@ -230,7 +230,7 @@ public class Scenario : MonoBehaviour
         // 수확
         message.On("우클릭으로 아보카도를 수확하세요 !", 999f, true);
         mark.On(Abocado.instances[0].gameObject, 999f);
-        while (StaticData.Abocado < 1) yield return waitForSeconds;
+        while (StaticData.Abocado < 2) yield return waitForSeconds;
 
         // 상점
         message.On("Shop 을 눌러보세요.", 999f, true);
