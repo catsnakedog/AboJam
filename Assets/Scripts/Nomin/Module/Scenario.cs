@@ -409,6 +409,9 @@ public class Scenario : MonoBehaviour
             yield return waitForSeconds;
         }
 
+        mark.On(shop_close, 999f);
+        while (shop_close.activeInHierarchy) yield return waitForSeconds;
+
         // 교체
         mark.Off();
         message.On(" R 버튼으로 근접 / 원거리 무기를 교체할 수 있어요.", 999f, true);
