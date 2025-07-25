@@ -289,7 +289,7 @@ public class Scenario : MonoBehaviour
         }
         message.On("아보카도를 심고 모든 종류의 타워를 건설해보세요 !", 999f, true);
         mark.Off();
-        StaticData.Abocado++;
+        StaticData.Abocado += 2;
         StaticData.Garu = 999;
         tempWaitForSeconds = new WaitForSeconds(0.1f);
         Coroutine corDayNight = StartCoroutine(CorDayNight());
