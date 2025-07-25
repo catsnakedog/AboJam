@@ -200,7 +200,7 @@ public class Scenario : MonoBehaviour
         yield return new WaitForSeconds(2f);
         message.On($"WASD 로 움직일 수 있어요.", 2f, true);
         yield return new WaitForSeconds(2f);
-        message.On($"땅을 우클릭해 보세요 !", 999f, true);
+        message.On($"땅을 우클릭해서 밭을 개간해보세요 !", 999f, true);
         while (Abocado.instances.Count < 1) yield return waitForSeconds;
 
         // 심기
@@ -287,7 +287,7 @@ public class Scenario : MonoBehaviour
             yield return tempWaitForSeconds;
             CheckTowerCount(out towerCount);
         }
-        message.On("모든 종류의 타워를 건설해보세요.", 999f, true);
+        message.On("아보카도를 심고 모든 종류의 타워를 건설해보세요 !", 999f, true);
         mark.Off();
         StaticData.Abocado++;
         StaticData.Garu = 999;
@@ -487,7 +487,7 @@ public class Scenario : MonoBehaviour
         globalLight.Set(globalLight.sunset, 0.01f);
         message.On($"곧 적들이 몰려올 것 같은데..", 2f, true);
         yield return new WaitForSeconds(2f);
-        message.On("타워를 하나 드릴게요. 고치면 쓸 만 할거에요.", 2f, true);
+        message.On("타워를 업그레이드해서 빠르게 해치우자구요 !", 2f, true);
         if (grid.GetTile((15, 19)).Go != null) pool.Return(grid.GetTile((15, 19)).Go);
         grid.GetTile((15, 19)).Bind(pool.Get("Auto"), EnumData.TileIndex.Auto);
         HP hpAuto = HP.FindHP(grid.GetTile((15, 19)).Go);
