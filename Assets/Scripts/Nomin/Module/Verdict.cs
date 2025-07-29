@@ -132,10 +132,10 @@ public class Verdict : MonoBehaviour
         GameObject lose = Instantiate(this.lose, ui.transform);
         TextMeshProUGUI resultText = lose.GetComponentInChildren<TextMeshProUGUI>();
         DateTime dateTime = DateTime.Parse(StaticData.gameData.dateTime, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
-        resultText.text = $"나이: {dateTime:y살 d일}\n" +
-                          $"처치: {StaticData.gameData.kill}\n" +
-                          $"심은 아보카도: {StaticData.gameData.abocado}\n" +
-                          $"건설한 타워: {StaticData.gameData.tower}\n" +
-                          $"사용한 가루: {StaticData.gameData.garu}";
+        resultText.text = $"기록 : {dateTime:d 일}\n" +
+                          $"처치 : {StaticData.gameData.kill}\n" +
+                          $"심은 아보카도 : {StaticData.gameData.abocado}\n" +
+                          $"건설한 타워 : {StaticData.gameData.tower}\n" +
+                          $"사용한 가루 : {StaticData.gameData.garu}";
     }
 }

@@ -36,9 +36,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -52.300003, y: 10.6}
-  m_SizeDelta: {x: 79, y: 49.891205}
-  m_Pivot: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -187, y: 155}
+  m_SizeDelta: {x: 156, y: 62}
+  m_Pivot: {x: 1, y: 0}
 --- !u!222 &2089868799110209410
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -171,7 +171,7 @@ RectTransform:
   m_GameObject: {fileID: 2962788824181599893}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.525, y: 0.525, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 863081553662356340}
@@ -181,8 +181,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.00000047683716}
-  m_SizeDelta: {x: 291.3864, y: 292.2999}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 962, y: 682}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5947639959944113162
 CanvasRenderer:
@@ -411,10 +411,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3053005469667088702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -80, y: -155.3482}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 14.0267, y: -53.0588}
+  m_SizeDelta: {x: 511.8315, y: 312.6414}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1229361615282157370
 CanvasRenderer:
@@ -444,11 +444,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB098\uC774:  1\uC0B4 2\uC77C\n\uCC98\uCE58: 5\n\uC2EC\uC740 \uC544\uBCF4\uCE74\uB3C4:
-    0\n\uAC74\uC124\uD55C \uD0C0\uC6CC: 0\n\uC0AC\uC6A9\uD55C \uAC00\uB8E8: 5"
+  m_text: "\uAE30\uB85D : 2 \uC77C\n\uCC98\uCE58 : 5\n\uC2EC\uC740 \uC544\uBCF4\uCE74\uB3C4
+    : 0\n\uAC74\uC124\uD55C \uD0C0\uC6CC : 0\n\uC0AC\uC6A9\uD55C \uAC00\uB8E8 : 5"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
-  m_sharedMaterial: {fileID: -6307645790068136302, guid: 08bd2419df6cb854e9f3f226c31e4165, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5c8589534013fc74e92139aed6513839, type: 2}
+  m_sharedMaterial: {fileID: 6757395020271957884, guid: 5c8589534013fc74e92139aed6513839, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -472,15 +472,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
