@@ -49,7 +49,22 @@ public static class HandUtil
     public static Quaternion ForwardToMouse(GameObject obj, Camera mainCamera, float handAngleCorrection)
     {
         // 1. 마우스의 화면 좌표를 가져옴
-        Vector3 mouseScreenPosition = Input.mousePosition;
+        Vector3 mouseScreenPosition;
+
+        // 모바일
+        if (Receiver.instance.aimDirection != Vector2.zero)
+        {
+            Vector3 playerPos = Camera.main.WorldToScreenPoint(Player.instance.gameObject.transform.position);
+            Vector3 aimDirection = Receiver.instance.aimDirection;
+            Vector3 targetPos = playerPos + aimDirection * 500;
+
+            mouseScreenPosition = targetPos;
+        }
+        // PC
+        else
+        {
+            mouseScreenPosition = Input.mousePosition;
+        }
 
         // 2. 마우스의 월드 좌표를 계산 (카메라 기준 Z 깊이 설정)
         Vector3 mouseWorldPosition = ScreenToWorld2D(mouseScreenPosition, mainCamera);
@@ -70,7 +85,23 @@ public static class HandUtil
     public static Quaternion RimitedForwardToMouse(GameObject obj, Camera mainCamera, float maxAngle, float minAngle, float correctAngle, bool adjustFlip = false)
     {
         // 1. 마우스의 화면 좌표를 가져옴
-        Vector3 mouseScreenPosition = Input.mousePosition;
+        Vector3 mouseScreenPosition;
+
+        // 모바일
+        if (Receiver.instance.aimDirection != Vector2.zero)
+        {
+            Vector3 playerPos = Camera.main.WorldToScreenPoint(Player.instance.gameObject.transform.position);
+            Vector3 aimDirection = Receiver.instance.aimDirection;
+            Vector3 targetPos = playerPos + aimDirection * 500;
+
+            mouseScreenPosition = targetPos;
+        }
+        // PC
+        else
+        {
+            mouseScreenPosition = Input.mousePosition;
+        }
+         
 
         // 2. 마우스의 월드 좌표를 계산 (카메라 기준 Z 깊이 설정)
         Vector3 mouseWorldPosition = ScreenToWorld2D(mouseScreenPosition, mainCamera);

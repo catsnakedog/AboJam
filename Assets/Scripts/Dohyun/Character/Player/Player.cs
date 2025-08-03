@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : Character
 {
+    public static Player instance;
     private IPlayerState _currentState;
     private List<IObserver> _observers = new();
 
@@ -14,6 +15,7 @@ public class Player : Character
 
     void Awake()
     {
+        instance = this;
         Movement = PlayerMovement;
         Hand?.Init();
         Head?.Init();

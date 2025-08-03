@@ -32,6 +32,7 @@ public class Receiver : MonoBehaviour
     [SerializeField] private GraphicRaycaster uiRaycaster;
     [SerializeField] private EventSystem eventSystem;
     public static Action<bool> eventMove;
+    public Vector2 aimDirection;
 
     /* Field & Property */
     private Coroutine corKeepAttack;
@@ -71,12 +72,22 @@ public class Receiver : MonoBehaviour
         character.FindAction("Move").performed += OnMove;
         character.FindAction("Move").canceled -= OffMove;
         character.FindAction("Move").canceled += OffMove;
-        character.FindAction("Attack").started -= OnAttack;
-        character.FindAction("Attack").started += OnAttack;
-        character.FindAction("Attack").performed -= KeepAttack;
-        character.FindAction("Attack").performed += KeepAttack;
-        character.FindAction("Attack").canceled -= OffAttack;
-        character.FindAction("Attack").canceled += OffAttack;
+        character.FindAction("Aim").performed -= OnAim;
+        character.FindAction("Aim").performed += OnAim;
+        character.FindAction("Aim").canceled -= OffAim;
+        character.FindAction("Aim").canceled += OffAim;
+        character.FindAction("Attack_PC").started -= OnAttack;
+        character.FindAction("Attack_PC").started += OnAttack;
+        character.FindAction("Attack_PC").performed -= KeepAttack;
+        character.FindAction("Attack_PC").performed += KeepAttack;
+        character.FindAction("Attack_PC").canceled -= OffAttack;
+        character.FindAction("Attack_PC").canceled += OffAttack;
+        character.FindAction("Attack_Mobile").started -= OnAttack;
+        character.FindAction("Attack_Mobile").started += OnAttack;
+        character.FindAction("Attack_Mobile").performed -= KeepAttack;
+        character.FindAction("Attack_Mobile").performed += KeepAttack;
+        character.FindAction("Attack_Mobile").canceled -= OffAttack;
+        character.FindAction("Attack_Mobile").canceled += OffAttack;
 
         InputActionMap ui = inputAction.FindActionMap("UI");
         ui.Enable();
@@ -102,9 +113,14 @@ public class Receiver : MonoBehaviour
         InputActionMap character = inputAction.FindActionMap("Character");
         character.FindAction("Move").performed -= OnMove;
         character.FindAction("Move").canceled -= OffMove;
-        character.FindAction("Attack").started -= OnAttack;
-        character.FindAction("Attack").performed -= KeepAttack;
-        character.FindAction("Attack").canceled -= OffAttack;
+        character.FindAction("Aim").performed -= OnAim;
+        character.FindAction("Aim").canceled -= OffAim;
+        character.FindAction("Attack_PC").started -= OnAttack;
+        character.FindAction("Attack_PC").performed -= KeepAttack;
+        character.FindAction("Attack_PC").canceled -= OffAttack;
+        character.FindAction("Attack_Mobile").started -= OnAttack;
+        character.FindAction("Attack_Mobile").performed -= KeepAttack;
+        character.FindAction("Attack_Mobile").canceled -= OffAttack;
 
         InputActionMap ui = inputAction.FindActionMap("UI");
         ui.FindAction("Close").performed -= OnClose;
@@ -211,24 +227,35 @@ public class Receiver : MonoBehaviour
         player.PlayerMovement._movement = Vector2.zero;
     }
     /// <summary>
-    /// KeyDown(Click)
+    /// Right Stick Drag (Mobile)
+    /// </summary>
+    private void OnAim(InputAction.CallbackContext context)
+    {
+        aimDirection = context.ReadValue<Vector2>().normalized;
+    }
+    private void OffAim(InputAction.CallbackContext context)
+    {
+        aimDirection = Vector2.zero;
+    }
+    /// <summary>
+    /// KeyDown(Click) | Right Stick Drag
     /// </summary>
     /// <param name="context"></param>
     private void OnAttack(InputAction.CallbackContext context)
     {
-        if (IsPointerOverUI()) return;
+        if (aimDirection == Vector2.zero && IsPointerOverUI()) return;
         if (CheckAttack() == false) return;
 
         // 공격 개시
         if (player.Hand._CurrentWeapon != null) player.Hand._CurrentWeapon.AttackStart();
     }
     /// <summary>
-    /// Key(Click)
+    /// Key(Click) | Right Stick Hold
     /// </summary>
     /// <param name="context"></param>
     private void KeepAttack(InputAction.CallbackContext context)
     {
-        if (IsPointerOverUI()) return;
+        if (aimDirection == Vector2.zero && IsPointerOverUI()) return;
         if (shopPanel.activeInHierarchy) return;
 
         if (corKeepAttack != null) StopCoroutine(corKeepAttack);
@@ -254,6 +281,10 @@ public class Receiver : MonoBehaviour
             yield return null;
         }
     }
+    /// <summary>
+    /// KeyUp | Right Stick Up
+    /// </summary>
+    /// <param name="context"></param>
     private void OffAttack(InputAction.CallbackContext context)
     {
         if (corKeepAttack != null) StopCoroutine(corKeepAttack);
