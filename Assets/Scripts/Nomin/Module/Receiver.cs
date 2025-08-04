@@ -33,6 +33,7 @@ public class Receiver : MonoBehaviour
     [SerializeField] private EventSystem eventSystem;
     public static Action<bool> eventMove;
     public Vector2 aimDirection;
+    public float aimMagnitude;
 
     /* Field & Property */
     [SerializeField] private float doubleTapThreshold;
@@ -272,10 +273,12 @@ public class Receiver : MonoBehaviour
     private void OnAim(InputAction.CallbackContext context)
     {
         aimDirection = context.ReadValue<Vector2>().normalized;
+        aimMagnitude = context.ReadValue<Vector2>().magnitude;
     }
     private void OffAim(InputAction.CallbackContext context)
     {
         aimDirection = Vector2.zero;
+        aimMagnitude = 0;
     }
     /// <summary>
     /// KeyDown(Click) | Right Stick Drag

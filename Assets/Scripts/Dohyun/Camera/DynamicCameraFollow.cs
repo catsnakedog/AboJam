@@ -27,13 +27,15 @@ public class DynamicCameraFollow : MonoBehaviour
     {
         float smooth = SmoothSpeed;
 
-        // Aim 방향을 카메라와 연동시킵니다.
+        // 카메라와 Aim 을 연동시킵니다.
         Vector2 inputDirection = Receiver.instance.aimDirection;
+        float inputMagnitude = Receiver.instance.aimMagnitude;
+
         Vector3 stickRelativeToCenter = new Vector3(
             inputDirection.x * (OutsideBox.sizeDelta.x / 2f),
             inputDirection.y * (OutsideBox.sizeDelta.y / 2f),
             0 );
-        Vector3 screenPosition = CalculateScreenPosition(stickRelativeToCenter);
+        Vector3 screenPosition = CalculateScreenPosition(stickRelativeToCenter) * inputMagnitude;
 
         /* Aim 방향을 마우스와 연동시킵니다.
         Vector3 screenCenter = new(Screen.width / 2f, Screen.height / 2f, 0);
