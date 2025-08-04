@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,7 +25,7 @@ public class RayCaster2D : MonoBehaviour
 
     /* Public Mehtod */
     /// <summary>
-    /// UI 요소를 레이캐스트 합니다.
+    /// UI 요소를 레이캐스트 합니다. 단, Joystick 레이어는 제외합니다.
     /// </summary>
     public List<RaycastResult> RayCastUI(Vector3 mousePos)
     {
@@ -32,7 +33,18 @@ public class RayCaster2D : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         graphicRaycaster.Raycast(pointerEventData, results);
 
-        return results;
+        // Joystick 레이어 오브젝트 제외
+        int joystickLayer = LayerMask.NameToLayer("Joystick");
+        List<RaycastResult> filteredResults = results.Where(result => result.gameObject.layer != joystickLayer).ToList();
+
+        // 처음 충돌한 UI 가 버튼일 경우, Invoke
+        if (filteredResults.Count > 0)
+        {
+            Button button = filteredResults[0].gameObject.GetComponent<Button>();
+            if (button != null && button.interactable) button.onClick.Invoke();
+        }
+
+        return filteredResults;
     }
     /// <summary>
     /// <br>단일 대상을 레이캐스팅합니다.</br>
@@ -44,8 +56,25 @@ public class RayCaster2D : MonoBehaviour
         List<RaycastResult> UI = RayCastUI(mousePos);
         if (UI.Count > 0) return null;
 
-        // Player 레이어 무시
-        int excludePlayer = ~(1 << LayerMask.NameToLayer("Player"));
-        return Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePos), Vector2.zero, 0, excludePlayer);
+        // 모든 레이캐스팅 충돌체 반환
+        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePos);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(worldPoint, Vector2.zero, 0);
+        if (hits.Length == 0) return null;
+
+        // 거리 순 정렬
+        var sortedHits = hits.OrderBy(h => h.distance).ToArray();
+
+        // 무시하고 관통할 레이어 지정
+        int penetratingLayersMask = (1 << LayerMask.NameToLayer("Player")) | (1 << LayerMask.NameToLayer("Joystick"));
+
+        // 첫 번째로 충돌한 오브젝트 반환
+        foreach (var hit in sortedHits)
+        {
+            bool isPenetrating = (penetratingLayersMask & (1 << hit.collider.gameObject.layer)) != 0;
+
+            if (!isPenetrating) return hit;
+        }
+
+        return null;
     }
 }

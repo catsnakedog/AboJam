@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class DynamicCameraFollow : MonoBehaviour
 {
-    public Transform Player; // ÇÃ·¹ÀÌ¾îÀÇ Transform
-    public RectTransform CameraBox; // CameraBoxÀÇ Transform
-    public RectTransform InsideBox; // InsideBoxÀÇ Transform
-    public RectTransform OutsideBox; // OutSideBoxÀÇ Transform
-    public float SmoothSpeed = 0.125f; // Ä«¸Ş¶ó ºÎµå·¯¿î ÀÌµ¿ ¼Óµµ
+    public Transform Player; // í”Œë ˆì´ì–´ì˜ Transform
+    public RectTransform CameraBox; // CameraBoxì˜ Transform
+    public RectTransform InsideBox; // InsideBoxì˜ Transform
+    public RectTransform OutsideBox; // OutSideBoxì˜ Transform
+    public float SmoothSpeed = 0.125f; // ì¹´ë©”ë¼ ë¶€ë“œëŸ¬ìš´ ì´ë™ ì†ë„
 
     private Camera _mainCamera;
-    private float _fixedZ; // Ä«¸Ş¶ó ZÃà °íÁ¤ °ª
+    private float _fixedZ; // ì¹´ë©”ë¼ Zì¶• ê³ ì • ê°’
 
     void Start()
     {
-        _mainCamera = Camera.main; // ¸ŞÀÎ Ä«¸Ş¶ó ÂüÁ¶
-        _fixedZ = transform.position.z; // ÃÊ±â ZÃà °ª ÀúÀå
+        _mainCamera = Camera.main; // ë©”ì¸ ì¹´ë©”ë¼ ì°¸ì¡°
+        _fixedZ = transform.position.z; // ì´ˆê¸° Zì¶• ê°’ ì €ì¥
         Player = GameObject.FindWithTag("Player").transform;
     }
 
@@ -27,17 +27,23 @@ public class DynamicCameraFollow : MonoBehaviour
     {
         float smooth = SmoothSpeed;
 
-        // È­¸é Áß¾Ó ÁÂÇ¥ °è»ê (½ºÅ©¸° ±âÁØ)
-        Vector3 screenCenter = new(Screen.width / 2f, Screen.height / 2f, 0);
+        // Aim ë°©í–¥ì„ ì¹´ë©”ë¼ì™€ ì—°ë™ì‹œí‚µë‹ˆë‹¤.
+        Vector2 inputDirection = Receiver.instance.aimDirection;
+        Vector3 stickRelativeToCenter = new Vector3(
+            inputDirection.x * (OutsideBox.sizeDelta.x / 2f),
+            inputDirection.y * (OutsideBox.sizeDelta.y / 2f),
+            0 );
+        Vector3 screenPosition = CalculateScreenPosition(stickRelativeToCenter);
 
-        // ¸¶¿ì½º ÁÂÇ¥¸¦ È­¸é Áß½É ±âÁØ »ó´ë ÁÂÇ¥·Î º¯È¯
-        Vector3 mouseRelativeToCenter = Input.mousePosition - screenCenter;
+        /* Aim ë°©í–¥ì„ ë§ˆìš°ìŠ¤ì™€ ì—°ë™ì‹œí‚µë‹ˆë‹¤.
+Â  Â  Â  Â  Vector3 screenCenter = new(Screen.width / 2f, Screen.height / 2f, 0);
+Â  Â  Â  Â  Vector3 mouseRelativeToCenter = Input.mousePosition - screenCenter;
         Vector3 screenPosition = CalculateScreenPosition(mouseRelativeToCenter);
+        */
 
-        if (screenPosition == Vector3.zero)
-            smooth = 0.25f;
+        if (screenPosition == Vector3.zero) smooth = 0.25f;
 
-        // »ó´ë ÁÂÇ¥¸¦ ¿ùµå °ø°£À¸·Î º¯È¯
+        // ìƒëŒ€ ì¢Œí‘œë¥¼ ì›”ë“œ ê³µê°„ìœ¼ë¡œ ë³€í™˜
         Vector3 relativeToWorld = new(GetPixelsPerWorldUnit(screenPosition.x), GetPixelsPerWorldUnit(screenPosition.y), _fixedZ);
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, Player.position + relativeToWorld, smooth);
         transform.position = smoothedPosition;
@@ -54,7 +60,7 @@ public class DynamicCameraFollow : MonoBehaviour
 
     private float GetPixelsPerWorldUnit(float distance)
     {
-        // Ä«¸Ş¶óÀÇ FOV¿Í È­¸é ³ôÀÌ °¡Á®¿À±â
+        // ì¹´ë©”ë¼ì˜ FOVì™€ í™”ë©´ ë†’ì´ ê°€ì ¸ì˜¤ê¸°
         return distance / ((Screen.height * 2) /_mainCamera.orthographicSize);
     }
 }

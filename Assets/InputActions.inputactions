@@ -58,7 +58,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC",
+                    "groups": "PC;Mobile",
                     "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -97,6 +97,28 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "",
+                    "id": "68657543-61a5-4554-8167-aef60664ecbb",
+                    "path": "<Touchscreen>/touch0/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3fff222-426b-46a5-845b-23b1fe0cac17",
+                    "path": "<Touchscreen>/touch1/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "One Modifier",
                     "id": "dece8fee-b274-4c9d-91e3-eb419a92ade0",
                     "path": "OneModifier",
@@ -128,6 +150,28 @@
                     "action": "Demolition",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d1c390e6-e331-48a1-a63c-76c599a51af8",
+                    "path": "<Touchscreen>/touch0/tap",
+                    "interactions": "MultiTap",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "Demolition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aaf53fa7-e586-44fb-83fb-7673a373bb8b",
+                    "path": "<Touchscreen>/touch1/tap",
+                    "interactions": "MultiTap",
+                    "processors": "",
+                    "groups": "Mobile",
+                    "action": "Demolition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "One Modifier",
@@ -307,17 +351,6 @@
                 },
                 {
                     "name": "",
-                    "id": "f020696e-dd14-4db0-86cb-f53dea61e940",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Attack_PC",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c004da49-dfc2-40f8-8a8a-70273a5bea70",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -380,6 +413,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
+                    "action": "Close",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e3f8dcc-4340-4534-992c-8db1d8fdfe8d",
+                    "path": "<Touchscreen>/{Back}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mobile",
                     "action": "Close",
                     "isComposite": false,
                     "isPartOfComposite": false

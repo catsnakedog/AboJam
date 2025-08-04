@@ -35,6 +35,11 @@ public class Receiver : MonoBehaviour
     public Vector2 aimDirection;
 
     /* Field & Property */
+    [SerializeField] private float doubleTapThreshold;
+    private DateTime lastTapTime = DateTime.MinValue;
+    private bool? isMove = false; public bool? IsMove { get => isMove; }
+    private bool? isAttack = false; public bool? IsAttack { get => isAttack; }
+    private bool isZoomMode = false; public bool IsZoomMode { get => isZoomMode; }
     private Coroutine corKeepAttack;
     private PointerEventData pointerEventData;
 
@@ -68,8 +73,10 @@ public class Receiver : MonoBehaviour
 
         InputActionMap character = inputAction.FindActionMap("Character");
         character.Enable();
-        character.FindAction("Move").performed -= OnMove;
-        character.FindAction("Move").performed += OnMove;
+        character.FindAction("Move").started -= OnMove;
+        character.FindAction("Move").started += OnMove;
+        character.FindAction("Move").performed -= KeepMove;
+        character.FindAction("Move").performed += KeepMove;
         character.FindAction("Move").canceled -= OffMove;
         character.FindAction("Move").canceled += OffMove;
         character.FindAction("Aim").performed -= OnAim;
@@ -111,7 +118,8 @@ public class Receiver : MonoBehaviour
         map.FindAction("HighlightDemolition").canceled -= OffHighlight;
 
         InputActionMap character = inputAction.FindActionMap("Character");
-        character.FindAction("Move").performed -= OnMove;
+        character.FindAction("Move").started -= OnMove;
+        character.FindAction("Move").performed -= KeepMove;
         character.FindAction("Move").canceled -= OffMove;
         character.FindAction("Aim").performed -= OnAim;
         character.FindAction("Aim").canceled -= OffAim;
@@ -217,14 +225,46 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnMove(InputAction.CallbackContext context)
     {
+        Debug.Log("OnMove");
+
+        if (isAttack == false) isZoomMode = true;
+        else isZoomMode = false;
+
+        isMove = false;
+    }
+    private void KeepMove(InputAction.CallbackContext context)
+    {
+        Debug.Log("KeepMove");
+
         eventMove.Invoke(true);
         farming.StopCultivate();
         player.PlayerMovement._movement = context.ReadValue<Vector2>();
+
+        if(player.PlayerMovement._movement != Vector2.zero) isMove = true;
     }
     private void OffMove(InputAction.CallbackContext context)
     {
+        Debug.Log("OffMove");
+
+#if !UNITY_STANDALONE
+        // 이동이 없는 조이스틱 조작은 상호작용으로 간주합니다.
+        if (isMove == false)
+        {
+            DateTime now = DateTime.Now;
+            double delay = (now - lastTapTime).TotalSeconds;
+            lastTapTime = now;
+
+            // 싱글 탭
+            if (delay >= doubleTapThreshold) OnInteraction(context);
+            // 더블 탭
+            else OnDemolition(context);
+        }
+#endif
+
         eventMove.Invoke(false);
         player.PlayerMovement._movement = Vector2.zero;
+
+        isMove = null;
     }
     /// <summary>
     /// Right Stick Drag (Mobile)
@@ -243,6 +283,11 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnAttack(InputAction.CallbackContext context)
     {
+        if (isMove == false) isZoomMode = true;
+        else isZoomMode = false;
+
+        isAttack = false;
+
         if (aimDirection == Vector2.zero && IsPointerOverUI()) return;
         if (CheckAttack() == false) return;
 
@@ -260,6 +305,8 @@ public class Receiver : MonoBehaviour
 
         if (corKeepAttack != null) StopCoroutine(corKeepAttack);
         corKeepAttack = StartCoroutine(CorKeepAttack());
+
+        isAttack = true;
     }
     private IEnumerator CorKeepAttack()
     {
@@ -287,6 +334,21 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OffAttack(InputAction.CallbackContext context)
     {
+#if !UNITY_STANDALONE
+        // 공격이 없는 조이스틱 조작은 상호작용으로 간주합니다.
+        if (isAttack == false)
+        {
+            DateTime now = DateTime.Now;
+            double delay = (now - lastTapTime).TotalSeconds;
+            lastTapTime = now;
+
+            // 싱글 탭
+            if (delay >= doubleTapThreshold) OnInteraction(context);
+            // 더블 탭
+            else OnDemolition(context);
+        }
+#endif
+
         if (corKeepAttack != null) StopCoroutine(corKeepAttack);
         if (CheckAttack() == false) return;
 
@@ -297,6 +359,8 @@ public class Receiver : MonoBehaviour
         // 공격 종료
         if (player.Hand._CurrentWeapon != null)
             player.Hand._CurrentWeapon.AttackEnd();
+
+        isAttack = null;
     }
 
     /* UI Event Handler */
@@ -318,7 +382,7 @@ public class Receiver : MonoBehaviour
         shortcut.SetActive(false);
         OffUI();
 
-        if(!flag || menu.panel.activeSelf) menu.MenuOnOff();
+        if (!flag || menu.panel.activeSelf) menu.MenuOnOff();
     }
     /// <summary>
     /// KeyDown(Enter)

@@ -58,7 +58,7 @@ public class Zoom : MonoBehaviour
         }
 
         // 모바일 (두 손가락 터치)
-        if (Input.touchCount == 2)
+        if (Input.touchCount == 2 && Receiver.instance.IsZoomMode)
         {
             Touch touch1 = Input.GetTouch(0);
             Touch touch2 = Input.GetTouch(1);
@@ -98,6 +98,7 @@ public class Zoom : MonoBehaviour
             if (child.name == "Promotion") continue;
             if (child.name == "Lose(Clone)") continue;
             if (child.name == "Mark") continue;
+            if (child.name == "Joystick") continue;
 
             // CanvasGroup 처리
             CanvasGroup cg = child.GetComponent<CanvasGroup>();
