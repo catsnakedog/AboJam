@@ -23,6 +23,7 @@ public class Zoom : MonoBehaviour
     private bool isOnUI = true;
     private float current_scale;
     private float speed_scale_before; // 스무딩 속도 추적용
+    public bool isZoomMode;
 
     /* Initalizer & Finalizer & Updater */
     private void Start()
@@ -58,7 +59,9 @@ public class Zoom : MonoBehaviour
         }
 
         // 모바일 (두 손가락 터치)
-        if (Input.touchCount == 2 && Receiver.instance.IsZoomMode)
+        if (Input.touchCount == 2 && Receiver.instance.IsAttack == null && Receiver.instance.IsMove == null) isZoomMode = true;
+        if (Input.touchCount < 2) isZoomMode = false;
+        if (isZoomMode)
         {
             Touch touch1 = Input.GetTouch(0);
             Touch touch2 = Input.GetTouch(1);

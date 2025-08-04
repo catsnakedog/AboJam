@@ -226,16 +226,11 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnMove(InputAction.CallbackContext context)
     {
-        Debug.Log("OnMove");
-
-        if (isAttack == false) isZoomMode = true;
-        else isZoomMode = false;
-
         isMove = false;
     }
     private void KeepMove(InputAction.CallbackContext context)
     {
-        Debug.Log("KeepMove");
+        if (Zoom.instance.isZoomMode) { isMove = true; return; }
 
         eventMove.Invoke(true);
         farming.StopCultivate();
@@ -245,8 +240,6 @@ public class Receiver : MonoBehaviour
     }
     private void OffMove(InputAction.CallbackContext context)
     {
-        Debug.Log("OffMove");
-
 #if !UNITY_STANDALONE
         // 이동이 없는 조이스틱 조작은 상호작용으로 간주합니다.
         if (isMove == false)
@@ -286,9 +279,6 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnAttack(InputAction.CallbackContext context)
     {
-        if (isMove == false) isZoomMode = true;
-        else isZoomMode = false;
-
         isAttack = false;
 
         if (aimDirection == Vector2.zero && IsPointerOverUI()) return;
@@ -305,6 +295,7 @@ public class Receiver : MonoBehaviour
     {
         if (aimDirection == Vector2.zero && IsPointerOverUI()) return;
         if (shopPanel.activeInHierarchy) return;
+        if (Zoom.instance.isZoomMode) { isAttack = true; return; }
 
         if (corKeepAttack != null) StopCoroutine(corKeepAttack);
         corKeepAttack = StartCoroutine(CorKeepAttack());
