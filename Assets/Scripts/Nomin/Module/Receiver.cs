@@ -186,13 +186,6 @@ public class Receiver : MonoBehaviour
         List<RaycastResult> ui = rayCaster2D.RayCastUI(Input.mousePosition);
         if (ui.Count == 0) OffUI();
         highlight.Off();
-
-        // 디버깅 용 코드입니다. 나중에 지울 예정
-        Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        string name;
-        if (tile.Go == null) name = "오브젝트가 없습니다.";
-        else name = tile.Go.name;
-        // Debug.Log($"타일 정보\n좌표 : [{tile.i}][{tile.j}] | pos : {tile.pos} | 설치 : {name} | GridIndexMap : {grid.GridIndexMap[tile.i, tile.j]}");
     }
     /// <summary>
     /// Click + KeyDown(Right Click)
@@ -240,21 +233,6 @@ public class Receiver : MonoBehaviour
     }
     private void OffMove(InputAction.CallbackContext context)
     {
-#if !UNITY_STANDALONE
-        // 이동이 없는 조이스틱 조작은 상호작용으로 간주합니다.
-        if (isMove == false)
-        {
-            DateTime now = DateTime.Now;
-            double delay = (now - lastTapTime).TotalSeconds;
-            lastTapTime = now;
-
-            // 싱글 탭
-            if (delay >= doubleTapThreshold) OnInteraction(context);
-            // 더블 탭
-            else OnDemolition(context);
-        }
-#endif
-
         eventMove.Invoke(false);
         player.PlayerMovement._movement = Vector2.zero;
 
@@ -328,21 +306,6 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OffAttack(InputAction.CallbackContext context)
     {
-#if !UNITY_STANDALONE
-        // 공격이 없는 조이스틱 조작은 상호작용으로 간주합니다.
-        if (isAttack == false)
-        {
-            DateTime now = DateTime.Now;
-            double delay = (now - lastTapTime).TotalSeconds;
-            lastTapTime = now;
-
-            // 싱글 탭
-            if (delay >= doubleTapThreshold) OnInteraction(context);
-            // 더블 탭
-            else OnDemolition(context);
-        }
-#endif
-
         if (corKeepAttack != null) StopCoroutine(corKeepAttack);
         if (CheckAttack() == false) return;
 

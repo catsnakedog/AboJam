@@ -37,13 +37,6 @@ public class RayCaster2D : MonoBehaviour
         int joystickLayer = LayerMask.NameToLayer("Joystick");
         List<RaycastResult> filteredResults = results.Where(result => result.gameObject.layer != joystickLayer).ToList();
 
-        // 처음 충돌한 UI 가 버튼일 경우, Invoke
-        if (filteredResults.Count > 0)
-        {
-            Button button = filteredResults[0].gameObject.GetComponent<Button>();
-            if (button != null && button.interactable) button.onClick.Invoke();
-        }
-
         return filteredResults;
     }
     /// <summary>
@@ -52,9 +45,23 @@ public class RayCaster2D : MonoBehaviour
     /// </summary>
     public RaycastHit2D? RayCast(Vector3 mousePos)
     {
-        // UI 요소 레이캐스팅 시 리턴
+        // UI 요소 레이캐스팅 시 이벤트 전달 후 리턴
         List<RaycastResult> UI = RayCastUI(mousePos);
-        if (UI.Count > 0) return null;
+        if (UI.Count > 0)
+        {
+            GameObject firstHitObject = UI[0].gameObject;
+
+            if (ExecuteEvents.CanHandleEvent<IPointerClickHandler>(firstHitObject))
+            {
+                ExecuteEvents.Execute(
+                    target: firstHitObject,
+                    eventData: new PointerEventData(EventSystem.current),
+                    functor: ExecuteEvents.pointerClickHandler
+                );
+            }
+
+            return null;
+        }
 
         // 모든 레이캐스팅 충돌체 반환
         Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePos);
