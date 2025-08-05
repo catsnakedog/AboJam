@@ -124,6 +124,8 @@ public class Zoom : MonoBehaviour
             if (child.name == "Mark") continue;
             if (child.name == "Joystick") continue;
             if (child.name == "Swap") continue;
+            if (child.name == "Circuit") continue;
+            if (child.name == "Handle") continue;
 
             // CanvasGroup 처리
             CanvasGroup cg = child.GetComponent<CanvasGroup>();

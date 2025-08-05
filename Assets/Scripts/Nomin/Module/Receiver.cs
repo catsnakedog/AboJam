@@ -31,11 +31,20 @@ public class Receiver : MonoBehaviour
     [SerializeField] private Button btnDemolitionYes;
     [SerializeField] private GraphicRaycaster uiRaycaster;
     [SerializeField] private EventSystem eventSystem;
+    [SerializeField] private GameObject UI;
     public static Action<bool> eventMove;
     public Vector2 aimDirection;
     public float aimMagnitude;
 
     /* Field & Property */
+    [SerializeField] private Vector2 moveCircuitSize;
+    [SerializeField] private Vector2 moveHandleSize;
+    [SerializeField] private Sprite moveCircuitSprite;
+    [SerializeField] private Sprite moveHandleSprite;
+    [SerializeField] private Vector2 attackCircuitSize;
+    [SerializeField] private Vector2 attackHandleSize;
+    [SerializeField] private Sprite attackCircuitSprite;
+    [SerializeField] private Sprite attackHandleSprite;
     [SerializeField] private float doubleTapThreshold;
     private DateTime lastTapTime = DateTime.MinValue;
     private bool? isMove = false; public bool? IsMove { get => isMove; }
@@ -43,6 +52,8 @@ public class Receiver : MonoBehaviour
     private bool isZoomMode = false; public bool IsZoomMode { get => isZoomMode; }
     private Coroutine corKeepAttack;
     private PointerEventData pointerEventData;
+    private Handle moveHandlePointer;
+    private Handle attackHandlePointer;
 
     /* Initializer & Finalizer &  Updater */
     private void Start()
@@ -212,7 +223,12 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnMove(InputAction.CallbackContext context)
     {
-        if(Zoom.instance.isZoomMode != true) isMove = false;
+        if (Zoom.instance.isZoomMode != true)
+        {
+            isMove = false;
+            moveHandlePointer = new Handle();
+            moveHandlePointer.Init(UI.transform,GetLeftTouchPos(), moveCircuitSize, moveHandleSize, moveCircuitSprite, moveHandleSprite);
+        }
     }
     private void KeepMove(InputAction.CallbackContext context)
     {
@@ -222,7 +238,8 @@ public class Receiver : MonoBehaviour
         farming.StopCultivate();
         player.PlayerMovement._movement = context.ReadValue<Vector2>();
 
-        if(player.PlayerMovement._movement != Vector2.zero) isMove = true;
+        if (player.PlayerMovement._movement != Vector2.zero) isMove = true;
+        moveHandlePointer.MoveHandle(GetLeftTouchPos());
     }
     private void OffMove(InputAction.CallbackContext context)
     {
@@ -230,6 +247,7 @@ public class Receiver : MonoBehaviour
         player.PlayerMovement._movement = Vector2.zero;
 
         isMove = null;
+        moveHandlePointer.Close();
     }
     /// <summary>
     /// Right Stick Drag (Mobile)
@@ -250,7 +268,12 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnAttack(InputAction.CallbackContext context)
     {
-        if (Zoom.instance.isZoomMode != true) isAttack = false;
+        if (Zoom.instance.isZoomMode != true)
+        {
+            isAttack = false;
+            attackHandlePointer = new Handle();
+            attackHandlePointer.Init(UI.transform, GetRightTouchPos(), attackCircuitSize, attackHandleSize, attackCircuitSprite, attackHandleSprite);
+        }
     }
     /// <summary>
     /// Key(Click) | Right Stick Hold
@@ -270,6 +293,7 @@ public class Receiver : MonoBehaviour
         corKeepAttack = StartCoroutine(CorKeepAttack());
 
         isAttack = true;
+        attackHandlePointer.MoveHandle(GetRightTouchPos());
     }
     private IEnumerator CorKeepAttack()
     {
@@ -309,6 +333,7 @@ public class Receiver : MonoBehaviour
             player.Hand._CurrentWeapon.AttackEnd();
 
         isAttack = null;
+        attackHandlePointer.Close();
     }
 
     /* UI Event Handler */
@@ -374,5 +399,40 @@ public class Receiver : MonoBehaviour
         uiRaycaster.Raycast(pointerEventData, results);
 
         return results.Count > 0;
+    }
+    /// <summary>
+    /// 현재 모든 터치 입력 중, 가장 왼쪽 / 오른쪽에 있는 터치의 위치를 반환합니다.
+    /// </summary>
+    private Vector2 GetLeftTouchPos()
+    {
+        // PC 면 마우스 위치를 리턴
+        if (Input.touchCount == 0) return Input.mousePosition;
+
+        Touch leftmostTouch = Input.GetTouch(0);
+
+        for (int i = 1; i < Input.touchCount; i++)
+        {
+            Touch currentTouch = Input.GetTouch(i);
+
+            if (currentTouch.position.x < leftmostTouch.position.x) leftmostTouch = currentTouch;
+        }
+
+        return leftmostTouch.position;
+    }
+    private Vector2 GetRightTouchPos()
+    {
+        // PC 면 마우스 위치를 리턴
+        if (Input.touchCount == 0) return Input.mousePosition;
+
+        Touch rightMostTouch = Input.GetTouch(0);
+
+        for (int i = 1; i < Input.touchCount; i++)
+        {
+            Touch currentTouch = Input.GetTouch(i);
+
+            if (currentTouch.position.x > rightMostTouch.position.x) rightMostTouch = currentTouch;
+        }
+
+        return rightMostTouch.position;
     }
 }
