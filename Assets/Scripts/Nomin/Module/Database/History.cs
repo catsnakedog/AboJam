@@ -73,7 +73,7 @@ public class History : MonoBehaviour, IPointerEnterHandler
         {
             DateTime dateTime = gameDatas[i].GetDateTime();
             gameDataLocal.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text =
-                $"[{i + 1}] 나이 : {dateTime:d일}";
+                $"[{i + 1}] DAY : {dateTime:d일}";
             gameDataLocal.transform.GetChild(i).GetComponentInChildren<Record>().WriteLog(gameDatas[i]);
         }
 

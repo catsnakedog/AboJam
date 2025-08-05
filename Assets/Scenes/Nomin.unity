@@ -9925,7 +9925,6 @@ MonoBehaviour:
   max_scale: 1
   time_smooth: 0.2
   isZoomMode: 0
-  firstTouchTime: 0
   zoomTouchThreshold: 0.3
 --- !u!114 &825439685
 MonoBehaviour:
@@ -11254,7 +11253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -15719,8 +15718,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -185.4, y: -32.8}
-  m_SizeDelta: {x: 127, y: 43.0425}
+  m_AnchoredPosition: {x: -192.4, y: -21.5}
+  m_SizeDelta: {x: 64.2154, y: 62.2267}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1367765724
 MonoBehaviour:
@@ -15820,7 +15819,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1367765724}
         m_TargetAssemblyTypeName: Swap, Assembly-CSharp
         m_MethodName: SwapSlot
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -23406,6 +23405,10 @@ PrefabInstance:
       value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6153363529398670469, guid: 6e9b3bb6fae3e4b489c3ae7ea5c90526, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6153363529398670469, guid: 6e9b3bb6fae3e4b489c3ae7ea5c90526, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
@@ -23635,6 +23638,10 @@ PrefabInstance:
     - target: {fileID: 3041645498493724195, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
       propertyPath: m_fontSizeBase
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3041645498493724195, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3041645498493724195, guid: 70355307dc8406945bfd3f5d2543d8d8, type: 3}
       propertyPath: m_sharedMaterial
