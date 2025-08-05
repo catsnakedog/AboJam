@@ -106,6 +106,8 @@ public class Weapon : MonoBehaviour
 
     public void AttackStart()
     {
+        if (IsStartAttack == true) return;
+
         if (IsReload)
             return;
         IsStartAttack = true;
