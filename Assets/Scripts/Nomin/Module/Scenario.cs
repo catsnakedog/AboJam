@@ -198,13 +198,13 @@ public class Scenario : MonoBehaviour
         // 경작
         message.On($"반가워요 ! 아보카도 농장에 오신걸 환영해요.", 2f, true);
         yield return new WaitForSeconds(2f);
-        message.On($"WASD 로 움직일 수 있어요.", 2f, true);
+        message.On($"화면 왼쪽을 끌어서 움직일 수 있어요.", 2f, true);
         yield return new WaitForSeconds(2f);
-        message.On($"땅을 우클릭해서 밭을 개간해보세요 !", 999f, true);
+        message.On($"땅을 터치해서 밭을 개간해보세요 !", 999f, true);
         while (Abocado.instances.Count < 1) yield return waitForSeconds;
 
         // 심기
-        message.On("잘 했어요 ! 다시 우클릭으로 아보카도를 심어보세요.", 999f, true);
+        message.On("잘 했어요 ! 다시 터치해서 아보카도를 심어보세요.", 999f, true);
         mark.On(Abocado.instances[0].gameObject, 999f);
         while (Abocado.instances[0].Level != EnumData.Abocado.Seed) yield return waitForSeconds;
 
@@ -228,7 +228,7 @@ public class Scenario : MonoBehaviour
         Abocado.instances[0].GrowUp();
 
         // 수확
-        message.On("우클릭으로 아보카도를 수확하세요 !", 999f, true);
+        message.On("터치로 아보카도를 수확하세요 !", 999f, true);
         mark.On(Abocado.instances[0].gameObject, 999f);
         while (StaticData.Abocado < 2) yield return waitForSeconds;
 
@@ -262,7 +262,7 @@ public class Scenario : MonoBehaviour
         while (shop_close.activeInHierarchy) yield return waitForSeconds;
 
         // 타워
-        message.On("우클릭으로 아보카도를 다시 눌러보세요 !", 999f, true);
+        message.On("아보카도를 다시 눌러보세요 !", 999f, true);
         mark.On(Abocado.instances[0].gameObject, 999f);
         while (!promotion.activeInHierarchy) yield return waitForSeconds;
         message.On("아보카도를 타워로 성장시키세요 !", 999f, true);
@@ -309,6 +309,8 @@ public class Scenario : MonoBehaviour
         }
 
         // 교전
+        message.On($"화면 오른쪽을 끌어서 공격할 수 있어요.", 2f, true);
+        yield return new WaitForSeconds(2f);
         message.On("타워를 이용해 몰려오는 갱단으로부터 살아남으세요.", 3f, true);
         StopCoroutine(corDayNight);
         mark.Off();
@@ -413,8 +415,9 @@ public class Scenario : MonoBehaviour
         while (shop_close.activeInHierarchy) yield return waitForSeconds;
 
         // 교체
-        mark.Off();
-        message.On(" R 버튼으로 근접 / 원거리 무기를 교체할 수 있어요.", 999f, true);
+        swap.SetActive(true);
+        mark.On(swap, 999f);
+        message.On(" 근접 / 원거리 무기를 교체할 수 있어요.", 999f, true);
         Hand.WeaponSlot slot = player.Hand.CurrentSlotIndex;
         while (player.Hand.CurrentSlotIndex == slot) yield return waitForSeconds;
 
@@ -471,7 +474,6 @@ public class Scenario : MonoBehaviour
         // UI 조정
         shop.SetActive(false);
         btn_skill.SetActive(false);
-        swap.SetActive(false);
         skip.SetActive(false);
 
         // 타워 설치
@@ -481,7 +483,7 @@ public class Scenario : MonoBehaviour
         // 철거
         message.On($"마지막 튜토리얼입니다 !", 2f, true);
         yield return new WaitForSeconds(2f);
-        message.On($"F + 클릭으로 타워와 경작지를 철거해보세요.", 999f, true);
+        message.On($"두 번 터치해서 타워와 경작지를 철거해보세요.", 999f, true);
         while (grid.GetTile((15, 17)).Go != null | grid.GetTile((15, 19)).Go != null) yield return waitForSeconds;
         message.On($"잘했어요 !", 1f, true);
         yield return new WaitForSeconds(1f);
@@ -496,7 +498,7 @@ public class Scenario : MonoBehaviour
         HP hpAuto = HP.FindHP(grid.GetTile((15, 19)).Go);
         hpAuto.Damage(hpAuto.Hp_max * 0.5f);
         yield return new WaitForSeconds(2f);
-        message.On($"우클릭으로 타워를 눌러보세요.", 999f, true);
+        message.On($"타워를 눌러보세요.", 999f, true);
         if (grid.GetTile((15, 19)).Go != null) mark.On(grid.GetTile((15, 19)).Go, 999f);
         while (!reinforcement.gameObject.activeSelf)
         {
@@ -518,7 +520,7 @@ public class Scenario : MonoBehaviour
                 HP tempHP = HP.FindHP(grid.GetTile((15, 19)).Go);
                 tempHP.Damage(hpAuto.Hp_max * 0.5f);
 
-                message.On($"우클릭으로 타워를 눌러보세요.", 999f, true);
+                message.On($"타워를 눌러보세요.", 999f, true);
                 mark.On(grid.GetTile((15, 19)).Go, 999f);
             }
             yield return new WaitForSeconds(0.6f);
@@ -570,7 +572,7 @@ public class Scenario : MonoBehaviour
         globalLight.Set(globalLight.night, 0.01f);
         message.On("곧 적들이 몰려옵니다...", 2f, true);
         yield return new WaitForSeconds(2f);
-        message.On("마우스 휠을 스크롤 해 적을 확인하세요 !", 999f, true);
+        message.On("화면 양쪽을 동시에 밀어서 적을 확인하세요 !", 999f, true);
         while (zoom.Target_zoom <= zoom.min_zoom) yield return waitForSeconds;
 
         // 교전
