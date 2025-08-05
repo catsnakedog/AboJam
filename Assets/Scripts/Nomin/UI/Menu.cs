@@ -43,8 +43,8 @@ public class Menu : MonoBehaviour
         else Time.timeScale = 1;
     }
 
-    ~Menu()
+    private void OnDestroy()
     {
         Time.timeScale = 1;
     }
-}
+ }
