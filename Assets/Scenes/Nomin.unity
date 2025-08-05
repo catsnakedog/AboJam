@@ -9925,6 +9925,8 @@ MonoBehaviour:
   max_scale: 1
   time_smooth: 0.2
   isZoomMode: 0
+  firstTouchTime: 0
+  zoomTouchThreshold: 0.3
 --- !u!114 &825439685
 MonoBehaviour:
   m_ObjectHideFlags: 0

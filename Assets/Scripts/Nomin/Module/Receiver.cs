@@ -212,7 +212,7 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnMove(InputAction.CallbackContext context)
     {
-        isMove = false;
+        if(Zoom.instance.isZoomMode != true) isMove = false;
     }
     private void KeepMove(InputAction.CallbackContext context)
     {
@@ -250,7 +250,7 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnAttack(InputAction.CallbackContext context)
     {
-        isAttack = false;
+        if (Zoom.instance.isZoomMode != true) isAttack = false;
     }
     /// <summary>
     /// Key(Click) | Right Stick Hold

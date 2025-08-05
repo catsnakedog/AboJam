@@ -23,7 +23,9 @@ public class Zoom : MonoBehaviour
     private bool isOnUI = true;
     private float current_scale;
     private float speed_scale_before; // 스무딩 속도 추적용
+    private float firstTouchTime;
     public bool isZoomMode;
+    public float zoomTouchThreshold;
 
     /* Initalizer & Finalizer & Updater */
     private void Start()
@@ -59,8 +61,27 @@ public class Zoom : MonoBehaviour
         }
 
         // 모바일 (두 손가락 터치)
-        if (Input.touchCount == 2 && Receiver.instance.IsAttack == null && Receiver.instance.IsMove == null) isZoomMode = true;
-        if (Input.touchCount < 2) isZoomMode = false;
+        switch (Input.touchCount)
+        {
+            case 0:
+                firstTouchTime = 0;
+                isZoomMode = false;
+                break;
+
+            case 1:
+                if (firstTouchTime == 0)
+                {
+                    firstTouchTime = Time.time;
+                    isZoomMode = false;
+                }
+                break;
+
+            case 2:
+                if (Time.time - firstTouchTime < zoomTouchThreshold || isZoomMode == true)
+                    if (Receiver.instance.IsAttack == null && Receiver.instance.IsMove == null) isZoomMode = true;
+                break;
+        }
+
         if (isZoomMode)
         {
             Touch touch1 = Input.GetTouch(0);
