@@ -55,8 +55,6 @@ public class Receiver : MonoBehaviour
 
         InputActionMap map = inputAction.FindActionMap("Map");
         map.Enable();
-        map.FindAction("Click").performed -= OnClick;
-        map.FindAction("Click").performed += OnClick;
         map.FindAction("Interaction").performed -= OnInteraction;
         map.FindAction("Interaction").performed += OnInteraction;
         map.FindAction("Demolition").performed -= OnDemolition;
@@ -109,7 +107,6 @@ public class Receiver : MonoBehaviour
     private void OnDisable()
     {
         InputActionMap map = inputAction.FindActionMap("Map");
-        map.FindAction("Click").performed -= OnClick;
         map.FindAction("Interaction").performed -= OnInteraction;
         map.FindAction("Demolition").performed -= OnDemolition;
         map.FindAction("HighlightCultivate").performed -= OnHighlightCultivate;
@@ -179,15 +176,6 @@ public class Receiver : MonoBehaviour
         highlight.Off();
     }
     /// <summary>
-    /// Click
-    /// </summary>
-    private void OnClick(InputAction.CallbackContext context)
-    {
-        List<RaycastResult> ui = rayCaster2D.RayCastUI(Input.mousePosition);
-        if (ui.Count == 0) OffUI();
-        highlight.Off();
-    }
-    /// <summary>
     /// Click + KeyDown(Right Click)
     /// </summary>
     /// <param name="context"></param>
@@ -195,7 +183,12 @@ public class Receiver : MonoBehaviour
     {
         // 레이 캐스팅
         RaycastHit2D? hit = rayCaster2D.RayCast(Input.mousePosition);
-        if (hit == null) return;
+        if (hit == null)
+        {
+            OffUI();
+            highlight.Off();
+            return;
+        }
 
         // 충돌 대상의 RayCastee2D.OnClick 실행
         try { hit.Value.collider.GetComponent<RayCastee2D>().OnClick(); } catch { return; }
@@ -258,12 +251,6 @@ public class Receiver : MonoBehaviour
     private void OnAttack(InputAction.CallbackContext context)
     {
         isAttack = false;
-
-        if (aimDirection == Vector2.zero && IsPointerOverUI()) return;
-        if (CheckAttack() == false) return;
-
-        // 공격 개시
-        if (player.Hand._CurrentWeapon != null) player.Hand._CurrentWeapon.AttackStart();
     }
     /// <summary>
     /// Key(Click) | Right Stick Hold
@@ -272,8 +259,12 @@ public class Receiver : MonoBehaviour
     private void KeepAttack(InputAction.CallbackContext context)
     {
         if (aimDirection == Vector2.zero && IsPointerOverUI()) return;
+        if (CheckAttack() == false) return;
         if (shopPanel.activeInHierarchy) return;
         if (Zoom.instance.isZoomMode) { isAttack = true; return; }
+
+        // 공격 개시
+        if (player.Hand._CurrentWeapon != null) player.Hand._CurrentWeapon.AttackStart();
 
         if (corKeepAttack != null) StopCoroutine(corKeepAttack);
         corKeepAttack = StartCoroutine(CorKeepAttack());

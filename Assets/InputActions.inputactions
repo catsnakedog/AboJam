@@ -6,15 +6,6 @@
             "id": "9395bbe1-3a44-4154-a25d-5dec1eee4bb1",
             "actions": [
                 {
-                    "name": "Click",
-                    "type": "Button",
-                    "id": "c6c3df2d-c7ae-4f26-8896-30b91d2360dd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Interaction",
                     "type": "Button",
                     "id": "c9984fe1-28ea-4d49-9062-35c32d9b6f2b",
@@ -54,53 +45,20 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "a3cc36a2-e2f7-4f0e-ab49-b74234d8bc67",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "One Modifier",
-                    "id": "5482cdf3-b116-4a74-b4c9-f017003d7d1b",
-                    "path": "OneModifier",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interaction",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "modifier",
-                    "id": "2ea1e28e-2916-475b-8311-26c1221ee3d8",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Interaction",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "binding",
-                    "id": "474617c5-6b22-47ea-b514-bcdff778a771",
+                    "id": "ff9265ee-2b0a-4a0b-a857-fa22c6d64825",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
                     "action": "Interaction",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "68657543-61a5-4554-8167-aef60664ecbb",
+                    "id": "88935459-df8c-4bb9-af13-e4860c063765",
                     "path": "<Touchscreen>/touch0/tap",
-                    "interactions": "Tap(duration=0.4)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Mobile",
                     "action": "Interaction",
@@ -109,9 +67,9 @@
                 },
                 {
                     "name": "",
-                    "id": "a3fff222-426b-46a5-845b-23b1fe0cac17",
+                    "id": "e7bf79c4-5c00-41ed-8219-7f5d6b0a333f",
                     "path": "<Touchscreen>/touch1/tap",
-                    "interactions": "Tap(duration=0.4)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "Mobile",
                     "action": "Interaction",
