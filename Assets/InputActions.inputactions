@@ -113,7 +113,7 @@
                     "name": "",
                     "id": "7cdeceb0-0e46-4a8e-a285-d21c3f75a0a7",
                     "path": "<Touchscreen>/touch*/Press",
-                    "interactions": "Hold(duration=1)",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "Mobile",
                     "action": "Demolition",

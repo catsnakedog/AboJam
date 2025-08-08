@@ -2065,14 +2065,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 919957099}
         m_TargetAssemblyTypeName: Background, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
+        m_MethodName: Tap
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Nomin
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &919957097
@@ -2125,6 +2125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f90c8f4f5f26e3742971fe4041e4d2a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doubleTapThreshold: 0.4
 --- !u!1 &927761662
 GameObject:
   m_ObjectHideFlags: 0
@@ -6243,7 +6244,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Touch to Start...
+  m_text: Double Tab to Start...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -7005,8 +7006,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -606, y: -443}
-  m_SizeDelta: {x: 535.93, y: 75}
+  m_AnchoredPosition: {x: -545.55, y: -443}
+  m_SizeDelta: {x: 656.83, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2555789356354222131
 Animator:
