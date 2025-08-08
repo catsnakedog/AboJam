@@ -53,9 +53,11 @@ public class RayCaster2D : MonoBehaviour
 
             if (ExecuteEvents.CanHandleEvent<IPointerClickHandler>(firstHitObject))
             {
+                PointerEventData pointerData = new PointerEventData(EventSystem.current);
+                pointerData.position = mousePos;
                 ExecuteEvents.Execute(
                     target: firstHitObject,
-                    eventData: new PointerEventData(EventSystem.current),
+                    eventData: pointerData,
                     functor: ExecuteEvents.pointerClickHandler
                 );
             }

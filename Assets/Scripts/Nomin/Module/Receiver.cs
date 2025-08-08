@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
+using UnityEngine.InputSystem.Controls;
 
 public class Receiver : MonoBehaviour
 {
@@ -191,8 +192,13 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnInteraction(InputAction.CallbackContext context)
     {
+        var control = context.control;
+        var touchControl = control.parent as TouchControl;
+        if (touchControl == null) return;
+
+        Vector2 touchPosition = touchControl.position.ReadValue();
+
         // 레이 캐스팅
-        Vector2 touchPosition = Pointer.current.position.ReadValue();
         RaycastHit2D? hit = rayCaster2D.RayCast(touchPosition);
         if (hit == null)
         {
