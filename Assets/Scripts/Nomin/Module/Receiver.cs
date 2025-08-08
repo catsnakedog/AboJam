@@ -192,7 +192,8 @@ public class Receiver : MonoBehaviour
     private void OnInteraction(InputAction.CallbackContext context)
     {
         // 레이 캐스팅
-        RaycastHit2D? hit = rayCaster2D.RayCast(Input.mousePosition);
+        Vector2 touchPosition = Pointer.current.position.ReadValue();
+        RaycastHit2D? hit = rayCaster2D.RayCast(touchPosition);
         if (hit == null)
         {
             OffUI();
