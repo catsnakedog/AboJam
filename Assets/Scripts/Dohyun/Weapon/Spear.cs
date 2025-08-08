@@ -97,9 +97,12 @@ public class Spear : MeleeWeapon
 
     public override void AttackLogic()
     {
+        /*
         IsHandFixed = true;
         MouseFlipPrio = true;
         FixedRot = transform.parent.parent.rotation;
+        */
+
         GameObject spearObj = ObjectPool.Instance.GetObj(_spearObjType, SpearObj, 10);
         spearObj.transform.localPosition = Vector3.zero;
         spearObj.transform.SetParent(FireLocation, false);
@@ -135,7 +138,10 @@ public class Spear : MeleeWeapon
             time += Time.deltaTime;
         }
         transform.localPosition = Vector3.zero;
+
+        /*
         IsHandFixed = false;
         MouseFlipPrio = false;
+        */
     }
 }
