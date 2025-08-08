@@ -199,7 +199,7 @@ public class Scenario : MonoBehaviour
         message.On($"반가워요 ! 아보카도 농장에 오신걸 환영해요.", 2f, true);
         yield return new WaitForSeconds(2f);
         message.On($"화면 왼쪽을 끌어서 움직일 수 있어요.", 2f, true);
-        yield return new WaitForSeconds(2f);
+        while (Receiver.instance.IsMove == true) yield return waitForSeconds;
         message.On($"땅을 터치해서 밭을 개간해보세요 !", 999f, true);
         while (Abocado.instances.Count < 1) yield return waitForSeconds;
 
@@ -310,7 +310,7 @@ public class Scenario : MonoBehaviour
 
         // 교전
         message.On($"화면 오른쪽을 끌어서 공격할 수 있어요.", 2f, true);
-        yield return new WaitForSeconds(2f);
+        while (Receiver.instance.IsAttack == true) yield return waitForSeconds;
         message.On("타워를 이용해 몰려오는 갱단으로부터 살아남으세요.", 3f, true);
         StopCoroutine(corDayNight);
         mark.Off();
@@ -483,7 +483,7 @@ public class Scenario : MonoBehaviour
         // 철거
         message.On($"마지막 튜토리얼입니다 !", 2f, true);
         yield return new WaitForSeconds(2f);
-        message.On($"두 번 터치해서 타워와 경작지를 철거해보세요.", 999f, true);
+        message.On($"타워와 경작지를 꾸욱 눌러서 철거해보세요.", 999f, true);
         while (grid.GetTile((15, 17)).Go != null | grid.GetTile((15, 19)).Go != null) yield return waitForSeconds;
         message.On($"잘했어요 !", 1f, true);
         yield return new WaitForSeconds(1f);

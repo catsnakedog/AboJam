@@ -23512,11 +23512,11 @@ PrefabInstance:
       objectReference: {fileID: 342094290}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveHandleSize.x
-      value: 112.2
+      value: 183.9
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveHandleSize.y
-      value: 112.2
+      value: 183.9
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveHandleSprite
@@ -23524,11 +23524,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 8f887c73cea918a4ab71a08c21de0466, type: 3}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveCircuitSize.x
-      value: 274.56
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveCircuitSize.y
-      value: 274.56
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveCircuitSprite
@@ -23536,11 +23536,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 824986c51a5b7eb4e9f6254657ac671a, type: 3}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackHandleSize.x
-      value: 132
+      value: 216.35
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackHandleSize.y
-      value: 132
+      value: 216.35
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackHandleSprite
@@ -23556,11 +23556,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackCircuitSize.x
-      value: 258.72
+      value: 424.04
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackCircuitSize.y
-      value: 258.72
+      value: 424.04
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackCircuitSprite

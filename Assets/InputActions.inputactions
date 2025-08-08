@@ -111,20 +111,9 @@
                 },
                 {
                     "name": "",
-                    "id": "d1c390e6-e331-48a1-a63c-76c599a51af8",
-                    "path": "<Touchscreen>/touch0/tap",
-                    "interactions": "MultiTap",
-                    "processors": "",
-                    "groups": "Mobile",
-                    "action": "Demolition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "aaf53fa7-e586-44fb-83fb-7673a373bb8b",
-                    "path": "<Touchscreen>/touch1/tap",
-                    "interactions": "MultiTap",
+                    "id": "7cdeceb0-0e46-4a8e-a285-d21c3f75a0a7",
+                    "path": "<Touchscreen>/touch*/Press",
+                    "interactions": "Hold(duration=1)",
                     "processors": "",
                     "groups": "Mobile",
                     "action": "Demolition",
