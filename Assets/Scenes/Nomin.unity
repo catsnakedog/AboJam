@@ -23512,40 +23512,40 @@ PrefabInstance:
       objectReference: {fileID: 342094290}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveHandleSize.x
-      value: 40
+      value: 112.2
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveHandleSize.y
-      value: 40
+      value: 112.2
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveHandleSprite
       value: 
-      objectReference: {fileID: 21300000, guid: ea5f55b2402de934f9abf1dba5e7b86d, type: 3}
+      objectReference: {fileID: 21300000, guid: 8f887c73cea918a4ab71a08c21de0466, type: 3}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveCircuitSize.x
-      value: 200
+      value: 274.56
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveCircuitSize.y
-      value: 200
+      value: 274.56
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: moveCircuitSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 982cf2162bc827b439c0b8957546268e, type: 3}
+      objectReference: {fileID: 21300000, guid: 824986c51a5b7eb4e9f6254657ac671a, type: 3}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackHandleSize.x
-      value: 40
+      value: 132
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackHandleSize.y
-      value: 40
+      value: 132
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackHandleSprite
       value: 
-      objectReference: {fileID: 21300000, guid: b119ea8054ec3fc4cb9ee30c80275b55, type: 3}
+      objectReference: {fileID: 21300000, guid: 50466c692f6bb05418fb1e62c45ab2f3, type: 3}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: doubleTapThreshold
       value: 0.5
@@ -23556,16 +23556,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackCircuitSize.x
-      value: 200
+      value: 258.72
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackCircuitSize.y
-      value: 200
+      value: 258.72
       objectReference: {fileID: 0}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: attackCircuitSprite
       value: 
-      objectReference: {fileID: 21300000, guid: d660e32f5ca8ca641ad7aa8adf2b468b, type: 3}
+      objectReference: {fileID: 21300000, guid: 5c9709a85551e324dbba3930a494968f, type: 3}
     - target: {fileID: 226789510368413163, guid: e11be17f79160ba4bb9250b9bfd0cd18, type: 3}
       propertyPath: leftStickDragThreshold
       value: 0.7
