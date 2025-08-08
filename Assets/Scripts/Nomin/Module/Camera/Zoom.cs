@@ -24,7 +24,19 @@ public class Zoom : MonoBehaviour
     private float current_scale;
     private float speed_scale_before; // 스무딩 속도 추적용
     private float firstTouchTime;
-    public bool isZoomMode;
+    [SerializeField] private bool lockZoomMode;
+    private bool isZoomMode; public bool IsZoomMode
+    {
+        get
+        {
+            if (lockZoomMode == false)
+                return isZoomMode;
+            else
+                return false;
+        }
+
+        set => isZoomMode = value;
+    }
     public float zoomTouchThreshold;
 
     /* Initalizer & Finalizer & Updater */
@@ -65,24 +77,24 @@ public class Zoom : MonoBehaviour
         {
             case 0:
                 firstTouchTime = 0;
-                isZoomMode = false;
+                IsZoomMode = false;
                 break;
 
             case 1:
                 if (firstTouchTime == 0)
                 {
                     firstTouchTime = Time.time;
-                    isZoomMode = false;
+                    IsZoomMode = false;
                 }
                 break;
 
             case 2:
-                if (Time.time - firstTouchTime < zoomTouchThreshold || isZoomMode == true)
-                    if (Receiver.instance.IsAttack == null && Receiver.instance.IsMove == null) isZoomMode = true;
+                if (Time.time - firstTouchTime < zoomTouchThreshold || IsZoomMode == true)
+                    if (Receiver.instance.IsAttack == null && Receiver.instance.IsMove == null) IsZoomMode = true;
                 break;
         }
 
-        if (isZoomMode)
+        if (IsZoomMode)
         {
             Touch touch1 = Input.GetTouch(0);
             Touch touch2 = Input.GetTouch(1);
@@ -98,6 +110,18 @@ public class Zoom : MonoBehaviour
 
         // 부드러운 전환
         cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, target_zoom, ref speed_zoom_before, time_smooth);
+    }
+
+    /* Public Method */
+    /// <summary>
+    /// 최소 줌과 최대 줌을 토글합니다.
+    /// </summary>
+    public void OnChange()
+    {
+        if (Mathf.Approximately(cam.orthographicSize, min_zoom))
+            target_zoom = max_zoom;
+        else
+            target_zoom = min_zoom;
     }
 
     /* Private Method */
@@ -126,6 +150,7 @@ public class Zoom : MonoBehaviour
             if (child.name == "Swap") continue;
             if (child.name == "Circuit") continue;
             if (child.name == "Handle") continue;
+            if (child.name == "Zoom") continue;
 
             // CanvasGroup 처리
             CanvasGroup cg = child.GetComponent<CanvasGroup>();

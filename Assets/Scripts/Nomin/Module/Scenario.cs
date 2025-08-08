@@ -24,6 +24,7 @@ public class Scenario : MonoBehaviour
     [SerializeField] private GameObject swap;
     [SerializeField] private GameObject skip;
     [SerializeField] private GameObject buy;
+    [SerializeField] private GameObject btn_zoom;
     [SerializeField] private AnimationClick animationClick;
     [SerializeField] private Player player;
     [SerializeField] private HP playerHP;
@@ -193,6 +194,7 @@ public class Scenario : MonoBehaviour
         btn_skill.SetActive(false);
         swap.SetActive(false);
         skip.SetActive(false);
+        btn_zoom.SetActive(false);
         Demolition.instance.Active = false;
 
         // 경작
@@ -350,6 +352,7 @@ public class Scenario : MonoBehaviour
         btn_skill.SetActive(false);
         swap.SetActive(false);
         skip.SetActive(false);
+        btn_zoom.SetActive(false);
 
         message.On($"오늘은 각종 무기 사용법을 알아봐요.", 2f, true);
         yield return new WaitForSeconds(2f);
@@ -475,6 +478,7 @@ public class Scenario : MonoBehaviour
         shop.SetActive(false);
         btn_skill.SetActive(false);
         skip.SetActive(false);
+        btn_zoom.SetActive(false);
 
         // 타워 설치
         grid.GetTile((15, 17)).Bind(pool.Get("Abocado"), EnumData.TileIndex.AboCado);
@@ -572,10 +576,13 @@ public class Scenario : MonoBehaviour
         globalLight.Set(globalLight.night, 0.01f);
         message.On("곧 적들이 몰려옵니다...", 2f, true);
         yield return new WaitForSeconds(2f);
-        message.On("화면 양쪽을 동시에 밀어서 적을 확인하세요 !", 999f, true);
+        message.On("시야를 넓혀 적을 확인하세요 !", 999f, true);
+        btn_zoom.SetActive(true);
+        mark.On(btn_zoom, 999f);
         while (zoom.Target_zoom <= zoom.min_zoom) yield return waitForSeconds;
 
         // 교전
+        mark.Off();
         message.On($"모든 적을 무찌르세요.", 999f, true);
         globalLight.Set(globalLight.night, 0.01f);
         for (int i = 0; i < 3; i++)

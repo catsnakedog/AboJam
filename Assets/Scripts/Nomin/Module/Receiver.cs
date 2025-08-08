@@ -49,7 +49,6 @@ public class Receiver : MonoBehaviour
     private DateTime lastTapTime = DateTime.MinValue;
     private bool? isMove = false; public bool? IsMove { get => isMove; }
     private bool? isAttack = false; public bool? IsAttack { get => isAttack; }
-    private bool isZoomMode = false; public bool IsZoomMode { get => isZoomMode; }
     private Coroutine corKeepAttack;
     private PointerEventData pointerEventData;
     private Handle moveHandlePointer;
@@ -223,7 +222,7 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnMove(InputAction.CallbackContext context)
     {
-        if (Zoom.instance.isZoomMode != true)
+        if (Zoom.instance.IsZoomMode != true)
         {
             isMove = false;
             moveHandlePointer = new Handle();
@@ -232,7 +231,7 @@ public class Receiver : MonoBehaviour
     }
     private void KeepMove(InputAction.CallbackContext context)
     {
-        if (Zoom.instance.isZoomMode) { isMove = true; return; }
+        if (Zoom.instance.IsZoomMode) { isMove = true; return; }
 
         eventMove.Invoke(true);
         farming.StopCultivate();
@@ -268,7 +267,7 @@ public class Receiver : MonoBehaviour
     /// <param name="context"></param>
     private void OnAttack(InputAction.CallbackContext context)
     {
-        if (Zoom.instance.isZoomMode != true)
+        if (Zoom.instance.IsZoomMode != true)
         {
             isAttack = false;
             attackHandlePointer = new Handle();
@@ -284,7 +283,7 @@ public class Receiver : MonoBehaviour
         if (aimDirection == Vector2.zero && IsPointerOverUI()) return;
         if (CheckAttack() == false) return;
         if (shopPanel.activeInHierarchy) return;
-        if (Zoom.instance.isZoomMode) { isAttack = true; return; }
+        if (Zoom.instance.IsZoomMode) { isAttack = true; return; }
 
         // 공격 개시
         if (player.Hand._CurrentWeapon != null) player.Hand._CurrentWeapon.AttackStart();
