@@ -24,6 +24,9 @@ public class Zoom : MonoBehaviour
     private float current_scale;
     private float speed_scale_before; // 스무딩 속도 추적용
     private float firstTouchTime;
+    [SerializeField] Image btnImg;
+    [SerializeField] Sprite zoomInSprite;
+    [SerializeField] Sprite zoomOutSprite;
     [SerializeField] private bool lockZoomMode;
     private bool isZoomMode; public bool IsZoomMode
     {
@@ -119,9 +122,15 @@ public class Zoom : MonoBehaviour
     public void OnChange()
     {
         if (Mathf.Approximately(cam.orthographicSize, min_zoom))
+        {
             target_zoom = max_zoom;
+            btnImg.sprite = zoomInSprite;
+        }
         else
+        {
             target_zoom = min_zoom;
+            btnImg.sprite = zoomOutSprite;
+        }
     }
 
     /* Private Method */
