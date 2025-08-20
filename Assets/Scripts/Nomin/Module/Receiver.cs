@@ -217,6 +217,7 @@ public class Receiver : MonoBehaviour
     private void OnDemolition(InputAction.CallbackContext context)
     {
         if (demolition.gameObject.activeSelf) return;
+        if (IsMove == true || IsAttack == true) return;
         Tile tile = grid.GetNearestTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         Tile.currentTile = tile;
         if (tile.Go != null) demolition.On();
