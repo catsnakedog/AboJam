@@ -35,6 +35,7 @@ public class Receiver : MonoBehaviour
     [SerializeField] private GameObject UI;
     public static Action<bool> eventMove;
     public Vector2 aimDirection;
+    public Vector2 moveDirection;
     public float aimMagnitude;
 
     /* Field & Property */
@@ -235,12 +236,14 @@ public class Receiver : MonoBehaviour
             isMove = false;
             moveHandlePointer = new Handle();
             moveHandlePointer.Init(UI.transform,GetLeftTouchPos(), moveCircuitSize, moveHandleSize, moveCircuitSprite, moveHandleSprite);
+            moveDirection = context.ReadValue<Vector2>().normalized;
         }
     }
     private void KeepMove(InputAction.CallbackContext context)
     {
         if (Zoom.instance.IsZoomMode) { isMove = true; return; }
 
+        moveDirection = context.ReadValue<Vector2>().normalized;
         eventMove.Invoke(true);
         farming.StopCultivate();
         player.PlayerMovement._movement = context.ReadValue<Vector2>();
@@ -252,6 +255,7 @@ public class Receiver : MonoBehaviour
     {
         eventMove.Invoke(false);
         player.PlayerMovement._movement = Vector2.zero;
+        moveDirection = Vector2.zero;
 
         isMove = null;
         moveHandlePointer.Close();

@@ -347,6 +347,10 @@ public class Hand : IObserver
             // 마우스가 플레이어 상대 방향 (1 : 왼쪽, -1 : 오른쪽)
             _mouseFlip = _player.transform.position.x > ScreenToWorld2D(Input.mousePosition, _mainCamera).x ? 1 : -1;
 
+        // 안드로이드 전용 코드
+        if (Receiver.instance.moveDirection.x < 0) _mouseFlip = 1;
+        else if (Receiver.instance.moveDirection.x > 0) _mouseFlip = -1;
+        else _mouseFlip = 1;
 
         // 3. 최종 방향 결정 (1: 기본, -1: 뒤집힘)
         _flip = _playerFlip * _mouseFlip;

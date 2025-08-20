@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static Hand;
 using static Weapon;
 
@@ -60,6 +61,15 @@ public static class HandUtil
 
             mouseScreenPosition = targetPos;
         }
+        else if (Receiver.instance.aimDirection == Vector2.zero)
+        {
+            Vector3 playerPos = Camera.main.WorldToScreenPoint(Player.instance.gameObject.transform.position);
+            Vector3 aimDirection = Receiver.instance.moveDirection;
+            if (aimDirection == Vector3.zero) aimDirection = new Vector2(0, -1).normalized;
+            Vector3 targetPos = playerPos + aimDirection * 500;
+
+            mouseScreenPosition = targetPos;
+        }
         // PC
         else
         {
@@ -93,6 +103,14 @@ public static class HandUtil
             Vector3 playerPos = Camera.main.WorldToScreenPoint(Player.instance.gameObject.transform.position);
             Vector3 aimDirection = Receiver.instance.aimDirection;
             Vector3 targetPos = playerPos + aimDirection * 500;
+
+            mouseScreenPosition = targetPos;
+        }
+        else if (Receiver.instance.moveDirection != Vector2.zero)
+        {
+            Vector3 playerPos = Camera.main.WorldToScreenPoint(Player.instance.gameObject.transform.position);
+            Vector3 moveDirection = Receiver.instance.moveDirection;
+            Vector3 targetPos = playerPos + moveDirection * 500;
 
             mouseScreenPosition = targetPos;
         }
