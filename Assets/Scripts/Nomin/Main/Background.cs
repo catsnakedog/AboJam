@@ -21,9 +21,17 @@ public class Background : MonoBehaviour
         Init();
     }
 
+    private void Update()
+    {
+        if (Screen.fullScreen == false)
+        {
+            Screen.fullScreen = true;
+            Debug.Log("Switch to fullScreen...");
+        }
+    }
+
     private void Init()
     {
-        Screen.fullScreen = true;
         lastTouchTime = DateTime.Now;
         eventDoubleTap = LoadGame;
     }

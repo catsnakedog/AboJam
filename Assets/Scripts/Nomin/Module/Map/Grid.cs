@@ -50,6 +50,15 @@ public class Grid : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Screen.fullScreen == false)
+        {
+            Screen.fullScreen = true;
+            Debug.Log("Switch to fullScreen...");
+        }
+    }
+
     /* Public Method */
     /// <summary>
     /// 마우스 좌표에 해당하는 타일의 OnClick 메서드를 실행시킵니다.
