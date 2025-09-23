@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -77,6 +78,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -89,6 +91,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -402,118 +405,137 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1091292965
+    uuid:
+      value0: 300170759
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: 300170759
     name: Fire_Blast
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Fire_Blast_Frame_0
+    - name: Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 10
         width: 15
         height: 9
       spriteId: 2332278e8c5c2914ca31c00241867d92
-    - name: Fire_Blast_Frame_1
+    - name: Frame_1
       frameIndex: 1
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 7
         width: 25
         height: 17
       spriteId: b24edde6ca7be424590e6772afe9b5b1
-    - name: Fire_Blast_Frame_2
+    - name: Frame_2
       frameIndex: 2
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 7
         width: 29
         height: 18
       spriteId: 830637df0bb76df418bacebf114aa2fb
-    - name: Fire_Blast_Frame_3
+    - name: Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 6
         width: 31
         height: 21
       spriteId: 12c38ac1a4d34eb429bdfae61555f0fd
-    - name: Fire_Blast_Frame_4
+    - name: Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 3
         width: 31
         height: 25
       spriteId: d11dc9e825791064b9873cfc9ef7e5fb
-    - name: Fire_Blast_Frame_5
+    - name: Frame_5
       frameIndex: 5
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 3
         width: 31
         height: 24
       spriteId: 84fe3a9844d9b3946a2d4585d377f989
-    - name: Fire_Blast_Frame_6
+    - name: Frame_6
       frameIndex: 6
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 4
         width: 31
         height: 23
       spriteId: 3af455b2ec95c544e8333c8d604de74f
-    - name: Fire_Blast_Frame_7
+    - name: Frame_7
       frameIndex: 7
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 4
         width: 31
         height: 23
       spriteId: 57ab9fa664d1aff4aab7df29e0d38946
-    - name: Fire_Blast_Frame_8
+    - name: Frame_8
       frameIndex: 8
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 7
         width: 31
         height: 19
       spriteId: 9d3e89e7088d4b84793b3a910a61ccdb
-    - name: Fire_Blast_Frame_9
+    - name: Frame_9
       frameIndex: 9
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 6
         width: 31
         height: 20
       spriteId: 0611d4b44d7155e4caab8478b447fccd
-    - name: Fire_Blast_Frame_10
+    - name: Frame_10
       frameIndex: 10
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 7
         width: 31
         height: 19
       spriteId: 66f8d1915de8b43418a41d597e90e678
-    - name: Fire_Blast_Frame_11
+    - name: Frame_11
       frameIndex: 11
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 7
         width: 31
         height: 17
       spriteId: ad9a03e9c4365fd4f9d899d0eb795d7c
-    - name: Fire_Blast_Frame_12
+    - name: Frame_12
       frameIndex: 12
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 10
         width: 17
         height: 10
       spriteId: f539d12dbfdfcb44eb1983ed9547cd8a
-    - name: Fire_Blast_Frame_13
+    - name: Frame_13
       frameIndex: 13
+      additiveSortOrder: 0
       cellRect:
         x: 0
         y: 12
@@ -523,6 +545,8 @@ ScriptedImporter:
     linkedCells: []
     parentIndex: -1
   platformSettings: []
+  generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 32, y: 32}
+  previousTextureSize: {x: 128, y: 128}

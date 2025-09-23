@@ -8,6 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  importerVersion: 2
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
@@ -77,6 +78,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -89,6 +91,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -302,78 +305,92 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 1073363772
+    uuid:
+      value0: 2263782188
+      value1: 0
+      value2: 0
+      value3: 0
+    guid: -2031185108
     name: airplane
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: airplane_Frame_0
+    - name: Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
       cellRect:
         x: 2
         y: 6
         width: 28
         height: 27
       spriteId: e222a862e03557048901dd8b777e4c62
-    - name: airplane_Frame_1
+    - name: Frame_1
       frameIndex: 1
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 4
         width: 26
         height: 29
       spriteId: 69ba555295204214ca0ceffee1f73502
-    - name: airplane_Frame_2
+    - name: Frame_2
       frameIndex: 2
+      additiveSortOrder: 0
       cellRect:
         x: 7
         y: 3
         width: 18
         height: 30
       spriteId: ccaf8718b72ba514d9a9e0858e2fa201
-    - name: airplane_Frame_3
+    - name: Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 4
         width: 26
         height: 29
       spriteId: a01fc70c6dda462418c3fc467bd8bc96
-    - name: airplane_Frame_4
+    - name: Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 2
         y: 6
         width: 28
         height: 27
       spriteId: 9336633ed25870446a3e36bb5994598b
-    - name: airplane_Frame_5
+    - name: Frame_5
       frameIndex: 5
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 4
         width: 26
         height: 29
       spriteId: 9ef1e128442a4d142883ca79567e0362
-    - name: airplane_Frame_6
+    - name: Frame_6
       frameIndex: 6
+      additiveSortOrder: 0
       cellRect:
         x: 7
         y: 3
         width: 18
         height: 30
       spriteId: a8455ff3e663bf349819b5cfbfa955eb
-    - name: airplane_Frame_7
+    - name: Frame_7
       frameIndex: 7
+      additiveSortOrder: 0
       cellRect:
         x: 3
         y: 4
         width: 26
         height: 29
       spriteId: 02e43bb7a3588e8419b9c557579df837
-    - name: airplane_Frame_8
+    - name: Frame_8
       frameIndex: 8
+      additiveSortOrder: 0
       cellRect:
         x: 2
         y: 6
@@ -383,6 +400,8 @@ ScriptedImporter:
     linkedCells: []
     parentIndex: -1
   platformSettings: []
+  generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 31, y: 35}
+  previousTextureSize: {x: 128, y: 128}

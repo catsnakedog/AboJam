@@ -23,6 +23,7 @@ public class Background : MonoBehaviour
 
     private void Init()
     {
+        Screen.fullScreen = true;
         lastTouchTime = DateTime.Now;
         eventDoubleTap = LoadGame;
     }
