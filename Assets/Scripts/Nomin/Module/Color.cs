@@ -1,11 +1,14 @@
-public class Color : RecordInstance<Table_Color, Record_Color>
+namespace ColorSpace
 {
-    /* Intializer & Finalizer & Updater */
-    public void Start()
+    public class Color : RecordInstance<Table_Color, Record_Color>
     {
-        // Start 사용 시 필수 고정 구현
-        if (startFlag == true) return;
-        startFlag = true;
-        base.Start();
+        /* Intializer & Finalizer & Updater */
+        public void Start()
+        {
+            // Start 사용 시 필수 고정 구현
+            if (startFlag == true) return;
+            startFlag = true;
+            base.Start();
+        }
     }
 }
